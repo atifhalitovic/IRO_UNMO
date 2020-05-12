@@ -1,0 +1,68 @@
+﻿@model IRO_UNMO.App.Areas.Admin.ViewModels.EditPartnersVMa
+@{
+    ViewData["Title"] = "";
+    Layout = "_Layout11";
+}
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <!--- Site CSS -->
+    <link rel="stylesheet" type="text/css" href="~/dist/components/reset.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/site.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/grid.css">
+    <!--- Component CSS -->
+    <link rel="stylesheet" type="text/css" href="~/dist/components/icon.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/table.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/button.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/transition.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/popup.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/accordion.css">
+
+    <script src="~/assets/library/jquery.min.js"></script>
+    <script src="~/assets/library/iframe-content.js"></script>
+
+    <script type="text/javascript" src="~/dist/components/popup.js"></script>
+    <script type="text/javascript" src="~/dist/components/transition.js"></script>
+    <script type="text/javascript" src="~/dist/components/accordion.js"></script>
+    <script type="text/javascript" src="~/dist/components/modal.js"></script>
+    <style>
+        .ui.compact.segment {
+            width: 850px;
+        }
+    </style>
+</head>
+<body>
+    @if (Model.University == null)
+    {
+        <h3>Add university partner</h3>
+    }
+
+    else if(Model != null)
+    {
+        <h3>Edit university partner</h3>
+    }
+    <div class="ui small equal width form">
+        <form asp-area="admin" asp-controller="partners" asp-action="partner" method="post">
+            @Html.HiddenFor(a => a.UniversityId)
+            <div class="ui compact segment">
+                <div class="fields">
+                    <div class="field">
+                        <label asp-for="@Model.University.Name">Name</label>
+                        <input asp-for="@Model.University.Name" type="text" class="form-control">
+                    </div>
+                    <div class="field">
+                        <label asp-for="@Model.University.Code">Code</label>
+                        <input asp-for="@Model.University.Code" type="text" class="form-control">
+                    </div>
+                    <div class="field">
+                        <label asp-for="@Model.University.Country">Country</label>
+                        @Html.DropDownListFor(model => model.University.CountryId, Model.Countries, new { required = "Please choose your gender" })
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="ui primary button">Save</button>
+        </form>
+    </div>
+</body>

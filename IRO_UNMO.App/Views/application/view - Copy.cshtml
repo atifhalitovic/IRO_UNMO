@@ -1,0 +1,434 @@
+﻿@using IRO_UNMO.App.ViewModels
+@model IRO_UNMO.App.ViewModels.ViewAppVM
+@using Microsoft.AspNetCore.Identity;
+@{
+
+}
+<h2>Here you can review your submitted application informations.</h2>
+<head>
+    <environment include="Production">
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    </environment>
+</head>
+<body>
+    <div class="container emp-profile">
+        <form>
+            @Html.HiddenFor(x => x.Applicant.ApplicantId)
+            @Html.HiddenFor(x => x.Application.ApplicationId)
+            <div class="row">
+                <h3>Basic info section</h3>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>Full name</label>
+                    </div>
+                    <div class="col-md-4">
+                        <p>@Model.Application.Applicant.ApplicationUser.Name @Model.Application.Applicant.ApplicationUser.Surname</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>University</label>
+                    </div>
+                    <div class="col-md-6">
+                        <p>@Model.Application.Applicant.University.Name</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>Study cycle</label>
+                    </div>
+                    <div class="col-md-4">
+                        <p>@Model.Application.Applicant.StudyCycle</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>Study field</label>
+                    </div>
+                    <div class="col-md-4">
+                        <p>@Model.Application.Applicant.StudyField</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>Account created</label>
+                    </div>
+                    <div class="col-md-4">
+                        <p>@Model.Application.Applicant.CreatedProfile</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>Account verified</label>
+                    </div>
+                    <div class="col-md-4">
+                        <p>@Model.Application.Applicant.Verified.ToString()</p>
+                    </div>
+                </div>
+                <h3>Info section</h3>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>Gender</label>
+                    </div>
+                    <div class="col-md-4">
+                        <p>@Model.Application.Infos.Gender</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>Citizenship</label>
+                    </div>
+                    <div class="col-md-4">
+                        <p>@Model.Application.Infos.Citizenship.Name</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>Date of birth</label>
+                    </div>
+                    <div class="col-md-4">
+                        <p>@Model.Application.Infos.DateOfBirth.ToShortDateString()</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>Place of birth</label>
+                    </div>
+                    <div class="col-md-4">
+                        <p>@Model.Application.Infos.PlaceOfBirth</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>Passport number</label>
+                    </div>
+                    <div class="col-md-4">
+                        <p>@Model.Application.Infos.PassportNumber</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>Passport issue date</label>
+                    </div>
+                    <div class="col-md-4">
+                        <p>@Model.Application.Infos.PassportIssueDate.ToShortDateString()</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>Passport expiry date</label>
+                    </div>
+                    <div class="col-md-4">
+                        <p>@Model.Application.Infos.PassportExpiryDate.ToShortDateString()</p>
+                    </div>
+                </div>
+                <h3>Contacts section</h3>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>Email</label>
+                    </div>
+                    <div class="col-md-4">
+                        <p>@Model.Application.Contacts.Email</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>Telephone</label>
+                    </div>
+                    <div class="col-md-4">
+                        <p>@Model.Application.Contacts.Telephone</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>Street name</label>
+                    </div>
+                    <div class="col-md-4">
+                        <p>@Model.Application.Contacts.StreetName</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>City, town, village</label>
+                    </div>
+                    <div class="col-md-4">
+                        <p>@Model.Application.Contacts.PlaceName</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>Postal code</label>
+                    </div>
+                    <div class="col-md-4">
+                        <p>@Model.Application.Contacts.PostalCode</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>Country</label>
+                    </div>
+                    <div class="col-md-4">
+                        <p>@Model.Application.Contacts.Country.Name</p>
+                    </div>
+                </div>
+                <h3>Languages section</h3>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>Native language</label>
+                    </div>
+                    <div class="col-md-4">
+                        <p>@Model.Application.Languages.Native</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>First foreign language and proficiency</label>
+                    </div>
+                    <div class="col-md-4">
+                        <p>@Model.Application.Languages.ForeignFirst | @Model.Application.Languages.ForeignFirstProficiency
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>Second foreign language and proficiency</label>
+                    </div>
+                    <div class="col-md-4">
+                        <p>@Model.Application.Languages.ForeignSecond | @Model.Application.Languages.ForeignSecondProficiency
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>Third foreign language and proficiency</label>
+                    </div>
+                    <div class="col-md-4">
+                        <p>@Model.Application.Languages.ForeignThird | @Model.Application.Languages.ForeignThirdProficiency
+                    </div>
+                </div>
+                <h3>Home institution section</h3>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>Offical university name</label>
+                    </div>
+                    <div class="col-md-4">
+                        <p>@Model.Application.HomeInstitutions.OfficialName</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>DepartmentName</label>
+                    </div>
+                    <div class="col-md-4">
+                        <p>@Model.Application.HomeInstitutions.DepartmentName</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>LevelOfEducation</label>
+                    </div>
+                    <div class="col-md-4">
+                        <p>@Model.Application.HomeInstitutions.LevelOfEducation</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>CurrentTermOrYear</label>
+                    </div>
+                    <div class="col-md-4">
+                        <p>@Model.Application.HomeInstitutions.CurrentTermOrYear</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>StudyProgramme</label>
+                    </div>
+                    <div class="col-md-4">
+                        <p>@Model.Application.HomeInstitutions.StudyProgramme</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>CoordinatorFullName</label>
+                    </div>
+                    <div class="col-md-4">
+                        <p>@Model.Application.HomeInstitutions.CoordinatorFullName</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>CoordinatorPosition</label>
+                    </div>
+                    <div class="col-md-4">
+                        <p>@Model.Application.HomeInstitutions.CoordinatorPosition</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>CoordinatorEmail</label>
+                    </div>
+                    <div class="col-md-4">
+                        <p>@Model.Application.HomeInstitutions.CoordinatorEmail</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>CoordinatorAddress</label>
+                    </div>
+                    <div class="col-md-4">
+                        <p>@Model.Application.HomeInstitutions.CoordinatorAddress</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>CoordinatorPhoneNum</label>
+                    </div>
+                    <div class="col-md-4">
+                        <p>@Model.Application.HomeInstitutions.CoordinatorPhoneNum</p>
+                    </div>
+                </div>
+                <h3>Other section</h3>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>MedicalInfo</label>
+                    </div>
+                    <div class="col-md-4">
+                        <p>@Model.Application.Others.MedicalInfo</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>AdditionalRequests</label>
+                    </div>
+                    <div class="col-md-4">
+                        <p>@Model.Application.Others.AdditionalRequests</p>
+                    </div>
+                </div>
+                <h3>Documents section</h3>
+                @if (Model.Application.DocumentsId != null)
+                {
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label>Learning agreement</label>
+                        </div>
+                        @if (Model.Application.Documents.LearningAgreement != null)
+                        {
+                            <div class="col-md-4">
+                                @Html.ActionLink(Model.Application.Documents.LearningAgreement, "DownloadFile", new { fileName = Model.Application.Documents.LearningAgreement })
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col-md-4">
+                                <p>Not uploaded yet.</p>
+                            </div>
+                        }
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label>Curriculum vitae</label>
+                        </div>
+                        @if (Model.Application.Documents.CV != null)
+                        {
+                            <div class="col-md-4">
+                                @Html.ActionLink(Model.Application.Documents.CV, "DownloadFile", new { fileName = Model.Application.Documents.CV })
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col-md-4">
+                                <p>Not uploaded yet.</p>
+                            </div>
+                        }
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label>Passport</label>
+                        </div>
+                        @if (Model.Application.Documents.Passport != null)
+                        {
+                            <div class="col-md-4">
+                                @Html.ActionLink(Model.Application.Documents.Passport, "DownloadFile", new { fileName = Model.Application.Documents.Passport })
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col-md-4">
+                                <p>Not uploaded yet.</p>
+                            </div>
+                        }
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label>English language proficiency</label>
+                        </div>
+                        @if (Model.Application.Documents.EngProficiency != null)
+                        {
+                            <div class="col-md-4">
+                                @Html.ActionLink(Model.Application.Documents.EngProficiency, "DownloadFile", new { fileName = Model.Application.Documents.EngProficiency })
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col-md-4">
+                                <p>Not uploaded yet.</p>
+                            </div>
+                        }
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label>Transcript of records</label>
+                        </div>
+                        @if (Model.Application.Documents.TranscriptOfRecords != null)
+                        {
+                            <div class="col-md-4">
+                                @Html.ActionLink(Model.Application.Documents.TranscriptOfRecords, "DownloadFile", new { fileName = Model.Application.Documents.TranscriptOfRecords })
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col-md-4">
+                                <p>Not uploaded yet.</p>
+                            </div>
+                        }
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label>Motivation letter</label>
+                        </div>
+                        @if (Model.Application.Documents.MotivationLetter != null)
+                        {
+                            <div class="col-md-4">
+                                @Html.ActionLink(Model.Application.Documents.MotivationLetter, "DownloadFile", new { fileName = Model.Application.Documents.MotivationLetter })
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col-md-4">
+                                <p>Not uploaded yet.</p>
+                            </div>
+                        }
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label>Reference letter</label>
+                        </div>
+                        @if (Model.Application.Documents.ReferenceLetter != null)
+                        {
+                            <div class="col-md-4">
+                                @Html.ActionLink(Model.Application.Documents.ReferenceLetter, "DownloadFile", new { fileName = Model.Application.Documents.ReferenceLetter })
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col-md-4">
+                                <p>Not uploaded yet.</p>
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+        </form>
+    </div>
+</body>
+

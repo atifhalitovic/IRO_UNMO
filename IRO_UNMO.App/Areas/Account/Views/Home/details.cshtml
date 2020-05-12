@@ -1,0 +1,303 @@
+﻿@model IRO_UNMO.App.ViewModels.ProfileVM
+@using Microsoft.AspNetCore.Identity;
+@{
+
+}
+<h2>Basic profile details</h2>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <!--- Site CSS -->
+    <link rel="stylesheet" type="text/css" href="~/dist/components/reset.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/site.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/grid.css">
+    <!--- Component CSS -->
+    <link rel="stylesheet" type="text/css" href="~/dist/components/icon.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/table.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/button.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/transition.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/popup.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/accordion.css">
+    <!--- Component JS -->
+    <script src="~/assets/library/jquery.min.js"></script>
+    <script src="~/assets/library/iframe-content.js"></script>
+
+    <script type="text/javascript" src="~/dist/components/popup.js"></script>
+    <script type="text/javascript" src="~/dist/components/transition.js"></script>
+
+    <!--- Show Names -->
+    @*<script src="~/assets/show-examples.js"></script>*@
+    <!--- Example Javascript -->
+    <script>
+        var fileExtentionRange = '.zip .rar .tar .pdf .doc .docx .xls .xlsx .ppt .pptx';
+        var MAX_SIZE = 30; // MB
+
+        $(document).on('change', '.btn-file :file', function () {
+            var input = $(this);
+
+            if (navigator.appVersion.indexOf("MSIE") != -1) { // IE
+                var label = input.val();
+
+                input.trigger('fileselect', [1, label, 0]);
+            } else {
+                var label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+                var numFiles = input.get(0).files ? input.get(0).files.length : 1;
+                var size = input.get(0).files[0].size;
+
+                input.trigger('fileselect', [numFiles, label, size]);
+            }
+        });
+
+        $('.btn-file :file').on('fileselect', function (event, numFiles, label, size) {
+            $('#attachmentName').attr('name', 'attachmentName'); // allow upload.
+
+            var postfix = label.substr(label.lastIndexOf('.'));
+            if (fileExtentionRange.indexOf(postfix.toLowerCase()) > -1) {
+                if (size > 1024 * 1024 * MAX_SIZE) {
+                    alert('max size：<strong>' + MAX_SIZE + '</strong> MB.');
+
+                    $('#attachmentName').removeAttr('name'); // cancel upload file.
+                } else {
+                    $('#_attachmentName').val(label);
+                }
+            } else {
+                alert('file type：<br/> <strong>' + fileExtentionRange + '</strong>');
+
+                $('#attachmentName').removeAttr('name'); // cancel upload file.
+            }
+        });
+    </script>
+
+    <style>
+        .ui.card.nom {
+            background-color: #93f87b;
+        }
+
+        .ui.button.zeleni {
+            background-color: #93f87b;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    @Html.HiddenFor(x => x.Applicant.ApplicantId)
+    @if (Model.Applicant.UniversityId != 1)
+    {
+        <div id='container' style='height:410px;width:500px'>
+            <table class="ui small definition table">
+                <tbody>
+                    <tr>
+                        <td class="five wide column">Full name</td>
+                        <td class="align right">@Model.Applicant.ApplicationUser.Name @Model.Applicant.ApplicationUser.Surname</td>
+                    </tr>
+                    <tr>
+                        <td>Email</td>
+                        <td>@Model.Applicant.ApplicationUser.Email</td>
+                    </tr>
+                    <tr>
+                        <td>Phone number</td>
+                        <td>@Model.Applicant.ApplicationUser.PhoneNumber</td>
+                    </tr>
+                    <tr>
+                        <td>Nationality</td>
+                        <td>
+                            @Model.Applicant.ApplicationUser.Country.Name
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>University</td>
+                        <td>@Model.Applicant.University.Name</td>
+                    </tr>
+                    <tr>
+                        <td>Study field</td>
+                        <td>@Model.Applicant.StudyField</td>
+                    </tr>
+                    <tr>
+                        <td>Study cycle</td>
+                        <td>@Model.Applicant.StudyCycle</td>
+                    </tr>
+                    <tr>
+                        <td>Student/staff</td>
+                        <td>TO DO !!! TO DO @Model.Applicant.TypeOfApplication</td>
+                    </tr>
+                    <tr>
+                        <td>Account created</td>
+                        <td>@Model.Applicant.CreatedProfile</td>
+                    </tr>
+                    <tr>
+                        <td>Account verification</td>
+                        <td>@Model.Applicant.Verified.ToString()</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="ui cards">
+            <div class="ui card">
+                <div class="content">
+                    <div class="header">
+                        <p>Account verification</p>
+                    </div>
+                    <div class="meta">
+                        Account verification means nomination which is a document made through email communication
+                        from your home coordinator who confirms that the student/staff was
+                        selected by your institution to carry out a study/teaching/training
+                        period at UNMO. Your home university needs to send us candidates’
+                        data (name, surname, study field, study cycle, email, and preferably
+                        learning/mobility agreement) by given deadlines.
+                    </div>
+                </div>
+            </div>
+            <div class="ui card">
+                <div class="content">
+                    <div class="header">
+                        <p>Student nomination</p>
+                    </div>
+                    <div class="meta">
+                        Students whose nomination is approved by both home and
+                        host university will receive an email with clear instruction
+                        regarding the online application (below), required documents, deadlines and temporary
+                        residence.
+                    </div>
+                </div>
+            </div>
+            <div class="ui card">
+                <div class="content">
+                    <div class="header">
+                        <p>Deadline</p>
+                    </div>
+                    <div class="meta">
+                        The students will have one month to complete the necessary
+                        procedures to be registered at UNMO.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ui card nom">
+            <div class="content">
+                <div class="header">
+                    <p>Active application</p>
+                </div>
+                @if (Model.Applicant.Verified == true && Model.Application != null)
+                {
+                    <div class="meta">
+                        <span>Last change: @Model.Application.LastEdited</span>
+                        <p> </p>
+                        <p> </p>
+                        <p> </p>
+                        @*// if(userManager kurac palac == admin bez ova dvaa)*@
+                        <a asp-action="edit" asp-controller="application" asp-route-id="@Model.Application.ApplicationId" class="ui basic black button"><i class="address card outline icon"></i>Edit application</a>
+                        <p></p>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <a asp-action="docs" asp-controller="application" asp-route-id="@Model.Application.ApplicationId" class="ui basic black button"><i class="file icon"></i>Edit documents</a>
+                            </div>
+                        </div>
+                        <p></p>
+                        @if (Model.Application.Contacts.CountryId != null)
+                        {
+                        <a asp-action="view" asp-controller="application" asp-route-id="@Model.Application.ApplicationId" class="ui basic black button"><i class="eye"></i>View complete application</a>
+                        }
+                        else
+                        {
+                            <a asp-action="view" asp-controller="application" asp-route-id="@Model.Application.ApplicationId" class="ui basic green disabled button"><i class="eye"></i>View complete application</a>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <p>You didn't create any application.</p>
+                }
+            </div>
+            @Html.HiddenFor(x => x.Applicant.ApplicationUser)
+            @if (Model.Applicant.Verified == true && Model.Application == null)
+            {
+                <a asp-action="create" asp-controller="application" asp-route-id="@Model.Applicant.ApplicationUser.Id" class="ui button secondary black">Create new application</a>
+            }
+            else if (Model.Applicant.Verified == false && Model.Application != null)
+            {
+                <a asp-action="create" asp-controller="application" asp-route-id="@Model.Applicant.ApplicationUser.Id" class="ui button secondary black disabled">Create new application</a>
+            }
+        </div>
+    }
+    else
+    {
+        <div id='container' style='height:325px;width:500px'>
+            <table class="ui small definition table">
+                <tbody>
+                    <tr>
+                        <td class="five wide column">Full name</td>
+                        <td class="align right">@Model.Applicant.ApplicationUser.Name @Model.Applicant.ApplicationUser.Surname</td>
+                    </tr>
+                    <tr>
+                        <td>Email</td>
+                        <td>@Model.Applicant.ApplicationUser.Email</td>
+                    </tr>
+                    <tr>
+                        <td>Phone number</td>
+                        <td>@Model.Applicant.ApplicationUser.PhoneNumber</td>
+                    </tr>
+                    <tr>
+                        <td>Nationality</td>
+                        <td>@Model.Applicant.ApplicationUser.Country.Name</td>
+                    </tr>
+                    <tr>
+                        <td>University</td>
+                        <td>@Model.Applicant.University.Name</td>
+                    </tr>
+                    <tr>
+                        <td>Faculty</td>
+                        <td>@Model.Applicant.FacultyName</td>
+                    </tr>
+                    <tr>
+                        <td>Student/staff</td>
+                        <td>@Model.Applicant.TypeOfApplication</td>
+                    </tr>
+                    <tr>
+                        <td>Account created</td>
+                        <td>@Model.Applicant.CreatedProfile</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        @if (Model.Nominations.Count != 0)
+        {
+            <div class="ui cards">
+                @foreach (var x in Model.Nominations)
+                {
+                    <div class="ui card nom">
+                        <div class="content">
+                            <div class="header">
+                                <h4>@x.University.Name</h4>
+                            </div>
+                            <p></p>
+                            @if (x != null)
+                            {
+                                <div class="meta">
+                                    <p>Created: @x.CreatedNom</p>
+                                    <p>Last change: @x.LastEdited</p>
+                                    <p>Status: @x.StatusOfNomination </p>
+                                    <a asp-action="docs" asp-controller="nomination" asp-route-id="@x.NominationId" class="ui basic black button"><i class="file icon"></i>Edit documents</a>
+                                    <p></p>
+                                    <p></p>
+                                    <a asp-action="view" asp-controller="nomination" asp-route-id="@x.NominationId" class="ui secondary basic button"><i class="eye"></i>Review nomination</a>
+                                </div>
+                            }
+                            else
+                            {
+                                <p>You didn't create any application.</p>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        <br />
+        @if (Model.Nominations.Count < 3)
+        {
+            <div class="ui container">
+                <a asp-action="create" asp-controller="nomination" asp-route-id="@Model.Applicant.ApplicationUser.Id" class="ui button zeleni">Create new nomination (max 3)</a>
+            </div>
+        }
+    }
+</body>

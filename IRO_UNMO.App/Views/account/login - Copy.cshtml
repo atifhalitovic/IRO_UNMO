@@ -1,0 +1,16 @@
+﻿@model IRO_UNMO.App.ViewModels.LoginVM
+@{
+    Layout = "_Layout1";
+}
+<p></p>
+<h3>Welcome to the login page!</h3>
+<div class="form">
+    <form asp-controller="applicant" asp-action="login" method="post">
+        <div class="form-group">
+            <label>Enter your unique code (from email)</label>
+            <input asp-for="@Model.UniqueCode" class="form-control" />
+            <span asp-validation-for="@Model.UniqueCode"></span>
+        </div>
+        <input type="submit" class="btn btn-success" value="Log in" style="margin: 10px 10px 10px 10px;" />
+    </form>
+</div>

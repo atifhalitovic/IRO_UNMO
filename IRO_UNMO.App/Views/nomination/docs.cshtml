@@ -1,0 +1,359 @@
+﻿@using IRO_UNMO.App.ViewModels
+@model IRO_UNMO.App.ViewModels.EditDocsNomVM
+@using Microsoft.AspNetCore.Identity;
+@{
+
+}
+<h2>Welcome to documents upload section Nomination page.</h2>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <!--- Site CSS -->
+    <link rel="stylesheet" type="text/css" href="~/dist/components/reset.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/site.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/grid.css">
+    <!--- Component CSS -->
+    <link rel="stylesheet" type="text/css" href="~/dist/components/icon.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/table.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/button.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/transition.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/popup.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/accordion.css">
+    <!--- Component JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.2/semantic.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+    <script src="~/assets/library/jquery.min.js"></script>
+    <script src="~/assets/library/iframe-content.js"></script>
+
+    <script type="text/javascript" src="~/dist/components/popup.js"></script>
+    <script type="text/javascript" src="~/dist/components/transition.js"></script>
+
+    <!--- Show Names -->
+    @*<script src="~/assets/show-examples.js"></script>*@
+    <!--- Example Javascript -->
+    <script>
+        var fileExtentionRange = '.zip .rar .tar .pdf .doc .docx .xls .xlsx .ppt .pptx';
+        var MAX_SIZE = 30; // MB
+
+        $(document).on('change', '.btn-file :file', function () {
+            var input = $(this);
+
+            if (navigator.appVersion.indexOf("MSIE") != -1) { // IE
+                var label = input.val();
+
+                input.trigger('fileselect', [1, label, 0]);
+            } else {
+                var label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+                var numFiles = input.get(0).files ? input.get(0).files.length : 1;
+                var size = input.get(0).files[0].size;
+
+                input.trigger('fileselect', [numFiles, label, size]);
+            }
+        });
+
+        $('.btn-file :file').on('fileselect', function (event, numFiles, label, size) {
+            $('#attachmentName').attr('name', 'attachmentName'); // allow upload.
+
+            var postfix = label.substr(label.lastIndexOf('.'));
+            if (fileExtentionRange.indexOf(postfix.toLowerCase()) > -1) {
+                if (size > 1024 * 1024 * MAX_SIZE) {
+                    alert('max size：<strong>' + MAX_SIZE + '</strong> MB.');
+
+                    $('#attachmentName').removeAttr('name'); // cancel upload file.
+                } else {
+                    $('#_attachmentName').val(label);
+                }
+            } else {
+                alert('file type：<br/> <strong>' + fileExtentionRange + '</strong>');
+
+                $('#attachmentName').removeAttr('name'); // cancel upload file.
+            }
+        });
+    </script>
+</head>
+<body>
+    <form asp-action="docs" method="post" enctype="multipart/form-data">
+        @Html.HiddenFor(x => x.NominationId)
+        @Html.HiddenFor(x => x.ApplicantId)
+        <table class="ui celled striped table">
+            <thead>
+                <tr>
+                    <th colspan="3">
+                        Documents for upload
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Applicant.TypeOfApplication == "Student")
+                {
+                    <tr>
+                        <td class="collapsing">
+                            <i class="file icon"></i>Learning agreement
+                        </td>
+                        @if (Model.Nomination.LearningAgreement != null)
+                        {
+                            <td class="collapsing">@Html.ActionLink(Model.Nomination.LearningAgreement, "DownloadFile", new { fileName = Model.Nomination.LearningAgreement })</td>
+                        }
+                        else
+                        {
+                            <td>Not uploaded yet.</td>
+                        }
+                        <td class="collapsing">
+                            <div class="field">
+                                <label asp-for="@Model.Nomination.LearningAgreement" class="ui icon button">
+                                    <input asp-for="@Model.LearningAgreement" type="file" class="custom-file-input">
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    <tr>
+                        <td class="collapsing">
+                            <i class="file icon"></i>Work plan
+                        </td>
+                        @if (Model.Nomination.WorkPlan != null)
+                        {
+                            <td>@Html.ActionLink(Model.Nomination.WorkPlan, "DownloadFile", new { fileName = Model.Nomination.WorkPlan })</td>
+                        }
+                        else
+                        {
+                            <td>Not uploaded yet.</td>
+                        }
+                        <td>
+                            <div>
+                                <label asp-for="@Model.Nomination.WorkPlan" class="ui icon button">
+                                    <input asp-for="@Model.WorkPlan" type="file" class="custom-file-input">
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                }
+                <tr>
+                    <td class="collapsing">
+                        <i class="file icon"></i>Curriculum vitae
+                    </td>
+                    @if (Model.Nomination.CV != null)
+                    {
+                        <td>@Html.ActionLink(Model.Nomination.CV, "DownloadFile", new { fileName = Model.Nomination.CV })</td>
+                    }
+                    else
+                    {
+                        <td>Not uploaded yet.</td>
+                    }
+                    <td>
+                        <label asp-for="@Model.Nomination.CV" class="ui icon button">
+                            <input asp-for="@Model.CV" type="file" class="custom-file-input">
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="collapsing">
+                        <i class="file icon"></i>English proficiency
+                    </td>
+                    @if (Model.Nomination.EngProficiency != null)
+                    {
+                        <td>@Html.ActionLink(Model.Nomination.EngProficiency, "DownloadFile", new { fileName = Model.Nomination.EngProficiency })</td>
+                    }
+                    else
+                    {
+                        <td>Not uploaded yet.</td>
+                    }
+                    <td>
+                        <div>
+                            <label asp-for="@Model.Nomination.EngProficiency" class="ui icon button">
+                                <input asp-for="@Model.EngProficiency" type="file" class="custom-file-input">
+                            </label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="collapsing">
+                        <i class="file icon"></i>Transcript of records
+                    </td>
+                    @if (Model.Nomination.TranscriptOfRecords != null)
+                    {
+                        <td>@Html.ActionLink(Model.Nomination.TranscriptOfRecords, "DownloadFile", new { fileName = Model.Nomination.TranscriptOfRecords })</td>
+                    }
+                    else
+                    {
+                        <td>Not uploaded yet.</td>
+                    }
+                    <td>
+                        <div>
+                            <label asp-for="@Model.Nomination.TranscriptOfRecords" class="ui icon button">
+                                <input asp-for="@Model.TranscriptOfRecords" type="file" class="custom-file-input">
+                            </label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="collapsing">
+                        <i class="file icon"></i>Motivation letter
+                    </td>
+                    @if (Model.Nomination.MotivationLetter != null)
+                    {
+                        <td>@Html.ActionLink(Model.Nomination.MotivationLetter, "DownloadFile", new { fileName = Model.Nomination.MotivationLetter })</td>
+                    }
+                    else
+                    {
+                        <td>Not uploaded yet.</td>
+                    }
+                    <td>
+                        <div>
+                            <label asp-for="@Model.Nomination.MotivationLetter" class="ui icon button">
+                                <input asp-for="@Model.MotivationLetter" type="file" class="custom-file-input">
+                            </label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="collapsing">
+                        <i class="file icon"></i>Reference letter
+                    </td>
+                    @if (Model.Nomination.ReferenceLetter != null)
+                    {
+                        <td>@Html.ActionLink(Model.Nomination.ReferenceLetter, "DownloadFile", new { fileName = Model.Nomination.ReferenceLetter })</td>
+                    }
+                    else
+                    {
+                        <td>Not uploaded yet.</td>
+                    }
+                    <td>
+                        <div>
+                            <label asp-for="@Model.Nomination.ReferenceLetter" class="ui icon button">
+                                <input asp-for="@Model.ReferenceLetter" type="file" class="custom-file-input">
+                            </label>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <button class="ui primary button">Save</button>
+    </form>
+    @*<form asp-action="edit" method="post" enctype="multipart/form-data">
+            @Html.HiddenFor(x => x.NominationId)
+            @Html.HiddenFor(x => x.ApplicantId)
+
+            @if (Model.Applicant.TypeOfApplication == "Student")
+            {
+                <div>
+                    <label asp-for="@Model.LearningAgreement">Learning agreement</label>
+                    @if (Model.Nomination.LearningAgreement != null)
+                    {
+                        <p>Current uploaded: @Html.ActionLink(Model.Nomination.LearningAgreement, "DownloadFile", new { fileName = Model.Nomination.LearningAgreement })</p>
+                    }
+                    <div class="field">
+                        <div class="ui action input">
+                            <input type="text" id="_attachmentName">
+                            <label for="attachmentName" class="ui icon button btn-file">
+                                <i class="attachment basic icon"></i>
+                                <input type="file" id="attachmentName" name="attachmentName" style="display: none">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="form-group">
+                    <label asp-for="@Model.WorkPlan">Work plan</label>
+                    @if (Model.Nomination.WorkPlan != null)
+                    {
+                        <p>Current uploaded: @Html.ActionLink(Model.Nomination.WorkPlan, "DownloadFile", new { fileName = Model.Nomination.WorkPlan })</p>
+                    }
+                    <input asp-for="@Model.WorkPlan" type="file" class="form-control custom-file-input">
+                </div>
+            }
+
+
+            <div class="form-group">
+                <label asp-for="@Model.CV">Curriculum vitae</label>
+                @if (Model.Nomination.CV != null)
+                {
+                    <p>Current uploaded: @Html.ActionLink(Model.Nomination.CV, "DownloadFile", new { fileName = Model.Nomination.CV })</p>
+                }
+                <input asp-for="@Model.CV" type="file" class="form-control custom-file-input">
+            </div>
+
+            <div class="form-group">
+                <label asp-for="@Model.EngProficiency">Eng proficiency</label>
+                @if (Model.Nomination.EngProficiency != null)
+                {
+                    <p>Current uploaded: @Html.ActionLink(Model.Nomination.EngProficiency, "DownloadFile", new { fileName = Model.Nomination.EngProficiency })</p>
+                }
+                <input asp-for="@Model.EngProficiency" type="file" class="form-control custom-file-input">
+            </div>
+
+            <div class="form-group">
+                <label asp-for="@Model.TranscriptOfRecords">Transcript of records</label>
+                @if (Model.Nomination.TranscriptOfRecords != null)
+                {
+                    <p>Current uploaded: @Html.ActionLink(Model.Nomination.TranscriptOfRecords, "DownloadFile", new { fileName = Model.Nomination.TranscriptOfRecords })</p>
+                }
+                <input asp-for="@Model.TranscriptOfRecords" type="file" class="form-control custom-file-input">
+            </div>
+
+            <div class="form-group">
+                <label asp-for="@Model.MotivationLetter">Motivation letter</label>
+                @if (Model.Nomination.MotivationLetter != null)
+                {
+                    <p>Current uploaded: @Html.ActionLink(Model.Nomination.MotivationLetter, "DownloadFile", new { fileName = Model.Nomination.MotivationLetter })</p>
+                }
+                <input asp-for="@Model.MotivationLetter" type="file" class="form-control custom-file-input">
+            </div>
+
+            <div class="form-group">
+                <label asp-for="@Model.ReferenceLetter">Reference letter</label>
+                @if (Model.Nomination.ReferenceLetter != null)
+                {
+                    <p>Current uploaded: @Html.ActionLink(Model.Nomination.ReferenceLetter, "DownloadFile", new { fileName = Model.Nomination.ReferenceLetter })</p>
+                }
+                <input asp-for="@Model.ReferenceLetter" type="file" class="form-control custom-file-input">
+            </div>
+            <button type="submit" class="btn btn-success">Save</button>
+        </form>*@
+    <script>
+        var fileExtentionRange = '.zip .rar .tar .pdf .doc .docx .xls .xlsx .ppt .pptx';
+        var MAX_SIZE = 30; // MB
+
+        $(document).on('change', '.btn-file :file', function () {
+            var input = $(this);
+
+            if (navigator.appVersion.indexOf("MSIE") != -1) { // IE
+                var label = input.val();
+
+                input.trigger('fileselect', [1, label, 0]);
+            } else {
+                var label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+                var numFiles = input.get(0).files ? input.get(0).files.length : 1;
+                var size = input.get(0).files[0].size;
+
+                input.trigger('fileselect', [numFiles, label, size]);
+            }
+        });
+
+        $('.btn-file :file').on('fileselect', function (event, numFiles, label, size) {
+            $('#attachmentName').attr('name', 'attachmentName'); // allow upload.
+
+            var postfix = label.substr(label.lastIndexOf('.'));
+            if (fileExtentionRange.indexOf(postfix.toLowerCase()) > -1) {
+                if (size > 1024 * 1024 * MAX_SIZE) {
+                    alert('max size：<strong>' + MAX_SIZE + '</strong> MB.');
+
+                    $('#attachmentName').removeAttr('name'); // cancel upload file.
+                } else {
+                    $('#_attachmentName').val(label);
+                }
+            } else {
+                alert('file type：<br/> <strong>' + fileExtentionRange + '</strong>');
+
+                $('#attachmentName').removeAttr('name'); // cancel upload file.
+            }
+        });
+    </script>
+</body>
+

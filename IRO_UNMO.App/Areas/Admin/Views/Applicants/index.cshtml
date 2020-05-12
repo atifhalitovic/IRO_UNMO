@@ -1,0 +1,83 @@
+﻿@model IRO_UNMO.App.ViewModels.ApplicantsVM
+@{
+    ViewData["Title"] = "";
+    Layout = "_Layout11";
+}
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <!--- Site CSS -->
+    <link rel="stylesheet" type="text/css" href="~/dist/components/reset.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/site.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/grid.css">
+    <!--- Component CSS -->
+    <link rel="stylesheet" type="text/css" href="~/dist/components/icon.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/table.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/button.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/transition.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/popup.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/accordion.css">
+
+    <script src="~/assets/library/jquery.min.js"></script>
+    <script src="~/assets/library/iframe-content.js"></script>
+
+    <script type="text/javascript" src="~/dist/components/popup.js"></script>
+    <script type="text/javascript" src="~/dist/components/transition.js"></script>
+    <script type="text/javascript" src="~/dist/components/accordion.js"></script>
+</head>
+<body>
+    <h2 class="ui header">Incoming applicants</h2>
+    <table class="ui celled table">
+        <thead>
+            <tr>
+                <th>Full name</th>
+                @*<th>Faculty</th>*@
+                <th>University</th>
+                <th>Created profile</th>
+                <th>Verified</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        @foreach (var x in Model.IApplicants)
+        {
+            <tbody>
+                <tr>
+                    <td>@x.ApplicationUser.Name @x.ApplicationUser.Surname</td>
+                    @*<td>@x.FacultyName</td>*@
+                    <td>@x.University.Name</td>
+                    <td>@x.CreatedProfile</td>
+                    <td>@x.Verified</td>
+                    <td><a asp-action="review" asp-controller="applicants" asp-route-id="@x.ApplicantId" class="ui primary button">Review</a>
+                        @*<a asp-action="docs" asp-controller="application" asp-route-id="@x.ApplicationId" class="ui primary button">Docs</a>*@</td>
+                </tr>
+            </tbody>
+        }
+    </table>
+
+    <h2 class="ui header">Outgoing applicants</h2>
+    <table class="ui celled table">
+        <thead>
+            <tr>
+                <th>Full name</th>
+                <th>Faculty</th>
+                <th>University</th>
+                <th>Created profile</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        @foreach (var x in Model.OApplicants)
+        {
+            <tbody>
+                <tr>
+                    <td>@x.ApplicationUser.Name @x.ApplicationUser.Surname</td>
+                    <td>@x.FacultyName</td>
+                    <td>@x.University.Name</td>
+                    <td>@x.CreatedProfile</td>
+                    <td><a asp-action="review" asp-controller="applicants" asp-route-id="@x.ApplicantId" class="ui primary button">Review</a></td>
+                </tr>
+            </tbody>
+        }
+    </table>
+</body>

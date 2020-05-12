@@ -1,0 +1,87 @@
+﻿@model IRO_UNMO.App.ViewModels.UsersVM
+@{
+    Layout = "_Layout1";
+}
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <!--- Site CSS -->
+    <link rel="stylesheet" type="text/css" href="~/dist/components/reset.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/site.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/grid.css">
+    <!--- Component CSS -->
+    <link rel="stylesheet" type="text/css" href="~/dist/components/icon.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/table.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/button.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/transition.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/popup.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/accordion.css">
+
+    <script src="~/assets/library/jquery.min.js"></script>
+    <script src="~/assets/library/iframe-content.js"></script>
+
+    <script type="text/javascript" src="~/dist/components/popup.js"></script>
+    <script type="text/javascript" src="~/dist/components/transition.js"></script>
+    <script type="text/javascript" src="~/dist/components/accordion.js"></script>
+
+    <style>
+        .ui.compact.segment {
+            background-color: #dedede;
+        }
+    </style>
+
+
+</head>
+<body>
+    <form asp-controller="account" asp-action="incoming" method="post">
+        <div class="ui compact segment">
+            <h3 class="ui green dividing header"><i class="sign in alternate icon"></i>Registration for incoming applicant at UNMO</h3>
+            <div class="fields">
+                <div class="ui small equal width form">
+                    <div class="fields">
+                        <div class="field">
+                            <label>First name</label>
+                            <input asp-for="@Model.Name" type="text" min="2" max="20" autocomplete="off" required />
+                        </div>
+                        <div class="field">
+                            <label>Last name</label>
+                            <input asp-for="@Model.Surname" type="text" min="2" max="20" autocomplete="off" required>
+                        </div>
+                    </div>
+                    <div class="fields">
+                        <div class="field">
+                            <label>Phone number</label>
+                            <input name="PhoneNumber" asp-for="@Model.PhoneNumber" type="text" autocomplete="off" required />
+                        </div>
+                        <div class="field">
+                            <label>E-mail</label>
+                            <input name="Email" asp-for="@Model.Email" type="text" autocomplete="off" required />
+                        </div>
+                        <div class="field">
+                            <label asp-for="@Model.CountryId">Nationality</label>
+                            @Html.DropDownListFor(model => model.CountryId, Model.Countries)
+                        </div>
+                    </div>
+                    <div class="fields">
+                        <div class="field">
+                            <label asp-for="@Model.StudyField">Study field</label>
+                            <input name="StudyField" asp-for="@Model.StudyField" type="text" autocomplete="off" required />
+                        </div>
+                        <div class="field">
+                            <label asp-for="@Model.StudyCycle">Study cycle</label>
+                            @Html.DropDownListFor(model => model.StudyCycle, Model.StudyCycles)
+                        </div>
+                        <div class="field">
+                            <label asp-for="@Model.UniversityId">University</label>
+                            @Html.DropDownListFor(model => model.UniversityId, Model.Universities)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="extra content">
+                <button type="submit" class="ui primary button">Register</button>
+            </div>
+        </div>
+    </form>
+</body>

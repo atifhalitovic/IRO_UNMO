@@ -1,0 +1,86 @@
+﻿@using IRO_UNMO.App.ViewModels
+@model IRO_UNMO.App.ViewModels.EditDocsVM
+@using Microsoft.AspNetCore.Identity;
+@{
+
+}
+<h2>Welcome to documents upload section application page.</h2>
+<head>
+    <environment include="Production">
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    </environment>
+</head>
+<body>
+    <form asp-action="EditDocs" method="post" enctype="multipart/form-data">
+        @Html.HiddenFor(x => x.ApplicationId)
+        @Html.HiddenFor(x => x.DocumentsId)
+        @Html.HiddenFor(x => x.Application.DocumentsId)
+        <h3>Info section</h3>
+        <div class="form-group">
+            <label asp-for="@Model.LearningAgreement">Learning agreement</label>
+            @if (Model.Application.Documents.LearningAgreement != null)
+            {
+                <p>Current uploaded: @Html.ActionLink(Model.Application.Documents.LearningAgreement, "DownloadFile", new { fileName = Model.Application.Documents.LearningAgreement })</p>
+            }
+            <input asp-for="@Model.LearningAgreement" type="file" class="form-control custom-file-input">
+        </div>
+
+        <div class="form-group">
+            <label asp-for="@Model.CV">Curriculum vitae</label>
+            @if (Model.Application.Documents.CV != null)
+            {
+                <p>Current uploaded: @Html.ActionLink(Model.Application.Documents.CV, "DownloadFile", new { fileName = Model.Application.Documents.CV })</p>
+            }
+            <input asp-for="@Model.CV" type="file" class="form-control custom-file-input">
+        </div>
+
+        <div class="form-group">
+            <label asp-for="@Model.Passport">Passport</label>
+            @if (Model.Application.Documents.Passport != null)
+            {
+                <p>Current uploaded: @Html.ActionLink(Model.Application.Documents.Passport, "DownloadFile", new { fileName = Model.Application.Documents.Passport })</p>
+            }
+            <input asp-for="@Model.Passport" type="file" class="form-control custom-file-input">
+        </div>
+
+        <div class="form-group">
+            <label asp-for="@Model.EngProficiency">Eng proficiency</label>
+            @if (Model.Application.Documents.EngProficiency != null)
+            {
+                <p>Current uploaded: @Html.ActionLink(Model.Application.Documents.EngProficiency, "DownloadFile", new { fileName = Model.Application.Documents.EngProficiency })</p>
+            }
+            <input asp-for="@Model.EngProficiency" type="file" class="form-control custom-file-input">
+        </div>
+
+        <div class="form-group">
+            <label asp-for="@Model.TranscriptOfRecords">Transcript of records</label>
+            @if (Model.Application.Documents.TranscriptOfRecords != null)
+            {
+                <p>Current uploaded: @Html.ActionLink(Model.Application.Documents.TranscriptOfRecords, "DownloadFile", new { fileName = Model.Application.Documents.TranscriptOfRecords })</p>
+            }
+            <input asp-for="@Model.TranscriptOfRecords" type="file" class="form-control custom-file-input">
+        </div>
+
+        <div class="form-group">
+            <label asp-for="@Model.MotivationLetter">Motivation letter</label>
+            @if (Model.Application.Documents.MotivationLetter != null)
+            {
+                <p>Current uploaded: @Html.ActionLink(Model.Application.Documents.MotivationLetter, "DownloadFile", new { fileName = Model.Application.Documents.MotivationLetter })</p>
+            }
+            <input asp-for="@Model.MotivationLetter" type="file" class="form-control custom-file-input">
+        </div>
+
+        <div class="form-group">
+            <label asp-for="@Model.ReferenceLetter">Reference letter</label>
+            @if (Model.Application.Documents.ReferenceLetter != null)
+            {
+                <p>Current uploaded: @Html.ActionLink(Model.Application.Documents.ReferenceLetter, "DownloadFile", new { fileName = Model.Application.Documents.ReferenceLetter })</p>
+            }
+            <input asp-for="@Model.ReferenceLetter" type="file" class="form-control custom-file-input">
+        </div>
+        <button type="submit" class="btn btn-success">Save</button>
+    </form>
+</body>
+

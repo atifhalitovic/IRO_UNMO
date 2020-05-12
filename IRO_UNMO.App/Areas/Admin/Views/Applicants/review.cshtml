@@ -1,0 +1,193 @@
+﻿@model IRO_UNMO.App.ViewModels.ProfileVM
+@{
+    ViewData["Title"] = "";
+    Layout = "_Layout11";
+}
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <!--- Site CSS -->
+    <link rel="stylesheet" type="text/css" href="~/dist/components/reset.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/site.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/grid.css">
+    <!--- Component CSS -->
+    <link rel="stylesheet" type="text/css" href="~/dist/components/icon.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/table.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/button.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/transition.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/popup.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/accordion.css">
+
+    <script src="~/assets/library/jquery.min.js"></script>
+    <script src="~/assets/library/iframe-content.js"></script>
+
+    <script type="text/javascript" src="~/dist/components/popup.js"></script>
+    <script type="text/javascript" src="~/dist/components/transition.js"></script>
+    <script type="text/javascript" src="~/dist/components/accordion.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('.ui.accordion').accordion();
+        });
+    </script>
+</head>
+<body>
+    @Html.HiddenFor(x => x.Applicant.ApplicantId)
+    @if (Model.Applicant.UniversityId != 2)
+    {
+        <div id='container' style='height:450px;width:500px'>
+            <table class="ui small definition table">
+                <tbody>
+                    <tr>
+                        <td class="five wide column">Full name</td>
+                        <td class="align right">@Model.Applicant.ApplicationUser.Name @Model.Applicant.ApplicationUser.Surname</td>
+                    </tr>
+                    <tr>
+                        <td>E-mail</td>
+                        <td>@Model.Applicant.ApplicationUser.Email</td>
+                    </tr>
+                    <tr>
+                        <td>Phone number</td>
+                        <td>@Model.Applicant.ApplicationUser.PhoneNumber</td>
+                    </tr>
+                    <tr>
+                        <td>Nationality</td>
+                        <td>@Model.Applicant.ApplicationUser.Country.Name</td>
+                    </tr>
+                    <tr>
+                        <td>University</td>
+                        <td>@Model.Applicant.University.Name</td>
+                    </tr>
+                    <tr>
+                        <td>Student/staff</td>
+                        <td>TO DO !!! TO DO @Model.Applicant.TypeOfApplication</td>
+                    </tr>
+                    <tr>
+                        <td>Account created</td>
+                        <td>@Model.Applicant.CreatedProfile</td>
+                    </tr>
+                    <tr>
+                        <td>Account verification</td>
+                        <td><a class="ui primary disabled button">@Model.Applicant.Verified.ToString()</a></td>
+                    </tr>
+                    @if (Model.Application != null && Model.Applicant.Verified == true)
+                    {
+                        <tr>
+                            <td>Application started</td>
+                            <td>@Model.Application.CreatedApp</td>
+                        </tr>
+                        <tr>
+                            <td>Application last edited</td>
+                            <td>@Model.Application.LastEdited</td>
+                        </tr>
+                        <tr>
+                            <td>Application review</td>
+                            <td>
+                                <a asp-action="view" asp-controller="application" asp-route-id="@Model.Application.ApplicationId" class="ui basic black button"><i class="eye"></i>Review</a>
+                            </td>
+                        </tr>
+                    }
+                    else if (Model.Applicant.Verified == true && Model.Application == null)
+                    {
+                        <tr>
+                            <td>Application status</td>
+                            <td>Application isn't still created, but it is possible to.</td>
+                        </tr>
+                    }
+                    else if (Model.Applicant.Verified != true && Model.Application == null)
+                    {
+                        <tr>
+                            <td>Application status</td>
+                            <td>Application isn't still created, because unverified account.</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div id='container' style='height:325px;width:500px'>
+            <table class="ui small definition table">
+                <tbody>
+                    <tr>
+                        <td class="five wide column">Full name</td>
+                        <td class="align right">@Model.Applicant.ApplicationUser.Name @Model.Applicant.ApplicationUser.Surname</td>
+                    </tr>
+                    <tr>
+                        <td>E-mail</td>
+                        <td>@Model.Applicant.ApplicationUser.Email</td>
+                    </tr>
+                    <tr>
+                        <td>Phone number</td>
+                        <td>@Model.Applicant.ApplicationUser.PhoneNumber</td>
+                    </tr>
+                    <tr>
+                        <td>Nationality</td>
+                        <td>@Model.Applicant.ApplicationUser.Country.Name</td>
+                    </tr>
+                    <tr>
+                        <td>University</td>
+                        <td>@Model.Applicant.University.Name</td>
+                    </tr>
+                    <tr>
+                        <td>Faculty</td>
+                        <td>@Model.Applicant.FacultyName</td>
+                    </tr>
+                    <tr>
+                        <td>Student/staff</td>
+                        <td>@Model.Applicant.TypeOfApplication</td>
+                    </tr>
+                    <tr>
+                        <td>Account created</td>
+                        <td>@Model.Applicant.CreatedProfile</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        @if (Model.Nominations.Count != 0)
+        {
+            <div class="ui cards">
+                @foreach (var x in Model.Nominations)
+                {
+                    <div class="ui card nom">
+                        <div class="content">
+                            <div class="header">
+                                <h4>@x.University.Name</h4>
+                            </div>
+                            @if (x != null)
+                            {
+                                <div class="meta">
+                                    <p>Created: @x.CreatedNom</p>
+                                    <p></p>
+                                    <p>Last change: @x.LastEdited</p>
+                                    <p> </p>
+                                    <p>Status: @x.StatusOfNomination </p>
+                                    <p> </p>
+                                    <p> </p>
+                                    <p></p>
+                                    <p></p>
+                                    <a asp-action="view" asp-controller="nomination" asp-route-id="@x.NominationId" class="ui secondary basic button"><i class="eye"></i>View nomination</a>
+                                </div>
+                            }
+                            else
+                            {
+                                <p>Applicant didn't create any nominiation yet.</p>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="ui compact segment">
+                <h4>
+                    No nominations created.
+                </h4>
+            </div>
+        }
+    }
+</body>

@@ -1,0 +1,16 @@
+﻿@model IRO_UNMO.App.ViewModels.ForgotUniqueCodeVM
+@{
+    Layout = "_Layout1";
+}
+<p></p>
+<h3>Welcome to Forgot unique code page.</h3>
+<div class="form">
+    <form asp-controller="account" asp-action="code" method="post">
+        <div class="form-group">
+            <label>Enter your email (to send you new unique code)</label>
+            <input asp-for="@Model.Email" class="form-control" />
+            <span asp-validation-for="@Model.Email"></span>
+        </div>
+        <input type="submit" class="btn btn-success" value="Send new unique code" style="margin: 10px 10px 10px 10px;" />
+    </form>
+</div>

@@ -1,0 +1,161 @@
+﻿@using IRO_UNMO.App.ViewModels
+@model IRO_UNMO.App.ViewModels.EditAppVM
+@using Microsoft.AspNetCore.Identity;
+@{
+
+}
+<h2>Welcome to editing existing application page.</h2>
+<head>
+    <environment include="Production">
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    </environment>
+</head>
+<body>
+    <form asp-action="EditApp" method="post">
+        @Html.HiddenFor(x => x.ApplicationId)
+        <h3>Info section</h3>
+        <div class="form-group">
+            <label asp-for="@Model.Application.Infos.Gender">Gender</label>
+            @Html.DropDownListFor(model => model.Application.Infos.Gender, Model.Genders, new { @class = "form-control", required = "Please choose your gender" })
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.Application.Infos.DateOfBirth">Date of birth</label>
+            <input asp-for="@Model.Application.Infos.DateOfBirth" type="date" class="form-control">
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.Application.Infos.PlaceOfBirth">Place of birth</label>
+            @Html.TextBoxFor(model => model.Application.Infos.PlaceOfBirth, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.Application.Infos.Citizenship.Name">Nationality</label>
+            <input asp-for="@Model.Application.Infos.Citizenship.Name" type="text" class="form-control" disabled>
+            @*@Html.DropDownListFor(model => model.Application.Infos.CitizenshipId, Model.Countries, new { @class = "form-control", required = "Please choose country of your citizenship" })*@
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.Application.Infos.PassportNumber">Passport number</label>
+            <input asp-for="@Model.Application.Infos.PassportNumber" type="text" class="form-control">
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.Application.Infos.PassportIssueDate">Passport issue date</label>
+            <input asp-for="@Model.Application.Infos.PassportIssueDate" type="date" class="form-control">
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.Application.Infos.PassportExpiryDate">Passport expiry date</label>
+            <input asp-for="@Model.Application.Infos.PassportExpiryDate" type="date" class="form-control">
+        </div>
+
+        <h3>Contact section</h3>
+        <div class="form-group">
+            <label asp-for="@Model.Application.Contacts.Email">Email</label>
+            <input asp-for="@Model.Application.Contacts.Email" type="text" disabled class="form-control">
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.Application.Contacts.Telephone">Telephone</label>
+            <input asp-for="@Model.Application.Contacts.Telephone" type="text" disabled class="form-control">
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.Application.Contacts.StreetName">Street name</label>
+            <input asp-for="@Model.Application.Contacts.StreetName" type="text" class="form-control">
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.Application.Contacts.PlaceName">City, town, village</label>
+            <input asp-for="@Model.Application.Contacts.PlaceName" type="text" class="form-control">
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.Application.Contacts.PostalCode">Postal code</label>
+            <input asp-for="@Model.Application.Contacts.PostalCode" type="text" class="form-control">
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.Application.Contacts.Country">Country</label>
+            @Html.DropDownListFor(model => model.Application.Contacts.CountryId, Model.Countries, new { @class = "form-control", required = "Please choose country of your address" })
+        </div>
+        <h3>Languages section</h3>
+        <div class="form-group">
+            <label asp-for="@Model.Application.Languages.Native">Native language</label>
+            @Html.DropDownListFor(model => model.Application.Languages.Native, Model.Languages, new { @class = "form-control", required = "Please choose native language" })
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.Application.Languages.ForeignFirst">First foreign language</label>
+            @Html.DropDownListFor(model => model.Application.Languages.ForeignFirst, Model.Languages, new { @class = "form-control", required = "Please choose first foreign language" })
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.Application.Languages.ForeignFirstProficiency">First foreign language proficiency</label>
+            @Html.DropDownListFor(model => model.Application.Languages.ForeignFirstProficiency, Model.LangProfiency, new { @class = "form-control", required = "Please choose proficiency of your first chosen foreign language" })
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.Application.Languages.ForeignSecond">Second foreign language</label>
+            @Html.DropDownListFor(model => model.Application.Languages.ForeignSecond, Model.Languages, new { @class = "form-control", required = "Please choose second foreign language" })
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.Application.Languages.ForeignSecondProficiency">Second foreign language proficiency</label>
+            @Html.DropDownListFor(model => model.Application.Languages.ForeignSecondProficiency, Model.LangProfiency, new { @class = "form-control", required = "Please choose proficiency of your second chosen foreign language" })
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.Application.Languages.ForeignThird">Third foreign language</label>
+            @Html.DropDownListFor(model => model.Application.Languages.ForeignThird, Model.Languages, new { @class = "form-control", required = "Please choose third foreign language" })
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.Application.Languages.ForeignThirdProficiency">Third foreign language proficiency</label>
+            @Html.DropDownListFor(model => model.Application.Languages.ForeignThirdProficiency, Model.LangProfiency, new { @class = "form-control", required = "Please choose proficiency of your third chosen foreign language" })
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.Application.Languages.ForeignExperienceNumber">Number of foreign experiences (exchanges and c.o.)</label>
+            @Html.DropDownListFor(model => model.Application.Languages.ForeignExperienceNumber, Enumerable.Range(0, 6).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), new { @class = "form-control", required = "Please choose proficiency the number of your foreign experiences" })
+        </div>
+        <h3>Home institution section</h3>
+        <div class="form-group">
+            <label asp-for="@Model.Application.HomeInstitutions.OfficialName">Offical university name</label>
+            <input asp-for="@Model.Application.HomeInstitutions.OfficialName" type="text" class="form-control" disabled>
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.Application.HomeInstitutions.DepartmentName">Name of department / faculty / institute</label>
+            <input asp-for="@Model.Application.HomeInstitutions.DepartmentName" type="text" class="form-control">
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.Application.HomeInstitutions.LevelOfEducation">Study cycle</label>
+            <input asp-for="@Model.Application.HomeInstitutions.LevelOfEducation" type="text" class="form-control" disabled>
+            @*@Html.DropDownListFor(model => model.Application.HomeInstitutions.LevelOfEducation, Model.StudyCycles, new { @class = "form-control", required = "Please select your study cycle" })*@
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.Application.HomeInstitutions.StudyProgramme">Study programme name</label>
+            <input asp-for="@Model.Application.HomeInstitutions.StudyProgramme" type="text" , class="form-control" disabled>
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.Application.HomeInstitutions.CurrentTermOrYear">Current term</label>
+            @Html.DropDownListFor(model => model.Application.HomeInstitutions.CurrentTermOrYear, Model.StudyTerms, new { @class = "form-control", required = "Please select your study term" })
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.Application.HomeInstitutions.CoordinatorFullName">Coordinator fullname</label>
+            <input asp-for="@Model.Application.HomeInstitutions.CoordinatorFullName" type="text" class="form-control">
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.Application.HomeInstitutions.CoordinatorPosition">Coordinator position</label>
+            <input asp-for="@Model.Application.HomeInstitutions.CoordinatorPosition" type="text" class="form-control">
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.Application.HomeInstitutions.CoordinatorEmail">Coordinator email</label>
+            <input asp-for="@Model.Application.HomeInstitutions.CoordinatorEmail" type="text" class="form-control">
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.Application.HomeInstitutions.CoordinatorAddress">Coordinator address</label>
+            <input asp-for="@Model.Application.HomeInstitutions.CoordinatorAddress" type="text" class="form-control">
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.Application.HomeInstitutions.CoordinatorPhoneNum">Coordinator phone number</label>
+            <input asp-for="@Model.Application.HomeInstitutions.CoordinatorPhoneNum" type="text" class="form-control">
+        </div>
+        <h3>Other section</h3>
+        <div class="form-group">
+            <label asp-for="@Model.Application.Others.MedicalInfo">Medical info</label>
+            <input asp-for="@Model.Application.Others.MedicalInfo" type="text" class="form-control">
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.Application.Others.AdditionalRequests">Additional requests</label>
+            <input asp-for="@Model.Application.Others.AdditionalRequests" type="text" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-success">Save</button>
+    </form>
+</body>
+
