@@ -1,7 +1,7 @@
 ﻿@model IRO_UNMO.App.ViewModels.ProfileVM
 @{
     ViewData["Title"] = "";
-    Layout = "_Layout11";
+    Layout = "_Layout5";
 }
 
 <head>
@@ -37,7 +37,7 @@
     @Html.HiddenFor(x => x.Applicant.ApplicantId)
     @if (Model.Applicant.UniversityId != 2)
     {
-        <div id='container' style='height:450px;width:500px'>
+        <div style='height:450px;width:500px'>
             <table class="ui small definition table">
                 <tbody>
                     <tr>
@@ -68,10 +68,54 @@
                         <td>Account created</td>
                         <td>@Model.Applicant.CreatedProfile</td>
                     </tr>
-                    <tr>
-                        <td>Account verification</td>
-                        <td><a class="ui primary disabled button">@Model.Applicant.Verified.ToString()</a></td>
-                    </tr>
+
+                    @*<tr>
+                            <td>Account verification</td>
+                            <td><a class="ui primary disabled button">@Model.Applicant.Verified.ToString()</a></td>
+                        </tr>*@
+                    @if (Model.Applicant.Verified)
+                    {
+                        <tr>
+                            <td>Account verification</td>
+                            <td>
+                                <button asp-action="verified" asp-controller="applicants" class="ui basic green button" asp-route-id="@Model.Applicant.ApplicantId" id="test">Verified</button>
+                                <div class="ui modal test">
+                                    <i class="close icon"></i>
+                                    <div class="ui small header">
+                                        Are you sure you want to unverify the selected applicant?
+                                        You will delete all of his application info.
+                                    </div>
+                                    <div class="actions">
+                                        <div class="ui black deny button">
+                                            No
+                                        </div>
+                                        <a asp-action="verified" asp-controller="applicants" class="ui negative button" asp-route-id="@Model.Applicant.ApplicantId"><i class="checkmark icon"></i>Yes, unverify this applicant.</a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                    else if (Model.Applicant.Verified == false)
+                    {
+                        <tr>
+                            <td>Account verification</td>
+                            <td>
+                                <button asp-action="unverified" asp-controller="applicants" class="ui basic red button" asp-route-id="@Model.Applicant.ApplicantId" id="test">Unverified</button>
+                                <div class="ui modal test">
+                                    <i class="close icon"></i>
+                                    <div class="ui small header">
+                                        Are you sure you want to verify the selected applicant?
+                                    </div>
+                                    <div class="actions">
+                                        <div class="ui black deny button">
+                                            Nope
+                                        </div>
+                                        <a asp-action="unverified" asp-controller="applicants" class="ui positive button" asp-route-id="@Model.Applicant.ApplicantId"><i class="checkmark icon"></i>Yes, verify this applicant.</a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    }
                     @if (Model.Application != null && Model.Applicant.Verified == true)
                     {
                         <tr>
@@ -84,9 +128,18 @@
                         </tr>
                         <tr>
                             <td>Application review</td>
-                            <td>
-                                <a asp-action="view" asp-controller="application" asp-route-id="@Model.Application.ApplicationId" class="ui basic black button"><i class="eye"></i>Review</a>
-                            </td>
+                            @if (Model.Application.Contacts.CountryId != null)
+                            {
+                                <td>
+                                    <a asp-action="view" asp-controller="application" asp-route-id="@Model.Application.ApplicationId" class="ui basic black button"><i class="eye"></i>Review</a>
+                                </td>
+                            }
+                            else
+                            {
+                                <td>
+                                    <a asp-action="view" asp-controller="application" asp-route-id="@Model.Application.ApplicationId" class="ui basic disabled black button"><i class="eye"></i>Review</a>
+                                </td>
+                            }
                         </tr>
                     }
                     else if (Model.Applicant.Verified == true && Model.Application == null)
@@ -106,6 +159,7 @@
                 </tbody>
             </table>
         </div>
+
     }
     else
     {
@@ -147,6 +201,9 @@
                 </tbody>
             </table>
         </div>
+        <p></p>
+        <p></p>
+        <p></p>
         @if (Model.Nominations.Count != 0)
         {
             <div class="ui cards">
@@ -160,18 +217,27 @@
                             @if (x != null)
                             {
                                 <div class="meta">
+                                    <p></p>
                                     <p>Created: @x.CreatedNom</p>
                                     <p></p>
                                     <p>Last change: @x.LastEdited</p>
-                                    <p> </p>
+                                    <p></p>
                                     <p>Status: @x.StatusOfNomination </p>
-                                    <p> </p>
-                                    <p> </p>
+                                    <p></p>
+                                    <p>Submitted: @x.Finished</p>
                                     <p></p>
                                     <p></p>
-                                    <a asp-action="view" asp-controller="nomination" asp-route-id="@x.NominationId" class="ui secondary basic button"><i class="eye"></i>View nomination</a>
+                                    @if (x.Finished)
+                                    {
+                                        <a asp-action="view" asp-controller="nomination" asp-route-id="@x.NominationId" class="ui secondary basic button"><i class="eye"></i>View nomination</a>
+                                    }
+                                    else
+                                    {
+                                        <a asp-action="view" asp-controller="nomination" asp-route-id="@x.NominationId" class="ui secondary basic disabled button"><i class="eye"></i>View nomination</a>
+                                    }
                                 </div>
                             }
+
                             else
                             {
                                 <p>Applicant didn't create any nominiation yet.</p>
@@ -191,3 +257,14 @@
         }
     }
 </body>
+<script>
+    $(function () {
+        $("#test").click(function () {
+            $(".test").modal('show');
+        });
+
+        $(".test").modal({
+            closable: true
+        });
+    });
+</script>

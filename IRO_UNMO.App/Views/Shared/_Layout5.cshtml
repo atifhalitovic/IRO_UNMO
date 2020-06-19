@@ -1,0 +1,248 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using System.Security.Claims;
+@using IRO_UNMO.Util
+@inject SignInManager<ApplicationUser> signInManager
+@inject UserManager<ApplicationUser> userManager
+@{
+    var controller = ViewContext.RouteData.Values["Controller"];
+    var action = MyExtensions.FirstCharToUpper(ViewContext.RouteData.Values["Action"].ToString().Replace("_", " "));
+}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2, user-scalable=no" />
+    <meta name="description" content="Semantic-UI-Forest, collection of design, themes and templates for Semantic-UI." />
+    <meta name="keywords" content="Semantic-UI, Theme, Design, Template" />
+    <meta name="author" content="PPType" />
+    <meta name="theme-color" content="#ffffff" />
+
+    <title>IRO-UNMO web application</title>
+
+    <!--- Site CSS -->
+    <link rel="stylesheet" type="text/css" href="~/dist/components/reset.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/site.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/grid.css">
+    <!--- Component CSS -->
+    <link rel="stylesheet" type="text/css" href="~/dist/components/icon.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/table.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/button.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/transition.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/popup.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/accordion.css">
+
+    <script src="~/assets/library/jquery.min.js"></script>
+    <script src="~/assets/library/iframe-content.js"></script>
+
+    <script type="text/javascript" src="~/dist/components/popup.js"></script>
+    <script type="text/javascript" src="~/dist/components/transition.js"></script>
+    <script type="text/javascript" src="~/dist/components/accordion.js"></script>
+    <!--- Component JS -->
+
+    <link rel="stylesheet" type="text/css" href="~/css/semantic.min.css">
+
+    <style type="text/css">
+        body {
+            -webkit-font-smoothing: antialiased;
+        }
+
+        #sidebar {
+            position: fixed;
+            height: 100vh;
+            background-color: #f0f3f4;
+            padding-top: 68px;
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+            #sidebar .ui.menu > a.item {
+                padding: 10px 20px;
+                line-height: 20px;
+                color: #922822;
+                border-radius: 0 !important;
+                margin-top: 0;
+                margin-bottom: 0;
+                font-size: 16px;
+            }
+
+            #sidebar .ui.menu > a.item {
+                padding: 10px 20px;
+                line-height: 20px;
+                color: #922822;
+                border-radius: 0 !important;
+                margin-top: 0;
+                margin-bottom: 0;
+                font-size: 16px;
+            }
+
+                #sidebar .ui.menu > a.item.disabled {
+                    padding: 10px 20px;
+                    line-height: 20px;
+                    position:relative;
+                }
+
+                #sidebar .ui.menu > a.item.active {
+                    background-color: #1b1c1d;
+                    color: white;
+                    border: none !important;
+                }
+
+                #sidebar .ui.menu > a.item:hover {
+                    background-color: #bababa;
+                }
+
+        #content {
+            padding-top: 56px;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+            #content h1 {
+                font-size: 36px;
+                font-weight: lighter;
+            }
+
+            #content .ui.dividing.header {
+                width: 100%;
+            }
+
+        .ui.centered.small.circular.image {
+            margin-top: 14px;
+            margin-bottom: 14px;
+        }
+
+        .ui.borderless.menu {
+            box-shadow: none;
+            flex-wrap: wrap;
+            border: none;
+            font-size: 16px;
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+        .ui.mobile.only.grid .ui.menu .ui.vertical.menu {
+            display: none;
+        }
+
+        .ui.header {
+            color: #922822;
+            font-weight: lighter;
+        }
+
+        .ui.inverted.borderless.top.fixed.fluid.menu {
+            color: #922822;
+        }
+
+        .ui.breadcrumb {
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body id="root">
+    <div class="ui tablet computer only padded grid">
+        <div class="ui inverted borderless top fixed fluid menu">
+            <a class="header item">IRO-UNMO Admin</a>
+            <div class="right menu">
+                    <div class="item">
+                        <div class="ui small input"><input placeholder="Search..." /></div>
+                    </div>
+                    <a asp-area="" asp-controller="account" asp-action="type" class="item">Register</a>
+                    <a asp-area="" asp-action="login" asp-controller="account" class="item">Login</a>
+                    <a class="item">Dashboard</a> <a class="item">Settings</a>
+                    <a class="item">Profile</a> <a class="item">Help</a>
+            </div>
+        </div>
+    </div>
+    <div class="ui mobile only padded grid">
+        <div class="ui top fixed borderless fluid inverted menu">
+            <a class="header item">IRO-UNMO Admin</a>
+            <div class="right menu">
+                <div class="item">
+                    <button class="ui icon toggle basic inverted button">
+                        <i class="content icon"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="ui vertical borderless inverted fluid menu">
+                <a class="item">Dashboard</a> <a class="item">Settings</a>
+                <a class="item">Profile</a> <a class="item">Help</a>
+                <div class="ui fitted divider"></div>
+                <div class="item">
+                    <div class="ui small input"><input placeholder="Search..." /></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="ui padded grid">
+        <div class="three wide tablet only three wide computer only column" id="sidebar">
+            <div class="ui vertical borderless fluid text menu">
+                <a class="item disabled"><img src="~/unmo_logo.png" /></a>
+                <a asp-controller="home" asp-action="index" class="item">Overview</a>
+                <div class="ui divider"></div>
+                <a asp-action="index" asp-controller="partners" asp-area="admin" class="item">Partners</a>
+                <div class="ui divider"></div>
+                <a class="item" asp-controller="applicants" asp-action="index">Applicants</a>
+                <a class="item">Messages and comments</a>
+            </div>
+        </div>
+        <div class="sixteen wide mobile thirteen wide tablet thirteen wide computer right floated column" id="content">
+            <div class="ui padded grid">
+                <div class="ui dividing huge header">
+                    <p></p>
+                    <div class="ui huge breadcrumb">
+                        @if (!controller.Equals("Home"))
+                        {
+                        <h1 class="ui header">
+                            @controller.ToString().ToUpper()
+                            @if (action == "Index")
+                            {
+
+                            }
+                            else
+                            {
+                                <a>/ @action.ToUpper()</a>
+                            }
+                        </h1>
+                        }
+                        else
+                        {
+                            <h1 class="ui header">DASHBOARD</h1>
+                        }
+                    </div>
+                </div>
+                <div class="ui container">
+                    @RenderBody()
+                </div>
+                <div class="ui hidden section divider"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js" type="text/javascript"></script>
+
+    <script src="~/dist/semantic.min.js" type="text/javascript"></script>
+    <script>
+        $(document).ready(function () {
+
+            // Override the default dimmer page behaviour for Sidebar
+            $('.sidebar')
+                .sidebar({
+                    dimPage: false,
+                    closable: false
+                })
+                .sidebar('attach events', '#vk-header-icon-a')
+                .sidebar('setting', 'transition', 'push');
+
+
+            // Initialize the table
+            $('#example').DataTable({
+                "stripeClasses": ['odd-row', 'even-row']
+            });
+        });
+    </script>
+</body>
+</html>

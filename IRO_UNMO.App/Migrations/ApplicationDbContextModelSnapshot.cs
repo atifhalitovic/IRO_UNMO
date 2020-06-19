@@ -23,6 +23,10 @@ namespace IRO_UNMO.App.Migrations
                 {
                     b.Property<string>("AdministratorId");
 
+                    b.Property<DateTime>("CreatedProfile");
+
+                    b.Property<string>("Ime");
+
                     b.HasKey("AdministratorId");
 
                     b.ToTable("Administrator");
@@ -116,6 +120,8 @@ namespace IRO_UNMO.App.Migrations
                         .HasMaxLength(256);
 
                     b.Property<bool>("EmailConfirmed");
+
+                    b.Property<DateTime>("LastLogin");
 
                     b.Property<bool>("LockoutEnabled");
 
@@ -388,6 +394,10 @@ namespace IRO_UNMO.App.Migrations
                     b.Property<DateTime>("CreatedNom");
 
                     b.Property<string>("EngProficiency");
+
+                    b.Property<bool>("Finished");
+
+                    b.Property<DateTime>("FinishedTime");
 
                     b.Property<DateTime>("LastEdited");
 

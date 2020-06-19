@@ -46,11 +46,17 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
         {
             PartnersVM vm = new PartnersVM();
             vm.Universities = _db.University.Include(a => a.Country).ToList();
+            vm.Countries = _db.Country.Select(x => new SelectListItem()
+            {
+                Value = x.CountryId.ToString(),
+                Text = x.Name
+            }).ToList();
             return View(vm);
         }
 
         public IActionResult partner(int id = 0)
         {
+            ViewBag.ID = id;
             EditPartnersVMa vm = new EditPartnersVMa();
             if (id == 0)
             {
@@ -74,7 +80,7 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult partner(EditPartnersVMa vm)
+        public IActionResult partner(PartnersVM vm)
         {
             University current = _db.University.Where(a => a.UniversityId == vm.UniversityId).FirstOrDefault();
             if (current == null)
@@ -96,6 +102,18 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
             }
 
             return RedirectToAction("index", "partners", new { area = "admin" });
+        }
+
+        [HttpDelete]
+        public IActionResult delete(int id)
+        {
+            University current = _db.University.Where(a => a.UniversityId == id).FirstOrDefault();
+            if (current == null)
+            {
+                _db.University.Remove(current);
+                _db.SaveChanges();
+            }
+            return RedirectToAction("Index");
         }
     }
 }

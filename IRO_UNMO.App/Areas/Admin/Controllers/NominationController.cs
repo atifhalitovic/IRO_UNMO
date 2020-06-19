@@ -51,7 +51,7 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
             return View();
         }
 
-        public async Task<FileResult> DownloadFile(string fileName)
+        public async Task<FileResult> download(string fileName)
         {
             var path = Path.Combine(
                Directory.GetCurrentDirectory(),
@@ -92,7 +92,7 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
             a.University = _db.University.Where(b => b.UniversityId == vm.UniversityId).FirstOrDefault();
             a.StatusOfNomination = "Unknown";
 
-            Applicant applicant = _db.Applicant.Where(xa => xa.ApplicantId == vm.ApplicantId).Include(xq => xq.ApplicationUser).ThenInclude(xe => xe.Country).Include(xw => xw.University).FirstOrDefault();
+            Models.Applicant applicant = _db.Applicant.Where(xa => xa.ApplicantId == vm.ApplicantId).Include(xq => xq.ApplicationUser).ThenInclude(xe => xe.Country).Include(xw => xw.University).FirstOrDefault();
 
             _db.Nomination.Add(a);
             _db.SaveChanges();
@@ -114,7 +114,7 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
         public IActionResult docs(EditDocsNomVM model)
         {
             Nomination newNom = _db.Nomination.Where(a => a.NominationId == model.NominationId).FirstOrDefault();
-            Applicant y = _db.Applicant.Where(x => x.ApplicantId == newNom.ApplicantId).Include(b => b.ApplicationUser).ThenInclude(c => c.Country).FirstOrDefault();
+            Models.Applicant y = _db.Applicant.Where(x => x.ApplicantId == newNom.ApplicantId).Include(b => b.ApplicationUser).ThenInclude(c => c.Country).FirstOrDefault();
 
             if (ModelState.IsValid)
             {
@@ -139,9 +139,9 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
                     uniqueFileNameLA = newNom.NominationId + "_" + model.LearningAgreement.FileName;
                     //uniqueFileNameLA = Guid.NewGuid().ToString() + "_" + model.LearningAgreement.FileName;
                     string filePath = Path.Combine(uploadsFolder, uniqueFileNameLA);
-                    // Use CopyTo() method provided by IFormFile interface to
-                    // copy the file to wwwroot/images folder
-                    model.LearningAgreement.CopyTo(new FileStream(filePath, FileMode.Create));
+                    var nesto = new FileStream(filePath, FileMode.Create);
+                    model.LearningAgreement.CopyTo(nesto);
+                    nesto.Close();
                     newNom.LearningAgreement = uniqueFileNameLA;
                 }
 
@@ -150,7 +150,9 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
                     string uploadsFolder = Path.Combine(hosting.WebRootPath, "uploads");
                     uniqueFileNameWP = newNom.NominationId + "_" + model.WorkPlan.FileName;
                     string filePath = Path.Combine(uploadsFolder, uniqueFileNameWP);
-                    model.WorkPlan.CopyTo(new FileStream(filePath, FileMode.Create));
+                    var nesto = new FileStream(filePath, FileMode.Create);
+                    model.WorkPlan.CopyTo(nesto);
+                    nesto.Close();
                     newNom.WorkPlan = uniqueFileNameWP;
                 }
 
@@ -159,7 +161,9 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
                     string uploadsFolder = Path.Combine(hosting.WebRootPath, "uploads");
                     uniqueFileNameCV = newNom.NominationId + "_" + model.CV.FileName;
                     string filePath = Path.Combine(uploadsFolder, uniqueFileNameCV);
-                    model.CV.CopyTo(new FileStream(filePath, FileMode.Create));
+                    var nesto = new FileStream(filePath, FileMode.Create);
+                    model.CV.CopyTo(nesto);
+                    nesto.Close();
                     newNom.CV = uniqueFileNameCV;
                 }
 
@@ -168,7 +172,9 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
                     string uploadsFolder = Path.Combine(hosting.WebRootPath, "uploads");
                     uniqueFileNameEng = newNom.NominationId + "_" + model.EngProficiency.FileName;
                     string filePath = Path.Combine(uploadsFolder, uniqueFileNameEng);
-                    model.EngProficiency.CopyTo(new FileStream(filePath, FileMode.Create));
+                    var nesto = new FileStream(filePath, FileMode.Create);
+                    model.EngProficiency.CopyTo(nesto);
+                    nesto.Close();
                     newNom.EngProficiency = uniqueFileNameEng;
                 }
 
@@ -177,7 +183,9 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
                     string uploadsFolder = Path.Combine(hosting.WebRootPath, "uploads");
                     uniqueFileNameToR = newNom.NominationId + "_" + model.TranscriptOfRecords.FileName;
                     string filePath = Path.Combine(uploadsFolder, uniqueFileNameToR);
-                    model.TranscriptOfRecords.CopyTo(new FileStream(filePath, FileMode.Create));
+                    var nesto = new FileStream(filePath, FileMode.Create);
+                    model.TranscriptOfRecords.CopyTo(nesto);
+                    nesto.Close();
                     newNom.TranscriptOfRecords = uniqueFileNameToR;
                 }
 
@@ -186,7 +194,9 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
                     string uploadsFolder = Path.Combine(hosting.WebRootPath, "uploads");
                     uniqueFileNameML = newNom.NominationId + "_" + model.MotivationLetter.FileName;
                     string filePath = Path.Combine(uploadsFolder, uniqueFileNameML);
-                    model.MotivationLetter.CopyTo(new FileStream(filePath, FileMode.Create));
+                    var nesto = new FileStream(filePath, FileMode.Create);
+                    model.MotivationLetter.CopyTo(nesto);
+                    nesto.Close();
                     newNom.MotivationLetter = uniqueFileNameML;
                 }
 
@@ -195,7 +205,9 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
                     string uploadsFolder = Path.Combine(hosting.WebRootPath, "uploads");
                     uniqueFileNameRL = newNom.NominationId + "_" + model.ReferenceLetter.FileName;
                     string filePath = Path.Combine(uploadsFolder, uniqueFileNameRL);
-                    model.ReferenceLetter.CopyTo(new FileStream(filePath, FileMode.Create));
+                    var nesto = new FileStream(filePath, FileMode.Create);
+                    model.ReferenceLetter.CopyTo(nesto);
+                    nesto.Close();
                     newNom.ReferenceLetter = uniqueFileNameRL;
                 }
 
@@ -203,7 +215,6 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
                 _db.SaveChanges();
 
                 return RedirectToAction("docs", "nomination", new { id = newNom.NominationId });
-                //return RedirectToAction("Details", "Applicant", new { id = newNom.ApplicantId });
             }
 
             return View();
@@ -250,17 +261,17 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
             return View("view", model);
         }
 
-        public IActionResult AddComment(int id)
+        public IActionResult comment(int id)
         {
             ViewNomVM model = new ViewNomVM();
             model.Nomination = _db.Nomination.Where(a => a.NominationId == id).FirstOrDefault();
             model.Applicant = _db.Applicant.Where(a => a.ApplicantId == model.Nomination.ApplicantId).FirstOrDefault();
             model.Comments = _db.Comment.Where(x => x.IonId == id).ToList();
-            return View("AddComment", model);
+            return View("comment", model);
         }
 
         [HttpPost]
-        public IActionResult AddComment(ViewNomVM model)
+        public IActionResult comment(ViewNomVM model)
         {
             Nomination current = _db.Nomination.Where(a => a.NominationId == model.Nomination.NominationId).Include(a => a.University).FirstOrDefault();
            

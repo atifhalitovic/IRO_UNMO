@@ -60,5 +60,29 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
             };
             return View(vm);
         }
+
+        public IActionResult verified(string id)
+        {
+            Models.Applicant v = _db.Applicant.Include(a => a.ApplicationUser).Where(a=>a.ApplicantId==id).FirstOrDefault();
+            if (v.Verified == true)
+            {
+                v.Verified = false;
+            }
+            _db.Applicant.Update(v);
+            _db.SaveChanges();
+            return RedirectToAction("review", "applicants", new { id = v.ApplicantId });
+        }
+
+        public IActionResult unverified(string id)
+        {
+            Models.Applicant v = _db.Applicant.Include(a => a.ApplicationUser).Where(a => a.ApplicantId == id).FirstOrDefault();
+            if (v.Verified == false)
+            {
+                v.Verified = true;
+            }
+            _db.Applicant.Update(v);
+            _db.SaveChanges();
+            return RedirectToAction("review", "applicants", new { id =  v.ApplicantId });
+        }
     }
 }

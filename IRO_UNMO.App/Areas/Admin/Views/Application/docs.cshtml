@@ -2,9 +2,9 @@
 @model IRO_UNMO.App.ViewModels.EditDocsVM
 @using Microsoft.AspNetCore.Identity;
 @{
-    Layout = "_Layout11";
+    Layout = "_Layout5";
 }
-<h2>Welcome to documents upload page for Dzemal Bijedic University's application</h2>
+<h2 class="ui header">Welcome to documents upload page for Dzemal Bijedic University's application</h2>
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -70,256 +70,259 @@
             }
         });
     </script>
+    <style>
+
+    </style>
 </head>
 <body>
     <form asp-action="docs" method="post" enctype="multipart/form-data">
-        @Html.HiddenFor(x => x.ApplicationId)
-        @Html.HiddenFor(x => x.DocumentsId)
-        <table class="ui small celled striped table">
-            <thead>
-                <tr>
-                    <th colspan="3">
-                        Documents for upload
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td class="collapsing">
-                        <i class="file pdf icon"></i>Learning agreement
-                    </td>
-                    @if (Model.Application.Documents.LearningAgreement != null)
-                    {
-                        <td class="collapsing">@Html.ActionLink(Model.Application.Documents.LearningAgreement, "DownloadFile", new { fileName = Model.Application.Documents.LearningAgreement })</td>
-                    }
-                    else
-                    {
-                        <td>Not uploaded yet.</td>
-                    }
-                    <td class="collapsing">
-                        <div class="field">
-                            <label asp-for="@Model.Application.Documents.LearningAgreement" class="ui icon button">
-                                <input asp-for="@Model.LearningAgreement" type="file" class="custom-file-input">
+        <div class="ui compact segment">
+            @Html.HiddenFor(x => x.ApplicationId)
+            @Html.HiddenFor(x => x.DocumentsId)
+            <table class="ui celled striped table">
+                <thead>
+                    <tr>
+                        <th colspan="2">
+                            Documents for upload
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="two wide column">
+                            <i class="file pdf icon"></i>Learning agreement
+                        </td>
+                        @if (Model.Application.Documents.LearningAgreement != null)
+                        {
+                            <td class="collapsing">@Html.ActionLink(Model.Application.Documents.LearningAgreement, "download", new { fileName = Model.Application.Documents.LearningAgreement })</td>
+                        }
+                        else
+                        {
+                            <td>Not uploaded yet.</td>
+                        }
+                        @*<td class="collapsing">
+                            <div class="field">
+                                <label asp-for="@Model.Application.Documents.LearningAgreement" class="ui icon button">
+                                    <input asp-for="@Model.LearningAgreement" type="file" class="custom-file-input">
+                                </label>
+                            </div>
+                        </td>*@
+                    </tr>
+                    <tr>
+                        <td class="collapsing">
+                            <i class="file pdf icon"></i>Curriculum vitae
+                        </td>
+                        @if (Model.Application.Documents.CV != null)
+                        {
+                            <td>@Html.ActionLink(Model.Application.Documents.CV, "download", new { fileName = Model.Application.Documents.CV })</td>
+                        }
+                        else
+                        {
+                            <td>Not uploaded yet.</td>
+                        }
+                        @*<td>
+                            <label asp-for="@Model.Application.Documents.CV" class="ui icon button">
+                                <input asp-for="@Model.CV" type="file" class="custom-file-input">
                             </label>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="collapsing">
-                        <i class="file pdf icon"></i>Curriculum vitae
-                    </td>
-                    @if (Model.Application.Documents.CV != null)
-                    {
-                        <td>@Html.ActionLink(Model.Application.Documents.CV, "DownloadFile", new { fileName = Model.Application.Documents.CV })</td>
-                    }
-                    else
-                    {
-                        <td>Not uploaded yet.</td>
-                    }
-                    <td>
-                        <label asp-for="@Model.Application.Documents.CV" class="ui icon button">
-                            <input asp-for="@Model.CV" type="file" class="custom-file-input">
-                        </label>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="collapsing">
-                        <i class="file pdf icon"></i>English proficiency
-                    </td>
-                    @if (Model.Application.Documents.EngProficiency != null)
-                    {
-                        <td>@Html.ActionLink(Model.Application.Documents.EngProficiency, "DownloadFile", new { fileName = Model.Application.Documents.EngProficiency })</td>
-                    }
-                    else
-                    {
-                        <td>Not uploaded yet.</td>
-                    }
-                    <td>
-                        <div>
-                            <label asp-for="@Model.Application.Documents.EngProficiency" class="ui icon button">
-                                <input asp-for="@Model.EngProficiency" type="file" class="custom-file-input">
-                            </label>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="collapsing">
-                        <i class="file pdf icon"></i>Transcript of records
-                    </td>
-                    @if (Model.Application.Documents.TranscriptOfRecords != null)
-                    {
-                        <td>@Html.ActionLink(Model.Application.Documents.TranscriptOfRecords, "DownloadFile", new { fileName = Model.Application.Documents.TranscriptOfRecords })</td>
-                    }
-                    else
-                    {
-                        <td>Not uploaded yet.</td>
-                    }
-                    <td>
-                        <div>
-                            <label asp-for="@Model.Application.Documents.TranscriptOfRecords" class="ui icon button">
-                                <input asp-for="@Model.TranscriptOfRecords" type="file" class="custom-file-input">
-                            </label>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="collapsing">
-                        <i class="file pdf icon"></i>Motivation letter
-                    </td>
-                    @if (Model.Application.Documents.MotivationLetter != null)
-                    {
-                        <td>@Html.ActionLink(Model.Application.Documents.MotivationLetter, "DownloadFile", new { fileName = Model.Application.Documents.MotivationLetter })</td>
-                    }
-                    else
-                    {
-                        <td>Not uploaded yet.</td>
-                    }
-                    <td>
-                        <div>
-                            <label asp-for="@Model.Application.Documents.MotivationLetter" class="ui icon button">
-                                <input asp-for="@Model.MotivationLetter" type="file" class="custom-file-input">
-                            </label>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="collapsing">
-                        <i class="file pdf icon"></i>Reference letter
-                    </td>
-                    @if (Model.Application.Documents.ReferenceLetter != null)
-                    {
-                        <td>@Html.ActionLink(Model.Application.Documents.ReferenceLetter, "DownloadFile", new { fileName = Model.Application.Documents.ReferenceLetter })</td>
-                    }
-                    else
-                    {
-                        <td>Not uploaded yet.</td>
-                    }
-                    <td>
-                        <div>
-                            <label asp-for="@Model.Application.Documents.ReferenceLetter" class="ui icon button">
-                                <input asp-for="@Model.ReferenceLetter" type="file" class="custom-file-input">
-                            </label>
-                        </div>
-                    </td>
-                </tr>
+                        </td>*@
+                    </tr>
+                    <tr>
+                        <td class="collapsing">
+                            <i class="file pdf icon"></i>English proficiency
+                        </td>
+                        @if (Model.Application.Documents.EngProficiency != null)
+                        {
+                            <td>@Html.ActionLink(Model.Application.Documents.EngProficiency, "download", new { fileName = Model.Application.Documents.EngProficiency })</td>
+                        }
+                        else
+                        {
+                            <td>Not uploaded yet.</td>
+                        }
+                        @*<td>
+                            <div>
+                                <label asp-for="@Model.Application.Documents.EngProficiency" class="ui icon button">
+                                    <input asp-for="@Model.EngProficiency" type="file" class="custom-file-input">
+                                </label>
+                            </div>
+                        </td>*@
+                    </tr>
+                    <tr>
+                        <td class="collapsing">
+                            <i class="file pdf icon"></i>Transcript of records
+                        </td>
+                        @if (Model.Application.Documents.TranscriptOfRecords != null)
+                        {
+                            <td>@Html.ActionLink(Model.Application.Documents.TranscriptOfRecords, "download", new { fileName = Model.Application.Documents.TranscriptOfRecords })</td>
+                        }
+                        else
+                        {
+                            <td>Not uploaded yet.</td>
+                        }
+                        @*<td>
+                            <div>
+                                <label asp-for="@Model.Application.Documents.TranscriptOfRecords" class="ui icon button">
+                                    <input asp-for="@Model.TranscriptOfRecords" type="file" class="custom-file-input">
+                                </label>
+                            </div>
+                        </td>*@
+                    </tr>
+                    <tr>
+                        <td class="collapsing">
+                            <i class="file pdf icon"></i>Motivation letter
+                        </td>
+                        @if (Model.Application.Documents.MotivationLetter != null)
+                        {
+                            <td>@Html.ActionLink(Model.Application.Documents.MotivationLetter, "download", new { fileName = Model.Application.Documents.MotivationLetter })</td>
+                        }
+                        else
+                        {
+                            <td>Not uploaded yet.</td>
+                        }
+                        @*<td>
+                            <div>
+                                <label asp-for="@Model.Application.Documents.MotivationLetter" class="ui icon button">
+                                    <input asp-for="@Model.MotivationLetter" type="file" class="custom-file-input">
+                                </label>
+                            </div>
+                        </td>*@
+                    </tr>
+                    <tr>
+                        <td class="collapsing">
+                            <i class="file pdf icon"></i>Reference letter
+                        </td>
+                        @if (Model.Application.Documents.ReferenceLetter != null)
+                        {
+                            <td>@Html.ActionLink(Model.Application.Documents.ReferenceLetter, "download", new { fileName = Model.Application.Documents.ReferenceLetter })</td>
+                        }
+                        else
+                        {
+                            <td>Not uploaded yet.</td>
+                        }
+                        @*<td>
+                            <div>
+                                <label asp-for="@Model.Application.Documents.ReferenceLetter" class="ui icon button">
+                                    <input asp-for="@Model.ReferenceLetter" type="file" class="custom-file-input">
+                                </label>
+                            </div>
+                        </td>*@
+                    </tr>
 
-            </tbody>
-        </table>
-        <button class="ui primary button">Save</button>
-        <p></p>
-        <p></p>
-        <p></p>
-        <p></p>
-        <table class="ui small celled striped table">
-            <thead>
-                <tr>
-                    <th colspan="3">
-                        Documents upload by hosting institution
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td class="collapsing">
-                        <i class="file pdf icon"></i>Learning agreement host
-                    </td>
-                    @if (Model.Application.Documents.LearningAgreementHost != null)
-                    {
-                        <td class="collapsing">@Html.ActionLink(Model.Application.Documents.LearningAgreementHost, "DownloadFile", new { fileName = Model.Application.Documents.LearningAgreement })</td>
-                    }
-                    else
-                    {
-                        <td>Not uploaded yet.</td>
-                    }
-                    <td class="collapsing">
-                        <div class="field">
-                            <label asp-for="@Model.Application.Documents.LearningAgreementHost" class="ui icon button">
-                                <input asp-for="@Model.LearningAgreementHost" type="file" class="custom-file-input">
+                </tbody>
+            </table>
+            <p></p>
+            <p></p>
+            <p></p>
+            <table class="ui compact celled striped table compact">
+                <thead>
+                    <tr>
+                        <th colspan="3">
+                            Documents upload by hosting institution
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="collapsing">
+                            <i class="file pdf icon"></i>Learning agreement host
+                        </td>
+                        @if (Model.Application.Documents.LearningAgreementHost != null)
+                        {
+                            <td class="collapsing">@Html.ActionLink(Model.Application.Documents.LearningAgreementHost, "download", new { fileName = Model.Application.Documents.LearningAgreement })</td>
+                        }
+                        else
+                        {
+                            <td>Not uploaded yet.</td>
+                        }
+                        <td class="collapsing">
+                            <div class="field">
+                                <label asp-for="@Model.Application.Documents.LearningAgreementHost" class="ui icon button">
+                                    <input asp-for="@Model.LearningAgreementHost" type="file" class="custom-file-input">
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="collapsing">
+                            <i class="file pdf icon"></i>Certificate of arrival
+                        </td>
+                        @if (Model.Application.Documents.CertificateOfArrival != null)
+                        {
+                            <td class="collapsing">@Html.ActionLink(Model.Application.Documents.CertificateOfArrival, "download", new { fileName = Model.Application.Documents.CertificateOfArrival })</td>
+                        }
+                        else
+                        {
+                            <td>Not uploaded yet.</td>
+                        }
+                        <td class="collapsing">
+                            <div class="field">
+                                <label asp-for="@Model.Application.Documents.CertificateOfArrival" class="ui icon button">
+                                    <input asp-for="@Model.CertificateOfArrival" type="file" class="custom-file-input">
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="collapsing">
+                            <i class="file pdf icon"></i>Student transcript of records host institution
+                        </td>
+                        @if (Model.Application.Documents.StudentTranscriptOfRecords != null)
+                        {
+                            <td>@Html.ActionLink(Model.Application.Documents.StudentTranscriptOfRecords, "download", new { fileName = Model.Application.Documents.StudentTranscriptOfRecords })</td>
+                        }
+                        else
+                        {
+                            <td>Not uploaded yet.</td>
+                        }
+                        <td>
+                            <label asp-for="@Model.Application.Documents.StudentTranscriptOfRecords" class="ui icon button">
+                                <input asp-for="@Model.StudentTranscriptOfRecords" type="file" class="custom-file-input">
                             </label>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="collapsing">
-                        <i class="file pdf icon"></i>Certificate of arrival
-                    </td>
-                    @if (Model.Application.Documents.CertificateOfArrival != null)
-                    {
-                        <td class="collapsing">@Html.ActionLink(Model.Application.Documents.CertificateOfArrival, "DownloadFile", new { fileName = Model.Application.Documents.CertificateOfArrival })</td>
-                    }
-                    else
-                    {
-                        <td>Not uploaded yet.</td>
-                    }
-                    <td class="collapsing">
-                        <div class="field">
-                            <label asp-for="@Model.Application.Documents.CertificateOfArrival" class="ui icon button">
-                                <input asp-for="@Model.CertificateOfArrival" type="file" class="custom-file-input">
-                            </label>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="collapsing">
-                        <i class="file pdf icon"></i>Student transcript of records host institution
-                    </td>
-                    @if (Model.Application.Documents.StudentTranscriptOfRecords != null)
-                    {
-                        <td>@Html.ActionLink(Model.Application.Documents.StudentTranscriptOfRecords, "DownloadFile", new { fileName = Model.Application.Documents.StudentTranscriptOfRecords })</td>
-                    }
-                    else
-                    {
-                        <td>Not uploaded yet.</td>
-                    }
-                    <td>
-                        <label asp-for="@Model.Application.Documents.StudentTranscriptOfRecords" class="ui icon button">
-                            <input asp-for="@Model.StudentTranscriptOfRecords" type="file" class="custom-file-input">
-                        </label>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="collapsing">
-                        <i class="file pdf icon"></i>Exchange student record sheet
-                    </td>
-                    @if (Model.Application.Documents.StudentRecordSheet != null)
-                    {
-                        <td>@Html.ActionLink(Model.Application.Documents.StudentRecordSheet, "DownloadFile", new { fileName = Model.Application.Documents.StudentRecordSheet })</td>
-                    }
-                    else
-                    {
-                        <td>Not uploaded yet.</td>
-                    }
-                    <td>
-                        <div>
-                            <label asp-for="@Model.Application.Documents.StudentRecordSheet" class="ui icon button">
-                                <input asp-for="@Model.StudentRecordSheet" type="file" class="custom-file-input">
-                            </label>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="collapsing">
-                        <i class="file pdf icon"></i>Certificate of departure
-                    </td>
-                    @if (Model.Application.Documents.CertificateOfDeparture != null)
-                    {
-                        <td>@Html.ActionLink(Model.Application.Documents.CertificateOfDeparture, "DownloadFile", new { fileName = Model.Application.Documents.CertificateOfDeparture })</td>
-                    }
-                    else
-                    {
-                        <td>Not uploaded yet.</td>
-                    }
-                    <td>
-                        <div>
-                            <label asp-for="@Model.Application.Documents.CertificateOfDeparture" class="ui icon button">
-                                <input asp-for="@Model.CertificateOfDeparture" type="file" class="custom-file-input">
-                            </label>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <button class="ui primary button">Save</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="collapsing">
+                            <i class="file pdf icon"></i>Exchange student record sheet
+                        </td>
+                        @if (Model.Application.Documents.StudentRecordSheet != null)
+                        {
+                            <td>@Html.ActionLink(Model.Application.Documents.StudentRecordSheet, "download", new { fileName = Model.Application.Documents.StudentRecordSheet })</td>
+                        }
+                        else
+                        {
+                            <td>Not uploaded yet.</td>
+                        }
+                        <td>
+                            <div>
+                                <label asp-for="@Model.Application.Documents.StudentRecordSheet" class="ui icon button">
+                                    <input asp-for="@Model.StudentRecordSheet" type="file" class="custom-file-input">
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="collapsing">
+                            <i class="file pdf icon"></i>Certificate of departure
+                        </td>
+                        @if (Model.Application.Documents.CertificateOfDeparture != null)
+                        {
+                            <td>@Html.ActionLink(Model.Application.Documents.CertificateOfDeparture, "download", new { fileName = Model.Application.Documents.CertificateOfDeparture })</td>
+                        }
+                        else
+                        {
+                            <td>Not uploaded yet.</td>
+                        }
+                        <td>
+                            <div>
+                                <label asp-for="@Model.Application.Documents.CertificateOfDeparture" class="ui icon button">
+                                    <input asp-for="@Model.CertificateOfDeparture" type="file" class="custom-file-input">
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <button class="ui primary button">Save</button>
+        </div>
     </form>
 </body>
 

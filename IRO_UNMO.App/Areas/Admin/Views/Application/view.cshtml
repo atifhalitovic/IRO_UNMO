@@ -2,7 +2,7 @@
 @model IRO_UNMO.App.ViewModels.ViewAppVM
 @using Microsoft.AspNetCore.Identity;
 @{
-    Layout = "_Layout11";
+    Layout = "_Layout6";
 }
 <head>
     <meta charset="utf-8" />
@@ -32,6 +32,9 @@
     <script type="text/javascript" src="~/dist/components/popup.js"></script>
     <script type="text/javascript" src="~/dist/components/transition.js"></script>
     <script type="text/javascript" src="~/dist/components/accordion.js"></script>
+
+    <script src="~/lib/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/chat.js"></script>
 
     <!--- Show Names -->
     @*<script src="~/assets/show-examples.js"></script>*@
@@ -89,6 +92,7 @@
             Application for the Dzemal Bijedic University
             <div class="sub header">Started: @Model.Application.CreatedApp</div>
         </h2>
+
         @if (Model.Application.StatusOfApplication == "Unknown")
         {
             <div class="ui label">Status: <div class="detail">@Model.Application.StatusOfApplication</div></div>
@@ -105,6 +109,11 @@
         {
             <div class="ui red label">Status: <div class="detail">@Model.Application.StatusOfApplication</div></div>
         }
+
+        <p></p>
+        <p></p>
+        <p></p>
+
         <form class="ui compact segment" method="post">
             @Html.HiddenFor(x => x.Application.ApplicationId)
             <div class="ui small equal width form">
@@ -115,6 +124,12 @@
                 <button class="ui primary submit button" asp-controller="application" asp-action="status" asp-route-id="@Model.Application.ApplicationId">Save</button>
             </div>
         </form>
+
+
+        <p></p>
+        <p></p>
+        <p></p>
+
         <div class="ui styled accordion">
             <div class=" title">
                 <i class="dropdown icon"></i>Applicant info
@@ -360,7 +375,7 @@
                             @if (Model.Application.Documents.LearningAgreement != null)
                             {
                                 <td>
-                                    @Html.ActionLink(Model.Application.Documents.LearningAgreement, "DownloadFile", new { fileName = Model.Application.Documents.LearningAgreement })
+                                    @Html.ActionLink(Model.Application.Documents.LearningAgreement, "download", new { fileName = Model.Application.Documents.LearningAgreement })
                                 </td>
                             }
                             else
@@ -375,7 +390,7 @@
                             @if (Model.Application.Documents.CV != null)
                             {
                                 <td>
-                                    @Html.ActionLink(Model.Application.Documents.CV, "DownloadFile", new { fileName = Model.Application.Documents.CV })
+                                    @Html.ActionLink(Model.Application.Documents.CV, "download", new { fileName = Model.Application.Documents.CV })
                                 </td>
                             }
                             else
@@ -388,7 +403,7 @@
                             @if (Model.Application.Documents.EngProficiency != null)
                             {
                                 <td>
-                                    @Html.ActionLink(Model.Application.Documents.EngProficiency, "DownloadFile", new { fileName = Model.Application.Documents.EngProficiency })
+                                    @Html.ActionLink(Model.Application.Documents.EngProficiency, "download", new { fileName = Model.Application.Documents.EngProficiency })
                                 </td>
                             }
                             else
@@ -401,7 +416,7 @@
                             @if (Model.Application.Documents.TranscriptOfRecords != null)
                             {
                                 <td>
-                                    @Html.ActionLink(Model.Application.Documents.TranscriptOfRecords, "DownloadFile", new { fileName = Model.Application.Documents.TranscriptOfRecords })
+                                    @Html.ActionLink(Model.Application.Documents.TranscriptOfRecords, "download", new { fileName = Model.Application.Documents.TranscriptOfRecords })
                                 </td>
                             }
                             else
@@ -414,7 +429,7 @@
                             @if (Model.Application.Documents.MotivationLetter != null)
                             {
                                 <td>
-                                    @Html.ActionLink(Model.Application.Documents.MotivationLetter, "DownloadFile", new { fileName = Model.Application.Documents.MotivationLetter })
+                                    @Html.ActionLink(Model.Application.Documents.MotivationLetter, "download", new { fileName = Model.Application.Documents.MotivationLetter })
                                 </td>
                             }
                             else
@@ -427,7 +442,7 @@
                             @if (Model.Application.Documents.ReferenceLetter != null)
                             {
                                 <td>
-                                    @Html.ActionLink(Model.Application.Documents.ReferenceLetter, "DownloadFile", new { fileName = Model.Application.Documents.ReferenceLetter })
+                                    @Html.ActionLink(Model.Application.Documents.ReferenceLetter, "download", new { fileName = Model.Application.Documents.ReferenceLetter })
                                 </td>
                             }
                             else
@@ -439,10 +454,63 @@
                 </table>
                 <a asp-action="docs" asp-route-id="@Model.Application.ApplicationId" class="ui primary button"><i class="file icon"></i>Edit documents</a>
             </div>
+            <div class=" title">
+                <i class="dropdown icon"></i>Comments
+            </div>
+            <div class=" content">
+                @if (Model.Comments.Count == 0)
+                {
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label>No comments yet.</label>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    @foreach (var x in Model.Comments)
+                    {
+                        @if (x.Message != null)
+                        {
+                            <div class="ui comments">
+                                <div class="comment">
+                                    <div class="content">
+                                        @if (x.ApplicantId != null)
+                                        {
+                                            <a class="author">@x.Applicant.ApplicationUser.Name @x.Applicant.ApplicationUser.Surname</a>
+                                        }
+                                        else /*if (x.AdministratorId != null)*/
+                                        {
+                                            <a class="author">Administrator@*@x.Administrator.ApplicationUser.Name @x.Administrator.ApplicationUser.Surname*@</a>
+                                        }
+                                        <div class="metadata"><div class="date">@x.CommentTime</div></div>
+                                        <div class="text">@x.Message</div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                }
+                <form class="ui reply form" method="post">
+                    @Html.HiddenFor(x => x.Applicant.ApplicantId)
+                    @Html.HiddenFor(x => x.Application.ApplicationId)
+                    <h5>Please write comment in text box if you want to comment or send reply to administrator.</h5>
+                    <div class="field">
+                        @Html.TextAreaFor(model => model.NewComment, 10, 10, null)
+                    </div>
+                    <button class="ui primary submit labeled icon button" asp-controller="application" asp-action="comment" asp-route-id="@Model.Application.ApplicationId"><i class="icon edit"></i>Add reply</button>
+                </form>
+            </div>
         </div>
         <p></p>
         <p></p>
         <p></p>
+        <div class="ui form">
+            <form asp-action="pdf" asp-route-id="@Model.Application.ApplicationId" method="post">
+                @Html.HiddenFor(x => x.Application.ApplicationId)
+                <button type="submit" class="ui basic green button"><i class="file pdf outline icon"></i>PDF</button>
+            </form>
+        </div>
     </div>
 </body>
 

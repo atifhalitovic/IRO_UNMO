@@ -82,6 +82,7 @@ namespace IRO_UNMO.App.Controllers
                 CountryId = model.CountryId,
                 UserName = model.Name.ToLower() + '.' + model.Surname.ToLower(),
                 UniqueCode = GetRandomizedString(brojac),
+                LastLogin = DateTime.Now
             };
 
             await _userManager.CreateAsync(user, password);
@@ -108,6 +109,62 @@ namespace IRO_UNMO.App.Controllers
         {
             UsersVM model = _userManagementHelper.prepUser();
             return View("outgoing", model);
+        }
+
+
+        public IActionResult admin()
+        {
+            UsersVM model = _userManagementHelper.prepUser();
+            return View("admin", model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> admin(UsersVM model)
+        {
+            bool x = await _roleManager.RoleExistsAsync("Administrator");
+
+            if (!x)
+            {
+                await _roleManager.CreateAsync(new IdentityRole
+                {
+                    Name = "Administrator"
+                });
+            }
+
+            //password must be strong enough in order for userManager.CreateAsync to work!!!
+            string password = "myP@ssW0r@d123";
+
+            var brojKorisnika = _db.Users.Count();
+
+            brojac = ++brojKorisnika;
+
+            ApplicationUser user = new ApplicationUser
+            {
+                Name = model.Name,
+                Surname = model.Surname,
+                Email = model.Email,
+                PhoneNumber = model.PhoneNumber,
+                CountryId = model.CountryId,
+                UserName = model.Name.ToLower() + '.' + model.Surname.ToLower(),
+                UniqueCode = GetRandomizedString(brojac),
+                LastLogin = DateTime.Now
+            };
+
+            await _userManager.CreateAsync(user, password);
+
+            await _userManager.AddToRoleAsync(user, "Administrator");
+
+            Administrator admin = new Administrator
+            {
+                AdministratorId = user.Id,
+                Ime = model.Name + " " + model.Surname,
+                CreatedProfile = DateTime.Now,
+            };
+
+            _db.Administrator.Add(admin);
+            _db.SaveChanges();
+
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpPost]
@@ -139,6 +196,7 @@ namespace IRO_UNMO.App.Controllers
                 CountryId = model.CountryId,
                 UserName = model.Name.ToLower() + '.' + model.Surname.ToLower(),
                 UniqueCode = GetRandomizedString(brojac),
+                LastLogin = DateTime.Now
             };
 
             await _userManager.CreateAsync(user, password);
@@ -247,21 +305,24 @@ namespace IRO_UNMO.App.Controllers
         {
             ApplicationUser user = _db.Users.FirstOrDefault(u => u.UniqueCode == model.UniqueCode);
             if (user == null) return RedirectToAction("denied");
+            user.LastLogin = DateTime.Now;
+            _db.SaveChanges();
 
             var userRole = _userManager.GetRolesAsync(user).Result.Single();
 
             if (userRole == "Administrator")
-                return RedirectToAction("Index", "Home", new { area = "admin" });
+                return RedirectToAction("index", "home", new { area = "admin" });
 
             else if (userRole == "IncomingApplicant" || userRole == "OutgoingApplicant")
-                return RedirectToAction("details", "account", new { @id = user.Id });
+                return RedirectToAction("details", "home", new { id = user.Id, Area = "applicant" });
+
 
             return View(model);
         }
 
         public IActionResult denied()
         {
-            return View();
+            return View("login");
         }
 
         public IActionResult code()

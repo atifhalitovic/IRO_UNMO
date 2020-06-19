@@ -1,7 +1,8 @@
 ﻿@model IRO_UNMO.App.Areas.Admin.ViewModels.EditPartnersVMa
 @{
     ViewData["Title"] = "";
-    Layout = "_Layout11";
+    Layout = "_Layout5";
+    var ID = ViewBag.ID;
 }
 
 <head>
@@ -36,12 +37,12 @@
 <body>
     @if (Model.University == null)
     {
-        <h3>Add university partner</h3>
+        <h2 class="ui header">Add university partner</h2>
     }
 
-    else if(Model != null)
+    else if (Model != null)
     {
-        <h3>Edit university partner</h3>
+        <h2 class="ui header">Edit university partner</h2>
     }
     <div class="ui small equal width form">
         <form asp-area="admin" asp-controller="partners" asp-action="partner" method="post">
@@ -58,7 +59,7 @@
                     </div>
                     <div class="field">
                         <label asp-for="@Model.University.Country">Country</label>
-                        @Html.DropDownListFor(model => model.University.CountryId, Model.Countries, new { required = "Please choose your gender" })
+                        @Html.DropDownListFor(model => model.University.CountryId, Model.Countries, new { required = "Please choose your country" })
                     </div>
                 </div>
             </div>

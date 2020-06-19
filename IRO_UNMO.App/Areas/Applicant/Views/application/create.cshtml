@@ -1,0 +1,70 @@
+﻿@using IRO_UNMO.App.ViewModels
+@model IRO_UNMO.App.ViewModels.CreateNewAppVM
+@using Microsoft.AspNetCore.Identity;
+@{
+    Layout = "_Layout5";
+}
+
+<head>
+    <environment include="Production">
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    </environment>
+</head>
+<body>
+    <h2 class="ui header">Welcome to creating new application page.</h2>
+    <h3 class="ui header">Do you want to start the creating application for the Dzemal Bijedic University with these basic informations?</h3>
+    <h4 class="ui header">Have in mind that you can't change basic informations afterwards.</h4>
+    <div id='container' style='height:450px;width:500px'>
+        <form asp-action="create" method="post">
+            @Html.HiddenFor(x => x.ApplicantId)
+            <table class="ui definition table">
+                <tbody>
+                    <tr>
+                        <td class="five wide column">Full name</td>
+                        <td class="align right">@Model.Applicant.ApplicationUser.Name @Model.Applicant.ApplicationUser.Surname</td>
+                    </tr>
+                    <tr>
+                        <td>Email</td>
+                        <td>@Model.Applicant.ApplicationUser.Email</td>
+                    </tr>
+                    <tr>
+                        <td>Phone number</td>
+                        <td>@Model.Applicant.ApplicationUser.PhoneNumber</td>
+                    </tr>
+                    <tr>
+                        <td>Citizenship</td>
+                        <td>@Model.Applicant.ApplicationUser.Country.Name</td>
+                    </tr>
+                    <tr>
+                        <td>University</td>
+                        <td>@Model.Applicant.University.Name</td>
+                    </tr>
+                    <tr>
+                        <td>Study field</td>
+                        <td>@Model.Applicant.StudyField</td>
+                    </tr>
+                    <tr>
+                        <td>Study cycle</td>
+                        <td>@Model.Applicant.StudyCycle</td>
+                    </tr>
+                    <tr>
+                        <td>Student/staff</td>
+                        <td>TO DO !!! TO DO @Model.Applicant.TypeOfApplication</td>
+                    </tr>
+                    <tr>
+                        <td>Account created</td>
+                        <td>@Model.Applicant.CreatedProfile</td>
+                    </tr>
+                    <tr>
+                        <td>Account verification</td>
+                        <td>@Model.Applicant.Verified.ToString()</td>
+                    </tr>
+                </tbody>
+            </table>
+            <button class="ui primary button">Start creating</button>
+        </form>
+    </div>
+</body>
+

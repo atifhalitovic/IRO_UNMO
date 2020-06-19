@@ -31,5 +31,8 @@ namespace IRO_UNMO.App.Models
 
         public DateTime CreatedNom { get; set; }
         public DateTime LastEdited { get; set; }
+
+        public bool Finished { get; set; }
+        public DateTime FinishedTime { get; set; }
     }
 }

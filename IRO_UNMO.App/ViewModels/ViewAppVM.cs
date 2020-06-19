@@ -13,6 +13,9 @@ namespace IRO_UNMO.App.ViewModels
         public Applicant Applicant { get; set; }
         public Application Application { get; set; }
 
+        public List<Comment> Comments { get; set; }
+        public string NewComment { get; set; }
+
         public string StatusOfApplication { get; set; }
         public List<SelectListItem> Statuses { get; set; }
     }

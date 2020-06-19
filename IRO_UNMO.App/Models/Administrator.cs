@@ -11,6 +11,8 @@ namespace IRO_UNMO.App.Models
     {
         [ForeignKey("ApplicationUser")]
         public string AdministratorId { get; set; }
+        public string Ime { get; set; }
+        public DateTime CreatedProfile { get; set; }
         public virtual ApplicationUser ApplicationUser { get; set; }
     }
 }

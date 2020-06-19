@@ -1,6 +1,6 @@
 ﻿@{
     ViewData["Title"] = "";
-    Layout = "_Layout11";
+    Layout = "_Layout5";
 }
 
 <head>
@@ -27,5 +27,40 @@
     <script type="text/javascript" src="~/dist/components/accordion.js"></script>
 </head>
 <body>
-
+    <div class="ui padded grid">
+        <div class="center aligned row">
+            <div class="eight wide mobile four wide tablet four wide computer column">
+                <img class="ui centered small circular image" />
+                <i class="massive globe icon"></i>
+                <p></p>
+                <div class="ui large basic label"><a asp-action="index" asp-controller="partners">Partners</a></div>
+                <p></p>
+                <p>Something else</p>
+            </div>
+            <div class="eight wide mobile four wide tablet four wide computer column">
+                <img class="ui centered small circular image file icon outline" />
+                <i class="massive address card outline icon"></i>
+                <p></p>
+                <div class="ui large basic label"><a class="active item" asp-action="index" asp-controller="applicants">Applicants</a></div>
+                <p></p>
+                <p>Something else</p>
+            </div>
+            <div class="eight wide mobile four wide tablet four wide computer column">
+                <img class="ui centered small circular image" />
+                <i class="massive comment alternate outline icon"></i>
+                <p></p>
+                <div class="ui large basic label"><a class="active item" asp-action="index" asp-controller="news">News</a></div>
+                <p></p>
+                <p>Something else</p>
+            </div>
+            <div class="eight wide mobile four wide tablet four wide computer column">
+                <img class="ui centered small circular image" />
+                <i class="massive exclamation triangle icon"></i>
+                <p></p>
+                <div class="ui large basic label">Settings</div>
+                <p></p>
+                <p>Something else</p>
+            </div>
+        </div>
+    </div>
 </body>

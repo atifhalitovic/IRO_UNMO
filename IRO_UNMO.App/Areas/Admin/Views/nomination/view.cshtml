@@ -2,7 +2,7 @@
 @model IRO_UNMO.App.ViewModels.ViewNomVM
 @using Microsoft.AspNetCore.Identity;
 @{
-    Layout = "_Layout11";
+    Layout = "_Layout5";
 }
 <head>
     <meta charset="utf-8" />
@@ -85,241 +85,250 @@
 </head>
 <body>
     @Html.HiddenFor(x => x.Applicant.ApplicantId)
-    <div class="ui container">
-        <h2 class="ui header">
-            Nomination for the @Model.Nomination.University.Name
-            <div class="sub header">Started: @Model.Nomination.CreatedNom</div>
-        </h2>
-        @if (Model.Nomination.StatusOfNomination == "Unknown")
-        {
-            <div class="ui label">Status: <div class="detail">@Model.Nomination.StatusOfNomination</div></div>
-        }
-        else if (Model.Nomination.StatusOfNomination == "Review - on hold" || Model.Nomination.StatusOfNomination == "Review - successful")
-        {
-            <div class="ui orange label">Status: <div class="detail">@Model.Nomination.StatusOfNomination</div></div>
-        }
-        else if (Model.Nomination.StatusOfNomination == "Enrolled")
-        {
-            <div class="ui green label">Status: <div class="detail">@Model.Nomination.StatusOfNomination</div></div>
-        }
-        else
-        {
-            <div class="ui red label">Status: <div class="detail">@Model.Nomination.StatusOfNomination</div></div>
-        }
-        <form class="ui compact segment" method="post">
-            @Html.HiddenFor(x => x.Nomination.NominationId)
-            <div class="ui small equal width form">
-                <h5>Please select current status of nomination</h5>
-                <div class="field">
-                    @Html.DropDownListFor(model => model.Nomination.StatusOfNomination, Model.Statuses)
+    <div class="ui compact segments">
+        <div class="ui piled segment">
+            <h2 class="ui header">
+                Nomination for the @Model.Nomination.University.Name
+                <div class="sub header">Started: @Model.Nomination.CreatedNom</div>
+            </h2>
+            @if (Model.Nomination.StatusOfNomination == "Unknown")
+            {
+                <div class="ui label">Status: <div class="detail">@Model.Nomination.StatusOfNomination</div></div>
+            }
+            else if (Model.Nomination.StatusOfNomination == "Review - on hold" || Model.Nomination.StatusOfNomination == "Review - successful")
+            {
+                <div class="ui orange label">Status: <div class="detail">@Model.Nomination.StatusOfNomination</div></div>
+            }
+            else if (Model.Nomination.StatusOfNomination == "Enrolled")
+            {
+                <div class="ui green label">Status: <div class="detail">@Model.Nomination.StatusOfNomination</div></div>
+            }
+            else
+            {
+                <div class="ui red label">Status: <div class="detail">@Model.Nomination.StatusOfNomination</div></div>
+            }
+            <p></p>
+            @if (Model.Nomination.Finished == true)
+            {
+                <div class="ui green label">Submitted:<div class="detail">@Model.Nomination.FinishedTime</div></div>
+            }
+            else if (Model.Nomination.Finished == false)
+            {
+                <div class="ui label">Submitted:<div class="detail">Not yet</div></div>
+            }
+            <p></p>
+            <p></p>
+            <p></p>
+            <form class="ui compact segment" method="post">
+                @Html.HiddenFor(x => x.Nomination.NominationId)
+                <div class="ui small equal width form">
+                    <h5>Please select current status of nomination</h5>
+                    <div class="field">
+                        @Html.DropDownListFor(model => model.Nomination.StatusOfNomination, Model.Statuses)
+                    </div>
+                    @if (Model.Nomination.Finished)
+                    {
+                        <button class="ui primary submit button" asp-controller="nomination" asp-action="status" asp-route-id="@Model.Nomination.NominationId">Save</button>
+                    }
+                    else
+                    {
+                        <button class="ui disabled primary submit button" asp-controller="nomination" asp-action="status" asp-route-id="@Model.Nomination.NominationId">Save</button>
+                    }
                 </div>
-                <button class="ui primary submit button" asp-controller="nomination" asp-action="status" asp-route-id="@Model.Nomination.NominationId">Save</button>
-            </div>
-        </form>
-        <p></p>
-        <p></p>
-        <p></p>
-        <div class="ui styled accordion">
-            <div class=" title">
-                <i class="dropdown icon"></i>Applicant info
-            </div>
-            <div class=" content">
-                <table class="ui definition table">
-                    <tbody>
+            </form>
+            <p></p>
+            <p></p>
+            <p></p>
+        </div>
+        <div class="ui piled segment">
+            <div class="ui top attached label">Basic info</div>
+            <table class="ui definition table">
+                <tbody>
+                    <tr>
+                        <td class="five wide column">Full name</td>
+                        <td>@Model.Applicant.ApplicationUser.Name @Model.Applicant.ApplicationUser.Surname</td>
+                    </tr>
+                    <tr>
+                        <td>Faculty</td>
+                        <td>@Model.Applicant.FacultyName</td>
+                    </tr>
+                    <tr>
+                        <td>University</td>
+                        <td>@Model.Applicant.University.Name</td>
+                    </tr>
+                    <tr>
+                        <td>Student/staff</td>
+                        <td>@Model.Applicant.TypeOfApplication</td>
+                    </tr>
+                    <tr>
+                        <td>Account created</td>
+                        <td>@Model.Applicant.CreatedProfile</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="ui piled segment">
+            <div class="ui top attached label">Documents</div>
+            <table class="ui celled striped table">
+                <thead>
+                    <tr>
+                        <th colspan="2">
+                            Uploaded documents
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Applicant.TypeOfApplication == "Student")
+                    {
                         <tr>
-                            <td class="five wide column">Full name</td>
-                            <td>@Model.Applicant.ApplicationUser.Name @Model.Applicant.ApplicationUser.Surname</td>
+                            <td class="five wide column"><i class="file icon"></i>Learning agreement</td>
+                            @if (Model.Nomination.LearningAgreement != null)
+                            {
+                                <td>
+                                    @Html.ActionLink(Model.Nomination.LearningAgreement, "download", new { fileName = Model.Nomination.LearningAgreement })
+                                </td>
+                            }
+                            else
+                            {
+                                <td>
+                                    Not uploaded yet.
+                                </td>
+                            }
                         </tr>
+                    }
+                    else
+                    {
                         <tr>
-                            <td>Faculty</td>
-                            <td>@Model.Applicant.FacultyName</td>
+                            <td class="seven wide column"><i class="file icon"></i>Work plan</td>
+                            @if (Model.Nomination.WorkPlan != null)
+                            {
+                                <td>
+                                    @Html.ActionLink(Model.Nomination.WorkPlan, "download", new { fileName = Model.Nomination.WorkPlan })
+                                </td>
+                            }
+                            else
+                            {
+                                <td>
+                                    Not uploaded yet.
+                                </td>
+                            }
                         </tr>
-                        <tr>
-                            <td>University</td>
-                            <td>@Model.Applicant.University.Name</td>
-                        </tr>
-                        <tr>
-                            <td>Student/staff</td>
-                            <td>@Model.Applicant.TypeOfApplication</td>
-                        </tr>
-                        <tr>
-                            <td>Account created</td>
-                            <td>@Model.Applicant.CreatedProfile</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="title">
-                <i class="dropdown icon"></i>Documents
-            </div>
-            <div class="content">
-                <table class="ui definition table">
-                    <tbody>
-                        @if (Model.Applicant.TypeOfApplication == "Student")
+                    }
+                    <tr>
+                        <td><i class="file icon"></i>Curriculum vitae</td>
+                        @if (Model.Nomination.CV != null)
                         {
-                            <tr>
-                                <td class="seven wide column">Learning agreement</td>
-                                @if (Model.Nomination.LearningAgreement != null)
-                                {
-                                    <td>
-                                        @Html.ActionLink(Model.Nomination.LearningAgreement, "DownloadFile", new { fileName = Model.Nomination.LearningAgreement })
-                                    </td>
-                                }
-                                else
-                                {
-                                    <td>
-                                        Not uploaded yet.
-                                    </td>
-                                }
-                            </tr>
+                            <td>
+                                @Html.ActionLink(Model.Nomination.CV, "download", new { fileName = Model.Nomination.CV })
+                            </td>
                         }
                         else
                         {
-                            <tr>
-                                <td class="four wide column">Work plan</td>
-                                @if (Model.Nomination.WorkPlan != null)
-                                {
-                                    <td>
-                                        @Html.ActionLink(Model.Nomination.WorkPlan, "DownloadFile", new { fileName = Model.Nomination.WorkPlan })
-                                    </td>
-                                }
-                                else
-                                {
-                                    <td>
-                                        Not uploaded yet.
-                                    </td>
-                                }
-                            </tr>
+                            <td><p>Not uploaded yet.</p></td>
                         }
-                        <tr>
-                            <td>Curriculum vitae</td>
-                            @if (Model.Nomination.CV != null)
-                            {
-                                <td>
-                                    @Html.ActionLink(Model.Nomination.CV, "DownloadFile", new { fileName = Model.Nomination.CV })
-
-                                </td>
-                            }
-                            else
-                            {
-                                <td><p>Not uploaded yet.</p></td>
-                            }
-                        </tr>
-                        <tr>
-                            <td>English language proficiency</td>
-                            @if (Model.Nomination.EngProficiency != null)
-                            {
-                                <td>
-                                    @Html.ActionLink(Model.Nomination.EngProficiency, "DownloadFile", new { fileName = Model.Nomination.EngProficiency })
-                                </td>
-                            }
-                            else
-                            {
-                                <td><p>Not uploaded yet.</p></td>
-                            }
-                        </tr>
-                        <tr>
-                            <td>Transcript of records</td>
-                            @if (Model.Nomination.TranscriptOfRecords != null)
-                            {
-                                <td>
-                                    @Html.ActionLink(Model.Nomination.TranscriptOfRecords, "DownloadFile", new { fileName = Model.Nomination.TranscriptOfRecords })
-                                </td>
-                            }
-                            else
-                            {
-                                <td><p>Not uploaded yet.</p></td>
-                            }
-                        </tr>
-                        <tr>
-                            <td>Motivation letter</td>
-                            @if (Model.Nomination.MotivationLetter != null)
-                            {
-                                <td>
-                                    @Html.ActionLink(Model.Nomination.MotivationLetter, "DownloadFile", new { fileName = Model.Nomination.MotivationLetter })
-                                </td>
-                            }
-                            else
-                            {
-                                <td><p>Not uploaded yet.</p></td>
-                            }
-                        </tr>
-                        <tr>
-                            <td>Reference letter</td>
-                            @if (Model.Nomination.ReferenceLetter != null)
-                            {
-                                <td>
-                                    @Html.ActionLink(Model.Nomination.ReferenceLetter, "DownloadFile", new { fileName = Model.Nomination.ReferenceLetter })
-                                </td>
-                            }
-                            else
-                            {
-                                <td><p>Not uploaded yet.</p></td>
-                            }
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class=" title">
-                <i class="dropdown icon"></i>Comments
-            </div>
-            <div class=" content">
-                @if (Model.Comments.Count == 0)
-                {
-                    <div class="row">
-                        <div class="col-md-4">
-                            <label>No comments yet.</label>
-                        </div>
-                    </div>
-                }
-                else
-                {
-                    @foreach (var x in Model.Comments)
-                    {
-                        @if (x.Message != null)
+                    </tr>
+                    <tr>
+                        <td><i class="file icon"></i>English language proficiency</td>
+                        @if (Model.Nomination.EngProficiency != null)
                         {
-                            <div class="ui comments">
-                                <div class="comment">
-                                    <div class="content">
-                                        @if (x.ApplicantId != null)
-                                        {
-                                            <a class="author">@x.Applicant.ApplicationUser.Name @x.Applicant.ApplicationUser.Surname</a>
-                                        }
-                                        else /*if (x.AdministratorId != null)*/
-                                        {
-                                            <a class="author">Administrator@*@x.Administrator.ApplicationUser.Name @x.Administrator.ApplicationUser.Surname*@</a>
-                                        }
-                                        <div class="metadata"><div class="date">@x.CommentTime</div></div>
-                                        <div class="text">@x.Message</div>
-                                    </div>
+                            <td>
+                                @Html.ActionLink(Model.Nomination.EngProficiency, "download", new { fileName = Model.Nomination.EngProficiency })
+                            </td>
+                        }
+                        else
+                        {
+                            <td><p>Not uploaded yet.</p></td>
+                        }
+                    </tr>
+                    <tr>
+                        <td><i class="file icon"></i>Transcript of records</td>
+                        @if (Model.Nomination.TranscriptOfRecords != null)
+                        {
+                            <td>
+                                @Html.ActionLink(Model.Nomination.TranscriptOfRecords, "download", new { fileName = Model.Nomination.TranscriptOfRecords })
+                            </td>
+                        }
+                        else
+                        {
+                            <td><p>Not uploaded yet.</p></td>
+                        }
+                    </tr>
+                    <tr>
+                        <td><i class="file icon"></i>Motivation letter</td>
+                        @if (Model.Nomination.MotivationLetter != null)
+                        {
+                            <td>
+                                @Html.ActionLink(Model.Nomination.MotivationLetter, "download", new { fileName = Model.Nomination.MotivationLetter })
+                            </td>
+                        }
+                        else
+                        {
+                            <td><p>Not uploaded yet.</p></td>
+                        }
+                    </tr>
+                    <tr>
+                        <td><i class="file icon"></i>Reference letter</td>
+                        @if (Model.Nomination.ReferenceLetter != null)
+                        {
+                            <td>
+                                @Html.ActionLink(Model.Nomination.ReferenceLetter, "download", new { fileName = Model.Nomination.ReferenceLetter })
+                            </td>
+                        }
+                        else
+                        {
+                            <td><p>Not uploaded yet.</p></td>
+                        }
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="ui piled segment">
+            <div class="ui top attached label">Comments</div>
+            @if (Model.Comments.Count == 0)
+            {
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>No comments yet.</label>
+                    </div>
+                </div>
+            }
+            else
+            {
+                @foreach (var x in Model.Comments)
+                {
+                    @if (x.Message != null)
+                    {
+                        <div class="ui comments">
+                            <div class="comment">
+                                <div class="content">
+                                    @if (x.ApplicantId != null)
+                                    {
+                                        <a class="author">@x.Applicant.ApplicationUser.Name @x.Applicant.ApplicationUser.Surname</a>
+                                    }
+                                    else /*if (x.AdministratorId != null)*/
+                                    {
+                                        <a class="author">Administrator@*@x.Administrator.ApplicationUser.Name @x.Administrator.ApplicationUser.Surname*@</a>
+                                    }
+                                    <div class="metadata"><div class="date">@x.CommentTime</div></div>
+                                    <div class="text">@x.Message</div>
                                 </div>
                             </div>
-                        }
+                        </div>
                     }
                 }
-                <form class="ui reply form" method="post">
-                    @Html.HiddenFor(x => x.Applicant.ApplicantId)
-                    @Html.HiddenFor(x => x.Nomination.NominationId)
-                    <h5>Please write comment in text box if you want to comment or send reply to administrator.</h5>
-                    <div class="field">
-                        @Html.TextAreaFor(model => model.NewComment, 10, 10, null)
-                    </div>
-                    <button class="ui primary submit labeled icon button" asp-controller="Nomination" asp-action="AddComment" asp-route-id="@Model.Nomination.NominationId"><i class="icon edit"></i>Add reply</button>
-                </form>
-            </div>
+            }
+            <form class="ui reply form" method="post">
+                @Html.HiddenFor(x => x.Applicant.ApplicantId)
+                @Html.HiddenFor(x => x.Nomination.NominationId)
+                <h5>Please write comment in text box if you want to comment or send reply to administrator.</h5>
+                <div class="field">
+                    @Html.TextAreaFor(model => model.NewComment, 10, 10, null)
+                </div>
+                <button class="ui primary submit labeled icon button" asp-controller="nomination" asp-action="comment" asp-route-id="@Model.Nomination.NominationId"><i class="icon edit"></i>Add reply</button>
+            </form>
         </div>
-        <p></p>
-        <p></p>
-        <p></p>
-
-        @*<div class="field">
-            <div class="header">Nomination status</div>
-            @Html.DropDownListFor(model => model.Nomination.StatusOfNomination, Model.Statuses)
-        </div>*@
     </div>
-    <script>
-        $('#example2').progress({
-            percent: 22
-        });
-    </script>
+    <p></p>
+    <p></p>
+    <p></p>
 </body>

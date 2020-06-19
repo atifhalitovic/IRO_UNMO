@@ -1,7 +1,7 @@
 ﻿@model IRO_UNMO.App.ViewModels.ApplicantsVM
 @{
     ViewData["Title"] = "";
-    Layout = "_Layout11";
+    Layout = "_Layout5";
 }
 
 <head>
@@ -45,12 +45,21 @@
             <tbody>
                 <tr>
                     <td>@x.ApplicationUser.Name @x.ApplicationUser.Surname</td>
-                    @*<td>@x.FacultyName</td>*@
                     <td>@x.University.Name</td>
                     <td>@x.CreatedProfile</td>
-                    <td>@x.Verified</td>
-                    <td><a asp-action="review" asp-controller="applicants" asp-route-id="@x.ApplicantId" class="ui primary button">Review</a>
-                        @*<a asp-action="docs" asp-controller="application" asp-route-id="@x.ApplicationId" class="ui primary button">Docs</a>*@</td>
+                    @if (x.Verified)
+                    {
+                        <td><div class="ui green large horizontal label">@x.Verified</div></td>
+
+                    }
+                    else
+                    {
+                        <td><div class="ui red large horizontal label">@x.Verified</div></td>
+                    }
+                    <td>
+                        <a asp-action="review" asp-controller="applicants" asp-route-id="@x.ApplicantId" class="ui primary button">Review</a>
+                        @*<a asp-action="docs" asp-controller="application" asp-route-id="@x.ApplicationId" class="ui primary button">Docs</a>*@
+                    </td>
                 </tr>
             </tbody>
         }

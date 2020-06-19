@@ -16,10 +16,21 @@
     <Compile Remove="Controllers\AdminController.cs" />
     <Compile Remove="Migrations\20200327221048_AddDocuments.cs" />
     <Compile Remove="Migrations\20200331203458_AddNomination.cs" />
+    <Compile Remove="NotificationComponent.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Remove="Views\application\ViewDocs.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="unmo_logo.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="unmo_logo.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -30,7 +41,9 @@
     <PackageReference Include="Microsoft.AspNetCore.Connections.Abstractions" Version="2.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.1" PrivateAssets="All" />
-    <PackageReference Include="Microsoft.AspNetCore.SignalR.Core" Version="1.0.15" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="1.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Core" Version="1.0.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.14" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="2.1.14" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.1.14" />
@@ -44,12 +57,17 @@
     <PackageReference Include="NETCore.Encrypt" Version="2.0.8" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="popper.js" Version="1.16.1" />
+    <PackageReference Include="SqlTableDependency" Version="7.1.0" />
+    <PackageReference Include="Syncfusion.HtmlToPdfConverter.QtWebKit.Net.Core" Version="18.1.0.52" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="4.7.0" />
+    <PackageReference Include="wkhtmltopdf-x86-win32" Version="0.12.3.6" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="Areas\Applicant\Data\" />
+    <Folder Include="Areas\Applicant\Models\" />
     <Folder Include="Areas\Identity\Services\" />
     <Folder Include="Views\admin\" />
     <Folder Include="wwwroot\uploads\" />
@@ -114,6 +132,20 @@
     <None Include="wwwroot\dist\themes\github\assets\fonts\octicons.svg" />
     <None Include="wwwroot\dist\themes\material\assets\fonts\icons.svg" />
     <None Include="wwwroot\dist\themes\material\assets\fonts\icons.woff2" />
+    <None Include="wwwroot\Scripts\bootstrap.js" />
+    <None Include="wwwroot\Scripts\bootstrap.min.js" />
+    <None Include="wwwroot\Scripts\jquery-2.2.3.intellisense.js" />
+    <None Include="wwwroot\Scripts\jquery-2.2.3.js" />
+    <None Include="wwwroot\Scripts\jquery-2.2.3.min.js" />
+    <None Include="wwwroot\Scripts\jquery-2.2.3.min.map" />
+    <None Include="wwwroot\Scripts\jquery.signalR-2.2.0.js" />
+    <None Include="wwwroot\Scripts\jquery.signalR-2.2.0.min.js" />
+    <None Include="wwwroot\Scripts\jquery.validate-vsdoc.js" />
+    <None Include="wwwroot\Scripts\jquery.validate.js" />
+    <None Include="wwwroot\Scripts\jquery.validate.min.js" />
+    <None Include="wwwroot\Scripts\jquery.validate.unobtrusive.js" />
+    <None Include="wwwroot\Scripts\jquery.validate.unobtrusive.min.js" />
+    <None Include="wwwroot\square-image.png" />
     <None Include="wwwroot\src\definitions\behaviors\api.js" />
     <None Include="wwwroot\src\definitions\behaviors\form.js" />
     <None Include="wwwroot\src\definitions\behaviors\visibility.js" />
@@ -496,6 +528,7 @@
     <None Include="wwwroot\src\_site\views\item.variables" />
     <None Include="wwwroot\src\_site\views\statistic.overrides" />
     <None Include="wwwroot\src\_site\views\statistic.variables" />
+    <None Include="wwwroot\unmo_logo.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -508,11 +541,17 @@
     <Content Update="Areas\Admin\Views\Application\view.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+    <Content Update="Areas\Admin\Views\Application\view1.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Areas\Admin\Views\Home\partners.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Areas\Admin\Views\Home\Index.cshtml">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Admin\Views\News\index.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Areas\Admin\Views\nomination\view.cshtml">
@@ -533,6 +572,51 @@
     <Content Update="Areas\Admin\Views\_ViewStart.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+    <Content Update="Areas\Applicant\Views\application\create.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Applicant\Views\application\docs - Copy.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Applicant\Views\application\docs.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Applicant\Views\application\edit - Copy.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Applicant\Views\application\edit.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Applicant\Views\application\view - Copy.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Applicant\Views\application\view.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Applicant\Views\Home\details.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Applicant\Views\nomination\create.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Applicant\Views\nomination\docs.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Applicant\Views\nomination\view.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Applicant\Views\nomination\ViewNom - Copy.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Applicant\Views\_ViewImports.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Applicant\Views\_ViewStart.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\account\admin.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Views\account\type.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
@@ -551,10 +635,13 @@
     <Content Update="Views\application\edit - Copy.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+    <Content Update="Views\application\view.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Views\application\view - Copy.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-    <Content Update="Views\application\view.cshtml">
+    <Content Update="Views\application\view1.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Views\nomination\create.cshtml">
@@ -570,6 +657,18 @@
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Views\Shared\_Layout.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\AdminLayout.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\_Layout6.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\_Layout5.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\_Layout3.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Views\Shared\_Layout11.cshtml">

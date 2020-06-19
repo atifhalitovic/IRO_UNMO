@@ -8,6 +8,7 @@ using IRO_UNMO.App.Data;
 using IRO_UNMO.App.Models;
 using IRO_UNMO.App.ViewModels;
 using IRO_UNMO.Util;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -17,6 +18,7 @@ using Microsoft.Extensions.Logging;
 
 namespace IRO_UNMO.App.Areas.Admin.Controllers
 {
+    //[Authorize(Roles="Administrator")]
     [Area("Admin")]
     public class HomeController : Controller
     {

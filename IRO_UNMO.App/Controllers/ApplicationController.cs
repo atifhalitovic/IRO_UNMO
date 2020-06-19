@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Mime;
-using System.Reflection.Metadata;
-using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using IRO_UNMO.App.Data;
@@ -16,8 +14,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.FileProviders;
-using Microsoft.Extensions.Logging;
+using Syncfusion.HtmlConverter;
+using Syncfusion.Pdf;
 
 namespace IRO_UNMO.App.Controllers
 {
@@ -412,6 +410,38 @@ namespace IRO_UNMO.App.Controllers
 
             _db.SaveChanges();
             return RedirectToAction("details", "account", new { id = newApp.ApplicantId });
+        }
+
+        public IActionResult AddComment(int id)
+        {
+            ViewNomVM model = new ViewNomVM();
+            model.Nomination = _db.Nomination.Where(a => a.NominationId == id).FirstOrDefault();
+            model.Applicant = _db.Applicant.Where(a => a.ApplicantId == model.Nomination.ApplicantId).FirstOrDefault();
+            model.Comments = _db.Comment.Where(x => x.IonId == id).ToList();
+            return View("AddComment", model);
+        }
+
+        [HttpPost]
+        public IActionResult AddComment(ViewNomVM model)
+        {
+            Nomination current = _db.Nomination.Where(a => a.NominationId == model.Nomination.NominationId).Include(a => a.University).FirstOrDefault();
+
+            if (model.NewComment != null)
+            {
+                Comment newComment = new Comment();
+                newComment.Message = model.NewComment;
+                newComment.ApplicantId = current.ApplicantId;
+                newComment.IonId = current.NominationId;
+                newComment.CommentTime = DateTime.Now;
+
+                _db.Comment.Add(newComment);
+                _db.SaveChanges();
+            }
+            else
+            {
+                return RedirectToAction("view", "nomination", new { id = model.Nomination.NominationId });
+            }
+            return RedirectToAction("view", "nomination", new { id = model.Nomination.NominationId });
         }
     }
 }

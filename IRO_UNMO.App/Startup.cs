@@ -15,6 +15,10 @@ using Microsoft.Extensions.DependencyInjection;
 using IRO_UNMO.App.Models;
 using Microsoft.Extensions.FileProviders;
 using System.IO;
+using IRO_UNMO.App.Hubs;
+using Microsoft.AspNetCore.SignalR;
+using IRO_UNMO.App.Subscription;
+using IRO_UNMO.App.Extensions;
 
 namespace IRO_UNMO.App
 {
@@ -51,6 +55,12 @@ namespace IRO_UNMO.App
               .AddDefaultTokenProviders();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddSignalR();
+            //services.AddEndPoint<MessagesEndPoint>();
+
+            // dependency injection
+            services.AddSingleton<NotificationDatabaseSubscription, NotificationDatabaseSubscription>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -73,6 +83,11 @@ namespace IRO_UNMO.App
 
             app.UseAuthentication();
 
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<NotificationHub>("/notification");
+            });
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
@@ -83,6 +98,8 @@ namespace IRO_UNMO.App
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            app.UseSqlTableDependency<NotificationDatabaseSubscription>(Configuration.GetConnectionString("lokalni"));
         }
     }
 }

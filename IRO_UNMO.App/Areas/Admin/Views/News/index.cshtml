@@ -1,0 +1,69 @@
+﻿@model IRO_UNMO.App.ViewModels.NewsVM
+@{
+    ViewData["Title"] = "";
+    Layout = "_Layout5";
+}
+<p></p>
+<h2 class="ui header">Unread notifications</h2>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <!--- Site CSS -->
+    <link rel="stylesheet" type="text/css" href="~/dist/components/reset.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/site.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/grid.css">
+    <!--- Component CSS -->
+    <link rel="stylesheet" type="text/css" href="~/dist/components/icon.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/table.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/button.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/transition.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/popup.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/accordion.css">
+
+    <script src="~/assets/library/jquery.min.js"></script>
+    <script src="~/assets/library/iframe-content.js"></script>
+
+    <script type="text/javascript" src="~/dist/components/popup.js"></script>
+    <script type="text/javascript" src="~/dist/components/transition.js"></script>
+    <script type="text/javascript" src="~/dist/components/accordion.js"></script>
+    <script type="text/javascript" src="~/dist/components/modal.js"></script>
+</head>
+<body>
+    @foreach (var x in Model.Comments)
+    {
+    <div class="ui large feed">
+        <div class="ui icon message">
+            <i class="inbox icon"></i>
+            <div class="content">
+                <div class="header">
+                    @x.Applicant.ApplicationUser.Name @x.Applicant.ApplicationUser.Surname
+                    <div class="subheader">@x.CommentTime</div>
+                </div>
+                <a asp-route-id="@x.IonId" asp-area="admin" asp-controller="application" asp-action="view">@x.Message</a>
+            </div>
+        </div>
+    </div>
+
+        @*<div class="ui icon message">
+            <i class="inbox icon"></i>
+            <div class="content">
+                <div class="header">
+                    @x.Applicant.ApplicationUser.Name @x.Applicant.ApplicationUser.Surname | @x.CommentTime
+                </div>
+                <a asp-route-id="@x.IonId" asp-area="admin" asp-controller="application" asp-action="view">@x.Message</a>
+            </div>
+        </div>*@
+    }
+</body>
+<script>
+    $(function () {
+        $("#test").click(function () {
+            $(".test").modal('show');
+        });
+
+        $(".test").modal({
+            closable: true
+        });
+    });
+</script>
