@@ -69,8 +69,8 @@ namespace IRO_UNMO.App.Areas.Applicant.Controllers
             CreateNewNomVM model = new CreateNewNomVM();
             model.ApplicantId = id;
             model.Applicant = _db.Applicant.Where(a => a.ApplicantId == id).Include(b => b.ApplicationUser).ThenInclude(c => c.Country).FirstOrDefault();
-
-            model.Universities = _db.University.Select(x => new SelectListItem()
+            model.Universities2 = _db.University.Include(a => a.Country).ToList();
+            model.Universities = _db.University.Include(a=>a.Country).Select(x => new SelectListItem()
             {
                 Value = x.UniversityId.ToString(),
                 Text = x.Name
@@ -83,14 +83,14 @@ namespace IRO_UNMO.App.Areas.Applicant.Controllers
         public IActionResult create(CreateNewNomVM vm)
         {
             Nomination a = new Nomination();
-            a.ApplicantId = vm.ApplicantId;
+            a.ApplicantId = vm.Applicant.ApplicantId;
             a.CreatedNom = DateTime.Now;
             a.LastEdited = DateTime.Now;
             a.UniversityId = vm.UniversityId;
             a.University = _db.University.Where(b => b.UniversityId == vm.UniversityId).FirstOrDefault();
             a.StatusOfNomination = "Unknown";
 
-            Models.Applicant applicant = _db.Applicant.Where(xa => xa.ApplicantId == vm.ApplicantId).Include(xq => xq.ApplicationUser).ThenInclude(xe => xe.Country).Include(xw => xw.University).FirstOrDefault();
+            Models.Applicant applicant = _db.Applicant.Where(xa => xa.ApplicantId == a.ApplicantId).Include(xq => xq.ApplicationUser).ThenInclude(xe => xe.Country).Include(xw => xw.University).FirstOrDefault();
 
             _db.Nomination.Add(a);
             _db.SaveChanges();

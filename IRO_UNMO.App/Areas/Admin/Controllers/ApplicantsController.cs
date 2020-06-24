@@ -6,6 +6,7 @@ using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using IRO_UNMO.App.Data;
 using IRO_UNMO.App.Models;
+using IRO_UNMO.App.Subscription;
 using IRO_UNMO.App.ViewModels;
 using IRO_UNMO.Util;
 using Microsoft.AspNetCore.Hosting;
@@ -29,8 +30,10 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly UrlEncoder _urlEncoder;
 
+        private readonly INotification _notificationService;
+
         public ApplicantsController(ApplicationDbContext db, IHostingEnvironment environment, UserManager<ApplicationUser> userManager,
-        SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager, UrlEncoder urlEncoder)
+        SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager, UrlEncoder urlEncoder, INotification notification)
         {
             _db = db;
             hosting = environment;
@@ -39,6 +42,7 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
             _roleManager = roleManager;
             _urlEncoder = urlEncoder;
             _userManagementHelper = new UserManagementHelper(_db);
+            _notificationService = notification;
         }
 
         public IActionResult Index()
@@ -64,24 +68,38 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
         public IActionResult verified(string id)
         {
             Models.Applicant v = _db.Applicant.Include(a => a.ApplicationUser).Where(a=>a.ApplicantId==id).FirstOrDefault();
+            string status = "";
             if (v.Verified == true)
             {
                 v.Verified = false;
+                status = "succesfully unverified!";
             }
             _db.Applicant.Update(v);
             _db.SaveChanges();
+            _notificationService.sendToApplicant(id, id, new IRO_UNMO.App.Subscription.NotificationVM()
+            {
+                Message = "Your account verification has been changed. Now you are " + status,
+                Url = "#"
+            });
             return RedirectToAction("review", "applicants", new { id = v.ApplicantId });
         }
 
         public IActionResult unverified(string id)
         {
             Models.Applicant v = _db.Applicant.Include(a => a.ApplicationUser).Where(a => a.ApplicantId == id).FirstOrDefault();
+            string status = "";
             if (v.Verified == false)
             {
                 v.Verified = true;
+                status = "succesfully verified!";
             }
             _db.Applicant.Update(v);
             _db.SaveChanges();
+            _notificationService.sendToApplicant(id, id, new IRO_UNMO.App.Subscription.NotificationVM()
+            {
+                Message = "Your account verification has been changed. Now you are " + status,
+                Url = "#"
+            });
             return RedirectToAction("review", "applicants", new { id =  v.ApplicantId });
         }
     }

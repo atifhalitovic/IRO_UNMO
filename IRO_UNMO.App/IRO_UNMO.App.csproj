@@ -7,9 +7,13 @@
 
   <ItemGroup>
     <Compile Remove="Areas\Account\**" />
+    <Compile Remove="Extensions\**" />
     <Content Remove="Areas\Account\**" />
+    <Content Remove="Extensions\**" />
     <EmbeddedResource Remove="Areas\Account\**" />
+    <EmbeddedResource Remove="Extensions\**" />
     <None Remove="Areas\Account\**" />
+    <None Remove="Extensions\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -17,6 +21,10 @@
     <Compile Remove="Migrations\20200327221048_AddDocuments.cs" />
     <Compile Remove="Migrations\20200331203458_AddNomination.cs" />
     <Compile Remove="NotificationComponent.cs" />
+    <Compile Remove="Subscription\IDatabaseSubscriptionInterface.cs" />
+    <Compile Remove="Subscription\ILoggedUser.cs" />
+    <Compile Remove="Subscription\LoggedUserService.cs" />
+    <Compile Remove="Subscription\NotificationDatabaseSubscription.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -40,9 +48,11 @@
     <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Connections.Abstractions" Version="2.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.1" PrivateAssets="All" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.0.4" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="1.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Common" Version="1.0.4" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Core" Version="1.0.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.14" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="2.1.14" />
@@ -57,6 +67,7 @@
     <PackageReference Include="NETCore.Encrypt" Version="2.0.8" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="popper.js" Version="1.16.1" />
+    <PackageReference Include="SendGrid" Version="9.16.0" />
     <PackageReference Include="SqlTableDependency" Version="7.1.0" />
     <PackageReference Include="Syncfusion.HtmlToPdfConverter.QtWebKit.Net.Core" Version="18.1.0.52" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="4.7.0" />
@@ -70,6 +81,7 @@
     <Folder Include="Areas\Applicant\Models\" />
     <Folder Include="Areas\Identity\Services\" />
     <Folder Include="Views\admin\" />
+    <Folder Include="wwwroot\lib\signalr\dist\browser\" />
     <Folder Include="wwwroot\uploads\" />
   </ItemGroup>
 
@@ -660,6 +672,9 @@
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Views\Shared\AdminLayout.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\_Layout5 - Copy.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Views\Shared\_Layout6.cshtml">

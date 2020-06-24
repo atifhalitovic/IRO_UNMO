@@ -54,5 +54,54 @@ namespace IRO_UNMO.App.Areas.Applicant.Controllers
             };
             return View(vm);
         }
+        [HttpPost]
+        public IActionResult create(CreateNewAppVM vm)
+        {
+            Application a = new Application();
+            a.ApplicantId = vm.Applicant.ApplicantId;
+            a.CreatedApp = DateTime.Now;
+            a.LastEdited = DateTime.Now;
+            a.StatusOfApplication = "Unknown";
+
+            Models.Applicant applicant = _db.Applicant.Where(xa => xa.ApplicantId == a.ApplicantId).Include(xq => xq.ApplicationUser).ThenInclude(xe => xe.Country).Include(xw => xw.University).FirstOrDefault();
+
+            Info newInfo = new Info();
+            newInfo.CitizenshipId = applicant.ApplicationUser.CountryId;
+            newInfo.Citizenship = _db.Country.Where(t => t.CountryId == newInfo.CitizenshipId).FirstOrDefault();
+            a.Infos = newInfo;
+            _db.Info.Add(newInfo);
+
+            Contact newContact = new Contact();
+            newContact.Email = applicant.ApplicationUser.Email;
+            newContact.Telephone = applicant.ApplicationUser.PhoneNumber;
+            newContact.Country = null;
+            newContact.CountryId = null;
+            a.Contacts = newContact;
+            _db.Contact.Add(newContact);
+
+            Language newLang = new Language();
+            a.Languages = newLang;
+            _db.Language.Add(newLang);
+
+            HomeInstitution newHI = new HomeInstitution();
+            newHI.OfficialName = applicant.University.Name;
+            newHI.LevelOfEducation = applicant.StudyCycle;
+            newHI.StudyProgramme = applicant.StudyField;
+            a.HomeInstitutions = newHI;
+            _db.HomeInstitution.Add(newHI);
+
+            Other newOther = new Other();
+            a.Others = newOther;
+            _db.Other.Add(newOther);
+
+            Documents newDocs = new Documents();
+            a.Documents = newDocs;
+            _db.Documents.Add(newDocs);
+
+            _db.Application.Add(a);
+            _db.SaveChanges();
+
+            return RedirectToAction("details", "home", new { id = applicant.ApplicantId });
+        }
     }
 }

@@ -9,6 +9,11 @@
         "dist/browser/signalr.js",
         "dist/browser/signalr.min.js"
       ]
+    },
+    {
+      "provider": "cdnjs",
+      "library": "signalr.js@2.4.1",
+      "destination": "wwwroot/lib/signalr.js/"
     }
   ]
 }

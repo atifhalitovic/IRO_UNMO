@@ -15,5 +15,6 @@ namespace IRO_UNMO.App.Models
         public int CountryId { get; set; }
         public Country Country { get; set; }
         public DateTime LastLogin { get; set; }
+        public string SignalRToken { get; set; }
     }
 }

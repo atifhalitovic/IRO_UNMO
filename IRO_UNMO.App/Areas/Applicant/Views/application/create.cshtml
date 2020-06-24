@@ -13,57 +13,90 @@
     </environment>
 </head>
 <body>
-    <h2 class="ui header">Welcome to creating new application page.</h2>
-    <h3 class="ui header">Do you want to start the creating application for the Dzemal Bijedic University with these basic informations?</h3>
-    <h4 class="ui header">Have in mind that you can't change basic informations afterwards.</h4>
-    <div id='container' style='height:450px;width:500px'>
+    <div class="ui content">
         <form asp-action="create" method="post">
             @Html.HiddenFor(x => x.ApplicantId)
-            <table class="ui definition table">
-                <tbody>
-                    <tr>
-                        <td class="five wide column">Full name</td>
-                        <td class="align right">@Model.Applicant.ApplicationUser.Name @Model.Applicant.ApplicationUser.Surname</td>
-                    </tr>
-                    <tr>
-                        <td>Email</td>
-                        <td>@Model.Applicant.ApplicationUser.Email</td>
-                    </tr>
-                    <tr>
-                        <td>Phone number</td>
-                        <td>@Model.Applicant.ApplicationUser.PhoneNumber</td>
-                    </tr>
-                    <tr>
-                        <td>Citizenship</td>
-                        <td>@Model.Applicant.ApplicationUser.Country.Name</td>
-                    </tr>
-                    <tr>
-                        <td>University</td>
-                        <td>@Model.Applicant.University.Name</td>
-                    </tr>
-                    <tr>
-                        <td>Study field</td>
-                        <td>@Model.Applicant.StudyField</td>
-                    </tr>
-                    <tr>
-                        <td>Study cycle</td>
-                        <td>@Model.Applicant.StudyCycle</td>
-                    </tr>
-                    <tr>
-                        <td>Student/staff</td>
-                        <td>TO DO !!! TO DO @Model.Applicant.TypeOfApplication</td>
-                    </tr>
-                    <tr>
-                        <td>Account created</td>
-                        <td>@Model.Applicant.CreatedProfile</td>
-                    </tr>
-                    <tr>
-                        <td>Account verification</td>
-                        <td>@Model.Applicant.Verified.ToString()</td>
-                    </tr>
-                </tbody>
-            </table>
-            <button class="ui primary button">Start creating</button>
+            <div class="ui compact segment">
+                <div class="ui big ribbon label">
+                    <i class="ui info icon"></i>
+                    Information
+                </div>
+                <h4 class="ui header">
+                    <div class="sub header">Searching possibilities available for applicant:</div>
+                        <div class="ui large header">
+                            @Model.Applicant.ApplicationUser.Name @Model.Applicant.ApplicationUser.Surname
+                        </div>
+                        <div class="sub header">
+                            <p>E-mail: @Model.Applicant.ApplicationUser.Email</p>
+                            <p>Mobile number: @Model.Applicant.ApplicationUser.PhoneNumber</p>
+                            <p>Country: @Model.Applicant.ApplicationUser.Country.Name</p>
+                            <p>University: @Model.Applicant.University.Name</p>
+                            <p>Study field: @Model.Applicant.StudyField</p>
+                            <p>Study cycle: @Model.Applicant.StudyCycle</p>
+                            <p>Type: TO DO !!! TO DO @Model.Applicant.TypeOfApplication</p>
+                            <p>Created profile: @Model.Applicant.CreatedProfile</p>
+                            <p>Verification: @Model.Applicant.Verified.ToString()</p>
+                        </div>
+                </h4>
+            </div>
+            <div class="ui raised result segment">
+                <div class="ui three column stackable grid">
+                    <div class="four wide column">
+                        <p>Dzemal Bijedic University of Mostar</p>
+                        <div>
+                            <div class="ui divider"></div>
+                            <p>Available for applicants from:</p>
+                            <div class="ui computer tablet only">
+                                <a href="/institutions/institution/1310-univerzita-pavla-jozefa-afrika-v-koiciach" target="_blank"><img src="https://img.cdn.dreamapply.com/eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJkcmVhbS1hcHBseSIsImF1ZCI6ImRyZWFtLWltYWdlIiwicGxkIjp7InBhdGgiOiJkcmVhbS1hcHBseTpzaGFyZDMzOFwvaW5zdGl0dXRpb25fbG9nb3NcLzEzMTAub241c2hjIiwidHJhbnNmb3JtYXRpb25zIjpbeyJuYW1lIjoiZml0IiwicGFyYW1zIjp7IndpZHRoIjoiMTIwIiwiaGVpZ2h0IjoiNDIiLCJxdWFsaXR5IjoiOTUiLCJleHRlbmQiOiIyNTUsMjU1LDI1NSJ9fV0sImNhY2hlIjoibWF4LWFnZT0zMTUzNjAwMCwgcHVibGljIiwib3V0cHV0X2Zvcm1hdCI6InNhbWUiLCJzZGtfdmVyc2lvbiI6IjEuMCJ9fQ.Fhbl7nvMffj-cF9WhCHsYKmYSYOemJDRduIf-2Yohco__jXRaWR5_88LN2_-gc7IOHQMH3Jp36Q3dB3q5t8knWVWRdiIQim0PFrMRzZyyoQ_guY9G4EgHdmAMNL9kkNsPriDAVP71qzVXcXdVg-s8-fJqBOc_ovcgiaVaHOSgRVByhSPud_q1-HJ8mF7EURKBUy1yupsSR8CIHMYxqtUT4Ce-EaSgsVu1ttYrNgJ6ALmr0ZK0VCmpuYP1WRONd1nN1TVzHrQHn_8yhTDCjMlIVSWB72jtFIxXWNoEiO20lGc9K5W9Q-YQ6H00_JsGxOSL_apnDv42A9NGLrgk0_zsA" /></a>
+                            </div>
+                            <div>
+                                <i class="ui university icon mobile only"></i>
+                                <a href="/institutions/institution/1310-univerzita-pavla-jozefa-afrika-v-koiciach" target="_blank" style="">Univerzitet incominga</a>
+                            </div>
+
+                            <small class="ui computer tablet only">Drzava incominga</small>
+                        </div>
+                        <div class="ui mobile only divider"></div>
+                    </div>
+
+                    <div class="seven wide column" style="padding-bottom: 3em">
+                        <a href="/courses/course/7754-incoming-erasmus-mobility-1sem-1-sem?search=80283">Incoming mobility (1 semester)</a>
+                        <p>Languages</p>
+                        <p>
+                            <small>Study language: English, Bosnian</small>
+                        </p>
+                    </div>
+                    <div class="five wide apply column">
+                        <div class="ui very relaxed list">
+                            <div class="item">
+                                <button type="submit" class="ui small fluid primary icon apply button">Apply now!</button>
+                                <div class="ui tiny list">
+                                    <div class="item">
+                                        <i class="top aligned university icon"></i>
+                                        <div class="content">
+                                            <div class="header">
+                                                Application start
+                                            </div>
+                                            <div class="description">
+                                                Nov 1, 2020
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="item">
+                                        <i class="top aligned university icon"></i>
+                                        <div class="content">
+                                            <div class="header">
+                                                Application deadline
+                                            </div>
+                                            <div class="description"><span>Dec 1, 2020 23:59 <span class="grayed">Europe/Warsaw time</span></span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </form>
     </div>
 </body>

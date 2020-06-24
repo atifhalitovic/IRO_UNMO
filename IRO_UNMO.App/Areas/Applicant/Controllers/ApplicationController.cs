@@ -63,12 +63,12 @@ namespace IRO_UNMO.App.Areas.Applicant.Controllers
         public IActionResult create(CreateNewAppVM vm)
         {
             Application a = new Application();
-            a.ApplicantId = vm.ApplicantId;
+            a.ApplicantId = vm.Applicant.ApplicantId;
             a.CreatedApp = DateTime.Now;
             a.LastEdited = DateTime.Now;
             a.StatusOfApplication = "Unknown";
 
-            Models.Applicant applicant = _db.Applicant.Where(xa => xa.ApplicantId == vm.ApplicantId).Include(xq=>xq.ApplicationUser).ThenInclude(xe=>xe.Country).Include(xw=>xw.University).FirstOrDefault();
+            Models.Applicant applicant = _db.Applicant.Where(xa => xa.ApplicantId == a.ApplicantId).Include(xq=>xq.ApplicationUser).ThenInclude(xe=>xe.Country).Include(xw=>xw.University).FirstOrDefault();
 
             Info newInfo = new Info();
             newInfo.CitizenshipId = applicant.ApplicationUser.CountryId;
@@ -89,9 +89,9 @@ namespace IRO_UNMO.App.Areas.Applicant.Controllers
             _db.Language.Add(newLang);
 
             HomeInstitution newHI = new HomeInstitution();
-            newHI.OfficialName = _db.Applicant.Where(xy => xy.ApplicantId == vm.ApplicantId).FirstOrDefault().University.Name;
-            newHI.LevelOfEducation = _db.Applicant.Where(xy => xy.ApplicantId == vm.ApplicantId).FirstOrDefault().StudyCycle;
-            newHI.StudyProgramme = _db.Applicant.Where(xy => xy.ApplicantId == vm.ApplicantId).FirstOrDefault().StudyField;
+            newHI.OfficialName = applicant.University.Name;
+            newHI.LevelOfEducation = applicant.StudyCycle;
+            newHI.StudyProgramme = applicant.StudyField;
             a.HomeInstitutions = newHI;
             _db.HomeInstitution.Add(newHI);
 

@@ -15,5 +15,6 @@ namespace IRO_UNMO.App.ViewModels
         public int UniversityId { get; set; }
         public University University { get; set; }
         public List<SelectListItem> Universities { get; set; }
+        public List<University> Universities2 { get; set; }
     }
 }

@@ -18,7 +18,8 @@ using System.IO;
 using IRO_UNMO.App.Hubs;
 using Microsoft.AspNetCore.SignalR;
 using IRO_UNMO.App.Subscription;
-using IRO_UNMO.App.Extensions;
+using IRO_UNMO.App.Infrastructure;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace IRO_UNMO.App
 {
@@ -54,12 +55,16 @@ namespace IRO_UNMO.App
               .AddRoles<IdentityRole>()
               .AddDefaultTokenProviders();
 
+
+            services.AddTransient<IEmailSender, EmailSender>();
+            services.AddScoped<IMyUser, MyUser>();
+            services.AddScoped<INotification, NotificationService>();
+            services.Configure<AuthMessageSenderOptions>(Configuration);
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddSignalR();
-            //services.AddEndPoint<MessagesEndPoint>();
 
             // dependency injection
-            services.AddSingleton<NotificationDatabaseSubscription, NotificationDatabaseSubscription>();
+            //services.AddSingleton<NotificationDatabaseSubscription, NotificationDatabaseSubscription>();
 
         }
 
@@ -85,7 +90,7 @@ namespace IRO_UNMO.App
 
             app.UseSignalR(routes =>
             {
-                routes.MapHub<NotificationHub>("/notification");
+                routes.MapHub<SignalServer>("/signalServer");
             });
 
             app.UseMvc(routes =>
@@ -99,7 +104,7 @@ namespace IRO_UNMO.App
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            app.UseSqlTableDependency<NotificationDatabaseSubscription>(Configuration.GetConnectionString("lokalni"));
+            //app.UseSqlTableDependency<NotificationDatabaseSubscription>(Configuration.GetConnectionString("lokalni"));
         }
     }
 }
