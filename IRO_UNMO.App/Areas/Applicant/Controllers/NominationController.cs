@@ -64,30 +64,45 @@ namespace IRO_UNMO.App.Areas.Applicant.Controllers
             return File(memory, MediaTypeNames.Application.Octet, Path.GetFileName(path));
         }
 
-        public IActionResult create(string id)
+        public IActionResult create(string id, int uniId)
         {
             CreateNewNomVM model = new CreateNewNomVM();
             model.ApplicantId = id;
             model.Applicant = _db.Applicant.Where(a => a.ApplicantId == id).Include(b => b.ApplicationUser).ThenInclude(c => c.Country).FirstOrDefault();
-            model.Universities2 = _db.University.Include(a => a.Country).ToList();
-            model.Universities = _db.University.Include(a=>a.Country).Select(x => new SelectListItem()
-            {
-                Value = x.UniversityId.ToString(),
-                Text = x.Name
-            }).ToList();
 
+            var offers = _db.Offer.Include(a => a.University).ThenInclude(x => x.Country).ToList();
+            var nominations = _db.Nomination.Where(a => a.ApplicantId == id).ToList();
+            var offersR = new List<Offer>();
+            if(nominations.Count()!=0)
+            {
+                foreach (var x in offers)
+                {
+                    foreach (var y in nominations)
+                    {
+                        if (y.UniversityId != x.UniversityId)
+                        {
+                            offersR.Add(x);
+                        }
+                    }
+                }
+                model.Offers = offersR;
+            }
+            else
+            {
+                model.Offers = offers;
+            }
             return View("create", model);
         }
 
         [HttpPost]
-        public IActionResult create(CreateNewNomVM vm)
+        public IActionResult create(CreateNewNomVM vm, int uniId)
         {
             Nomination a = new Nomination();
-            a.ApplicantId = vm.Applicant.ApplicantId;
+            a.ApplicantId = vm.ApplicantId;
             a.CreatedNom = DateTime.Now;
             a.LastEdited = DateTime.Now;
-            a.UniversityId = vm.UniversityId;
-            a.University = _db.University.Where(b => b.UniversityId == vm.UniversityId).FirstOrDefault();
+            a.UniversityId = uniId;
+            a.University = _db.University.Where(b => b.UniversityId == uniId).FirstOrDefault();
             a.StatusOfNomination = "Unknown";
 
             Models.Applicant applicant = _db.Applicant.Where(xa => xa.ApplicantId == a.ApplicantId).Include(xq => xq.ApplicationUser).ThenInclude(xe => xe.Country).Include(xw => xw.University).FirstOrDefault();

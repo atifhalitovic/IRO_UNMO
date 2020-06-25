@@ -4,14 +4,16 @@ using IRO_UNMO.App.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace IRO_UNMO.App.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200624123801_AppTiming1")]
+    partial class AppTiming1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -85,8 +87,6 @@ namespace IRO_UNMO.App.Migrations
 
                     b.Property<string>("StatusOfApplication");
 
-                    b.Property<int?>("TimingId");
-
                     b.HasKey("ApplicationId");
 
                     b.HasIndex("ApplicantId");
@@ -102,8 +102,6 @@ namespace IRO_UNMO.App.Migrations
                     b.HasIndex("LanguageId");
 
                     b.HasIndex("OtherId");
-
-                    b.HasIndex("TimingId");
 
                     b.ToTable("Application");
                 });
@@ -461,33 +459,6 @@ namespace IRO_UNMO.App.Migrations
                     b.ToTable("Notification");
                 });
 
-            modelBuilder.Entity("IRO_UNMO.App.Models.Offer", b =>
-                {
-                    b.Property<int>("OfferId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Cycles");
-
-                    b.Property<DateTime>("End");
-
-                    b.Property<string>("Info");
-
-                    b.Property<string>("Programmes");
-
-                    b.Property<string>("Semester");
-
-                    b.Property<DateTime>("Start");
-
-                    b.Property<int>("UniversityId");
-
-                    b.HasKey("OfferId");
-
-                    b.HasIndex("UniversityId");
-
-                    b.ToTable("Offer");
-                });
-
             modelBuilder.Entity("IRO_UNMO.App.Models.Other", b =>
                 {
                     b.Property<int>("OtherId")
@@ -699,10 +670,6 @@ namespace IRO_UNMO.App.Migrations
                     b.HasOne("IRO_UNMO.App.Models.Other", "Others")
                         .WithMany()
                         .HasForeignKey("OtherId");
-
-                    b.HasOne("IRO_UNMO.App.Models.Timing", "Timing")
-                        .WithMany()
-                        .HasForeignKey("TimingId");
                 });
 
             modelBuilder.Entity("IRO_UNMO.App.Models.ApplicationUser", b =>
@@ -775,14 +742,6 @@ namespace IRO_UNMO.App.Migrations
                     b.HasOne("IRO_UNMO.App.Models.ApplicationUser", "UserTo")
                         .WithMany()
                         .HasForeignKey("UserToID");
-                });
-
-            modelBuilder.Entity("IRO_UNMO.App.Models.Offer", b =>
-                {
-                    b.HasOne("IRO_UNMO.App.Models.University", "University")
-                        .WithMany()
-                        .HasForeignKey("UniversityId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("IRO_UNMO.App.Models.University", b =>

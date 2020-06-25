@@ -28,6 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="Areas\Admin\Views\Timing\timing.cshtml" />
     <Content Remove="Views\application\ViewDocs.cshtml" />
   </ItemGroup>
 
@@ -541,6 +542,7 @@
     <None Include="wwwroot\src\_site\views\statistic.overrides" />
     <None Include="wwwroot\src\_site\views\statistic.variables" />
     <None Include="wwwroot\unmo_logo.png" />
+    <None Include="wwwroot\unmo_preloader.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -569,13 +571,22 @@
     <Content Update="Areas\Admin\Views\nomination\view.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-    <Content Update="Areas\Admin\Views\Partners\partner.cshtml">
+    <Content Update="Areas\Admin\Views\offers\index.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Admin\Views\offers\offer.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Admin\Views\Timing\index.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Admin\Views\partners\partner.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Areas\Admin\Views\Applicants\review.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-    <Content Update="Areas\Admin\Views\Partners\index.cshtml">
+    <Content Update="Areas\Admin\Views\partners\index.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Areas\Admin\Views\_ViewImports.cshtml">

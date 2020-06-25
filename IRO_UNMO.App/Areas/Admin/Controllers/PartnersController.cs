@@ -104,16 +104,21 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
             return RedirectToAction("index", "partners", new { area = "admin" });
         }
 
-        [HttpDelete]
+        //[HttpDelete]
         public IActionResult delete(int id)
         {
-            University current = _db.University.Where(a => a.UniversityId == id).FirstOrDefault();
-            if (current == null)
+            University current = _db.University.Find(id);
+            //var listFromUni = _db.Offer.Include(a => a.University).Where(x => x.UniversityId == id).ToList();
+            //foreach(var x in listFromUni)
+            //{
+            //    _db.Offer.Remove(x);
+            //}
+            if (current != null)
             {
                 _db.University.Remove(current);
                 _db.SaveChanges();
             }
-            return RedirectToAction("Index");
+            return RedirectToActionPermanent(nameof(Index));
         }
     }
 }

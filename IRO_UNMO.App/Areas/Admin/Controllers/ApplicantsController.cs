@@ -58,9 +58,10 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
         {
             ProfileVM vm = new ProfileVM
             {
-                Applicant = _db.Applicant.Where(x => x.ApplicantId == id).Include(a => a.ApplicationUser).ThenInclude(b => b.Country).Include(b => b.University).FirstOrDefault(),
+                Applicant = _db.Applicant.Where(x => x.ApplicantId == id).Include(a => a.ApplicationUser).ThenInclude(b => b.Country).Include(b => b.University).ThenInclude(q => q.Country).FirstOrDefault(),
                 Application = _db.Application.Where(a => a.ApplicantId == id).Include(b => b.Infos).ThenInclude(q => q.Citizenship).Include(c => c.Contacts).ThenInclude(q => q.Country).Include(d => d.HomeInstitutions).Include(e => e.Others).FirstOrDefault(),
-                Nominations = _db.Nomination.Where(a => a.ApplicantId == id).Include(b => b.University).ToList()
+                Nominations = _db.Nomination.Where(a => a.ApplicantId == id).Include(b => b.University).ToList(),
+                Timing = _db.Timing.FirstOrDefault()
             };
             return View(vm);
         }

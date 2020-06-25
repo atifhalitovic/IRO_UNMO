@@ -71,7 +71,6 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
             CreateNewNomVM model = new CreateNewNomVM();
             model.ApplicantId = id;
             model.Applicant = _db.Applicant.Where(a => a.ApplicantId == id).Include(b => b.ApplicationUser).ThenInclude(c => c.Country).FirstOrDefault();
-
             model.Universities = _db.University.Select(x => new SelectListItem()
             {
                 Value = x.UniversityId.ToString(),

@@ -1,4 +1,4 @@
-﻿@model IRO_UNMO.App.Areas.Admin.ViewModels.EditPartnersVMa
+﻿@model IRO_UNMO.App.ViewModels.TimingVM
 @{
     ViewData["Title"] = "";
     Layout = "_Layout5";
@@ -35,31 +35,19 @@
     </style>
 </head>
 <body>
-    @if (Model.University == null)
-    {
-        <h2 class="ui header">Add university partner</h2>
-    }
-
-    else if (Model != null)
-    {
-        <h2 class="ui header">Edit university partner</h2>
-    }
+    <h2 class="ui header">Edit university partner</h2>
     <div class="ui small equal width form">
         <form asp-area="admin" asp-controller="partners" asp-action="partner" method="post">
-            @Html.HiddenFor(a => a.UniversityId)
+            @Html.HiddenFor(a => a.current.TimingId)
             <div class="ui compact segment">
                 <div class="fields">
                     <div class="field">
-                        <label asp-for="@Model.University.Name">Name</label>
-                        <input asp-for="@Model.University.Name" type="text" class="form-control">
+                        <label asp-for="@Model.current.Semester">Country</label>
+                        @Html.DropDownListFor(model => model.current.Semester, Model.Semesters, new { required = "Please choose semester for the application" })
                     </div>
                     <div class="field">
                         <label asp-for="@Model.University.Code">Code</label>
                         <input asp-for="@Model.University.Code" type="text" class="form-control">
-                    </div>
-                    <div class="field">
-                        <label asp-for="@Model.University.Country">Country</label>
-                        @Html.DropDownListFor(model => model.University.CountryId, Model.Countries, new { required = "Please choose country" })
                     </div>
                 </div>
             </div>

@@ -10,6 +10,7 @@ namespace IRO_UNMO.App.ViewModels
     {
         public Applicant Applicant { get; set; }
         public Application Application { get; set; }
+        public Timing Timing { get; set; }
         public List<Nomination> Nominations { get; set; }
     }
 }

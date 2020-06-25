@@ -3,6 +3,7 @@
     ViewData["Title"] = "";
     Layout = "_Layout5";
 }
+<script src="~/js/ajax.js"></script>
 <p></p>
 <h2 class="ui header">Dzemal Bijedic university partners</h2>
 <head>
@@ -23,11 +24,13 @@
 
     <script src="~/assets/library/jquery.min.js"></script>
     <script src="~/assets/library/iframe-content.js"></script>
+    <script src="~/js/ajax.js"></script>
 
     <script type="text/javascript" src="~/dist/components/popup.js"></script>
     <script type="text/javascript" src="~/dist/components/transition.js"></script>
     <script type="text/javascript" src="~/dist/components/accordion.js"></script>
     <script type="text/javascript" src="~/dist/components/modal.js"></script>
+
     <style>
         .ui.celled.table {
             width: 720px;
@@ -53,50 +56,20 @@
                     <td>@x.Country.Name</td>
                     <td>
                         <a asp-controller="partners" asp-action="partner" asp-route-id="@x.UniversityId" class="ui basic primary button">Edit</a>
-                        <button asp-action="delete" asp-controller="partners" asp-route-id="@x.UniversityId" class="ui basic red button" id="test">Delete</button>
-                        <div class="ui modal test">
+                        <a asp-action="delete" asp-controller="partners" class="ui right floated basic red button" asp-route-id="@x.UniversityId" id="test">Delete</a>
+                        @*<div class="ui modal test">
                             <i class="close icon"></i>
                             <div class="ui small header">
-                                Are you sure you want to delete selected university partner?
-                                @*You will delete all history of university.*@
+                                Are you sure you want to delete selected university?
+                                You will delete all offers for it.
                             </div>
                             <div class="actions">
                                 <div class="ui black deny button">
                                     No
                                 </div>
-                                <a asp-action="delete" asp-controller="partners" asp-route-id="@x.UniversityId" class="ui red button"><i class="eye"></i>Delete</a>
+                                <a asp-action="delete" asp-controller="partners" class="ui right floated red button" asp-route-id="@x.UniversityId" id="test"><i class="checkmark icon"></i>Yes, delete this offer.</a>
                             </div>
-                        </div>
-                        @*<button asp-controller="partners" asp-action="partner" class="ui basic primary button" id="test" data-id="@x.UniversityId">Edit</button>
-                            <div class="ui modal test">
-                                <div class="header">Editing university partner</div>
-                                <div class="modal dialog">
-                                    <div class="ui small equal width form">
-                                        <div class="ui segment">
-                                            <form asp-area="admin" asp-controller="partners" asp-action="partner" method="post" id="theform" data-id="@x.UniversityId">
-                                                @Html.HiddenFor(a => a.UniversityId)
-                                                <div class="fields">
-                                                    <div class="field">
-                                                        <label asp-for="@x.Name">Name</label>
-                                                        <input asp-for="@x.Name" type="text" class="form-control">
-                                                    </div>
-                                                    <div class="field">
-                                                        <label asp-for="@x.Code">Code</label>
-                                                        <input asp-for="@x.Code" type="text" class="form-control">
-                                                    </div>
-                                                    <div class="field">
-                                                        <label asp-for="@x.CountryId">Country</label>
-                                                        @Html.DropDownListFor(model => x.CountryId, Model.Countries, new { required = "Please choose your country" })
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="actions">
-                                    <input type="submit" form="theform" class="ui primary button" value="Save" id="id" data-id="@x.UniversityId">
-                                </div>
-                            </div>*@
+                        </div>*@
                     </td>
                 </tr>
             </tbody>
@@ -104,7 +77,7 @@
     </table>
     <a asp-controller="partners" asp-action="partner" class="ui basic green button">Add</a>
 </body>
-<script>
+@*<script>
     $(function () {
         $("#test").click(function () {
             $(".test").modal('show');
@@ -114,4 +87,4 @@
             closable: true
         });
     });
-</script>
+</script>*@

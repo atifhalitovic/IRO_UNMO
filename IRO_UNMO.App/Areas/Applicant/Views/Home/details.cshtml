@@ -30,7 +30,6 @@
     <script type="text/javascript" src="~/dist/components/transition.js"></script>
     <script type="text/javascript" src="~/dist/components/accordion.js"></script>
     <!--- Component JS -->
-
     <link rel="stylesheet" type="text/css" href="~/css/semantic.min.css">
 
     <script>
@@ -200,10 +199,10 @@
                     </div>
                     <div>
                         <i class="ui university icon mobile only"></i>
-                        <a>Univerzitet incominga</a>
+                        <a>@Model.Applicant.University.Name</a>
                     </div>
 
-                    <small class="ui computer tablet only">Drzava incominga</small>
+                    <small class="ui computer tablet only">@Model.Applicant.University.Country.Name</small>
                 </div>
                 <div class="ui mobile only divider"></div>
             </div>
@@ -252,7 +251,7 @@
                         <div class="item">
                             <div class="content">
                                 <div class="header">
-                                    Informacije
+                                    Information
                                 </div>
                                 <div class="description"><span>Mrka kapa<span class="grayed"> Europe/Warsaw time</span></span></div>
                             </div>
@@ -264,13 +263,17 @@
                 <div class="ui very relaxed list">
                     <div class="item">
                         @Html.HiddenFor(x => x.Applicant.ApplicationUser)
-                        @if (Model.Applicant.Verified == true && Model.Application == null)
+                        @if (Model.Applicant.Verified == true && Model.Application == null && (Model.Timing.From >= DateTime.Now || Model.Timing.To <= DateTime.Now))
+                        {
+                            <button type="submit" class="ui small fluid primary icon button disabled">It is not application period</button>
+                        }
+                        else if (Model.Applicant.Verified == true && Model.Application == null && (Model.Timing.From <= DateTime.Now || Model.Timing.To >= DateTime.Now))
                         {
                             <button type="submit" class="ui small fluid primary icon button">Apply now!</button>
                         }
-                        else  if (Model.Applicant.Verified == false && Model.Application == null)
+                        else if (Model.Applicant.Verified == false && Model.Application == null)
                         {
-                        <button type="submit" class="ui small fluid primary icon disabled button">Verification needed</button>
+                            <button type="submit" class="ui small fluid primary icon disabled button">Verification needed</button>
                         }
                         else if (Model.Applicant.Verified == true && Model.Application != null)
                         {
@@ -290,10 +293,10 @@
                             <i class="top aligned university icon"></i>
                             <div class="content">
                                 <div class="header">
-                                    Application started
+                                    Application period start
                                 </div>
                                 <div class="description">
-                                    1.1.2020.
+                                    @Model.Timing.From
                                 </div>
                             </div>
                         </div>
@@ -301,9 +304,9 @@
                             <i class="top aligned university icon"></i>
                             <div class="content">
                                 <div class="header">
-                                    Application last edited
+                                    Application period end
                                 </div>
-                                <div class="description"><span>1.2.2020.<span class="grayed"> Europe/Warsaw time</span></span></div>
+                                <div class="description"><span>@Model.Timing.To<span class="grayed"> Europe/Mostar time</span></span></div>
                             </div>
                         </div>
                     </div>

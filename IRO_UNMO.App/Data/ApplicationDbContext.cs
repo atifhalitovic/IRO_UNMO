@@ -30,6 +30,8 @@ namespace IRO_UNMO.App.Data
         public DbSet<Nomination> Nomination { get; set; }
         public DbSet<Comment> Comment { get; set; }
         public DbSet<Notification> Notification { get; set; }
+        public DbSet<Timing> Timing { get; set; }
+        public DbSet<Offer> Offer { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

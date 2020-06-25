@@ -14,7 +14,7 @@ namespace IRO_UNMO.App.ViewModels
         public DateTime LastEdited { get; set; }
         public int UniversityId { get; set; }
         public University University { get; set; }
+        public List<Offer> Offers { get; set; }
         public List<SelectListItem> Universities { get; set; }
-        public List<University> Universities2 { get; set; }
     }
 }

@@ -23,6 +23,9 @@ namespace IRO_UNMO.App.Models
         public Documents Documents { get; set; }
         public int? DocumentsId { get; set; }
 
+        public Timing Timing { get; set; }
+        public int? TimingId { get; set; }
+
         public string StatusOfApplication { get; set; }
         public DateTime CreatedApp { get; set; }
         public DateTime LastEdited { get; set; }

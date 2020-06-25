@@ -1,0 +1,117 @@
+﻿@model IRO_UNMO.App.Areas.Admin.ViewModels.EditOffersVM
+@{
+    ViewData["Title"] = "";
+    Layout = "_Layout5";
+    var ID = ViewBag.ID;
+}
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <!--- Site CSS -->
+    <link rel="stylesheet" type="text/css" href="~/dist/components/reset.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/site.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/grid.css">
+    <!--- Component CSS -->
+    <link rel="stylesheet" type="text/css" href="~/dist/components/icon.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/table.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/button.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/transition.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/popup.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/accordion.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/checkbox.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/dropdown.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/checkbox.min.css">
+
+    <script src="~/assets/library/jquery.min.js"></script>
+    <script src="~/assets/library/iframe-content.js"></script>
+    <script type="text/javascript" src="~/dist/components/modal.js"></script>
+    <script type="text/javascript" src="~/dist/components/popup.js"></script>
+    <script type="text/javascript" src="~/dist/components/transition.js"></script>
+    <script type="text/javascript" src="~/dist/components/accordion.js"></script>
+    <script type="text/javascript" src="~/dist/components/checkbox.js"></script>
+    <script type="text/javascript" src="~/dist/components/dropdown.js"></script>
+
+    <script type="text/javascript" src="~/dist/calendar.min.js"></script>
+    <link rel="stylesheet" href="~/dist/calendar.min.css" />
+
+    <style>
+        .ui.compact.segment {
+            width: 850px;
+        }
+    </style>
+</head>
+<body>
+    @if (Model.Offer == null)
+    {
+        <h2 class="ui header">Add offer</h2>
+    }
+
+    else if (Model != null)
+    {
+        <h2 class="ui header">Edit offer</h2>
+    }
+    <div class="ui small equal width form">
+        <form asp-area="admin" asp-controller="offers" asp-action="offer" method="post">
+            @Html.HiddenFor(a => a.Offer.OfferId)
+            <div class="ui compact segment">
+                <div class="fields">
+                    <div class="field">
+                        <label asp-for="@Model.Offer.Start">Date from</label>
+                        <div class="ui calendar" id="passissue">
+                            <div class="ui input left icon">
+                                <i class="calendar icon"></i>
+                                <input asp-for="@Model.Offer.Start" type="text" placeholder="Date">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label asp-for="@Model.Offer.End">Date to</label>
+                        <div class="ui calendar" id="passexpiry">
+                            <div class="ui input left icon">
+                                <i class="calendar icon"></i>
+                                <input asp-for="@Model.Offer.End" type="text" placeholder="Date">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="fields">
+                    <div class="field">
+                        <label asp-for="@Model.Offer.Semester">Semester</label>
+                        @Html.DropDownListFor(model => model.Offer.Semester, Model.Semesters, new { required = "Please choose semester for specific offer" })
+                    </div>
+                    <div class="field">
+                        <label asp-for="@Model.Offer.University">University</label>
+                        @Html.DropDownListFor(model => model.Offer.UniversityId, Model.Universities, new { required = "Please choose university for specific offer" })
+                    </div>
+                </div>
+                <div class="fields">
+                    <div class="field">
+                        <label asp-for="@Model.Offer.Cycles">Study cycles</label>
+                        @Html.DropDownListFor(model => model.Offer.Cycles, Model.Cycles, new { required = "Please choose study cycles for specific offer" })
+                    </div>
+                    <div class="field">
+                        <label asp-for="@Model.Offer.Programmes">Study programmes</label>
+                        @Html.DropDownListFor(model => model.Offer.Programmes, Model.Programmes, new { required = "Please choose study programmes for specific offer" })
+                    </div>
+                </div>
+                <div class="fields">
+                    <div class="field">
+                        <label asp-for="@Model.Offer.Info">Additional info</label>
+                        <input asp-for="@Model.Offer.Info" type="text">
+                    </div>
+                </div>
+                    <button type="submit" class="ui primary button">Save</button>
+</form>
+    </div>
+    <script>
+        $('#passissue').calendar({
+            type: 'date'
+        });
+
+        $('#passexpiry').calendar({
+            type: 'date'
+        });
+    </script>
+</body>
