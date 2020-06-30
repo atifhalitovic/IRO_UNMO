@@ -6,30 +6,33 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Areas\Account\**" />
-    <Compile Remove="Extensions\**" />
-    <Content Remove="Areas\Account\**" />
-    <Content Remove="Extensions\**" />
-    <EmbeddedResource Remove="Areas\Account\**" />
-    <EmbeddedResource Remove="Extensions\**" />
-    <None Remove="Areas\Account\**" />
-    <None Remove="Extensions\**" />
+    <Compile Remove="Views\admin\**" />
+    <Compile Remove="Views\application\**" />
+    <Compile Remove="Views\nomination\**" />
+    <Content Remove="Views\admin\**" />
+    <Content Remove="Views\application\**" />
+    <Content Remove="Views\nomination\**" />
+    <EmbeddedResource Remove="Views\admin\**" />
+    <EmbeddedResource Remove="Views\application\**" />
+    <EmbeddedResource Remove="Views\nomination\**" />
+    <None Remove="Views\admin\**" />
+    <None Remove="Views\application\**" />
+    <None Remove="Views\nomination\**" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Remove="Controllers\AdminController.cs" />
+    <Compile Remove="Controllers\ApplicationController.cs" />
+    <Compile Remove="Controllers\NominationController.cs" />
     <Compile Remove="Migrations\20200327221048_AddDocuments.cs" />
     <Compile Remove="Migrations\20200331203458_AddNomination.cs" />
     <Compile Remove="NotificationComponent.cs" />
-    <Compile Remove="Subscription\IDatabaseSubscriptionInterface.cs" />
     <Compile Remove="Subscription\ILoggedUser.cs" />
     <Compile Remove="Subscription\LoggedUserService.cs" />
-    <Compile Remove="Subscription\NotificationDatabaseSubscription.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Remove="Areas\Admin\Views\Timing\timing.cshtml" />
-    <Content Remove="Views\application\ViewDocs.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -76,17 +79,93 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\Account\Data\" />
+    <Folder Include="Areas\Account\Models\" />
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Applicant\Data\" />
     <Folder Include="Areas\Applicant\Models\" />
     <Folder Include="Areas\Identity\Services\" />
-    <Folder Include="Views\admin\" />
     <Folder Include="wwwroot\lib\signalr\dist\browser\" />
     <Folder Include="wwwroot\uploads\" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Areas\Account\Views\Home\AccessDenied.cshtml" />
+    <None Include="Areas\Account\Views\Home\details.cshtml" />
+    <None Include="Areas\Account\Views\Home\ForgotUniqueCode.cshtml" />
+    <None Include="Areas\Account\Views\Home\incoming.cshtml" />
+    <None Include="Areas\Account\Views\Home\login.cshtml" />
+    <None Include="Areas\Account\Views\Home\outgoing.cshtml" />
+    <None Include="Areas\Account\Views\Home\type.cshtml" />
+    <None Include="Areas\Admin\Views\Applicants\index.cshtml" />
+    <None Include="Areas\Admin\Views\Applicants\review.cshtml" />
+    <None Include="Areas\Admin\Views\Application\docs.cshtml" />
+    <None Include="Areas\Admin\Views\Application\view.cshtml" />
+    <None Include="Areas\Admin\Views\Application\view1.cshtml" />
+    <None Include="Areas\Admin\Views\Home\Index.cshtml" />
+    <None Include="Areas\Admin\Views\Home\partners.cshtml" />
+    <None Include="Areas\Admin\Views\News\index.cshtml" />
+    <None Include="Areas\Admin\Views\nomination\view.cshtml" />
+    <None Include="Areas\Admin\Views\offers\index.cshtml" />
+    <None Include="Areas\Admin\Views\offers\offer.cshtml" />
+    <None Include="Areas\Admin\Views\partners\index.cshtml" />
+    <None Include="Areas\Admin\Views\partners\partner.cshtml" />
+    <None Include="Areas\Admin\Views\Timing\index.cshtml" />
+    <None Include="Areas\Admin\Views\_ViewImports.cshtml" />
+    <None Include="Areas\Admin\Views\_ViewStart.cshtml" />
+    <None Include="Areas\Applicant\Views\application\create.cshtml" />
+    <None Include="Areas\Applicant\Views\application\docs - Copy.cshtml" />
+    <None Include="Areas\Applicant\Views\application\docs.cshtml" />
+    <None Include="Areas\Applicant\Views\application\edit - Copy.cshtml" />
+    <None Include="Areas\Applicant\Views\application\edit.cshtml" />
+    <None Include="Areas\Applicant\Views\application\view - Copy.cshtml" />
+    <None Include="Areas\Applicant\Views\application\view.cshtml" />
+    <None Include="Areas\Applicant\Views\application\ViewDocs.cshtml" />
+    <None Include="Areas\Applicant\Views\Home\details.cshtml" />
+    <None Include="Areas\Applicant\Views\nomination\create.cshtml" />
+    <None Include="Areas\Applicant\Views\nomination\docs.cshtml" />
+    <None Include="Areas\Applicant\Views\nomination\view.cshtml" />
+    <None Include="Areas\Applicant\Views\nomination\ViewNom - Copy.cshtml" />
+    <None Include="Areas\Applicant\Views\_ViewImports.cshtml" />
+    <None Include="Areas\Applicant\Views\_ViewStart.cshtml" />
+    <None Include="Areas\Identity\Pages\Account\AccessDenied.cshtml" />
+    <None Include="Areas\Identity\Pages\Account\ForgotPassword.cshtml" />
+    <None Include="Areas\Identity\Pages\Account\Login.cshtml" />
+    <None Include="Areas\Identity\Pages\Account\Logout.cshtml" />
+    <None Include="Areas\Identity\Pages\Account\Manage\Index.cshtml" />
+    <None Include="Areas\Identity\Pages\Account\Manage\_ViewImports.cshtml" />
+    <None Include="Areas\Identity\Pages\Account\Register.cshtml" />
+    <None Include="Areas\Identity\Pages\Account\_ViewImports.cshtml" />
+    <None Include="Areas\Identity\Pages\_ValidationScriptsPartial.cshtml" />
+    <None Include="Areas\Identity\Pages\_ViewImports.cshtml" />
+    <None Include="Areas\Identity\Pages\_ViewStart.cshtml" />
+    <None Include="Views\account\admin.cshtml" />
+    <None Include="Views\account\code.cshtml" />
+    <None Include="Views\account\denied.cshtml" />
+    <None Include="Views\account\details - Copy.cshtml" />
+    <None Include="Views\account\details.cshtml" />
+    <None Include="Views\account\incoming.cshtml" />
+    <None Include="Views\account\login - Copy.cshtml" />
+    <None Include="Views\account\login.cshtml" />
+    <None Include="Views\account\outgoing.cshtml" />
+    <None Include="Views\account\type.cshtml" />
+    <None Include="Views\home\index.cshtml" />
+    <None Include="Views\Shared\AdminLayout.cshtml" />
+    <None Include="Views\Shared\Error.cshtml" />
+    <None Include="Views\Shared\_CookieConsentPartial.cshtml" />
+    <None Include="Views\Shared\_Layout.cshtml" />
+    <None Include="Views\Shared\_Layout1.cshtml" />
+    <None Include="Views\Shared\_Layout11.cshtml" />
+    <None Include="Views\Shared\_Layout2.cshtml" />
+    <None Include="Views\Shared\_Layout3.cshtml" />
+    <None Include="Views\Shared\_Layout5 - Copy.cshtml" />
+    <None Include="Views\Shared\_Layout5.cshtml" />
+    <None Include="Views\Shared\_Layout6.cshtml" />
+    <None Include="Views\Shared\_LoginPartial.cshtml" />
+    <None Include="Views\Shared\_ValidationScriptsPartial.cshtml" />
+    <None Include="Views\_ViewImports.cshtml" />
+    <None Include="Views\_ViewStart.cshtml" />
     <None Include="wwwroot\assets\library\iframe-content.js" />
     <None Include="wwwroot\assets\library\iframe.js" />
     <None Include="wwwroot\assets\library\jquery.min.js" />
@@ -543,166 +622,6 @@
     <None Include="wwwroot\src\_site\views\statistic.variables" />
     <None Include="wwwroot\unmo_logo.png" />
     <None Include="wwwroot\unmo_preloader.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Update="Areas\Admin\Views\Applicants\index.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Areas\Admin\Views\Application\docs.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Areas\Admin\Views\Application\view.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Areas\Admin\Views\Application\view1.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Areas\Admin\Views\Home\partners.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Areas\Admin\Views\Home\Index.cshtml">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Areas\Admin\Views\News\index.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Areas\Admin\Views\nomination\view.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Areas\Admin\Views\offers\index.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Areas\Admin\Views\offers\offer.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Areas\Admin\Views\Timing\index.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Areas\Admin\Views\partners\partner.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Areas\Admin\Views\Applicants\review.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Areas\Admin\Views\partners\index.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Areas\Admin\Views\_ViewImports.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Areas\Admin\Views\_ViewStart.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Areas\Applicant\Views\application\create.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Areas\Applicant\Views\application\docs - Copy.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Areas\Applicant\Views\application\docs.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Areas\Applicant\Views\application\edit - Copy.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Areas\Applicant\Views\application\edit.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Areas\Applicant\Views\application\view - Copy.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Areas\Applicant\Views\application\view.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Areas\Applicant\Views\Home\details.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Areas\Applicant\Views\nomination\create.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Areas\Applicant\Views\nomination\docs.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Areas\Applicant\Views\nomination\view.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Areas\Applicant\Views\nomination\ViewNom - Copy.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Areas\Applicant\Views\_ViewImports.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Areas\Applicant\Views\_ViewStart.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Views\account\admin.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Views\account\type.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Views\account\login - Copy.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Views\account\outgoing.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Views\account\code.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Views\application\docs.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Views\application\edit - Copy.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Views\application\view.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Views\application\view - Copy.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Views\application\view1.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Views\nomination\create.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Views\nomination\docs.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Views\nomination\ViewNom - Copy.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Views\nomination\view.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Views\Shared\_Layout.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Views\Shared\AdminLayout.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Views\Shared\_Layout5 - Copy.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Views\Shared\_Layout6.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Views\Shared\_Layout5.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Views\Shared\_Layout3.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Views\Shared\_Layout11.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Views\Shared\_Layout2.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
   </ItemGroup>
 
 </Project>

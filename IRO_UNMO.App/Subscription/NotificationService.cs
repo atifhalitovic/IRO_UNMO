@@ -31,7 +31,8 @@ namespace IRO_UNMO.App.Subscription
             //message.Picture = user.Picture;
             msg.User = user.Name + " " + user.Surname;
             msg.Seen = false;
-            msg.Time = vrijeme.ToString("hh:mm:ss");
+            //msg.Time = vrijeme.ToString("hh:mm:ss");
+            msg.Time = vrijeme.ToShortDateString();//("hh:mm:ss");
             var temp = new Notification()
             {
                 Seen = msg.Seen,

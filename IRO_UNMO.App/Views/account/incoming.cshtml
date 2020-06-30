@@ -49,6 +49,10 @@
                             <label>Last name</label>
                             <input asp-for="@Model.Surname" type="text" min="2" max="20" autocomplete="off" required>
                         </div>
+                        <div class="field">
+                            <label asp-for="@Model.TypeOfApplication">Applicant type</label>
+                            @Html.DropDownListFor(model => model.TypeOfApplication, Model.TypesOfApplicant)
+                        </div>
                     </div>
                     <div class="fields">
                         <div class="field">

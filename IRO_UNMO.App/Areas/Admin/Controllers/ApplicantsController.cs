@@ -60,7 +60,7 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
             {
                 Applicant = _db.Applicant.Where(x => x.ApplicantId == id).Include(a => a.ApplicationUser).ThenInclude(b => b.Country).Include(b => b.University).ThenInclude(q => q.Country).FirstOrDefault(),
                 Application = _db.Application.Where(a => a.ApplicantId == id).Include(b => b.Infos).ThenInclude(q => q.Citizenship).Include(c => c.Contacts).ThenInclude(q => q.Country).Include(d => d.HomeInstitutions).Include(e => e.Others).FirstOrDefault(),
-                Nominations = _db.Nomination.Where(a => a.ApplicantId == id).Include(b => b.University).ToList(),
+                Nominations = _db.Nomination.Where(a => a.ApplicantId == id).Include(b => b.Offer).ThenInclude(c=>c.University).ThenInclude(d=>d.Country).ToList(),
                 Timing = _db.Timing.FirstOrDefault()
             };
             return View(vm);
@@ -80,7 +80,7 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
             _notificationService.sendToApplicant(id, id, new IRO_UNMO.App.Subscription.NotificationVM()
             {
                 Message = "Your account verification has been changed. Now you are " + status,
-                Url = "#"
+                Url = "/applicant/home/details?id=" + id
             });
             return RedirectToAction("review", "applicants", new { id = v.ApplicantId });
         }

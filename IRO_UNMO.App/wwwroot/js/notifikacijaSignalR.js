@@ -38,19 +38,18 @@ function generateNotification(obj) {
     if (!obj.seen) {
         o = "style='background-color:#d6e6ff'";
     }
-    var element1 = 
+    var element2 = 
         '<a onClick="deselectNotification(' + obj.notificationId + ')" class="item" href="' + obj.url + '">'+
         '<div class="content">' + '<a class="header">' + obj.user  + '</a>' + 
         '<span class="time"> ' +  obj.time + '</span>' + 
         '<div class="description">' + obj.message + '</div>' + 
         '<div class="extra">Thanks you for your support</div></div></div></a>';
 
-    //var element = '<a ' + o + ' onClick="deselectNotifikaciju(' + obj.notificationId + ')" class="item" href="' + obj.url
-    //    + '">' +
-    //    ' <div class="font-weight-bold">' +
-    //    '<div class="text-truncate">' + obj.message + '</div>' +
-    //    '<div class="small text-gray-500">' + obj.user + ' · ' + obj.time + '</div>' +
-    //    '</div></a>';
+    var element1 =
+        '<a onClick="deselectNotification(' + obj.notificationId + ')" class="item" href="' + obj.url + '">' +
+        '<div class="content">' + '<a class="header">' + obj.user + '</a>' +
+        '<span class="date"> ' + obj.time + '</span>' +
+        '<div class="description">' + obj.message + '</div></div></h4><div class="ui divider"></div>';
 
     return element1;
 }

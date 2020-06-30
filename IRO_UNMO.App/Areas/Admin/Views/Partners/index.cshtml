@@ -55,8 +55,8 @@
                     <td>@x.Code</td>
                     <td>@x.Country.Name</td>
                     <td>
-                        <a asp-controller="partners" asp-action="partner" asp-route-id="@x.UniversityId" class="ui basic primary button">Edit</a>
-                        <a asp-action="delete" asp-controller="partners" class="ui right floated basic red button" asp-route-id="@x.UniversityId" id="test">Delete</a>
+                        <a asp-action="partner" asp-controller="partners"  asp-route-id="@x.UniversityId" class="ui basic primary button">Edit</a>
+                        <a asp-action="delete" asp-controller="partners" class="ui basic red button" asp-route-id="@x.UniversityId" id="test">Delete</a>
                         @*<div class="ui modal test">
                             <i class="close icon"></i>
                             <div class="ui small header">

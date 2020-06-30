@@ -45,7 +45,9 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
         public IActionResult Index()
         {
             OffersVM vm = new OffersVM();
-            vm.Offers = _db.Offer.Include(a => a.University).ThenInclude(b=>b.Country).OrderBy(a=>a.Start).ToList();
+            vm.Offers = _db.Offer.Include(a => a.University).ThenInclude(b=>b.Country).Where(x => x.Start <= DateTime.Now && x.End >= DateTime.Now).OrderBy(a=>a.Start).ToList();
+            vm.UOffers = _db.Offer.Include(a => a.University).ThenInclude(b=>b.Country).Where(x=>x.Start > DateTime.Now).OrderBy(y => y.Start).ToList();
+            vm.EOffers = _db.Offer.Include(a => a.University).ThenInclude(b=>b.Country).Where(x=>x.Start <= DateTime.Now && x.End <= DateTime.Now).OrderBy(y => y.Start).ToList();
             return View(vm);
         }
 
@@ -144,6 +146,7 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
             {
                 vm.OfferId = id;
                 vm.Offer = _db.Offer.Where(a => a.OfferId == id).Include(x => x.University).ThenInclude(c=>c.Country).FirstOrDefault();
+                vm.Nominations = _db.Nomination.Where(a => a.OfferId == id).Include(b=>b.Applicant).ThenInclude(c=>c.ApplicationUser).ToList();
                 vm.Universities = _db.University.Include(a=>a.Country).Select(x => new SelectListItem()
                 {
                     Value = x.UniversityId.ToString(),

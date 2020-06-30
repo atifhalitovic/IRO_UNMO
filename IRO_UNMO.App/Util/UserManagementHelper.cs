@@ -48,6 +48,13 @@ namespace IRO_UNMO.Util
                 Text = "Staff"
             });
 
+            model.TypesOfApplicant.Add(new SelectListItem()
+            {
+                Value = "Other",
+                Text = "Other"
+            });
+
+
             model.StudyCycles = new List<SelectListItem>();
 
             model.StudyCycles.Add(new SelectListItem()

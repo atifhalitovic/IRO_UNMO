@@ -5,40 +5,6 @@
 }
 <h2 class="ui header">Basic profile info</h2>
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <!--- Site CSS -->
-    <link rel="stylesheet" type="text/css" href="~/dist/components/reset.css">
-    <link rel="stylesheet" type="text/css" href="~/dist/components/site.css">
-    <link rel="stylesheet" type="text/css" href="~/dist/components/grid.css">
-    <!--- Component CSS -->
-    <link rel="stylesheet" type="text/css" href="~/dist/components/icon.css">
-    <link rel="stylesheet" type="text/css" href="~/dist/components/table.css">
-    <link rel="stylesheet" type="text/css" href="~/dist/components/button.css">
-    <link rel="stylesheet" type="text/css" href="~/dist/components/transition.css">
-    <link rel="stylesheet" type="text/css" href="~/dist/components/popup.css">
-    <link rel="stylesheet" type="text/css" href="~/dist/components/accordion.css">
-    <!--- Component JS -->
-    <script src="~/lib/jquery/dist/jquery.js" type="text/javascript"></script>
-    <script src="~/lib/jquery/dist/jquery.min.js" type="text/javascript"></script>
-    <script src="~/js/signalr.js"></script>
-    <script src="~/js/notifikacijaSignalR.js"></script>
-    <script src="~/assets/library/iframe-content.js"></script>
-
-    <script type="text/javascript" src="~/dist/components/popup.js"></script>
-    <script type="text/javascript" src="~/dist/components/transition.js"></script>
-    <script type="text/javascript" src="~/dist/components/accordion.js"></script>
-    <!--- Component JS -->
-    <link rel="stylesheet" type="text/css" href="~/css/semantic.min.css">
-
-    <script>
-        $('.ui.teal.label')
-            .popup({
-                on: 'click'
-            });
-    </script>
-
     <!--- Show Names -->
     @*<script src="~/assets/show-examples.js"></script>*@
     <!--- Example Javascript -->
@@ -83,9 +49,9 @@
     </script>
 
     <style>
-        .ui.card.nom {
+        /*.ui.card.nom {
             background-color: #93f87b;
-        }
+        }*/
 
         .ui.button.zeleni {
             background-color: #93f87b;
@@ -94,281 +60,264 @@
     </style>
 </head>
 <body>
-@if (Model.Applicant.UniversityId != 2)
-{
-    <form asp-action="create" method="post">
-    @Html.HiddenFor(x => x.Applicant.ApplicantId)
-    <div id='container' style='height: 410px; width: 500px'>
-        <table class="ui small definition table">
-            <tbody>
-            <tr>
-                <td class="five wide column">Full name</td>
-                <td class="align right">@Model.Applicant.ApplicationUser.Name @Model.Applicant.ApplicationUser.Surname</td>
-            </tr>
-            <tr>
-                <td>Email</td>
-                <td>@Model.Applicant.ApplicationUser.Email</td>
-            </tr>
-            <tr>
-                <td>Phone number</td>
-                <td>@Model.Applicant.ApplicationUser.PhoneNumber</td>
-            </tr>
-            <tr>
-                <td>Nationality</td>
-                <td>
-                    @Model.Applicant.ApplicationUser.Country.Name
-                </td>
-            </tr>
-            <tr>
-                <td>University</td>
-                <td>@Model.Applicant.University.Name</td>
-            </tr>
-            <tr>
-                <td>Study field</td>
-                <td>@Model.Applicant.StudyField</td>
-            </tr>
-            <tr>
-                <td>Study cycle</td>
-                <td>@Model.Applicant.StudyCycle</td>
-            </tr>
-            <tr>
-                <td>Student/staff</td>
-                <td>TO DO !!! TO DO @Model.Applicant.TypeOfApplication</td>
-            </tr>
-            <tr>
-                <td>Account created</td>
-                <td>@Model.Applicant.CreatedProfile</td>
-            </tr>
-            <tr>
-                <td>Account verification</td>
-                <td>@Model.Applicant.Verified.ToString()</td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="ui cards">
-        <div class="ui card">
-            <div class="content">
-                <div class="header">
-                    <p>Account verification</p>
-                </div>
-                <div class="meta">
-                    Account verification means nomination which is a document made through email communication
-                    from your home coordinator who confirms that the student/staff was
-                    selected by your institution to carry out a study/teaching/training
-                    period at UNMO. Your home university needs to send us candidates’
-                    data (name, surname, study field, study cycle, email, and preferably
-                    learning/mobility agreement) by given deadlines.
-                </div>
+    @if (Model.Applicant.UniversityId != 2)
+    {
+        <form asp-action="create" method="post">
+            @Html.HiddenFor(x => x.Applicant.ApplicantId)
+            <div id='container' style='height: 410px; width: 500px'>
+                <table class="ui small definition table">
+                    <tbody>
+                        <tr>
+                            <td class="five wide column">Full name</td>
+                            <td class="align right">@Model.Applicant.ApplicationUser.Name @Model.Applicant.ApplicationUser.Surname</td>
+                        </tr>
+                        <tr>
+                            <td>E-mail</td>
+                            <td>@Model.Applicant.ApplicationUser.Email</td>
+                        </tr>
+                        <tr>
+                            <td>Phone number</td>
+                            <td>@Model.Applicant.ApplicationUser.PhoneNumber</td>
+                        </tr>
+                        <tr>
+                            <td>Nationality</td>
+                            <td>@Model.Applicant.ApplicationUser.Country.Name</td>
+                        </tr>
+                        <tr>
+                            <td>University</td>
+                            <td>@Model.Applicant.University.Name</td>
+                        </tr>
+                        <tr>
+                            <td>Study field</td>
+                            <td>@Model.Applicant.StudyField</td>
+                        </tr>
+                        <tr>
+                            <td>Study cycle</td>
+                            <td>@Model.Applicant.StudyCycle</td>
+                        </tr>
+                        <tr>
+                            <td>Student/staff</td>
+                            <td>@Model.Applicant.TypeOfApplication</td>
+                        </tr>
+                        <tr>
+                            <td>Account created</td>
+                            <td>@Model.Applicant.CreatedProfile</td>
+                        </tr>
+                        <tr>
+                            <td>Account verification</td>
+                            <td>@Model.Applicant.Verified.ToString()</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-        </div>
-        <div class="ui card">
-            <div class="content">
-                <div class="header">
-                    <p>Student nomination</p>
-                </div>
-                <div class="meta">
-                    Students whose nomination is approved by both home and
-                    host university will receive an email with clear instruction
-                    regarding the online application (below), required documents, deadlines and temporary
-                    residence.
-                </div>
-            </div>
-        </div>
-        <div class="ui card">
-            <div class="content">
-                <div class="header">
-                    <p>Deadline</p>
-                </div>
-                <div class="meta">
-                    The students will have one month to complete the necessary
-                    procedures to be registered at UNMO.
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="ui raised result segment">
-        <div class="ui three column stackable grid">
-            <div class="four wide column">
-                <p>Dzemal Bijedic University of Mostar</p>
-                <div>
-                    <div class="ui divider"></div>
-                    <p>Available for applicants from:</p>
-                    <div class="ui computer tablet only">
-                        <a><img src="https://img.cdn.dreamapply.com/eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJkcmVhbS1hcHBseSIsImF1ZCI6ImRyZWFtLWltYWdlIiwicGxkIjp7InBhdGgiOiJkcmVhbS1hcHBseTpzaGFyZDMzOFwvaW5zdGl0dXRpb25fbG9nb3NcLzEzMTAub241c2hjIiwidHJhbnNmb3JtYXRpb25zIjpbeyJuYW1lIjoiZml0IiwicGFyYW1zIjp7IndpZHRoIjoiMTIwIiwiaGVpZ2h0IjoiNDIiLCJxdWFsaXR5IjoiOTUiLCJleHRlbmQiOiIyNTUsMjU1LDI1NSJ9fV0sImNhY2hlIjoibWF4LWFnZT0zMTUzNjAwMCwgcHVibGljIiwib3V0cHV0X2Zvcm1hdCI6InNhbWUiLCJzZGtfdmVyc2lvbiI6IjEuMCJ9fQ.Fhbl7nvMffj-cF9WhCHsYKmYSYOemJDRduIf-2Yohco__jXRaWR5_88LN2_-gc7IOHQMH3Jp36Q3dB3q5t8knWVWRdiIQim0PFrMRzZyyoQ_guY9G4EgHdmAMNL9kkNsPriDAVP71qzVXcXdVg-s8-fJqBOc_ovcgiaVaHOSgRVByhSPud_q1-HJ8mF7EURKBUy1yupsSR8CIHMYxqtUT4Ce-EaSgsVu1ttYrNgJ6ALmr0ZK0VCmpuYP1WRONd1nN1TVzHrQHn_8yhTDCjMlIVSWB72jtFIxXWNoEiO20lGc9K5W9Q-YQ6H00_JsGxOSL_apnDv42A9NGLrgk0_zsA"/></a>
+            <div class="ui cards">
+                <div class="ui card">
+                    <div class="content">
+                        <div class="header">
+                            <p>Account verification</p>
+                        </div>
+                        <div class="meta">
+                            Account verification means nomination which is a document made through email communication
+                            from your home coordinator who confirms that the student/staff was
+                            selected by your institution to carry out a study/teaching/training
+                            period at UNMO. Your home university needs to send us candidates’
+                            data (name, surname, study field, study cycle, email, and preferably
+                            learning/mobility agreement) by given deadlines.
+                        </div>
                     </div>
-                    <div>
-                        <i class="ui university icon mobile only"></i>
-                        <a>@Model.Applicant.University.Name</a>
+                </div>
+                <div class="ui card">
+                    <div class="content">
+                        <div class="header">
+                            <p>Student nomination</p>
+                        </div>
+                        <div class="meta">
+                            Students whose nomination is approved by both home and
+                            host university will receive an email with clear instruction
+                            regarding the online application (below), required documents, deadlines and temporary
+                            residence.
+                        </div>
+                    </div>
+                </div>
+                <div class="ui card">
+                    <div class="content">
+                        <div class="header">
+                            <p>Deadline</p>
+                        </div>
+                        <div class="meta">
+                            The students will have one month to complete the necessary
+                            procedures to be registered at UNMO.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ui raised result segment">
+                <div class="ui three column stackable grid">
+                    <div class="four wide column">
+                        <p>Dzemal Bijedic University of Mostar</p>
+                        <div>
+                            <div class="ui divider"></div>
+                            <p>Available for applicants from:</p>
+                            <div class="ui computer tablet only">
+                                <a><img src="https://img.cdn.dreamapply.com/eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJkcmVhbS1hcHBseSIsImF1ZCI6ImRyZWFtLWltYWdlIiwicGxkIjp7InBhdGgiOiJkcmVhbS1hcHBseTpzaGFyZDMzOFwvaW5zdGl0dXRpb25fbG9nb3NcLzEzMTAub241c2hjIiwidHJhbnNmb3JtYXRpb25zIjpbeyJuYW1lIjoiZml0IiwicGFyYW1zIjp7IndpZHRoIjoiMTIwIiwiaGVpZ2h0IjoiNDIiLCJxdWFsaXR5IjoiOTUiLCJleHRlbmQiOiIyNTUsMjU1LDI1NSJ9fV0sImNhY2hlIjoibWF4LWFnZT0zMTUzNjAwMCwgcHVibGljIiwib3V0cHV0X2Zvcm1hdCI6InNhbWUiLCJzZGtfdmVyc2lvbiI6IjEuMCJ9fQ.Fhbl7nvMffj-cF9WhCHsYKmYSYOemJDRduIf-2Yohco__jXRaWR5_88LN2_-gc7IOHQMH3Jp36Q3dB3q5t8knWVWRdiIQim0PFrMRzZyyoQ_guY9G4EgHdmAMNL9kkNsPriDAVP71qzVXcXdVg-s8-fJqBOc_ovcgiaVaHOSgRVByhSPud_q1-HJ8mF7EURKBUy1yupsSR8CIHMYxqtUT4Ce-EaSgsVu1ttYrNgJ6ALmr0ZK0VCmpuYP1WRONd1nN1TVzHrQHn_8yhTDCjMlIVSWB72jtFIxXWNoEiO20lGc9K5W9Q-YQ6H00_JsGxOSL_apnDv42A9NGLrgk0_zsA" /></a>
+                            </div>
+                            <div>
+                                <i class="ui university icon mobile only"></i>
+                                <a>@Model.Applicant.University.Name</a>
+                            </div>
+
+                            <small class="ui computer tablet only">@Model.Applicant.University.Country.Name</small>
+                        </div>
+                        <div class="ui mobile only divider"></div>
                     </div>
 
-                    <small class="ui computer tablet only">@Model.Applicant.University.Country.Name</small>
-                </div>
-                <div class="ui mobile only divider"></div>
-            </div>
-
-            <div class="seven wide column" style="padding-bottom: 3em">
-                <a>Incoming mobility (1 semester)</a>
-                @if (Model.Applicant.Verified && Model.Application != null)
-                {
-                    <div class="ui tiny list">
-                        <div class="item">
-                            <i class="top aligned folder icon"></i>
-                            <div class="content">
-                                <div class="header">
-                                    Created
-                                </div>
-                                <div class="description">
-                                    @Model.Application.CreatedApp
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <i class="top aligned university icon"></i>
-                            <div class="content">
-                                <div class="header">
-                                    Last change
-                                </div>
-                                <div class="description"><span>@Model.Application.LastEdited<span class="grayed"> Europe/Mostar time</span></span></div>
-                            </div>
-                        </div>
-                    </div>
-                }
-                else
-                {
-                    <p>Languages</p>
-                    <div class="ui tiny list">
-                        <div class="item">
-                            <div class="content">
-                                <div class="header">
-                                    Application started
-                                </div>
-                                <div class="description">
-                                    Mrka kapa
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="content">
-                                <div class="header">
-                                    Information
-                                </div>
-                                <div class="description"><span>Mrka kapa<span class="grayed"> Europe/Warsaw time</span></span></div>
-                            </div>
-                        </div>
-                    </div>
-                }
-            </div>
-            <div class="five wide apply column">
-                <div class="ui very relaxed list">
-                    <div class="item">
-                        @Html.HiddenFor(x => x.Applicant.ApplicationUser)
-                        @if (Model.Applicant.Verified == true && Model.Application == null && (Model.Timing.From >= DateTime.Now || Model.Timing.To <= DateTime.Now))
+                    <div class="seven wide column" style="padding-bottom: 3em">
+                        <a>Incoming mobility (1 semester)</a>
+                        @if (Model.Applicant.Verified && Model.Application != null)
                         {
-                            <button type="submit" class="ui small fluid primary icon button disabled">It is not application period</button>
-                        }
-                        else if (Model.Applicant.Verified == true && Model.Application == null && (Model.Timing.From <= DateTime.Now || Model.Timing.To >= DateTime.Now))
-                        {
-                            <button type="submit" class="ui small fluid primary icon button">Apply now!</button>
-                        }
-                        else if (Model.Applicant.Verified == false && Model.Application == null)
-                        {
-                            <button type="submit" class="ui small fluid primary icon disabled button">Verification needed</button>
-                        }
-                        else if (Model.Applicant.Verified == true && Model.Application != null)
-                        {
-                            <a asp-action="edit" asp-controller="application" asp-route-id="@Model.Application.ApplicationId" class="ui basic black button"><i class="address card outline icon"></i>Edit application</a>
-                            <p></p>
-                            <a asp-action="docs" asp-controller="application" asp-route-id="@Model.Application.ApplicationId" class="ui basic black button"><i class="file icon"></i>Edit documents</a>
-                            <p></p>
-                            <a asp-action="view" asp-controller="application" asp-route-id="@Model.Application.ApplicationId" class="ui basic black button"><i class="eye"></i>View complete application</a>
-                        }
-                    </div>
-                </div>
-                @if (Model.Application == null)
-                {
-
-                    <div class="ui tiny list">
-                        <div class="item">
-                            <i class="top aligned university icon"></i>
-                            <div class="content">
-                                <div class="header">
-                                    Application period start
+                            <p>Information</p>
+                            <div class="ui tiny list">
+                                <div class="item">
+                                    <i class="top aligned folder large icon"></i>
+                                    <div class="content">
+                                        <div class="header">
+                                            Created
+                                        </div>
+                                        <div class="description">
+                                            @Model.Application.CreatedApp
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="description">
-                                    @Model.Timing.From
+                                <div class="item">
+                                    <i class="top aligned university large icon"></i>
+                                    <div class="content">
+                                        <div class="header">
+                                            Last change
+                                        </div>
+                                        <div class="description"><span>@Model.Application.LastEdited<span class="grayed"> Europe/Mostar time</span></span></div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="item">
-                            <i class="top aligned university icon"></i>
-                            <div class="content">
-                                <div class="header">
-                                    Application period end
-                                </div>
-                                <div class="description"><span>@Model.Timing.To<span class="grayed"> Europe/Mostar time</span></span></div>
-                            </div>
-                        </div>
-                    </div>
-                }
-
-            </div>
-        </div>
-    </div>
-    </form>
-        @*<div class="ui card nom">
-            <div class="content">
-                <div class="header">
-                    <p>Active application</p>
-                </div>
-                @if (Model.Applicant.Verified == true && Model.Application != null)
-                {
-                    <div class="meta">
-                        <span>Last change: @Model.Application.LastEdited</span>
-                        <p></p>
-                        <p></p>
-                        <p></p>
-                        @*// if(userManager kurac palac == admin bez ova dvaa)
-                        <a asp-action="edit" asp-controller="application" asp-route-id="@Model.Application.ApplicationId" class="ui basic black button"><i class="address card outline icon"></i>Edit application</a>
-                        <p></p>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <a asp-action="docs" asp-controller="application" asp-route-id="@Model.Application.ApplicationId" class="ui basic black button"><i class="file icon"></i>Edit documents</a>
-                            </div>
-                        </div>
-                        <p></p>
-                        @if (Model.Application.Contacts.CountryId != null)
-                        {
-                            <a asp-action="view" asp-controller="application" asp-route-id="@Model.Application.ApplicationId" class="ui basic black button"><i class="eye"></i>View complete application</a>
                         }
                         else
                         {
-                            <a asp-action="view" asp-controller="application" asp-route-id="@Model.Application.ApplicationId" class="ui basic green disabled button"><i class="eye"></i>View complete application</a>
+                            <div class="seven wide column" style="padding-bottom: 3em">
+                                <p></p>
+                                <h5>Information</h5>
+                                <p>Study cycles: bachelor, master, doctoral</p>
+                                <p>Study programmes: <a href="https://iro.unmo.ba/ba/incoming/offer-for-incoming-students/">Offer for incoming students</a></p>
+                            </div>
                         }
                     </div>
-                }
-                else if (Model.Applicant.Verified == false && Model.Application == null)
-                {
-                    <p>You can't create application because your account is unverified.</p>
-                }
-                else
-                {
-                    <p>You still didn't create the application.</p>
-                }
+                    <div class="five wide apply column">
+                        <div class="ui very relaxed list">
+                            <div class="item">
+                                @Html.HiddenFor(x => x.Applicant.ApplicationUser)
+                                @if (Model.Applicant.Verified == true && Model.Application == null && (Model.Timing.From >= DateTime.Now || Model.Timing.To <= DateTime.Now))
+                                {
+                                    <button type="submit" class="ui small fluid primary icon button disabled">It's not application period</button>
+                                }
+                                else if (Model.Applicant.Verified == true && Model.Application == null && (Model.Timing.From <= DateTime.Now || Model.Timing.To >= DateTime.Now))
+                                {
+                                    <button type="submit" class="ui small fluid primary icon button">Apply now!</button>
+                                }
+                                else if (Model.Applicant.Verified == false && Model.Application == null)
+                                {
+                                    <button type="submit" class="ui small fluid primary icon disabled button">Verification needed</button>
+                                }
+                                else if (Model.Applicant.Verified == true && Model.Application != null)
+                                {
+                                    <a asp-action="edit" asp-controller="application" asp-route-id="@Model.Application.ApplicationId" class="ui basic black button"><i class="address card outline icon"></i>Edit application</a>
+                                    <p></p>
+                                    <a asp-action="docs" asp-controller="application" asp-route-id="@Model.Application.ApplicationId" class="ui basic black button"><i class="file icon"></i>Edit documents</a>
+                                    <p></p>
+                                    <a asp-action="view" asp-controller="application" asp-route-id="@Model.Application.ApplicationId" class="ui basic black button"><i class="eye"></i>View complete application</a>
+                                }
+                            </div>
+                        </div>
+                        @if (Model.Application == null)
+                        {
+                            <div class="ui tiny list">
+                                <div class="item">
+                                    <i class="top aligned university large icon"></i>
+                                    <div class="content">
+                                        <div class="header">
+                                            Application start
+                                        </div>
+                                        <div class="description">
+                                            @Model.Timing.From.ToShortDateString()
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <i class="top aligned university large icon"></i>
+                                    <div class="content">
+                                        <div class="header">
+                                            Nomination deadline
+                                        </div>
+                                        <div class="description">@Model.Timing.To.ToShortDateString()</div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                </div>
             </div>
-            @Html.HiddenFor(x => x.Applicant.ApplicationUser)
-            @if (Model.Applicant.Verified == true && Model.Application == null)
-            {
-                <a asp-action="create" asp-controller="application" asp-route-id="@Model.Applicant.ApplicationUser.Id" class="ui button secondary black">Create new application</a>
-            }
-            else if (Model.Applicant.Verified == false && Model.Application != null)
-            {
-                <a asp-action="create" asp-controller="application" asp-route-id="@Model.Applicant.ApplicationUser.Id" class="ui button secondary black disabled">Create new application</a>
-            }
-        </div>*@
-        }
-        else
-        {
+        </form>
+        @*<div class="ui card nom">
+                <div class="content">
+                    <div class="header">
+                        <p>Active application</p>
+                    </div>
+                    @if (Model.Applicant.Verified == true && Model.Application != null)
+                    {
+                        <div class="meta">
+                            <span>Last change: @Model.Application.LastEdited</span>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            @*// if(userManager kurac palac == admin bez ova dvaa)
+                            <a asp-action="edit" asp-controller="application" asp-route-id="@Model.Application.ApplicationId" class="ui basic black button"><i class="address card outline icon"></i>Edit application</a>
+                            <p></p>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <a asp-action="docs" asp-controller="application" asp-route-id="@Model.Application.ApplicationId" class="ui basic black button"><i class="file icon"></i>Edit documents</a>
+                                </div>
+                            </div>
+                            <p></p>
+                            @if (Model.Application.Contacts.CountryId != null)
+                            {
+                                <a asp-action="view" asp-controller="application" asp-route-id="@Model.Application.ApplicationId" class="ui basic black button"><i class="eye"></i>View complete application</a>
+                            }
+                            else
+                            {
+                                <a asp-action="view" asp-controller="application" asp-route-id="@Model.Application.ApplicationId" class="ui basic green disabled button"><i class="eye"></i>View complete application</a>
+                            }
+                        </div>
+                    }
+                    else if (Model.Applicant.Verified == false && Model.Application == null)
+                    {
+                        <p>You can't create application because your account is unverified.</p>
+                    }
+                    else
+                    {
+                        <p>You still didn't create the application.</p>
+                    }
+                </div>
+                @Html.HiddenFor(x => x.Applicant.ApplicationUser)
+                @if (Model.Applicant.Verified == true && Model.Application == null)
+                {
+                    <a asp-action="create" asp-controller="application" asp-route-id="@Model.Applicant.ApplicationUser.Id" class="ui button secondary black">Create new application</a>
+                }
+                else if (Model.Applicant.Verified == false && Model.Application != null)
+                {
+                    <a asp-action="create" asp-controller="application" asp-route-id="@Model.Applicant.ApplicationUser.Id" class="ui button secondary black disabled">Create new application</a>
+                }
+            </div>*@
+    }
+    else
+    {
         <div id='container' style='height: 325px; width: 500px'>
             <table class="ui small definition table">
                 <tbody>
@@ -377,7 +326,7 @@
                         <td class="align right">@Model.Applicant.ApplicationUser.Name @Model.Applicant.ApplicationUser.Surname</td>
                     </tr>
                     <tr>
-                        <td>Email</td>
+                        <td>E-mail</td>
                         <td>@Model.Applicant.ApplicationUser.Email</td>
                     </tr>
                     <tr>
@@ -415,7 +364,7 @@
                     <div class="ui card nom">
                         <div class="content">
                             <div class="header">
-                                <h4>@x.University.Name</h4>
+                                <h4>@x.Offer.University.Name</h4>
                             </div>
                             <p></p>
                             @if (x != null)
@@ -423,8 +372,21 @@
                                 <div class="meta">
                                     <p>Created: @x.CreatedNom</p>
                                     <p>Last change: @x.LastEdited</p>
-                                    <p>Submitted: @x.Finished </p>
                                     <p>Status: @x.StatusOfNomination </p>
+                                    @if (x.Finished)
+                                    {
+                                        <div class="ui green label">
+                                            Submitted: @x.Finished
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="ui red label">
+                                            Submitted: @x.Finished
+                                        </div>
+                                    }
+                                    <p></p>
+                                    <div class="ui light red label">Application deadline: <div class="detail">@x.Offer.End.ToShortDateString()</div></div>
                                     @*<a asp-action="docs" asp-controller="nomination" asp-route-id="@x.NominationId" class="ui basic black button"><i class="file icon"></i>Edit documents</a>*@
                                     <p></p>
                                     <p></p>
@@ -444,8 +406,8 @@
         @if (Model.Nominations.Count < 3)
         {
             <div class="ui container">
-                <a asp-action="create" asp-controller="nomination" asp-route-id="@Model.Applicant.ApplicationUser.Id" class="ui button zeleni">Create new nomination (max 3)</a>
+                <a asp-action="create" asp-controller="nomination" asp-route-id="@Model.Applicant.ApplicationUser.Id" class="ui basic green button">Create new nomination (max 3)</a>
             </div>
         }
-        }
+    }
 </body>

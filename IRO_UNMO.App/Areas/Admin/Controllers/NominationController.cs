@@ -87,8 +87,8 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
             a.ApplicantId = vm.ApplicantId;
             a.CreatedNom = DateTime.Now;
             a.LastEdited = DateTime.Now;
-            a.UniversityId = vm.UniversityId;
-            a.University = _db.University.Where(b => b.UniversityId == vm.UniversityId).FirstOrDefault();
+            a.UniversityId = vm.OfferId;
+            a.University = _db.University.Where(b => b.UniversityId == vm.OfferId).FirstOrDefault();
             a.StatusOfNomination = "Unknown";
 
             Models.Applicant applicant = _db.Applicant.Where(xa => xa.ApplicantId == vm.ApplicantId).Include(xq => xq.ApplicationUser).ThenInclude(xe => xe.Country).Include(xw => xw.University).FirstOrDefault();
@@ -223,7 +223,7 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
         public IActionResult view(int id)
         {
             ViewNomVM model = new ViewNomVM();
-            model.Nomination = _db.Nomination.Where(a => a.NominationId == id).Include(a => a.University).FirstOrDefault();
+            model.Nomination = _db.Nomination.Where(a => a.NominationId == id).Include(q=>q.Offer).ThenInclude(a => a.University).ThenInclude(d=>d.Country).FirstOrDefault();
             model.Applicant = _db.Applicant.Where(x => x.ApplicantId == model.Nomination.ApplicantId).Include(a => a.ApplicationUser).ThenInclude(b => b.Country).Include(c => c.University).FirstOrDefault();
             model.Comments = _db.Comment.Where(x => x.IonId == id).ToList();
             model.Statuses = new List<SelectListItem>();

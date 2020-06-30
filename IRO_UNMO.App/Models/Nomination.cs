@@ -14,8 +14,10 @@ namespace IRO_UNMO.App.Models
         public int NominationId { get; set; }
         public Applicant Applicant { get; set; }
         public string ApplicantId { get; set; }
-        public int UniversityId { get; set; }
+        public int? UniversityId { get; set; }
+        public int OfferId { get; set; }
         public University University { get; set; }
+        public Offer Offer { get; set; }
         public string LearningAgreement { get; set; }
         public string WorkPlan { get; set; }
         public string CV { get; set; }

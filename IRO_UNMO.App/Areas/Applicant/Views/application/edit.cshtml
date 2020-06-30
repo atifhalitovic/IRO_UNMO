@@ -77,19 +77,19 @@
                     </div>
                     <div class="field">
                         <label asp-for="@Model.Application.Infos.PassportIssueDate">Passport issue date</label>
-                        <div class="ui calendar" id="passissue">
+                        <div class="ui calendar" id="rangestart">
                             <div class="ui input left icon">
                                 <i class="calendar icon"></i>
-                                <input asp-for="@Model.Application.Infos.PassportIssueDate" type="text" placeholder="Date">
+                                <input type="text" asp-for="@Model.Application.Infos.PassportIssueDate" placeholder="Start">
                             </div>
                         </div>
                     </div>
                     <div class="field">
                         <label asp-for="@Model.Application.Infos.PassportExpiryDate">Passport expiry date</label>
-                        <div class="ui calendar" id="passexpiry">
+                        <div class="ui calendar" id="rangeend">
                             <div class="ui input left icon">
                                 <i class="calendar icon"></i>
-                                <input asp-for="@Model.Application.Infos.PassportExpiryDate" type="text" placeholder="Date">
+                                <input type="text" asp-for="@Model.Application.Infos.PassportIssueDate" placeholder="End">
                             </div>
                         </div>
                     </div>
@@ -247,13 +247,13 @@
         $('#dateofbirth').calendar({
             type: 'date'
         });
-
-        $('#passissue').calendar({
-            type: 'date'
+        $('#rangestart').calendar({
+            type: 'date',
+            endCalendar: $('#rangeend')
         });
-
-        $('#passexpiry').calendar({
-            type: 'date'
+        $('#rangeend').calendar({
+            type: 'date',
+            startCalendar: $('#rangestart')
         });
 
         var toggle = $('#toggle');

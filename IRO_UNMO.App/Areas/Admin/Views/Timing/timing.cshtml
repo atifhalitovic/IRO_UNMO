@@ -45,10 +45,6 @@
                         <label asp-for="@Model.current.Semester">Country</label>
                         @Html.DropDownListFor(model => model.current.Semester, Model.Semesters, new { required = "Please choose semester for the application" })
                     </div>
-                    <div class="field">
-                        <label asp-for="@Model.University.Code">Code</label>
-                        <input asp-for="@Model.University.Code" type="text" class="form-control">
-                    </div>
                 </div>
             </div>
             <button type="submit" class="ui primary button">Save</button>

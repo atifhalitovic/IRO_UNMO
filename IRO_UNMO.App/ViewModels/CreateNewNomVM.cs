@@ -12,8 +12,8 @@ namespace IRO_UNMO.App.ViewModels
         public string ApplicantId { get; set; }
         public Applicant Applicant { get; set; }
         public DateTime LastEdited { get; set; }
-        public int UniversityId { get; set; }
-        public University University { get; set; }
+        public int OfferId { get; set; }
+        public Offer Offer { get; set; }
         public List<Offer> Offers { get; set; }
         public List<SelectListItem> Universities { get; set; }
     }

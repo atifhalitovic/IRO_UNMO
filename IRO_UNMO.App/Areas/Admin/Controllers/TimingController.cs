@@ -46,6 +46,7 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
         {
             TimingVM vm = new TimingVM();
             vm.Semesters = new List<SelectListItem>();
+            vm.Offers = _db.Offer.Include(a => a.University).ThenInclude(b => b.Country).Where(x => x.Start <= DateTime.Now && x.End >= DateTime.Now).OrderBy(a => a.Start).ToList();
             vm.Semesters.Add(new SelectListItem()
             {
                 Value = "summer",
@@ -66,6 +67,7 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
         {
             Timing current = _db.Timing.FirstOrDefault();
             vm.Semesters = new List<SelectListItem>();
+            vm.Offers = _db.Offer.Include(a => a.University).ThenInclude(b => b.Country).Where(x => x.Start <= DateTime.Now && x.End >= DateTime.Now).OrderBy(a => a.Start).ToList();
             vm.Semesters.Add(new SelectListItem()
             {
                 Value = "summer",

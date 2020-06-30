@@ -64,24 +64,24 @@ namespace IRO_UNMO.App.Areas.Applicant.Controllers
             return File(memory, MediaTypeNames.Application.Octet, Path.GetFileName(path));
         }
 
-        public IActionResult create(string id, int uniId)
+        public IActionResult create(string id)
         {
             CreateNewNomVM model = new CreateNewNomVM();
             model.ApplicantId = id;
             model.Applicant = _db.Applicant.Where(a => a.ApplicantId == id).Include(b => b.ApplicationUser).ThenInclude(c => c.Country).FirstOrDefault();
 
-            var offers = _db.Offer.Include(a => a.University).ThenInclude(x => x.Country).ToList();
-            var nominations = _db.Nomination.Where(a => a.ApplicantId == id).ToList();
+            var offers = _db.Offer.Include(a => a.University).ThenInclude(b => b.Country).Where(x => x.Start <= DateTime.Now && x.End >= DateTime.Now).OrderBy(a => a.Start).ToList();
+            var nominations = _db.Nomination.Where(a => a.ApplicantId == id).Select(q=>q.Offer).ToList();
             var offersR = new List<Offer>();
-            if(nominations.Count()!=0)
+            if (nominations.Count() != 0 && nominations.Count()<offers.Count())
             {
-                foreach (var x in offers)
+                foreach (var x in nominations)
                 {
-                    foreach (var y in nominations)
+                    foreach (var y in offers)
                     {
-                        if (y.UniversityId != x.UniversityId)
+                        if (x!=y)
                         {
-                            offersR.Add(x);
+                            offersR.Add(y);
                         }
                     }
                 }
@@ -95,14 +95,14 @@ namespace IRO_UNMO.App.Areas.Applicant.Controllers
         }
 
         [HttpPost]
-        public IActionResult create(CreateNewNomVM vm, int uniId)
+        public IActionResult create(CreateNewNomVM vm, int offerId)
         {
             Nomination a = new Nomination();
             a.ApplicantId = vm.ApplicantId;
             a.CreatedNom = DateTime.Now;
             a.LastEdited = DateTime.Now;
-            a.UniversityId = uniId;
-            a.University = _db.University.Where(b => b.UniversityId == uniId).FirstOrDefault();
+            a.OfferId = offerId;
+            a.Offer = _db.Offer.Where(b => b.OfferId == offerId).Include(x=>x.University).ThenInclude(q=>q.Country).FirstOrDefault();
             a.StatusOfNomination = "Unknown";
 
             Models.Applicant applicant = _db.Applicant.Where(xa => xa.ApplicantId == a.ApplicantId).Include(xq => xq.ApplicationUser).ThenInclude(xe => xe.Country).Include(xw => xw.University).FirstOrDefault();
@@ -251,7 +251,7 @@ namespace IRO_UNMO.App.Areas.Applicant.Controllers
         public IActionResult view(int id)
         {
             ViewNomVM model = new ViewNomVM();
-            model.Nomination = _db.Nomination.Where(a => a.NominationId == id).Include(a => a.University).FirstOrDefault();
+            model.Nomination = _db.Nomination.Where(a => a.NominationId == id).Include(a => a.Offer).ThenInclude(b=>b.University).ThenInclude(c=>c.Country).FirstOrDefault();
             model.Applicant = _db.Applicant.Where(x => x.ApplicantId == model.Nomination.ApplicantId).Include(a => a.ApplicationUser).ThenInclude(b => b.Country).Include(c => c.University).FirstOrDefault();
             model.Comments = _db.Comment.Where(x => x.IonId == id).ToList();
             model.Statuses = new List<SelectListItem>();

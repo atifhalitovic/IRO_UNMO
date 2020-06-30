@@ -92,7 +92,7 @@
     <div class="ui compact segments">
         <div class="ui piled segment">
             <h2 class="ui header">
-                Nomination for the @Model.Nomination.University.Name
+                Nomination for the @Model.Nomination.Offer.University.Name
                 <div class="sub header">Started: @Model.Nomination.CreatedNom</div>
             </h2>
             @if (Model.Nomination.StatusOfNomination == "Unknown")
@@ -368,7 +368,7 @@
                 <div class="ui small equal width form">
                     <h4>Please submit only when you uploaded and filled everything what is needed.</h4>
                     <div class="field">
-                        <button class="ui green submit button"  asp-controller="nomination" asp-action="submit" asp-route-id="@Model.Nomination.NominationId"><i class="save outline icon"></i>Submit application</button>
+                        <button class="ui green submit button"  asp-controller="nomination" asp-action="submit" asp-route-id="@Model.Nomination.NominationId"><i class="save outline icon"></i>Submit nomination</button>
                     </div>
                 </div>
             </form>

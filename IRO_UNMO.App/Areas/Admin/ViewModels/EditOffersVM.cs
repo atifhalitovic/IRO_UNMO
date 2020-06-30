@@ -11,6 +11,7 @@ namespace IRO_UNMO.App.Areas.Admin.ViewModels
     {
         public int OfferId { get; set; }
         public Offer Offer { get; set; }
+        public List<Nomination> Nominations { get; set; }
         public List<SelectListItem> Universities { get; set; }
         public List<SelectListItem> Semesters { get; set; }
         public List<SelectListItem> Cycles { get; set; }

@@ -11,5 +11,6 @@ namespace IRO_UNMO.App.ViewModels
     {
         public Timing current { get; set; }
         public List<SelectListItem> Semesters { get; set; }
+        public List<Offer> Offers { get; set; }
     }
 }

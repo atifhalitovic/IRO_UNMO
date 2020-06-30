@@ -89,7 +89,7 @@ namespace IRO_UNMO.App.Areas.Account.Controllers
 
             await _userManager.AddToRoleAsync(user, "IncomingApplicant");
 
-            Applicant applicant = new Applicant
+            IRO_UNMO.App.Models.Applicant a = new IRO_UNMO.App.Models.Applicant
             {
                 ApplicantId = user.Id,
                 CreatedProfile = DateTime.Now,
@@ -99,7 +99,7 @@ namespace IRO_UNMO.App.Areas.Account.Controllers
                 Verified = false,
             };
 
-            _db.Applicant.Add(applicant);
+            _db.Applicant.Add(a);
             _db.SaveChanges();
 
             return RedirectToAction("Index", "Home");
@@ -146,7 +146,7 @@ namespace IRO_UNMO.App.Areas.Account.Controllers
 
             await _userManager.AddToRoleAsync(user, "OutgoingApplicant");
 
-            Applicant applicant = new Applicant
+            IRO_UNMO.App.Models.Applicant applicant = new IRO_UNMO.App.Models.Applicant
             {
                 ApplicantId = user.Id,
                 CreatedProfile = DateTime.Now,

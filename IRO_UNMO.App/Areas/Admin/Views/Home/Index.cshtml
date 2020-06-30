@@ -4,7 +4,7 @@
 }
 
 <head>
-    <meta charset="utf-8" />
+    @*<meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <!--- Site CSS -->
@@ -24,7 +24,7 @@
 
     <script type="text/javascript" src="~/dist/components/popup.js"></script>
     <script type="text/javascript" src="~/dist/components/transition.js"></script>
-    <script type="text/javascript" src="~/dist/components/accordion.js"></script>
+    <script type="text/javascript" src="~/dist/components/accordion.js"></script>*@
 </head>
 <body>
     <div class="ui padded grid">
@@ -56,9 +56,9 @@
 
             <div class="eight wide mobile four wide tablet four wide computer column">
                 <img class="ui centered small circular image" />
-                <i class="massive exclamation triangle icon"></i>
+                <i class="massive newspaper outline icon"></i>
                 <p></p>
-                <div class="ui large basic label">Settings</div>
+                <div class="ui large basic label"><a class="active item" asp-action="index" asp-controller="news">News</a></div>
                 <p></p>
                 <p>Something else</p>
             </div>

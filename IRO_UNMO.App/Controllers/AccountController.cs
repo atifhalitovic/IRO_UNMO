@@ -97,6 +97,7 @@ namespace IRO_UNMO.App.Controllers
                 StudyCycle = model.StudyCycle,
                 StudyField = model.StudyField,
                 Verified = false,
+                TypeOfApplication = model.TypeOfApplication
             };
 
             _db.Applicant.Add(applicant);

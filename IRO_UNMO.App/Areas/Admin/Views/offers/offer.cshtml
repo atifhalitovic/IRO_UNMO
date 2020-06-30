@@ -58,20 +58,20 @@
             <div class="ui compact segment">
                 <div class="fields">
                     <div class="field">
-                        <label asp-for="@Model.Offer.Start">Date from</label>
-                        <div class="ui calendar" id="passissue">
+                        <label>Date from</label>
+                        <div class="ui calendar" id="rangestart">
                             <div class="ui input left icon">
                                 <i class="calendar icon"></i>
-                                <input asp-for="@Model.Offer.Start" type="text" placeholder="Date">
+                                <input type="text" asp-for="@Model.Offer.Start" placeholder="Start">
                             </div>
                         </div>
                     </div>
                     <div class="field">
-                        <label asp-for="@Model.Offer.End">Date to</label>
-                        <div class="ui calendar" id="passexpiry">
+                        <label>Date to</label>
+                        <div class="ui calendar" id="rangeend">
                             <div class="ui input left icon">
                                 <i class="calendar icon"></i>
-                                <input asp-for="@Model.Offer.End" type="text" placeholder="Date">
+                                <input type="text" asp-for="@Model.Offer.End" placeholder="End">
                             </div>
                         </div>
                     </div>
@@ -102,9 +102,39 @@
                         <input asp-for="@Model.Offer.Info" type="text">
                     </div>
                 </div>
-                    <button type="submit" class="ui primary button">Save</button>
-</form>
+            </div>
+            <button type="submit" class="ui primary button">Save</button>
+        </form>
     </div>
+    @if (Model.Offer != null && Model.Nominations.Count!=0)
+    {
+        <h2 class="ui header">Nominations for the offer</h2>
+        <table class="ui celled table">
+            <thead>
+                <tr>
+                    <th>Full name</th>
+                    <th>Faculty name</th>
+                    <th>Created nomination</th>
+                    <th>Submitted</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            @foreach (var x in Model.Nominations)
+            {
+                <tbody>
+                    <tr>
+                        <td>@x.Applicant.ApplicationUser.Name @x.Applicant.ApplicationUser.Surname</td>
+                        <td>@x.Applicant.FacultyName</td>
+                        <td>@x.CreatedNom</td>
+                        <td>@x.Finished</td>
+                        <td>
+                            <a asp-action="view" asp-controller="nomination" asp-route-id="@x.NominationId" class="ui primary button">Review</a>
+                        </td>
+                    </tr>
+                </tbody>
+            }
+        </table>
+    }
     <script>
         $('#passissue').calendar({
             type: 'date'
@@ -112,6 +142,15 @@
 
         $('#passexpiry').calendar({
             type: 'date'
+        });
+
+        $('#rangestart').calendar({
+            type: 'date',
+            endCalendar: $('#rangeend')
+        });
+        $('#rangeend').calendar({
+            type: 'date',
+            startCalendar: $('#rangestart')
         });
     </script>
 </body>

@@ -5,39 +5,39 @@
 }
 
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <!--- Site CSS -->
-    <link rel="stylesheet" type="text/css" href="~/dist/components/reset.css">
-    <link rel="stylesheet" type="text/css" href="~/dist/components/site.css">
-    <link rel="stylesheet" type="text/css" href="~/dist/components/grid.css">
-    <!--- Component CSS -->
-    <link rel="stylesheet" type="text/css" href="~/dist/components/icon.css">
-    <link rel="stylesheet" type="text/css" href="~/dist/components/table.css">
-    <link rel="stylesheet" type="text/css" href="~/dist/components/button.css">
-    <link rel="stylesheet" type="text/css" href="~/dist/components/transition.css">
-    <link rel="stylesheet" type="text/css" href="~/dist/components/popup.css">
-    <link rel="stylesheet" type="text/css" href="~/dist/components/accordion.css">
+    @*<meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+        <!--- Site CSS -->
+        <link rel="stylesheet" type="text/css" href="~/dist/components/reset.css">
+        <link rel="stylesheet" type="text/css" href="~/dist/components/site.css">
+        <link rel="stylesheet" type="text/css" href="~/dist/components/grid.css">
+        <!--- Component CSS -->
+        <link rel="stylesheet" type="text/css" href="~/dist/components/icon.css">
+        <link rel="stylesheet" type="text/css" href="~/dist/components/table.css">
+        <link rel="stylesheet" type="text/css" href="~/dist/components/button.css">
+        <link rel="stylesheet" type="text/css" href="~/dist/components/transition.css">
+        <link rel="stylesheet" type="text/css" href="~/dist/components/popup.css">
+        <link rel="stylesheet" type="text/css" href="~/dist/components/accordion.css">
 
-    <script src="~/assets/library/jquery.min.js"></script>
-    <script src="~/assets/library/iframe-content.js"></script>
+        <script src="~/assets/library/jquery.min.js"></script>
+        <script src="~/assets/library/jquery.js"></script>
+        <script src="~/assets/library/iframe-content.js"></script>
 
-    <script type="text/javascript" src="~/dist/components/popup.js"></script>
-    <script type="text/javascript" src="~/dist/components/transition.js"></script>
-    <script type="text/javascript" src="~/dist/components/accordion.js"></script>
+        <script type="text/javascript" src="~/dist/components/popup.js"></script>
+        <script type="text/javascript" src="~/dist/components/transition.js"></script>
+        <script type="text/javascript" src="~/dist/components/modal.js"></script>
+        <script type="text/javascript" src="~/dist/components/accordion.js"></script>
+        <script type="text/javascript" src="~/dist/components/dropdown.js"></script>
 
-    <script>
-        $(document).ready(function () {
-            $('.ui.accordion').accordion();
-        });
-    </script>
+        <script type="text/javascript" src="~/dist/calendar.min.js"></script>
+        <link rel="stylesheet" href="~/dist/calendar.min.css" />*@
 </head>
 <body>
     @Html.HiddenFor(x => x.Applicant.ApplicantId)
     @if (Model.Applicant.UniversityId != 2)
     {
-        <div style='height:330px;width:500px'>
+        <div style='height: 410px; width: 500px'>
             <table class="ui small definition table">
                 <tbody>
                     <tr>
@@ -61,8 +61,16 @@
                         <td>@Model.Applicant.University.Name</td>
                     </tr>
                     <tr>
+                        <td>Study field</td>
+                        <td>@Model.Applicant.StudyField</td>
+                    </tr>
+                    <tr>
+                        <td>Study cycle</td>
+                        <td>@Model.Applicant.StudyCycle</td>
+                    </tr>
+                    <tr>
                         <td>Student/staff</td>
-                        <td>TO DO !!! TO DO @Model.Applicant.TypeOfApplication</td>
+                        <td>@Model.Applicant.TypeOfApplication</td>
                     </tr>
                     <tr>
                         <td>Account created</td>
@@ -71,7 +79,7 @@
                     @if (Model.Applicant.Verified)
                     {
                         <tr>
-                            <td>Account verification</td>
+                            <td> Account verification </td>
                             <td>
                                 <button asp-action="verified" asp-controller="applicants" class="ui basic green button" asp-route-id="@Model.Applicant.ApplicantId" id="test">Verified</button>
                                 <div class="ui modal test">
@@ -111,46 +119,6 @@
                             </td>
                         </tr>
                     }
-                    @*@if (Model.Application != null && Model.Applicant.Verified == true)
-                        {
-                            <tr>
-                                <td>Application started</td>
-                                <td>@Model.Application.CreatedApp</td>
-                            </tr>
-                            <tr>
-                                <td>Application last edited</td>
-                                <td>@Model.Application.LastEdited</td>
-                            </tr>
-                            <tr>
-                                <td>Application review</td>
-                                @if (Model.Application.Contacts.CountryId != null)
-                                {
-                                    <td>
-                                        <a asp-action="view" asp-controller="application" asp-route-id="@Model.Application.ApplicationId" class="ui basic black button"><i class="eye"></i>Review</a>
-                                    </td>
-                                }
-                                else
-                                {
-                                    <td>
-                                        <a asp-action="view" asp-controller="application" asp-route-id="@Model.Application.ApplicationId" class="ui basic disabled black button"><i class="eye"></i>Review</a>
-                                    </td>
-                                }
-                            </tr>
-                        }
-                        else if (Model.Applicant.Verified == true && Model.Application == null)
-                        {
-                            <tr>
-                                <td>Application status</td>
-                                <td>Application isn't still created, but it is possible to.</td>
-                            </tr>
-                        }
-                        else if (Model.Applicant.Verified != true && Model.Application == null)
-                        {
-                            <tr>
-                                <td>Application status</td>
-                                <td>Application isn't still created, because unverified account.</td>
-                            </tr>
-                        }*@
                 </tbody>
             </table>
         </div>
@@ -180,7 +148,7 @@
                         <p>Information</p>
                         <div class="ui tiny list">
                             <div class="item">
-                                <i class="top aligned folder icon"></i>
+                                <i class="top aligned folder large icon"></i>
                                 <div class="content">
                                     <div class="header">
                                         Created
@@ -191,7 +159,7 @@
                                 </div>
                             </div>
                             <div class="item">
-                                <i class="top aligned university icon"></i>
+                                <i class="top aligned university large icon"></i>
                                 <div class="content">
                                     <div class="header">
                                         Last change
@@ -215,14 +183,6 @@
                                     </div>
                                 </div>
                             </div>
-                            @*<div class="item">
-                    <div class="content">
-                        <div class="header">
-                            Information
-                        </div>
-                        <div class="description"><span>Mrka kapa<span class="grayed"> Europe/Warsaw time</span></span></div>
-                    </div>
-                </div>*@
                         </div>
                     }
                 </div>
@@ -236,7 +196,7 @@
                             }
                             else if (Model.Applicant.Verified == true && Model.Application == null && (Model.Timing.From <= DateTime.Now || Model.Timing.To >= DateTime.Now))
                             {
-                                <button type="submit" class="ui small fluid primary icon button">Apply now!</button>
+                                <button type="submit" class="ui small fluid primary icon button disabled">It is possible to create application.</button>
                             }
                             else if (Model.Applicant.Verified == false && Model.Application == null)
                             {
@@ -250,23 +210,23 @@
                     </div>
                     <div class="ui tiny list">
                         <div class="item">
-                            <i class="top aligned university icon"></i>
+                            <i class="top aligned university large icon"></i>
                             <div class="content">
                                 <div class="header">
-                                    Application period start
+                                    Application start
                                 </div>
                                 <div class="description">
-                                    @Model.Timing.From
+                                    @Model.Timing.From.ToShortDateString()
                                 </div>
                             </div>
                         </div>
                         <div class="item">
-                            <i class="top aligned university icon"></i>
+                            <i class="top aligned university large icon"></i>
                             <div class="content">
                                 <div class="header">
-                                    Application period end
+                                    Application deadline
                                 </div>
-                                <div class="description"><span>@Model.Timing.To<span class="grayed"> Europe/Mostar time</span></span></div>
+                                <div class="description"><span>@Model.Timing.To.ToShortDateString()</span></div>
                             </div>
                         </div>
                     </div>
@@ -325,35 +285,48 @@
                     <div class="ui card nom">
                         <div class="content">
                             <div class="header">
-                                <h4>@x.University.Name</h4>
+                                <h4>@x.Offer.University.Name</h4>
                             </div>
                             @if (x != null)
                             {
-                                <div class="meta">
-                                    <p></p>
-                                    <p>Created: @x.CreatedNom</p>
-                                    <p></p>
-                                    <p>Last change: @x.LastEdited</p>
-                                    <p></p>
-                                    <p>Status: @x.StatusOfNomination </p>
-                                    <p></p>
-                                    <p>Submitted: @x.Finished</p>
-                                    <p></p>
-                                    <p></p>
-                                    @if (x.Finished)
-                                    {
-                                        <a asp-action="view" asp-controller="nomination" asp-route-id="@x.NominationId" class="ui secondary basic button"><i class="eye"></i>View nomination</a>
-                                    }
-                                    else
-                                    {
-                                        <a asp-action="view" asp-controller="nomination" asp-route-id="@x.NominationId" class="ui secondary basic disabled button"><i class="eye"></i>View nomination</a>
-                                    }
-                                </div>
+                            <div class="meta">
+                                <p></p>
+                                <p>Created: @x.CreatedNom</p>
+                                <p></p>
+                                <p>Last change: @x.LastEdited</p>
+                                <p></p>
+                                <p>Status: @x.StatusOfNomination </p>
+                                <p></p>
+                                @if (x.Finished)
+                                {
+                                    <div class="ui green label">
+                                        Submitted: @x.Finished
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="ui red label">
+                                        Submitted: @x.Finished
+                                    </div>
+                                }
+                                <p></p>
+                                <div class="ui light red label">Application deadline: <div class="detail">@x.Offer.End.ToShortDateString()</div></div>
+                                <p></p>
+                                @if (x.Finished)
+                                {
+                                    <a asp-action="view" asp-controller="nomination" asp-route-id="@x.NominationId" class="ui secondary basic button"><i class="eye"></i>Review nomination</a>
+                                }
+                                else
+                                {
+                                    <a asp-action="view" asp-controller="nomination" asp-route-id="@x.NominationId" class="ui secondary basic disabled button"><i class="eye"></i>Review nomination</a>
+                                }
+
+                            </div>
                             }
 
                             else
                             {
-                                <p>Applicant didn't create any nominiation yet.</p>
+                                <p>Applicant didn't create any nomination yet.</p>
                             }
                         </div>
                     </div>
