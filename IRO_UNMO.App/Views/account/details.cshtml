@@ -1,7 +1,7 @@
 ﻿@model IRO_UNMO.App.ViewModels.ProfileVM
 @using Microsoft.AspNetCore.Identity;
 @{
-    Layout = "_Layout5";
+    Layout = "BasicLayout";
 }
 <h2>Basic profile details</h2>
 <head>
@@ -196,7 +196,7 @@
                         <p></p>
                         @if (Model.Application.Contacts.CountryId != null)
                         {
-                        <a asp-action="view" asp-controller="application" asp-route-id="@Model.Application.ApplicationId" class="ui basic black button"><i class="eye"></i>View complete application</a>
+                            <a asp-action="view" asp-controller="application" asp-route-id="@Model.Application.ApplicationId" class="ui basic black button"><i class="eye"></i>View complete application</a>
                         }
                         else
                         {

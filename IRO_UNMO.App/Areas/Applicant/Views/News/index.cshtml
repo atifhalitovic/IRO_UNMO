@@ -1,0 +1,45 @@
+﻿@model IRO_UNMO.App.ViewModels.NewsVM
+@{
+    ViewData["Title"] = "";
+    Layout = "ApplicantLayout";
+}
+<p></p>
+<h2 class="ui header">Unread messages</h2>
+<body>
+    @foreach (var x in Model.Comments)
+    {
+    <div class="ui large feed">
+        <div class="ui icon message">
+            <i class="inbox icon"></i>
+            <div class="content">
+                <div class="header">
+                    @x.Applicant.ApplicationUser.Name @x.Applicant.ApplicationUser.Surname
+                    <div class="subheader">@x.CommentTime</div>
+                </div>
+                <a asp-route-id="@x.IonId" asp-area="admin" asp-controller="application" asp-action="view">@x.Message</a>
+            </div>
+        </div>
+    </div>
+
+        @*<div class="ui icon message">
+            <i class="inbox icon"></i>
+            <div class="content">
+                <div class="header">
+                    @x.Applicant.ApplicationUser.Name @x.Applicant.ApplicationUser.Surname | @x.CommentTime
+                </div>
+                <a asp-route-id="@x.IonId" asp-area="admin" asp-controller="application" asp-action="view">@x.Message</a>
+            </div>
+        </div>*@
+    }
+</body>
+<script>
+    $(function () {
+        $("#test").click(function () {
+            $(".test").modal('show');
+        });
+
+        $(".test").modal({
+            closable: true
+        });
+    });
+</script>

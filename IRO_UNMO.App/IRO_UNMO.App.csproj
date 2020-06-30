@@ -29,6 +29,7 @@
     <Compile Remove="NotificationComponent.cs" />
     <Compile Remove="Subscription\ILoggedUser.cs" />
     <Compile Remove="Subscription\LoggedUserService.cs" />
+    <Compile Remove="Subscription\NotificationDatabaseSubscription.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -72,7 +73,6 @@
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="popper.js" Version="1.16.1" />
     <PackageReference Include="SendGrid" Version="9.16.0" />
-    <PackageReference Include="SqlTableDependency" Version="7.1.0" />
     <PackageReference Include="Syncfusion.HtmlToPdfConverter.QtWebKit.Net.Core" Version="18.1.0.52" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="4.7.0" />
     <PackageReference Include="wkhtmltopdf-x86-win32" Version="0.12.3.6" />
@@ -151,7 +151,6 @@
     <None Include="Views\account\outgoing.cshtml" />
     <None Include="Views\account\type.cshtml" />
     <None Include="Views\home\index.cshtml" />
-    <None Include="Views\Shared\AdminLayout.cshtml" />
     <None Include="Views\Shared\Error.cshtml" />
     <None Include="Views\Shared\_CookieConsentPartial.cshtml" />
     <None Include="Views\Shared\_Layout.cshtml" />
@@ -159,7 +158,6 @@
     <None Include="Views\Shared\_Layout11.cshtml" />
     <None Include="Views\Shared\_Layout2.cshtml" />
     <None Include="Views\Shared\_Layout3.cshtml" />
-    <None Include="Views\Shared\_Layout5 - Copy.cshtml" />
     <None Include="Views\Shared\_Layout5.cshtml" />
     <None Include="Views\Shared\_Layout6.cshtml" />
     <None Include="Views\Shared\_LoginPartial.cshtml" />
@@ -622,6 +620,48 @@
     <None Include="wwwroot\src\_site\views\statistic.variables" />
     <None Include="wwwroot\unmo_logo.png" />
     <None Include="wwwroot\unmo_preloader.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Areas\Applicant\Views\Home\index.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Applicant\Views\News\index.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\account\logout.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\home\tuition.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\home\administrative.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\home\activities.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\home\accomodation.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\home\insurance.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\home\emergency.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\home\enrollment.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\home\mostar.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\BasicLayout.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\ApplicantLayout.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
   </ItemGroup>
 
 </Project>

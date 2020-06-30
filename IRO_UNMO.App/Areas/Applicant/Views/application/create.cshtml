@@ -2,16 +2,8 @@
 @model IRO_UNMO.App.ViewModels.CreateNewAppVM
 @using Microsoft.AspNetCore.Identity;
 @{
-    Layout = "_Layout5";
+    Layout = "ApplicantLayout";
 }
-
-<head>
-    <environment include="Production">
-        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    </environment>
-</head>
 <body>
     <div class="ui content">
         <form asp-action="create" method="post">
@@ -23,20 +15,20 @@
                 </div>
                 <h4 class="ui header">
                     <div class="sub header">Searching possibilities available for applicant:</div>
-                        <div class="ui large header">
-                            @Model.Applicant.ApplicationUser.Name @Model.Applicant.ApplicationUser.Surname
-                        </div>
-                        <div class="sub header">
-                            <p>E-mail: @Model.Applicant.ApplicationUser.Email</p>
-                            <p>Mobile number: @Model.Applicant.ApplicationUser.PhoneNumber</p>
-                            <p>Country: @Model.Applicant.ApplicationUser.Country.Name</p>
-                            <p>University: @Model.Applicant.University.Name</p>
-                            <p>Study field: @Model.Applicant.StudyField</p>
-                            <p>Study cycle: @Model.Applicant.StudyCycle</p>
-                            <p>Type: TO DO !!! TO DO @Model.Applicant.TypeOfApplication</p>
-                            <p>Created profile: @Model.Applicant.CreatedProfile</p>
-                            <p>Verification: @Model.Applicant.Verified.ToString()</p>
-                        </div>
+                    <div class="ui large header">
+                        @Model.Applicant.ApplicationUser.Name @Model.Applicant.ApplicationUser.Surname
+                    </div>
+                    <div class="sub header">
+                        <p>E-mail: @Model.Applicant.ApplicationUser.Email</p>
+                        <p>Mobile number: @Model.Applicant.ApplicationUser.PhoneNumber</p>
+                        <p>Country: @Model.Applicant.ApplicationUser.Country.Name</p>
+                        <p>University: @Model.Applicant.University.Name</p>
+                        <p>Study field: @Model.Applicant.StudyField</p>
+                        <p>Study cycle: @Model.Applicant.StudyCycle</p>
+                        <p>Type: TO DO !!! TO DO @Model.Applicant.TypeOfApplication</p>
+                        <p>Created profile: @Model.Applicant.CreatedProfile</p>
+                        <p>Verification: @Model.Applicant.Verified.ToString()</p>
+                    </div>
                 </h4>
             </div>
             <div class="ui raised result segment">

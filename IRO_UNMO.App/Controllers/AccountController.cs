@@ -45,6 +45,11 @@ namespace IRO_UNMO.App.Controllers
             return View("type");
         }
 
+        public IActionResult logout()
+        {
+            return View("logout");
+        }
+
         public IActionResult incoming()
         {
             UsersVM model = _userManagementHelper.prepUser();

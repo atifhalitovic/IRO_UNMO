@@ -43,6 +43,11 @@ namespace IRO_UNMO.App.Areas.Applicant.Controllers
             _userManagementHelper = new UserManagementHelper(_db);
         }
 
+        public IActionResult Index()
+        {
+            return View();
+        }
+
         [HttpGet]
         public IActionResult details(string id)
         {
