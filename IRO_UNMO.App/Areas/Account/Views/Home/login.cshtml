@@ -1,63 +1,82 @@
-﻿@model IRO_UNMO.App.ViewModels.LoginVM
+﻿@page
+@model IRO_UNMO.App.Areas.Account.Models.LoginModel
+
 @{
-    Layout = "_Layout1";
+    ViewData["Title"] = "Log in";
 }
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <!--- Site CSS -->
-    <link rel="stylesheet" type="text/css" href="~/dist/components/reset.css">
-    <link rel="stylesheet" type="text/css" href="~/dist/components/site.css">
-    <link rel="stylesheet" type="text/css" href="~/dist/components/grid.css">
-    <!--- Component CSS -->
-    <link rel="stylesheet" type="text/css" href="~/dist/components/icon.css">
-    <link rel="stylesheet" type="text/css" href="~/dist/components/table.css">
-    <link rel="stylesheet" type="text/css" href="~/dist/components/button.css">
-    <link rel="stylesheet" type="text/css" href="~/dist/components/transition.css">
-    <link rel="stylesheet" type="text/css" href="~/dist/components/popup.css">
-    <link rel="stylesheet" type="text/css" href="~/dist/components/accordion.css">
-    <!--- Component JS -->
-    @*<script src="~/lib/jquery/dist/jquery.min.js"></script>
-        <script src="~/dist/semantic.min.js"></script>*@
 
-    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.0/jquery.min.js"></script>*@
-    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>*@
-
-    <script src="~/assets/library/jquery.min.js"></script>
-    <script src="~/assets/library/iframe-content.js"></script>
-
-    <script type="text/javascript" src="~/dist/components/popup.js"></script>
-    <script type="text/javascript" src="~/dist/components/transition.js"></script>
-    <script type="text/javascript" src="~/dist/components/accordion.js"></script>
-</head>
-<body>
-    <p></p>
-    <p></p>
-    <p></p>
-    @*<div class="ui middle aligned center aligned grid">*@
-        <div class="ui container center aligned">
-            <div class="ui centered card">
-                <p></p>
-                <div class="meta">
-                    <form asp-controller="applicant" asp-action="login" method="post">
-                        <div class="ui top attached label">Please enter your unique code</div>
-                        <div class="field">
-                            <div class="ui left icon input">
-                                <i class="lock icon"></i>
-                                <input asp-for="@Model.UniqueCode" type="password" />
-                                <span asp-validation-for="@Model.UniqueCode"></span>
-                            </div>
+<h2>@ViewData["Title"]</h2>
+<div class="row">
+    <div class="col-md-4">
+        <section>
+            <form method="post">
+                <h4>Use a local account to log in.</h4>
+                <hr />
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Input.Email"></label>
+                    <input asp-for="Input.Email" class="form-control" />
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Input.Password"></label>
+                    <input asp-for="Input.Password" class="form-control" />
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label asp-for="Input.RememberMe">
+                            <input asp-for="Input.RememberMe" />
+                            @Html.DisplayNameFor(m => m.Input.RememberMe)
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-default">Log in</button>
+                </div>
+                <div class="form-group">
+                    <p>
+                        <a asp-page="./ForgotPassword">Forgot your password?</a>
+                    </p>
+                    <p>
+                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
+                    </p>
+                </div>
+            </form>
+        </section>
+    </div>
+    <div class="col-md-6 col-md-offset-2">
+        <section>
+            <h4>Use another service to log in.</h4>
+            <hr />
+            @{
+                if ((Model.ExternalLogins?.Count ?? 0) == 0)
+                {
+                    <div>
+                        <p>
+                            There are no external authentication services configured. See <a href="https://go.microsoft.com/fwlink/?LinkID=532715">this article</a>
+                            for details on setting up this ASP.NET application to support logging in via external services.
+                        </p>
+                    </div>
+                }
+                else
+                {
+                    <form asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+                        <div>
+                            <p>
+                                @foreach (var provider in Model.ExternalLogins)
+                                {
+                                    <button type="submit" class="btn btn-default" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+                                }
+                            </p>
                         </div>
-                        <input type="submit" class="ui teal submit button" value="Log in" style="margin: 10px 10px 10px 10px;" />
                     </form>
-                </div>
-                <p></p>
-                <p></p>
-                <p></p>
-                <div class="ui bottom attached label">
-                    New to us? <a asp-action="type" asp-controller="applicant">Register</a>
-                </div>
-            </div>
-        </div>
-</body>
+                }
+            }
+        </section>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

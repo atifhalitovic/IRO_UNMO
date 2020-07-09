@@ -8,6 +8,7 @@ using IRO_UNMO.App.Data;
 using IRO_UNMO.App.Models;
 using IRO_UNMO.App.ViewModels;
 using IRO_UNMO.Util;
+using IRO_UNMO.Web.Helper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -18,10 +19,8 @@ using Microsoft.Extensions.Logging;
 
 namespace IRO_UNMO.App.Areas.Applicant.Controllers
 {
-    //[Authorize(Roles="IncomingApplicant")]
-    //[Authorize(Roles="OutgoingApplicant")]
     [Area("Applicant")]
-    public class HomeController : Controller
+    public class DashboardController : Controller
     {
         private readonly IHostingEnvironment hosting;
         private ApplicationDbContext _db;
@@ -31,7 +30,7 @@ namespace IRO_UNMO.App.Areas.Applicant.Controllers
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly UrlEncoder _urlEncoder;
 
-        public HomeController(ApplicationDbContext db, IHostingEnvironment environment, UserManager<ApplicationUser> userManager,
+        public DashboardController(ApplicationDbContext db, IHostingEnvironment environment, UserManager<ApplicationUser> userManager,
         SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager, UrlEncoder urlEncoder)
         {
             _db = db;
@@ -43,14 +42,19 @@ namespace IRO_UNMO.App.Areas.Applicant.Controllers
             _userManagementHelper = new UserManagementHelper(_db);
         }
 
+        [Autorizacija(false, true, true)]
         public IActionResult Index()
         {
+            TempData["applicantId"] = HttpContext.GetLoggedUser().Id;
             return View();
         }
 
+        [Autorizacija(false, true, true)]
         [HttpGet]
+        [ActionName("profile")]
         public IActionResult details(string id)
         {
+            TempData["applicantId"] = HttpContext.GetLoggedUser().Id;
             ProfileVM vm = new ProfileVM
             {
                 Applicant = _db.Applicant.Where(x => x.ApplicantId == id).Include(a => a.ApplicationUser).ThenInclude(b => b.Country).Include(b => b.University).ThenInclude(c=>c.Country).FirstOrDefault(),
@@ -60,6 +64,8 @@ namespace IRO_UNMO.App.Areas.Applicant.Controllers
             };
             return View(vm);
         }
+
+        [Autorizacija(false, true, false)]
         [HttpPost]
         public IActionResult create(CreateNewAppVM vm)
         {
@@ -107,7 +113,67 @@ namespace IRO_UNMO.App.Areas.Applicant.Controllers
             _db.Application.Add(a);
             _db.SaveChanges();
 
-            return RedirectToAction("details", "home", new { id = applicant.ApplicantId });
+            return RedirectToAction("profile", "dashboard", new { id = applicant.ApplicantId });
+        }
+
+        [Autorizacija(false, false, true)]
+        [HttpGet]
+        public IActionResult offers()
+        {
+            OffersVM vm = new OffersVM();
+            vm.Offers = _db.Offer.Include(a => a.University).ThenInclude(b => b.Country).Where(x => x.Start <= DateTime.Now && x.End >= DateTime.Now).OrderBy(a => a.Start).ToList();
+            vm.UOffers = _db.Offer.Include(a => a.University).ThenInclude(b => b.Country).Where(x => x.Start > DateTime.Now).OrderBy(y => y.Start).ToList();
+            vm.EOffers = _db.Offer.Include(a => a.University).ThenInclude(b => b.Country).Where(x => x.Start <= DateTime.Now && x.End <= DateTime.Now).OrderBy(y => y.Start).ToList();
+            return View(vm);
+        }
+
+        [ActionName("study-in-mostar")]
+        public IActionResult mostar()
+        {
+            TempData["applicantId"] = HttpContext.GetLoggedUser().Id;
+            return View();
+        }
+
+        public IActionResult enrollment()
+        {
+            TempData["applicantId"] = HttpContext.GetLoggedUser().Id;
+            return View();
+        }
+
+        public IActionResult tuition()
+        {
+            TempData["applicantId"] = HttpContext.GetLoggedUser().Id;
+            return View();
+        }
+
+        public IActionResult activities()
+        {
+            TempData["applicantId"] = HttpContext.GetLoggedUser().Id;
+            return View();
+        }
+
+        public IActionResult administrative()
+        {
+            TempData["applicantId"] = HttpContext.GetLoggedUser().Id;
+            return View();
+        }
+
+        public IActionResult accomodation()
+        {
+            TempData["applicantId"] = HttpContext.GetLoggedUser().Id;
+            return View();
+        }
+
+        public IActionResult insurance()
+        {
+            TempData["applicantId"] = HttpContext.GetLoggedUser().Id;
+            return View();
+        }
+
+        public IActionResult emergency()
+        {
+            TempData["applicantId"] = HttpContext.GetLoggedUser().Id;
+            return View();
         }
     }
 }

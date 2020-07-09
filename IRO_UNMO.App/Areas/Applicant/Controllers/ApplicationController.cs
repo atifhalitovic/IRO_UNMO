@@ -11,6 +11,8 @@ using IRO_UNMO.App.Data;
 using IRO_UNMO.App.Models;
 using IRO_UNMO.App.ViewModels;
 using IRO_UNMO.Util;
+using IRO_UNMO.Web.Helper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -44,73 +46,10 @@ namespace IRO_UNMO.App.Areas.Applicant.Controllers
             _userManagementHelper = new UserManagementHelper(_db);
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-        public IActionResult create(string id)
-        {
-            CreateNewAppVM model = new CreateNewAppVM();
-            model.ApplicantId = id;
-            model.Applicant = _db.Applicant.Where(a => a.ApplicantId == id).Include(b => b.ApplicationUser).ThenInclude(c => c.Country).Include(xw => xw.University).FirstOrDefault();
-            model.LastEdited = DateTime.Now;
-
-            return View("create", model);
-        }
-
-        [HttpPost]
-        public IActionResult create(CreateNewAppVM vm)
-        {
-            Application a = new Application();
-            a.ApplicantId = vm.Applicant.ApplicantId;
-            a.CreatedApp = DateTime.Now;
-            a.LastEdited = DateTime.Now;
-            a.StatusOfApplication = "Unknown";
-
-            Models.Applicant applicant = _db.Applicant.Where(xa => xa.ApplicantId == a.ApplicantId).Include(xq=>xq.ApplicationUser).ThenInclude(xe=>xe.Country).Include(xw=>xw.University).FirstOrDefault();
-
-            Info newInfo = new Info();
-            newInfo.CitizenshipId = applicant.ApplicationUser.CountryId;
-            newInfo.Citizenship = _db.Country.Where(t => t.CountryId == newInfo.CitizenshipId).FirstOrDefault();
-            a.Infos = newInfo;
-            _db.Info.Add(newInfo);
-
-            Contact newContact = new Contact();
-            newContact.Email = applicant.ApplicationUser.Email;
-            newContact.Telephone = applicant.ApplicationUser.PhoneNumber;
-            newContact.Country = null;
-            newContact.CountryId = null;
-            a.Contacts = newContact;
-            _db.Contact.Add(newContact);
-
-            Language newLang = new Language();
-            a.Languages = newLang;
-            _db.Language.Add(newLang);
-
-            HomeInstitution newHI = new HomeInstitution();
-            newHI.OfficialName = applicant.University.Name;
-            newHI.LevelOfEducation = applicant.StudyCycle;
-            newHI.StudyProgramme = applicant.StudyField;
-            a.HomeInstitutions = newHI;
-            _db.HomeInstitution.Add(newHI);
-
-            Other newOther = new Other();
-            a.Others = newOther;
-            _db.Other.Add(newOther);
-
-            Documents newDocs = new Documents();
-            a.Documents = newDocs;
-            _db.Documents.Add(newDocs);
-
-            _db.Application.Add(a);
-            _db.SaveChanges();
-
-            return RedirectToAction("details", "home", new { id = vm.ApplicantId });
-        }
-
+        [Autorizacija(false, true, false)]
         public IActionResult docs(int id)
         {
+            TempData["applicantId"] = HttpContext.GetLoggedUser().Id;
             EditDocsVM model = new EditDocsVM();
             model.ApplicationId = id;
             model.Application = _db.Application.Where(a => a.ApplicationId == id).Include(b => b.Documents).FirstOrDefault();
@@ -290,16 +229,10 @@ namespace IRO_UNMO.App.Areas.Applicant.Controllers
             return View();
         }
 
-        [HttpGet]
-        public IActionResult ViewDocs(int id)
-        {
-            ViewDocsVM model = new ViewDocsVM();
-            model.Application = _db.Application.Where(a => a.ApplicationId == id).Include(b => b.Infos).ThenInclude(q => q.Citizenship).Include(c => c.Contacts).ThenInclude(q => q.Country).Include(d => d.HomeInstitutions).Include(e => e.Others).Include(f => f.Documents).FirstOrDefault();
-            return View("ViewDocs", model);
-        }
-
         public async Task<FileResult> download(string fileName)
         {
+            TempData["applicantId"] = HttpContext.GetLoggedUser().Id;
+
             var path = Path.Combine(
                Directory.GetCurrentDirectory(),
                "wwwroot\\uploads\\", fileName);
@@ -313,10 +246,11 @@ namespace IRO_UNMO.App.Areas.Applicant.Controllers
             return File(memory, MediaTypeNames.Application.Octet, Path.GetFileName(path));
         }
 
-
+        [Autorizacija(false, true, false)]
         [HttpGet]
         public IActionResult view(int id)
         {
+            TempData["applicantId"] = HttpContext.GetLoggedUser().Id;
             ViewAppVM model = new ViewAppVM();
             model.Application = _db.Application.Where(a => a.ApplicationId == id).Include(b => b.Infos).ThenInclude(q=>q.Citizenship).Include(c => c.Contacts).ThenInclude(q => q.Country).Include(d => d.HomeInstitutions).Include(e => e.Others).Include(f=>f.Documents).Include(g=>g.Languages).FirstOrDefault();
             model.Applicant = _db.Applicant.Where(x => x.ApplicantId == model.Application.ApplicantId).Include(a => a.ApplicationUser).ThenInclude(b => b.Country).Include(c=>c.University).FirstOrDefault();
@@ -354,8 +288,10 @@ namespace IRO_UNMO.App.Areas.Applicant.Controllers
             return View("view", model);
         }
 
+        [Autorizacija(false, true, false)]
         public IActionResult status(int id)
         {
+            TempData["applicantId"] = HttpContext.GetLoggedUser().Id;
             ViewAppVM model = new ViewAppVM();
             model.Application = _db.Application.Where(a => a.ApplicationId == id).FirstOrDefault();
             model.Applicant = _db.Applicant.Where(a => a.ApplicantId == model.Application.ApplicantId).FirstOrDefault();
@@ -371,8 +307,10 @@ namespace IRO_UNMO.App.Areas.Applicant.Controllers
             return RedirectToAction("view", "application", new { id = model.Application.ApplicationId });
         }
 
+        [Autorizacija(false, true, false)]
         public IActionResult edit(int id)
         {
+            TempData["applicantId"] = HttpContext.GetLoggedUser().Id;
             EditAppVM model = _userManagementHelper.prepApp();
             model.ApplicationId = id;
             model.Application = _db.Application.Where(a => a.ApplicationId == id).Include(b => b.Infos).ThenInclude(q=>q.Citizenship).Include(c => c.Contacts).ThenInclude(q => q.Country).Include(d => d.HomeInstitutions).Include(e => e.Others).Include(f => f.Documents).Include(g => g.Languages).FirstOrDefault();
@@ -436,11 +374,13 @@ namespace IRO_UNMO.App.Areas.Applicant.Controllers
             other.AdditionalRequests = vm.Application.Others.AdditionalRequests;
 
             _db.SaveChanges();
-            return RedirectToAction("details", "home", new { id = newApp.ApplicantId });
+            return RedirectToAction("profile", "dashboard", new { id = newApp.ApplicantId });
         }
 
-        public IActionResult add(int id)
+        [Autorizacija(false, true, false)]
+        public IActionResult comment(int id)
         {
+            TempData["applicantId"] = HttpContext.GetLoggedUser().Id;
             ViewAppVM model = new ViewAppVM();
             model.Application = _db.Application.Where(a => a.ApplicationId == model.Application.ApplicationId).Include(a => a.Applicant).ThenInclude(b => b.ApplicationUser).FirstOrDefault();
             model.Applicant = _db.Applicant.Where(a => a.ApplicantId == model.Application.ApplicantId).FirstOrDefault();
@@ -449,7 +389,7 @@ namespace IRO_UNMO.App.Areas.Applicant.Controllers
         }
 
         [HttpPost]
-        public IActionResult add(ViewAppVM model)
+        public IActionResult comment(ViewAppVM model)
         {
             Application current = _db.Application.Where(a => a.ApplicationId == model.Application.ApplicationId).Include(a => a.Applicant).ThenInclude(b => b.ApplicationUser).FirstOrDefault();
 
@@ -457,8 +397,9 @@ namespace IRO_UNMO.App.Areas.Applicant.Controllers
             {
                 Comment newComment = new Comment();
                 newComment.Message = model.NewComment;
-                newComment.ApplicantId = current.ApplicantId;
+                newComment.ApplicantId = HttpContext.GetLoggedUser().Id;
                 newComment.IonId = current.ApplicationId;
+                //newComment.Application = _db.Application.Where(a => a.ApplicationId == current.ApplicationId).FirstOrDefault();
                 newComment.CommentTime = DateTime.Now;
 
                 _db.Comment.Add(newComment);

@@ -11,6 +11,8 @@ using IRO_UNMO.App.Data;
 using IRO_UNMO.App.Models;
 using IRO_UNMO.App.ViewModels;
 using IRO_UNMO.Util;
+using IRO_UNMO.Web.Helper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -44,11 +46,7 @@ namespace IRO_UNMO.App.Areas.Applicant.Controllers
             _userManagementHelper = new UserManagementHelper(_db);
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
-
+        [Autorizacija(false, false, true)]
         public async Task<FileResult> download(string fileName)
         {
             var path = Path.Combine(
@@ -64,8 +62,10 @@ namespace IRO_UNMO.App.Areas.Applicant.Controllers
             return File(memory, MediaTypeNames.Application.Octet, Path.GetFileName(path));
         }
 
+        [Autorizacija(false, false, true)]
         public IActionResult create(string id)
         {
+            TempData["applicantId"] = HttpContext.GetLoggedUser().Id;
             CreateNewNomVM model = new CreateNewNomVM();
             model.ApplicantId = id;
             model.Applicant = _db.Applicant.Where(a => a.ApplicantId == id).Include(b => b.ApplicationUser).ThenInclude(c => c.Country).FirstOrDefault();
@@ -110,11 +110,13 @@ namespace IRO_UNMO.App.Areas.Applicant.Controllers
             _db.Nomination.Add(a);
             _db.SaveChanges();
 
-            return RedirectToAction("details", "home", new { id = vm.ApplicantId });
+            return RedirectToAction("profile", "dashboard", new { id = vm.ApplicantId });
         }
 
+        [Autorizacija(false, false, true)]
         public IActionResult docs(int id)
         {
+            TempData["applicantId"] = HttpContext.GetLoggedUser().Id;
             EditDocsNomVM model = new EditDocsNomVM();
             model.NominationId = id;
             model.Nomination = _db.Nomination.Where(a => a.NominationId == id).FirstOrDefault();
@@ -247,9 +249,11 @@ namespace IRO_UNMO.App.Areas.Applicant.Controllers
             return View();
         }
 
+        [Autorizacija(false, false, true)]
         [HttpGet]
         public IActionResult view(int id)
         {
+            TempData["applicantId"] = HttpContext.GetLoggedUser().Id;
             ViewNomVM model = new ViewNomVM();
             model.Nomination = _db.Nomination.Where(a => a.NominationId == id).Include(a => a.Offer).ThenInclude(b=>b.University).ThenInclude(c=>c.Country).FirstOrDefault();
             model.Applicant = _db.Applicant.Where(x => x.ApplicantId == model.Nomination.ApplicantId).Include(a => a.ApplicationUser).ThenInclude(b => b.Country).Include(c => c.University).FirstOrDefault();
@@ -288,8 +292,10 @@ namespace IRO_UNMO.App.Areas.Applicant.Controllers
             return View("view", model);
         }
 
+        [Autorizacija(false, false, true)]
         public IActionResult comment(int id)
         {
+            TempData["applicantId"] = HttpContext.GetLoggedUser().Id;
             ViewNomVM model = new ViewNomVM();
             model.Nomination = _db.Nomination.Where(a => a.NominationId == id).FirstOrDefault();
             model.Applicant = _db.Applicant.Where(a => a.ApplicantId == model.Nomination.ApplicantId).FirstOrDefault();
@@ -306,8 +312,9 @@ namespace IRO_UNMO.App.Areas.Applicant.Controllers
             {
                 Comment newComment = new Comment();
                 newComment.Message = model.NewComment;
-                newComment.ApplicantId = current.ApplicantId;
+                newComment.ApplicantId = HttpContext.GetLoggedUser().Id;
                 newComment.IonId = current.NominationId;
+                //newComment.Nomination = _db.Nomination.Where(a => a.NominationId == current.NominationId).FirstOrDefault();
                 newComment.CommentTime = DateTime.Now;
 
                 _db.Comment.Add(newComment);

@@ -15,7 +15,6 @@ namespace IRO_UNMO.App.Models
         public string ApplicantId { get; set; }
         public Applicant Applicant { get; set; }
         public int IonId { get; set; }
-
         public string Message { get; set; }
         public DateTime CommentTime { get; set; }
     }

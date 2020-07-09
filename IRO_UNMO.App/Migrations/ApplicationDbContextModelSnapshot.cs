@@ -25,8 +25,6 @@ namespace IRO_UNMO.App.Migrations
 
                     b.Property<DateTime>("CreatedProfile");
 
-                    b.Property<string>("Ime");
-
                     b.HasKey("AdministratorId");
 
                     b.ToTable("Administrator");
@@ -131,7 +129,9 @@ namespace IRO_UNMO.App.Migrations
 
                     b.Property<DateTimeOffset?>("LockoutEnd");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50);
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256);
@@ -149,7 +149,9 @@ namespace IRO_UNMO.App.Migrations
 
                     b.Property<string>("SignalRToken");
 
-                    b.Property<string>("Surname");
+                    b.Property<string>("Surname")
+                        .IsRequired()
+                        .HasMaxLength(50);
 
                     b.Property<bool>("TwoFactorEnabled");
 
@@ -524,6 +526,28 @@ namespace IRO_UNMO.App.Migrations
                     b.ToTable("Timing");
                 });
 
+            modelBuilder.Entity("IRO_UNMO.App.Models.Token", b =>
+                {
+                    b.Property<int>("TokenId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ApplicationUserId");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("SMALLDATETIME");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasColumnType("VARCHAR(50)");
+
+                    b.HasKey("TokenId");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.ToTable("Token");
+                });
+
             modelBuilder.Entity("IRO_UNMO.App.Models.University", b =>
                 {
                     b.Property<int>("UniversityId")
@@ -791,6 +815,13 @@ namespace IRO_UNMO.App.Migrations
                         .WithMany()
                         .HasForeignKey("UniversityId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("IRO_UNMO.App.Models.Token", b =>
+                {
+                    b.HasOne("IRO_UNMO.App.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("ApplicationUserId");
                 });
 
             modelBuilder.Entity("IRO_UNMO.App.Models.University", b =>

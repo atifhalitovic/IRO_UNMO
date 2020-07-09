@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using IRO_UNMO.App.Areas.Account.Models;
 using IRO_UNMO.App.Data;
 using IRO_UNMO.App.Models;
 using IRO_UNMO.App.ViewModels;
@@ -244,21 +245,31 @@ namespace IRO_UNMO.App.Areas.Account.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login(LoginVM model)
+        public IActionResult Login(LoginVM model, string returnUrl = null)
         {
             ApplicationUser user = _db.Users.FirstOrDefault(u => u.UniqueCode == model.UniqueCode);
             if (user == null) return RedirectToAction("AccessDenied");
 
             var userRole = _userManager.GetRolesAsync(user).Result.Single();
 
-            if (userRole == "Administrator")
+            if (userRole == "Administrator" && string.IsNullOrEmpty(returnUrl))
+            {
                 return RedirectToAction("Index", "Home", new { area = "AdminPanel" });
+            }
+            else if (userRole == "Administrator" && !string.IsNullOrEmpty(returnUrl))
+            {
+                return LocalRedirect(returnUrl);
+            }
 
-            else if (userRole == "Radnik")
-                return RedirectToAction("Index", "Home", new { area = "RadnikPanel" });
-
-            else if (userRole == "IncomingApplicant" || userRole == "OutgoingApplicant")
+            if ((userRole == "IncomingApplicant" || userRole == "OutgoingApplicant") && string.IsNullOrEmpty(returnUrl))
+            {
                 return RedirectToAction("details", "applicant", new { @id = user.Id });
+
+            }
+            else if ((userRole == "IncomingApplicant" || userRole == "OutgoingApplicant") && !string.IsNullOrEmpty(returnUrl))
+            {
+                return LocalRedirect(returnUrl);
+            }
 
             return View(model);
         }

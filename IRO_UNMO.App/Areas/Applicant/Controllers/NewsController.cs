@@ -9,6 +9,8 @@ using IRO_UNMO.App.Data;
 using IRO_UNMO.App.Models;
 using IRO_UNMO.App.ViewModels;
 using IRO_UNMO.Util;
+using IRO_UNMO.Web.Helper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -41,75 +43,16 @@ namespace IRO_UNMO.App.Areas.Applicant.Controllers
             _userManagementHelper = new UserManagementHelper(_db);
         }
 
+        [Autorizacija(false, true, true)]
+
         [HttpGet]
         public IActionResult Index()
         {
+            TempData["applicantId"] = HttpContext.GetLoggedUser().Id;
             NewsVM vm = new NewsVM();
             //LastLogin za admina
             vm.Comments = _db.Comment.Include(a => a.Applicant).ThenInclude(b=>b.ApplicationUser).Where(x=>x.CommentTime<DateTime.Now).ToList();
             return View(vm);
-        }
-
-        public IActionResult partner(int id = 0)
-        {
-            ViewBag.ID = id;
-            EditPartnersVMa vm = new EditPartnersVMa();
-            if (id == 0)
-            {
-                vm.Countries = _db.Country.Select(x => new SelectListItem()
-                {
-                    Value = x.CountryId.ToString(),
-                    Text = x.Name
-                }).OrderBy(a => a.Text).ToList();
-            }
-            else
-            {
-                vm.UniversityId = id;
-                vm.University = _db.University.Where(a => a.UniversityId == id).Include(x => x.Country).FirstOrDefault();
-                vm.Countries = _db.Country.Select(x => new SelectListItem()
-                {
-                    Value = x.CountryId.ToString(),
-                    Text = x.Name
-                }).ToList();
-            }
-            return View(vm);
-        }
-
-        [HttpPost]
-        public IActionResult partner(PartnersVM vm)
-        {
-            University current = _db.University.Where(a => a.UniversityId == vm.UniversityId).FirstOrDefault();
-            if (current == null)
-            {
-                University novi = new University();
-                novi.Name = vm.University.Name;
-                novi.Code = vm.University.Code;
-                novi.CountryId = vm.University.CountryId;
-                _db.University.Add(novi);
-
-                _db.SaveChanges();
-            }
-            else
-            {
-                current.Name = vm.University.Name;
-                current.Code = vm.University.Code;
-                current.CountryId = vm.University.CountryId;
-                _db.SaveChanges();
-            }
-
-            return RedirectToAction("index", "partners", new { area = "admin" });
-        }
-
-        [HttpDelete]
-        public IActionResult delete(int id)
-        {
-            University current = _db.University.Where(a => a.UniversityId == id).FirstOrDefault();
-            if (current == null)
-            {
-                _db.University.Remove(current);
-                _db.SaveChanges();
-            }
-            return RedirectToAction("Index");
         }
     }
 }

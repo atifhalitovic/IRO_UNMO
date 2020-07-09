@@ -9,6 +9,7 @@ using IRO_UNMO.App.Data;
 using IRO_UNMO.App.Models;
 using IRO_UNMO.App.ViewModels;
 using IRO_UNMO.Util;
+using IRO_UNMO.Web.Helper;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -41,6 +42,7 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
             _userManagementHelper = new UserManagementHelper(_db);
         }
 
+        [Autorizacija(true, false, false)]
         [HttpGet]
         public IActionResult Index()
         {

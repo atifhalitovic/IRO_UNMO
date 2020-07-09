@@ -4,6 +4,7 @@
 @inject SignInManager<ApplicationUser> signInManager
 @inject UserManager<ApplicationUser> userManager
 @{
+    var returnUrl = @Context.Request.Query["returnurl"];
     var controller = ViewContext.RouteData.Values["Controller"];
     var action = MyExtensions.FirstCharToUpper(ViewContext.RouteData.Values["Action"].ToString().Replace("_", " "));
 }
@@ -180,10 +181,7 @@
                         </div>
                     </div>
                 </div>
-                <a asp-area="" asp-controller="account" asp-action="type" class="item">Register</a>
-                <a asp-area="" asp-action="login" asp-controller="account" class="item">Login</a>
-                <a class="item">Dashboard</a> <a class="item">Settings</a>
-                <a class="item">Profile</a> <a class="item">Help</a>
+                <a asp-area="" asp-action="logout" asp-controller="account" class="item">Logout</a>
             </div>
         </div>
     </div>
@@ -201,9 +199,6 @@
                 <a class="item">Dashboard</a> <a class="item">Settings</a>
                 <a class="item">Profile</a> <a class="item">Help</a>
                 <div class="ui fitted divider"></div>
-                <div class="item">
-                    <div class="ui small input"><input placeholder="Search..." /></div>
-                </div>
             </div>
         </div>
     </div>
@@ -211,7 +206,7 @@
         <div class="three wide tablet only three wide computer only column" id="sidebar">
             <div class="ui vertical borderless fluid text menu">
                 <a class="item disabled"><img src="~/unmo_logo.png" /></a>
-                <a asp-controller="home" asp-action="index" class="item">Overview</a>
+                <a asp-controller="dashboard" asp-action="index" class="item">Overview</a>
                 <div class="ui divider"></div>
                 <a class="item" asp-controller="applicants" asp-action="index" asp-area="admin">Applicants</a>
                 <a class="item" asp-controller="news" asp-action="index" asp-area="admin">Messages and comments</a>

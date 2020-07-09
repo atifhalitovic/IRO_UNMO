@@ -9,19 +9,37 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using IRO_UNMO.App.Models;
+using System.Text.Encodings.Web;
+using IRO_UNMO.App.Data;
+using IRO_UNMO.Util;
+using Microsoft.AspNetCore.Hosting;
 
 namespace IRO_UNMO.App.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
     public class LoginModel : PageModel
     {
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly IHostingEnvironment hosting;
+        private ApplicationDbContext _db;
+        private UserManagementHelper _userManagementHelper;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly ILogger<LoginModel> _logger;
+        private readonly UrlEncoder _urlEncoder;
 
-        public LoginModel(SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(ApplicationDbContext db, IHostingEnvironment environment, UserManager<ApplicationUser> userManager,
+        SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager, UrlEncoder urlEncoder, ILogger<LoginModel> logger)
         {
+            _db = db;
+            hosting = environment;
+            _userManager = userManager;
             _signInManager = signInManager;
+            _roleManager = roleManager;
+            _urlEncoder = urlEncoder;
             _logger = logger;
+            _userManagementHelper = new UserManagementHelper(_db);
         }
 
         [BindProperty]
@@ -37,15 +55,7 @@ namespace IRO_UNMO.App.Areas.Identity.Pages.Account
         public class InputModel
         {
             [Required]
-            [EmailAddress]
-            public string Email { get; set; }
-
-            [Required]
-            [DataType(DataType.Password)]
-            public string Password { get; set; }
-
-            [Display(Name = "Remember me?")]
-            public bool RememberMe { get; set; }
+            public string UniqueCode { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -65,7 +75,7 @@ namespace IRO_UNMO.App.Areas.Identity.Pages.Account
             ReturnUrl = returnUrl;
         }
 
-        public async Task<IActionResult> OnPostAsync(string returnUrl = null)
+        public IActionResult OnPost(string returnUrl = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
 
@@ -73,20 +83,24 @@ namespace IRO_UNMO.App.Areas.Identity.Pages.Account
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: true);
-                if (result.Succeeded)
+                //var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: true);
+
+                ApplicationUser user = _db.Users.FirstOrDefault(u => u.UniqueCode == Input.UniqueCode);
+                if (user != null)
                 {
                     _logger.LogInformation("User logged in.");
-                    return LocalRedirect(returnUrl);
-                }
-                if (result.RequiresTwoFactor)
-                {
-                    return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
-                }
-                if (result.IsLockedOut)
-                {
-                    _logger.LogWarning("User account locked out.");
-                    return RedirectToPage("./Lockout");
+                    //return LocalRedirect(returnUrl);
+
+                    var userRole = _userManager.GetRolesAsync(user).Result.Single();
+
+                    if (userRole == "Administrator")
+                    {
+                        return RedirectToAction("index", "home", new { area = "admin" });
+                    }
+                    else if (userRole == "IncomingApplicant" || userRole == "OutgoingApplicant")
+                    {
+                        return RedirectToAction("index", "home", new { area = "applicant" });
+                    }
                 }
                 else
                 {

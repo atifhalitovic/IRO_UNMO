@@ -9,6 +9,7 @@ using IRO_UNMO.App.Data;
 using IRO_UNMO.App.Models;
 using IRO_UNMO.App.ViewModels;
 using IRO_UNMO.Util;
+using IRO_UNMO.Web.Helper;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -41,15 +42,17 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
             _userManagementHelper = new UserManagementHelper(_db);
         }
 
+        [Autorizacija(true, false, false)]
         [HttpGet]
         public IActionResult Index()
         {
             NewsVM vm = new NewsVM();
             //LastLogin za admina
-            vm.Comments = _db.Comment.Include(a => a.Applicant).ThenInclude(b=>b.ApplicationUser).Where(x=>x.CommentTime<DateTime.Now).ToList();
+            vm.Comments = _db.Comment.Include(a => a.Applicant).ThenInclude(b=>b.ApplicationUser).Where(x=>x.CommentTime<DateTime.Now).Where(y=>y.AdministratorId==null).ToList();
             return View(vm);
         }
 
+        [Autorizacija(true, false, false)]
         public IActionResult partner(int id = 0)
         {
             ViewBag.ID = id;
@@ -100,6 +103,7 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
             return RedirectToAction("index", "partners", new { area = "admin" });
         }
 
+        [Autorizacija(true, false, false)]
         [HttpDelete]
         public IActionResult delete(int id)
         {

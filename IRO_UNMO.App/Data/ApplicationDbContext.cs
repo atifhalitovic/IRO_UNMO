@@ -32,6 +32,7 @@ namespace IRO_UNMO.App.Data
         public DbSet<Notification> Notification { get; set; }
         public DbSet<Timing> Timing { get; set; }
         public DbSet<Offer> Offer { get; set; }
+        public DbSet<Token> Token { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

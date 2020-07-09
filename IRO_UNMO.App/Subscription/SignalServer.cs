@@ -15,6 +15,7 @@ namespace IRO_UNMO.App.Infrastructure
     public class SignalServer : Hub
     {
         private readonly IMyUser _user;
+        private readonly NameUserIdProvider mrka;
         private readonly ApplicationDbContext  _db;
         private readonly INotification _notifikacijaService;
         private readonly UserManager<ApplicationUser> _userManager;
@@ -26,7 +27,6 @@ namespace IRO_UNMO.App.Infrastructure
             _user = user;
             _db = db;
         }
-
         
         public  Task getNotification(int brNoti)
         {
@@ -45,18 +45,14 @@ namespace IRO_UNMO.App.Infrastructure
 
         public override Task OnConnectedAsync()
          {
-            //var Userid = Context.UserIdentifier;
-            var Userid = "3b7ae9e6-15b5-4877-b992-54a613d3e27b";
-
-            //var y = Context.User;
+            var Userid = Context.UserIdentifier;
+            //var UserId2 = mrka.GetUserId(connection);
             var ConnectionId = Context.ConnectionId;
-
             var x = _user.updateUser(Userid, ConnectionId).Result;
 
             if (x == true)
             {
                 return base.OnConnectedAsync();
-
             }
             return null;
         }

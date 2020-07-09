@@ -477,7 +477,7 @@
                     <div class="field">
                         @Html.TextAreaFor(model => model.NewComment, 10, 10, null)
                     </div>
-                    <button class="ui primary submit labeled icon button" asp-controller="application" asp-action="add" asp-route-id="@Model.Application.ApplicationId"><i class="icon edit"></i>Add reply</button>
+                    <button class="ui primary submit labeled icon button" asp-controller="application" asp-action="comment" asp-route-id="@Model.Application.ApplicationId"><i class="icon edit"></i>Add reply</button>
                 </form>
             </div>
         </div>

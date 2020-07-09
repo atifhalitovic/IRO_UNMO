@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.IO;
 using System.Linq;
 using System.Net.Mime;
@@ -19,9 +18,7 @@ using Microsoft.EntityFrameworkCore;
 using Syncfusion.Drawing;
 using Syncfusion.HtmlConverter;
 using Syncfusion.Pdf.Graphics;
-using Syncfusion.Pdf.Grid;
-using Syncfusion.Pdf.Tables;
-using Syncfusion.Pdf.Parsing;
+using IRO_UNMO.Web.Helper;
 
 namespace IRO_UNMO.App.Areas.Admin.Controllers
 {
@@ -46,11 +43,6 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
             _roleManager = roleManager;
             _urlEncoder = urlEncoder;
             _userManagementHelper = new UserManagementHelper(_db);
-        }
-
-        public IActionResult Index()
-        {
-            return View();
         }
 
         [HttpPost]
@@ -477,6 +469,7 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
             return View();
         }
 
+        [Autorizacija(true, false, false)]
         public async Task<FileResult> download(string fileName)
         {
             var path = Path.Combine(
@@ -494,7 +487,7 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
             return File(memory, MediaTypeNames.Application.Octet, Path.GetFileName(path));
         }
 
-
+        [Autorizacija(true, false, false)]
         [HttpGet]
         public IActionResult view(int id)
         {
@@ -535,6 +528,7 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
             return View("view", model);
         }
 
+        [Autorizacija(true, false, false)]
         public IActionResult status(int id)
         {
             ViewAppVM model = new ViewAppVM();
@@ -552,7 +546,7 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
             return RedirectToAction("view", "application", new { id = model.Application.ApplicationId });
         }
 
-
+        [Autorizacija(true, false, false)]
         public IActionResult comment(int id)
         {
             ViewAppVM model = new ViewAppVM();
@@ -571,7 +565,7 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
             {
                 Comment newComment = new Comment();
                 newComment.Message = model.NewComment;
-                newComment.ApplicantId = current.ApplicantId;
+                newComment.AdministratorId = HttpContext.GetLoggedUser().Id;
                 newComment.IonId = current.ApplicationId;
                 newComment.CommentTime = DateTime.Now;
 

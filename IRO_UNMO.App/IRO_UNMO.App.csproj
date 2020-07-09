@@ -6,34 +6,42 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Extensions\**" />
     <Compile Remove="Views\admin\**" />
     <Compile Remove="Views\application\**" />
     <Compile Remove="Views\nomination\**" />
+    <Content Remove="Extensions\**" />
     <Content Remove="Views\admin\**" />
     <Content Remove="Views\application\**" />
     <Content Remove="Views\nomination\**" />
+    <EmbeddedResource Remove="Extensions\**" />
     <EmbeddedResource Remove="Views\admin\**" />
     <EmbeddedResource Remove="Views\application\**" />
     <EmbeddedResource Remove="Views\nomination\**" />
+    <None Remove="Extensions\**" />
     <None Remove="Views\admin\**" />
     <None Remove="Views\application\**" />
     <None Remove="Views\nomination\**" />
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Areas\Identity\Pages\Account\Register.cshtml.cs" />
     <Compile Remove="Controllers\AdminController.cs" />
     <Compile Remove="Controllers\ApplicationController.cs" />
     <Compile Remove="Controllers\NominationController.cs" />
     <Compile Remove="Migrations\20200327221048_AddDocuments.cs" />
     <Compile Remove="Migrations\20200331203458_AddNomination.cs" />
+    <Compile Remove="Migrations\20200709022507_AddComment4.cs" />
     <Compile Remove="NotificationComponent.cs" />
     <Compile Remove="Subscription\ILoggedUser.cs" />
     <Compile Remove="Subscription\LoggedUserService.cs" />
     <Compile Remove="Subscription\NotificationDatabaseSubscription.cs" />
+    <Compile Remove="Util\EmailSettings.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Remove="Areas\Admin\Views\Timing\timing.cshtml" />
+    <Content Remove="Areas\Identity\Pages\Account\Register.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -80,7 +88,6 @@
 
   <ItemGroup>
     <Folder Include="Areas\Account\Data\" />
-    <Folder Include="Areas\Account\Models\" />
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Applicant\Data\" />
@@ -95,7 +102,7 @@
     <None Include="Areas\Account\Views\Home\details.cshtml" />
     <None Include="Areas\Account\Views\Home\ForgotUniqueCode.cshtml" />
     <None Include="Areas\Account\Views\Home\incoming.cshtml" />
-    <None Include="Areas\Account\Views\Home\login.cshtml" />
+    <None Include="Areas\Account\Views\Home\login0.cshtml" />
     <None Include="Areas\Account\Views\Home\outgoing.cshtml" />
     <None Include="Areas\Account\Views\Home\type.cshtml" />
     <None Include="Areas\Admin\Views\Applicants\index.cshtml" />
@@ -103,26 +110,23 @@
     <None Include="Areas\Admin\Views\Application\docs.cshtml" />
     <None Include="Areas\Admin\Views\Application\view.cshtml" />
     <None Include="Areas\Admin\Views\Application\view1.cshtml" />
-    <None Include="Areas\Admin\Views\Home\Index.cshtml" />
-    <None Include="Areas\Admin\Views\Home\partners.cshtml" />
-    <None Include="Areas\Admin\Views\News\index.cshtml" />
+    <None Include="Areas\Admin\Views\dashboard\index.cshtml" />
+    <None Include="Areas\Admin\Views\dashboard\partners.cshtml" />
+    <None Include="Areas\Admin\Views\news\index.cshtml" />
     <None Include="Areas\Admin\Views\nomination\view.cshtml" />
     <None Include="Areas\Admin\Views\offers\index.cshtml" />
     <None Include="Areas\Admin\Views\offers\offer.cshtml" />
     <None Include="Areas\Admin\Views\partners\index.cshtml" />
     <None Include="Areas\Admin\Views\partners\partner.cshtml" />
-    <None Include="Areas\Admin\Views\Timing\index.cshtml" />
+    <None Include="Areas\Admin\Views\Timing\tiiming.cshtml" />
     <None Include="Areas\Admin\Views\_ViewImports.cshtml" />
     <None Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <None Include="Areas\Applicant\Views\application\create.cshtml" />
-    <None Include="Areas\Applicant\Views\application\docs - Copy.cshtml" />
     <None Include="Areas\Applicant\Views\application\docs.cshtml" />
-    <None Include="Areas\Applicant\Views\application\edit - Copy.cshtml" />
     <None Include="Areas\Applicant\Views\application\edit.cshtml" />
-    <None Include="Areas\Applicant\Views\application\view - Copy.cshtml" />
     <None Include="Areas\Applicant\Views\application\view.cshtml" />
     <None Include="Areas\Applicant\Views\application\ViewDocs.cshtml" />
-    <None Include="Areas\Applicant\Views\Home\details.cshtml" />
+    <None Include="Areas\Applicant\Views\dashboard\profile.cshtml" />
     <None Include="Areas\Applicant\Views\nomination\create.cshtml" />
     <None Include="Areas\Applicant\Views\nomination\docs.cshtml" />
     <None Include="Areas\Applicant\Views\nomination\view.cshtml" />
@@ -135,7 +139,6 @@
     <None Include="Areas\Identity\Pages\Account\Logout.cshtml" />
     <None Include="Areas\Identity\Pages\Account\Manage\Index.cshtml" />
     <None Include="Areas\Identity\Pages\Account\Manage\_ViewImports.cshtml" />
-    <None Include="Areas\Identity\Pages\Account\Register.cshtml" />
     <None Include="Areas\Identity\Pages\Account\_ViewImports.cshtml" />
     <None Include="Areas\Identity\Pages\_ValidationScriptsPartial.cshtml" />
     <None Include="Areas\Identity\Pages\_ViewImports.cshtml" />
@@ -150,7 +153,7 @@
     <None Include="Views\account\login.cshtml" />
     <None Include="Views\account\outgoing.cshtml" />
     <None Include="Views\account\type.cshtml" />
-    <None Include="Views\home\index.cshtml" />
+    <None Include="Views\dashboard\index.cshtml" />
     <None Include="Views\Shared\Error.cshtml" />
     <None Include="Views\Shared\_CookieConsentPartial.cshtml" />
     <None Include="Views\Shared\_Layout.cshtml" />
@@ -623,7 +626,40 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="Areas\Applicant\Views\Home\index.cshtml">
+    <Content Update="Areas\Account\Views\Home\Login.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Admin\Views\dashboard\timing.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Applicant\Views\dashboard\accomodation.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Applicant\Views\dashboard\activities.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Applicant\Views\dashboard\administrative.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Applicant\Views\dashboard\emergency.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Applicant\Views\dashboard\enrollment.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Applicant\Views\dashboard\index.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Applicant\Views\dashboard\insurance.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Applicant\Views\dashboard\offers.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Applicant\Views\dashboard\study-in-mostar.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Applicant\Views\dashboard\tuition.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Areas\Applicant\Views\News\index.cshtml">
@@ -632,28 +668,34 @@
     <Content Update="Views\account\logout.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-    <Content Update="Views\home\tuition.cshtml">
+    <Content Update="Views\dashboard\offers.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-    <Content Update="Views\home\administrative.cshtml">
+    <Content Update="Views\dashboard\tuition.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-    <Content Update="Views\home\activities.cshtml">
+    <Content Update="Views\dashboard\administrative.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-    <Content Update="Views\home\accomodation.cshtml">
+    <Content Update="Views\dashboard\activities.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-    <Content Update="Views\home\insurance.cshtml">
+    <Content Update="Views\dashboard\accomodation.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-    <Content Update="Views\home\emergency.cshtml">
+    <Content Update="Views\dashboard\insurance.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-    <Content Update="Views\home\enrollment.cshtml">
+    <Content Update="Views\dashboard\emergency.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-    <Content Update="Views\home\mostar.cshtml">
+    <Content Update="Views\dashboard\enrollment.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\dashboard\study-in-mostar.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\OApplicantLayout.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Views\Shared\BasicLayout.cshtml">

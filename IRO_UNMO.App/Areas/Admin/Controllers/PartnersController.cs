@@ -9,6 +9,7 @@ using IRO_UNMO.App.Data;
 using IRO_UNMO.App.Models;
 using IRO_UNMO.App.ViewModels;
 using IRO_UNMO.Util;
+using IRO_UNMO.Web.Helper;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -41,6 +42,7 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
             _userManagementHelper = new UserManagementHelper(_db);
         }
 
+        [Autorizacija(true, false, false)]
         [HttpGet]
         public IActionResult Index()
         {
@@ -54,6 +56,7 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
             return View(vm);
         }
 
+        [Autorizacija(true, false, false)]
         public IActionResult partner(int id = 0)
         {
             ViewBag.ID = id;
@@ -105,6 +108,7 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
         }
 
         //[HttpDelete]
+        [Autorizacija(true, false, false)]
         public IActionResult delete(int id)
         {
             University current = _db.University.Find(id);

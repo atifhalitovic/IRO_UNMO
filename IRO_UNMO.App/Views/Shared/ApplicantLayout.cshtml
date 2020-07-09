@@ -1,11 +1,10 @@
-﻿@using Microsoft.AspNetCore.Identity
-@using System.Security.Claims;
+﻿@inject IRO_UNMO.App.Data.ApplicationDbContext context
 @using IRO_UNMO.Util
-@inject SignInManager<ApplicationUser> signInManager
-@inject UserManager<ApplicationUser> userManager
 @{
     var controller = ViewContext.RouteData.Values["Controller"];
     var action = MyExtensions.FirstCharToUpper(ViewContext.RouteData.Values["Action"].ToString().Replace("_", " "));
+    var applicantId = TempData["applicantId"];
+    var current = context.Users.Where(a => a.Id == applicantId.ToString()).FirstOrDefault();
 }
 
 
@@ -99,15 +98,15 @@
                 font-size: 16px;
             }
 
-            #sidebar .ui.menu > a.item.x {
-                padding: 10px 20px;
-                line-height: 20px;
-                color: #922822;
-                border-radius: 0 !important;
-                margin-top: 0;
-                margin-bottom: 0;
-                font-size: 13px;
-            }
+                #sidebar .ui.menu > a.item.x {
+                    padding: 10px 20px;
+                    line-height: 20px;
+                    color: #922822;
+                    border-radius: 0 !important;
+                    margin-top: 0;
+                    margin-bottom: 0;
+                    font-size: 13px;
+                }
 
                 #sidebar .ui.menu > a.item.disabled {
                     padding: 10px 20px;
@@ -172,8 +171,8 @@
         }
     </style>
 </head>
-
 <body id="root">
+    @Html.HiddenFor(x => applicantId)
     <div class="ui tablet computer only padded grid">
         <div class="ui inverted borderless top fixed fluid menu">
             <a class="header item">IRO-UNMO Applicant</a>
@@ -189,8 +188,14 @@
                         </div>
                     </div>
                 </div>
-                <a class="item">Welcome applicant</a>
-                <a asp-area="applicant" asp-controller="home" asp-action="details" class="item">Profile</a>
+                @if (current == null)
+                {
+                    <a class="item">KURCINA?</a>
+                }
+                else
+                {
+                    <a class="item">Welcome, @current.Name @current.Surname</a>
+                }
                 <a asp-area="" asp-controller="account" asp-action="logout" class="item">Logout</a>
             </div>
         </div>
@@ -206,8 +211,7 @@
                 </div>
             </div>
             <div class="ui vertical borderless inverted fluid menu">
-                <a class="item">Welcome applicant</a>
-                <a asp-area="applicant" asp-controller="home" asp-action="details" class="item">Profile</a>
+                <a class="item">Welcome!</a>
                 <a asp-area="" asp-controller="account" asp-action="logout" class="item">Logout</a>
             </div>
         </div>
@@ -216,21 +220,19 @@
         <div class="three wide tablet only three wide computer only column" id="sidebar">
             <div class="ui vertical borderless fluid text menu">
                 <a class="item disabled"><img src="~/unmo_logo.png" /></a>
-                <a asp-controller="home" asp-action="index" class="item">Overview</a>
                 <div class="ui divider"></div>
-                <a class="item" asp-controller="home" asp-action="details" asp-area="applicant">My applications</a>
-                <a class="item" asp-controller="nomination" asp-action="create" asp-area="applicant">Offers</a>
+                <a class="item" asp-route-id="@applicantId" asp-action="profile" asp-controller="dashboard" asp-area="applicant">My information</a>
                 @*//if inc or out nom or app*@
                 <div class="ui divider"></div>
                 <a class="item">More information</a>
-                <a class="item x" asp-area="" asp-controller="home" asp-action="mostar">Study in Mostar</a>
-                <a class="item x"> Enrollment procedure</a>
-                <a class="item x"> Tuition fees</a>
-                <a class="item x"> Student activities</a>
-                <a class="item x"> Administrative formalities</a>
-                <a class="item x"> Accomodation</a>
-                <a class="item x"> Insurance</a>
-                <a class="item x"> Emergency numbers</a>
+                <a class="item x" asp-area="applicant" asp-controller="dashboard" asp-action="study-in-mostar">Study in Mostar</a>
+                <a class="item x" asp-area="applicant" asp-controller="dashboard" asp-action="enrollment"> Enrollment procedure</a>
+                <a class="item x" asp-area="applicant" asp-controller="dashboard" asp-action="tuition"> Tuition fees</a>
+                <a class="item x" asp-area="applicant" asp-controller="dashboard" asp-action="activities"> Student activities</a>
+                <a class="item x" asp-area="applicant" asp-controller="dashboard" asp-action="administrative"> Administrative formalities</a>
+                <a class="item x" asp-area="applicant" asp-controller="dashboard" asp-action="accomodation"> Accomodation</a>
+                <a class="item x" asp-area="applicant" asp-controller="dashboard" asp-action="insurance"> Insurance</a>
+                <a class="item x" asp-area="applicant" asp-controller="dashboard" asp-action="emergency"> Emergency numbers</a>
             </div>
         </div>
         <div class="sixteen wide mobile thirteen wide tablet thirteen wide computer right floated column" id="content">

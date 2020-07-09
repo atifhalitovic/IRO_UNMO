@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using IRO_UNMO.App.Data;
@@ -15,11 +10,14 @@ using Microsoft.Extensions.DependencyInjection;
 using IRO_UNMO.App.Models;
 using Microsoft.Extensions.FileProviders;
 using System.IO;
-using IRO_UNMO.App.Hubs;
-using Microsoft.AspNetCore.SignalR;
 using IRO_UNMO.App.Subscription;
 using IRO_UNMO.App.Infrastructure;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.AspNetCore.Authorization;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.SignalR;
 
 namespace IRO_UNMO.App
 {
@@ -39,13 +37,6 @@ namespace IRO_UNMO.App
             new PhysicalFileProvider(
                 Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")));
 
-            services.Configure<CookiePolicyOptions>(options =>
-            {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = SameSiteMode.None;
-            });
-
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("lokalni")));
@@ -55,17 +46,44 @@ namespace IRO_UNMO.App
               .AddRoles<IdentityRole>()
               .AddDefaultTokenProviders();
 
-
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddScoped<IMyUser, MyUser>();
             services.AddScoped<INotification, NotificationService>();
             services.Configure<AuthMessageSenderOptions>(Configuration);
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddAuthorization();
+            services.AddSingleton<IUserIdProvider, NameUserIdProvider>();
             services.AddSignalR();
 
-            // dependency injection
-            //services.AddSingleton<NotificationDatabaseSubscription, NotificationDatabaseSubscription>();
+            //services.AddMvc(config =>
+            //{
+            //    var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+            //    config.Filters.Add(new AuthorizeFilter(policy));
+            //});
 
+            //services.ConfigureApplicationCookie(options =>
+            //{
+            //    // Cookie settings
+            //    options.Cookie.HttpOnly = true;
+            //    //options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+
+            //    options.LoginPath = "/Account/Login";
+            //    options.AccessDeniedPath = "/Account/AccessDenied";
+            //    options.LogoutPath = "/Account/Logout";
+
+            //    options.SlidingExpiration = true;
+
+            //    options.Events = new Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationEvents
+            //    {
+            //        OnRedirectToLogin = ctx =>
+            //        {
+            //            ctx.Response.Redirect("/Account/Login?returnurl=" + ctx.Request.Path + ctx.Request.QueryString);
+            //            //ctx.Response.Redirect("/Account/Login?returnurl=" + ctx.RedirectUri);
+
+            //            return Task.CompletedTask;
+            //        }
+            //    };
+            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -85,7 +103,6 @@ namespace IRO_UNMO.App
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
-
             app.UseAuthentication();
 
             app.UseSignalR(routes =>
@@ -97,14 +114,12 @@ namespace IRO_UNMO.App
             {
                 routes.MapRoute(
                    name: "area",
-                   template: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+                   template: "{area:exists}/{controller=Dashboard}/{action=Index}/{id?}");
 
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Dashboard}/{action=Index}/{id?}");
             });
-
-            //app.UseSqlTableDependency<NotificationDatabaseSubscription>(Configuration.GetConnectionString("lokalni"));
         }
     }
 }

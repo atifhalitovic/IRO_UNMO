@@ -1,6 +1,7 @@
 ﻿@model IRO_UNMO.App.ViewModels.LoginVM
 @{
     Layout = "BasicLayout";
+    var returnUrl = @Context.Request.Query["returnurl"];
 }
 <head>
     <meta charset="utf-8" />
@@ -40,7 +41,7 @@
             <div class="ui centered card">
                 <p></p>
                 <div class="meta">
-                    <form asp-controller="account" asp-action="login" method="post">
+                    <form asp-controller="account" asp-action="login" method="post" asp-route-returnurl="@returnUrl">
                         <div class="ui top attached label">Please enter your unique code</div>
                         <div class="field">
                             <div class="ui left icon input">

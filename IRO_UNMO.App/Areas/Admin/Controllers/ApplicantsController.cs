@@ -9,6 +9,7 @@ using IRO_UNMO.App.Models;
 using IRO_UNMO.App.Subscription;
 using IRO_UNMO.App.ViewModels;
 using IRO_UNMO.Util;
+using IRO_UNMO.Web.Helper;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -45,6 +46,7 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
             _notificationService = notification;
         }
 
+        [Autorizacija(true, false, false)]
         public IActionResult Index()
         {
             ApplicantsVM vm = new ApplicantsVM();
@@ -53,6 +55,7 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
             return View(vm);
         }
 
+        [Autorizacija(true, false, false)]
         [HttpGet]
         public IActionResult review(string id)
         {
@@ -66,6 +69,7 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
             return View(vm);
         }
 
+        [Autorizacija(true, false, false)]
         public IActionResult verified(string id)
         {
             Models.Applicant v = _db.Applicant.Include(a => a.ApplicationUser).Where(a=>a.ApplicantId==id).FirstOrDefault();
@@ -73,18 +77,19 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
             if (v.Verified == true)
             {
                 v.Verified = false;
-                status = "succesfully unverified!";
+                status = "Succesfully unverified!";
             }
             _db.Applicant.Update(v);
             _db.SaveChanges();
-            _notificationService.sendToApplicant(id, id, new IRO_UNMO.App.Subscription.NotificationVM()
+            _notificationService.sendToApplicant(id, HttpContext.GetLoggedUser().Id, new IRO_UNMO.App.Subscription.NotificationVM()
             {
                 Message = "Your account verification has been changed. Now you are " + status,
-                Url = "/applicant/home/details?id=" + id
+                Url = "/applicant/dashboard/profile?id=" + id
             });
             return RedirectToAction("review", "applicants", new { id = v.ApplicantId });
         }
 
+        [Autorizacija(true, false, false)]
         public IActionResult unverified(string id)
         {
             Models.Applicant v = _db.Applicant.Include(a => a.ApplicationUser).Where(a => a.ApplicantId == id).FirstOrDefault();
@@ -92,11 +97,11 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
             if (v.Verified == false)
             {
                 v.Verified = true;
-                status = "succesfully verified!";
+                status = "Succesfully verified!";
             }
             _db.Applicant.Update(v);
             _db.SaveChanges();
-            _notificationService.sendToApplicant(id, id, new IRO_UNMO.App.Subscription.NotificationVM()
+            _notificationService.sendToApplicant(id, HttpContext.GetLoggedUser().Id, new IRO_UNMO.App.Subscription.NotificationVM()
             {
                 Message = "Your account verification has been changed. Now you are " + status,
                 Url = "#"

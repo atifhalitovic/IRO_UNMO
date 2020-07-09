@@ -8,5 +8,6 @@ namespace IRO_UNMO.App.ViewModels
     public class LoginVM
     {
         public string UniqueCode { get; set; }
+        public string ReturnUrl { get; set; }
     }
 }

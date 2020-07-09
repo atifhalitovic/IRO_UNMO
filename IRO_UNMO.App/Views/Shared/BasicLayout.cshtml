@@ -195,7 +195,7 @@
             </div>
             <div class="ui vertical borderless inverted fluid menu">
                 <a class="item">Welcome applicant</a>
-                <a asp-area="applicant" asp-controller="home" asp-action="details" class="item">Profile</a>
+                <a asp-area="applicant" asp-controller="dashboard" asp-action="details" class="item">Profile</a>
             </div>
         </div>
     </div>
@@ -203,19 +203,19 @@
         <div class="three wide tablet only three wide computer only column" id="sidebar">
             <div class="ui vertical borderless fluid text menu">
                 <a class="item disabled"><img src="~/unmo_logo.png" /></a>
-                <a asp-controller="home" asp-action="index" class="item">Overview</a>
+                <a asp-controller="dashboard" asp-action="index" asp-area="" class="item">Overview</a>
                 <div class="ui divider"></div>
-                <a class="item" asp-controller="news" asp-action="index" asp-area="applicant">Find offers</a>
+                <a class="item" asp-controller="dashboard" asp-action="offers" asp-area="">Find offers</a>
                 <div class="ui divider"></div>
                 <a class="item">More information</a>
-                <a class="item x" asp-area="" asp-controller="home" asp-action="mostar">Study in Mostar</a>
-                <a class="item x" asp-area="" asp-controller="home" asp-action="enrollment"> Enrollment procedure</a>
-                <a class="item x" asp-area="" asp-controller="home" asp-action="tuition"> Tuition fees</a>
-                <a class="item x" asp-area="" asp-controller="home" asp-action="activities"> Student activities</a>
-                <a class="item x" asp-area="" asp-controller="home" asp-action="administrative"> Administrative formalities</a>
-                <a class="item x" asp-area="" asp-controller="home" asp-action="accomodation"> Accomodation</a>
-                <a class="item x" asp-area="" asp-controller="home" asp-action="insurance"> Insurance</a>
-                <a class="item x" asp-area="" asp-controller="home" asp-action="emergency"> Emergency numbers</a>
+                <a class="item x" asp-area="" asp-controller="dashboard" asp-action="study-in-mostar">Study in Mostar</a>
+                <a class="item x" asp-area="" asp-controller="dashboard" asp-action="enrollment"> Enrollment procedure</a>
+                <a class="item x" asp-area="" asp-controller="dashboard" asp-action="tuition"> Tuition fees</a>
+                <a class="item x" asp-area="" asp-controller="dashboard" asp-action="activities"> Student activities</a>
+                <a class="item x" asp-area="" asp-controller="dashboard" asp-action="administrative"> Administrative formalities</a>
+                <a class="item x" asp-area="" asp-controller="dashboard" asp-action="accomodation"> Accomodation</a>
+                <a class="item x" asp-area="" asp-controller="dashboard" asp-action="insurance"> Insurance</a>
+                <a class="item x" asp-area="" asp-controller="dashboard" asp-action="emergency"> Emergency numbers</a>
             </div>
         </div>
         <div class="sixteen wide mobile thirteen wide tablet thirteen wide computer right floated column" id="content">
@@ -223,7 +223,7 @@
                 <div class="ui dividing huge header">
                         <p></p>
                         <div class="ui huge breadcrumb">
-                            <h1 class="ui header">More information</h1>
+                            <h1 class="ui header">Information</h1>
                             @*@if (!controller.Equals("Home"))
                             {
                                 <h1 class="ui header">

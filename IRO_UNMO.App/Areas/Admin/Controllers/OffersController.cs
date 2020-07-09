@@ -9,6 +9,7 @@ using IRO_UNMO.App.Data;
 using IRO_UNMO.App.Models;
 using IRO_UNMO.App.ViewModels;
 using IRO_UNMO.Util;
+using IRO_UNMO.Web.Helper;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -41,6 +42,7 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
             _userManagementHelper = new UserManagementHelper(_db);
         }
 
+        [Autorizacija(true, false, false)]
         [HttpGet]
         public IActionResult Index()
         {
@@ -51,6 +53,7 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
             return View(vm);
         }
 
+        [Autorizacija(true, false, false)]
         public IActionResult offer(int id = 0)
         {
             ViewBag.ID = id;
@@ -172,37 +175,43 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
                 vm.Programmes.Add(new SelectListItem()
                 {
                     Value = "other",
-                    Text = "other"
+                    Text = "other",
+                    Selected = false
                 });
 
                 vm.Programmes.Add(new SelectListItem()
                 {
                     Value = "mechanic engineering",
-                    Text = "mechanics engineering"
+                    Text = "mechanics engineering",
+                    Selected = false
                 });
 
                 vm.Programmes.Add(new SelectListItem()
                 {
                     Value = "civil engineering",
-                    Text = "civil engineering"
+                    Text = "civil engineering",
+                    Selected = false
                 });
 
                 vm.Programmes.Add(new SelectListItem()
                 {
                     Value = "IT",
-                    Text = "IT"
+                    Text = "IT",
+                    Selected = false
                 });
 
                 vm.Programmes.Add(new SelectListItem()
                 {
                     Value = "business administration",
-                    Text = "business administration"
+                    Text = "business administration",
+                    Selected = false
                 });
 
                 vm.Programmes.Add(new SelectListItem()
                 {
                     Value = "available in info link",
-                    Text = "available in info link"
+                    Text = "available in info link",
+                    Selected = false
                 });
 
                 vm.Cycles = new List<SelectListItem>();
@@ -210,25 +219,29 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
                 vm.Cycles.Add(new SelectListItem()
                 {
                     Value = "bachelor",
-                    Text = "bachelor"
+                    Text = "bachelor",
+                    Selected = false
                 });
 
                 vm.Cycles.Add(new SelectListItem()
                 {
                     Value = "winter",
-                    Text = "winter"
+                    Text = "winter",
+                    Selected = false
                 });
 
                 vm.Cycles.Add(new SelectListItem()
                 {
                     Value = "doctoral",
-                    Text = "doctoral"
+                    Text = "doctoral",
+                    Selected = false
                 });
 
                 vm.Cycles.Add(new SelectListItem()
                 {
                     Value = "other",
-                    Text = "other"
+                    Text = "other",
+                    Selected = false
                 });
             }
             return View(vm);
@@ -265,6 +278,7 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
             return RedirectToAction("index", "offers", new { area = "admin" });
         }
 
+        [Autorizacija(true, false, false)]
         //[HttpDelete]
         public IActionResult delete(int id)
         {

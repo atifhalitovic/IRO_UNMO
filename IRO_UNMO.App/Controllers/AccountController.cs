@@ -8,6 +8,8 @@ using IRO_UNMO.App.Data;
 using IRO_UNMO.App.Models;
 using IRO_UNMO.App.ViewModels;
 using IRO_UNMO.Util;
+using IRO_UNMO.Web.Helper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -40,16 +42,89 @@ namespace IRO_UNMO.App.Controllers
             _userManagementHelper = new UserManagementHelper(_db);
         }
 
+        public string ReturnUrl { get; set; }
+
+        [HttpGet]
+        public IActionResult Login(string returnUrl = "")
+        {
+            var model = new LoginVM { ReturnUrl = returnUrl };
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult Login(LoginVM model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            ApplicationUser user = _db.Users.SingleOrDefault
+                (i => i.UniqueCode == model.UniqueCode);// && i.LozinkaHash == PasswordSettings.GetHash(model.Lozinka, Convert.FromBase64String(i.LozinkaSalt)));
+
+            if (user == null)
+            {
+                TempData["errorMessage"] = "Account info is not valid.";
+                return View(model);
+            }
+            var userRole = _userManager.GetRolesAsync(user).Result.Single();
+
+            if (userRole == "Administrator")
+            {
+                HttpContext.SetLoggedUser(user, true);
+                return RedirectToAction("index", "dashboard", new { area = "admin" });
+            }
+            else if (userRole == "IncomingApplicant")
+            {
+                HttpContext.SetLoggedUser(user, true);
+                TempData["applicantId"] = user.Id;
+                return RedirectToAction("profile", "dashboard", new { area = "applicant", @id = user.Id });
+        }
+            else if (userRole == "OutgoingApplicant")
+            {
+                HttpContext.SetLoggedUser(user, true);
+                TempData["applicantId"] = user.Id;
+                return RedirectToAction("profile", "dashboard", new { area = "applicant", @id = user.Id });
+            }
+
+            TempData["errorMessage"] = "Account info is not valid.";
+            return View(model);
+        }
+
+        public IActionResult logout()
+        {
+            ApplicationUser loggedUser = HttpContext.GetLoggedUser();
+
+            if (loggedUser == null)
+                return RedirectToAction("login", "account");
+
+            string trenutniToken = HttpContext.GetTrenutniToken();
+
+            Token token = _db.Token.SingleOrDefault
+                (x => x.ApplicationUserId == loggedUser.Id && x.Value == trenutniToken);
+
+            _db.Token.Remove(token);
+
+            List<Token> tokeni = _db.Token.Where
+                (x => (DateTime.Now - x.Created).TotalHours >= 24 && x.ApplicationUserId == loggedUser.Id).ToList();
+
+            foreach (Token t in tokeni)
+            {
+                _db.Token.Remove(t);
+            }
+
+            _db.SaveChanges();
+
+            Response.Cookies.Delete("loggedUser");
+
+            return RedirectToAction("login", "account");
+        }
+
+        [AllowAnonymous]
         public IActionResult type()
         {
             return View("type");
         }
 
-        public IActionResult logout()
-        {
-            return View("logout");
-        }
-
+        [AllowAnonymous]
         public IActionResult incoming()
         {
             UsersVM model = _userManagementHelper.prepUser();
@@ -111,6 +186,7 @@ namespace IRO_UNMO.App.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [AllowAnonymous]
         public IActionResult outgoing()
         {
             UsersVM model = _userManagementHelper.prepUser();
@@ -163,7 +239,6 @@ namespace IRO_UNMO.App.Controllers
             Administrator admin = new Administrator
             {
                 AdministratorId = user.Id,
-                Ime = model.Name + " " + model.Surname,
                 CreatedProfile = DateTime.Now,
             };
 
@@ -300,37 +375,13 @@ namespace IRO_UNMO.App.Controllers
                 return result.ToString();
         }
 
-        public IActionResult Login()
-        {
-            LoginVM model = new LoginVM();
-            return View(model);
-        }
 
-        [HttpPost]
-        public IActionResult Login(LoginVM model)
-        {
-            ApplicationUser user = _db.Users.FirstOrDefault(u => u.UniqueCode == model.UniqueCode);
-            if (user == null) return RedirectToAction("denied");
-            user.LastLogin = DateTime.Now;
-            _db.SaveChanges();
-
-            var userRole = _userManager.GetRolesAsync(user).Result.Single();
-
-            if (userRole == "Administrator")
-                return RedirectToAction("index", "home", new { area = "admin" });
-
-            else if (userRole == "IncomingApplicant" || userRole == "OutgoingApplicant")
-                return RedirectToAction("details", "home", new { id = user.Id, Area = "applicant" });
-
-
-            return View(model);
-        }
-
+        [AllowAnonymous]
         public IActionResult denied()
         {
-            return View("login");
+            return View("denied");
         }
-
+        [AllowAnonymous]
         public IActionResult code()
         {
             ForgotUniqueCodeVM model = new ForgotUniqueCodeVM();
@@ -341,7 +392,7 @@ namespace IRO_UNMO.App.Controllers
         public IActionResult code(ForgotUniqueCodeVM model)
         {
             ApplicationUser user = _db.Users.FirstOrDefault(u => u.Email == model.Email);
-            if (user == null) return RedirectToAction("AccessDenied");
+            if (user == null) return RedirectToAction("denied");
 
 
             var brojKorisnika = _db.Users.Count();
@@ -350,7 +401,7 @@ namespace IRO_UNMO.App.Controllers
             user.UniqueCode = GetRandomizedString(brojac);
 
             _db.SaveChanges();
-            return RedirectToAction("Login", "Applicant");
+            return RedirectToAction("login", "account");
         }
 
         [HttpGet]
@@ -358,9 +409,9 @@ namespace IRO_UNMO.App.Controllers
         {
             ProfileVM vm = new ProfileVM
             {
-                Applicant = _db.Applicant.Where(x => x.ApplicantId == id).Include(a => a.ApplicationUser).ThenInclude(b=>b.Country).Include(b=>b.University).FirstOrDefault(),
+                Applicant = _db.Applicant.Where(x => x.ApplicantId == id).Include(a => a.ApplicationUser).ThenInclude(b => b.Country).Include(b => b.University).FirstOrDefault(),
                 Application = _db.Application.Where(a => a.ApplicantId == id).Include(b => b.Infos).ThenInclude(q => q.Citizenship).Include(c => c.Contacts).ThenInclude(q => q.Country).Include(d => d.HomeInstitutions).Include(e => e.Others).FirstOrDefault(),
-                Nominations = _db.Nomination.Where(a=>a.ApplicantId==id).Include(b=>b.University).ToList()
+                Nominations = _db.Nomination.Where(a => a.ApplicantId == id).Include(b => b.University).ToList()
             };
             return View(vm);
         }
