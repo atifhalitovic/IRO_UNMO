@@ -18,5 +18,13 @@ namespace IRO_UNMO.App.ViewModels
 
         public string StatusOfApplication { get; set; }
         public List<SelectListItem> Statuses { get; set; }
+
+        //Issued by UNMO, just download - no upload (upload by UNMO coordinator)
+        //for admin upload
+        public IFormFile LearningAgreementHost { get; set; }
+        public IFormFile StudentRecordSheet { get; set; }
+        public IFormFile CertificateOfArrival { get; set; }
+        public IFormFile CertificateOfDeparture { get; set; }
+        public IFormFile StudentTranscriptOfRecords { get; set; }
     }
 }

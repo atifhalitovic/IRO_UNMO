@@ -3,23 +3,19 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Mime;
-using System.Reflection.Metadata;
-using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using IRO_UNMO.App.Data;
 using IRO_UNMO.App.Models;
+using IRO_UNMO.App.Subscription;
 using IRO_UNMO.App.ViewModels;
 using IRO_UNMO.Util;
 using IRO_UNMO.Web.Helper;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.FileProviders;
-using Microsoft.Extensions.Logging;
 
 namespace IRO_UNMO.App.Areas.Applicant.Controllers
 {
@@ -33,9 +29,10 @@ namespace IRO_UNMO.App.Areas.Applicant.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly UrlEncoder _urlEncoder;
+        private readonly INotification _notificationService;
 
         public ApplicationController(ApplicationDbContext db, IHostingEnvironment environment, UserManager<ApplicationUser> userManager,
-        SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager, UrlEncoder urlEncoder)
+        SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager, UrlEncoder urlEncoder, INotification notification)
         {
             _db = db;
             hosting = environment;
@@ -44,6 +41,7 @@ namespace IRO_UNMO.App.Areas.Applicant.Controllers
             _roleManager = roleManager;
             _urlEncoder = urlEncoder;
             _userManagementHelper = new UserManagementHelper(_db);
+            _notificationService = notification;
         }
 
         [Autorizacija(false, true, false)]
@@ -223,7 +221,7 @@ namespace IRO_UNMO.App.Areas.Applicant.Controllers
                 _db.SaveChanges();
 
                 //return RedirectToAction("details", "home", new { id = newApp.ApplicantId });
-                return RedirectToAction("docs", "application", new { id = newApp.ApplicationId });
+                return RedirectToAction("view", "application", new { id = newApp.ApplicationId });
             }
 
             return View();
@@ -399,8 +397,17 @@ namespace IRO_UNMO.App.Areas.Applicant.Controllers
                 newComment.Message = model.NewComment;
                 newComment.ApplicantId = HttpContext.GetLoggedUser().Id;
                 newComment.IonId = current.ApplicationId;
-                //newComment.Application = _db.Application.Where(a => a.ApplicationId == current.ApplicationId).FirstOrDefault();
                 newComment.CommentTime = DateTime.Now;
+
+                var admini = _db.Administrator.Include(a => a.ApplicationUser).ToList();
+                foreach (var x in admini)
+                {
+                    _notificationService.sendToAdmin(x.AdministratorId, HttpContext.GetLoggedUser().Id, new IRO_UNMO.App.Subscription.NotificationVM()
+                    {
+                        Message = model.NewComment,
+                        Url = "/admin/application/view/" + current.ApplicationId
+                    });
+                }
 
                 _db.Comment.Add(newComment);
                 _db.SaveChanges();
@@ -409,6 +416,16 @@ namespace IRO_UNMO.App.Areas.Applicant.Controllers
             {
                 return RedirectToAction("view", "application", new { id = model.Application.ApplicationId });
             }
+            return RedirectToAction("view", "application", new { id = model.Application.ApplicationId });
+        }
+
+        [HttpPost]
+        public IActionResult submit(ViewAppVM model)
+        {
+            Application current = _db.Application.Where(a => a.ApplicationId == model.Application.ApplicationId).Include(b => b.Infos).ThenInclude(q => q.Citizenship).Include(c => c.Contacts).ThenInclude(q => q.Country).Include(d => d.HomeInstitutions).Include(e => e.Others).Include(f => f.Documents).Include(g => g.Languages).FirstOrDefault();
+            current.Finished = true;
+            current.FinishedTime = DateTime.Now;
+            _db.SaveChanges();
             return RedirectToAction("view", "application", new { id = model.Application.ApplicationId });
         }
     }

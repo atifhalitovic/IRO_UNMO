@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,6 +16,10 @@ namespace IRO_UNMO.App.Models
         public string Semester { get; set; }
         public string Programmes { get; set; }
         public string Cycles { get; set; }
+        [NotMapped]
+        public List<string> LCycles { get; set; }
+        [NotMapped]
+        public List<string> LProgrammes { get; set; }
         public string Info { get; set; }
         public DateTime Start
         {

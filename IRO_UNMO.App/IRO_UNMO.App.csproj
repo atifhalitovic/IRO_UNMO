@@ -33,10 +33,13 @@
     <Compile Remove="Migrations\20200331203458_AddNomination.cs" />
     <Compile Remove="Migrations\20200709022507_AddComment4.cs" />
     <Compile Remove="NotificationComponent.cs" />
+    <Compile Remove="Subscription\IDatabaseSubscriptionInterface.cs" />
     <Compile Remove="Subscription\ILoggedUser.cs" />
     <Compile Remove="Subscription\LoggedUserService.cs" />
     <Compile Remove="Subscription\NotificationDatabaseSubscription.cs" />
     <Compile Remove="Util\EmailSettings.cs" />
+    <Compile Remove="Util\IUserRepository.cs" />
+    <Compile Remove="Util\UserRepository.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -93,7 +96,6 @@
     <Folder Include="Areas\Applicant\Data\" />
     <Folder Include="Areas\Applicant\Models\" />
     <Folder Include="Areas\Identity\Services\" />
-    <Folder Include="wwwroot\lib\signalr\dist\browser\" />
     <Folder Include="wwwroot\uploads\" />
   </ItemGroup>
 

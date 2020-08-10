@@ -29,5 +29,7 @@ namespace IRO_UNMO.App.Models
         public string StatusOfApplication { get; set; }
         public DateTime CreatedApp { get; set; }
         public DateTime LastEdited { get; set; }
+        public bool Finished { get; set; }
+        public DateTime FinishedTime { get; set; }
     }
 }

@@ -21,7 +21,6 @@ namespace IRO_UNMO.App
         public static void Main(string[] args)
         {
             var host = CreateWebHostBuilder(args).Build();
-            var hubContext = host.Services.GetService(typeof(IHubContext<NotificationHub>));
 
             using (var scope = host.Services.CreateScope())
             {
@@ -31,9 +30,6 @@ namespace IRO_UNMO.App
                     var context = services.GetRequiredService<ApplicationDbContext>();
                     var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
                     var roleManager = services.GetRequiredService<RoleManager<IdentityRole<int>>>();
-
-                    //var dbInitializerLogger = services.GetRequiredService<ILogger<DbInicijalizator>>();
-                    //DbInicijalizator.Napuni(context, userManager, roleManager, dbInitializerLogger).Wait();
                 }
                 catch (Exception ex)
                 {

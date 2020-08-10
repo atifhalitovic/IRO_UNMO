@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.Encodings.Web;
-using System.Threading.Tasks;
 using IRO_UNMO.App.Areas.Admin.ViewModels;
 using IRO_UNMO.App.Data;
 using IRO_UNMO.App.Models;
@@ -15,7 +13,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 
 namespace IRO_UNMO.App.Areas.Admin.Controllers
 {
@@ -47,9 +44,9 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
         public IActionResult Index()
         {
             OffersVM vm = new OffersVM();
-            vm.Offers = _db.Offer.Include(a => a.University).ThenInclude(b=>b.Country).Where(x => x.Start <= DateTime.Now && x.End >= DateTime.Now).OrderBy(a=>a.Start).ToList();
-            vm.UOffers = _db.Offer.Include(a => a.University).ThenInclude(b=>b.Country).Where(x=>x.Start > DateTime.Now).OrderBy(y => y.Start).ToList();
-            vm.EOffers = _db.Offer.Include(a => a.University).ThenInclude(b=>b.Country).Where(x=>x.Start <= DateTime.Now && x.End <= DateTime.Now).OrderBy(y => y.Start).ToList();
+            vm.Offers = _db.Offer.Include(a => a.University).ThenInclude(b => b.Country).Where(x => x.Start <= DateTime.Now && x.End >= DateTime.Now).OrderBy(a => a.Start).ToList();
+            vm.UOffers = _db.Offer.Include(a => a.University).ThenInclude(b => b.Country).Where(x => x.Start > DateTime.Now).OrderBy(y => y.Start).ToList();
+            vm.EOffers = _db.Offer.Include(a => a.University).ThenInclude(b => b.Country).Where(x => x.Start <= DateTime.Now && x.End <= DateTime.Now).OrderBy(y => y.Start).ToList();
             return View(vm);
         }
 
@@ -58,10 +55,10 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
         {
             ViewBag.ID = id;
             EditOffersVM vm = new EditOffersVM();
-        
+
             if (id == 0)
             {
-                vm.Universities = _db.University.Include(a=>a.Country).Select(x => new SelectListItem()
+                vm.Universities = _db.University.Include(a => a.Country).Where(b => b.UniversityId != 2).Select(x => new SelectListItem()
                 {
                     Value = x.UniversityId.ToString(),
                     Text = x.Name
@@ -80,7 +77,7 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
                     Value = "winter",
                     Text = "winter"
                 });
-            
+
                 vm.Programmes = new List<SelectListItem>();
 
                 vm.Programmes.Add(new SelectListItem()
@@ -129,8 +126,8 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
 
                 vm.Cycles.Add(new SelectListItem()
                 {
-                    Value = "winter",
-                    Text = "winter"
+                    Value = "master",
+                    Text = "master"
                 });
 
                 vm.Cycles.Add(new SelectListItem()
@@ -148,9 +145,9 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
             else
             {
                 vm.OfferId = id;
-                vm.Offer = _db.Offer.Where(a => a.OfferId == id).Include(x => x.University).ThenInclude(c=>c.Country).FirstOrDefault();
-                vm.Nominations = _db.Nomination.Where(a => a.OfferId == id).Include(b=>b.Applicant).ThenInclude(c=>c.ApplicationUser).ToList();
-                vm.Universities = _db.University.Include(a=>a.Country).Select(x => new SelectListItem()
+                vm.Offer = _db.Offer.Where(a => a.OfferId == id).Include(x => x.University).ThenInclude(c => c.Country).FirstOrDefault();
+                vm.Nominations = _db.Nomination.Where(a => a.OfferId == id).Include(b => b.Applicant).ThenInclude(c => c.ApplicationUser).ToList();
+                vm.Universities = _db.University.Include(a => a.Country).Select(x => new SelectListItem()
                 {
                     Value = x.UniversityId.ToString(),
                     Text = x.Name
@@ -225,8 +222,8 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
 
                 vm.Cycles.Add(new SelectListItem()
                 {
-                    Value = "winter",
-                    Text = "winter",
+                    Value = "master",
+                    Text = "master",
                     Selected = false
                 });
 
@@ -248,17 +245,46 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult offer(OffersVM vm)
+        public IActionResult offer(EditOffersVM vm)
         {
             Offer current = _db.Offer.Where(a => a.OfferId == vm.Offer.OfferId).Include(x => x.University).ThenInclude(c => c.Country).FirstOrDefault();
+
             if (current == null)
             {
                 Offer novi = new Offer();
                 novi.Semester = vm.Offer.Semester;
-                novi.Programmes = vm.Offer.Programmes;
-                novi.Cycles = vm.Offer.Cycles;
-                novi.Start = vm.Offer.Start;
-                novi.End = vm.Offer.End;
+                novi.Cycles = "";
+                if (vm.Offer.LCycles!=null)
+                {
+                    for (int i = 0; i < vm.Offer.LCycles.Count(); i++)
+                    {
+                        if (i == vm.Offer.LCycles.Count() - 1)
+                        {
+                            novi.Cycles += vm.Offer.LCycles[i];
+                        }
+                        else
+                        {
+                            novi.Cycles += vm.Offer.LCycles[i] + ", ";
+                        }
+                    }
+                }
+                novi.Programmes = "";
+                if (vm.Offer.LProgrammes!=null)
+                {
+                    for (int i = 0; i < vm.Offer.LProgrammes.Count(); i++)
+                    {
+                        if (i == vm.Offer.LProgrammes.Count() - 1)
+                        {
+                            novi.Programmes += vm.Offer.LProgrammes[i];
+                        }
+                        else
+                        {
+                            novi.Programmes += vm.Offer.LProgrammes[i] + ", ";
+                        }
+                    }
+                }
+                novi.Start = vm.Offer.Start.Date;
+                novi.End = vm.Offer.End.Date;
                 novi.Info = vm.Offer.Info;
                 novi.UniversityId = vm.Offer.UniversityId;
                 _db.Offer.Add(novi);
@@ -267,10 +293,38 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
             else
             {
                 current.Semester = vm.Offer.Semester;
-                current.Programmes = vm.Offer.Programmes;
-                current.Cycles = vm.Offer.Cycles;
-                current.Start = vm.Offer.Start;
-                current.End = vm.Offer.End;
+                if (vm.Offer.LCycles != null)
+                {
+                    current.Cycles = "";
+                    for (int i = 0; i < vm.Offer.LCycles.Count(); i++)
+                    {
+                        if (i == vm.Offer.LCycles.Count() - 1)
+                        {
+                            current.Cycles += vm.Offer.LCycles[i];
+                        }
+                        else
+                        {
+                            current.Cycles += vm.Offer.LCycles[i] + ", ";
+                        }
+                    }
+                }
+                if (vm.Offer.LProgrammes != null)
+                {
+                    current.Programmes = "";
+                    for (int i = 0; i < vm.Offer.LProgrammes.Count(); i++)
+                    {
+                        if (i == vm.Offer.LProgrammes.Count() - 1)
+                        {
+                            current.Programmes += vm.Offer.LProgrammes[i];
+                        }
+                        else
+                        {
+                            current.Programmes += vm.Offer.LProgrammes[i] + ", ";
+                        }
+                    }
+                }
+                //current.Start = vm.Offer.Start.Date;
+                //current.End = vm.Offer.End.Date;
                 current.Info = vm.Offer.Info;
                 current.UniversityId = vm.Offer.UniversityId;
                 _db.SaveChanges();

@@ -1,6 +1,5 @@
 ﻿@model IRO_UNMO.App.Areas.Admin.ViewModels.EditOffersVM
 @{
-    ViewData["Title"] = "";
     Layout = "_Layout5";
     var ID = ViewBag.ID;
 }
@@ -8,7 +7,6 @@
 <head>
     <script type="text/javascript" src="~/dist/calendar.min.js"></script>
     <link rel="stylesheet" href="~/dist/calendar.min.css" />
-
     <style>
         .ui.compact.segment {
             width: 850px;
@@ -32,21 +30,45 @@
                 <div class="fields">
                     <div class="field">
                         <label>Date from</label>
-                        <div class="ui calendar" id="rangestart">
-                            <div class="ui input left icon">
-                                <i class="calendar icon"></i>
-                                <input type="text" asp-for="@Model.Offer.Start" placeholder="Start">
+                        @if (Model.Offer == null)
+                        {
+                            <div class="ui calendar" id="rangestart">
+                                <div class="ui input left icon">
+                                    <i class="calendar icon"></i>
+                                    <input type="text" asp-for="@Model.Offer.Start" placeholder="Start">
+                                </div>
                             </div>
-                        </div>
+                        }
+                        else if (Model.Offer != null)
+                        {
+                            <div class="ui calendar">
+                                <div class="ui input left icon">
+                                    <i class="calendar icon"></i>
+                                    <input type="text" value="@Model.Offer.Start.ToMyStrDMYYYY()" disabled />
+                                </div>
+                            </div>
+                        }
                     </div>
                     <div class="field">
                         <label>Date to</label>
-                        <div class="ui calendar" id="rangeend">
-                            <div class="ui input left icon">
-                                <i class="calendar icon"></i>
-                                <input type="text" asp-for="@Model.Offer.End" placeholder="End">
+                        @if (Model.Offer == null)
+                        {
+                            <div class="ui calendar" id="rangeend">
+                                <div class="ui input left icon">
+                                    <i class="calendar icon"></i>
+                                    <input type="text" asp-for="@Model.Offer.End" placeholder="End">
+                                </div>
                             </div>
-                        </div>
+                        }
+                        else if (Model.Offer != null)
+                        {
+                            <div class="ui calendar">
+                                <div class="ui input left icon">
+                                    <i class="calendar icon"></i>
+                                    <input type="text" value="@Model.Offer.End.ToMyStrDMYYYY()" disabled>
+                                </div>
+                            </div>
+                        }
                     </div>
                 </div>
                 <div class="fields">
@@ -62,11 +84,23 @@
                 <div class="fields">
                     <div class="field">
                         <label asp-for="@Model.Offer.Cycles">Study cycles</label>
-                        @Html.DropDownListFor(model => model.Offer.Cycles, Model.Cycles, new { required = "Please choose study cycles for specific offer" })
+                        @if (Model.Offer != null)
+                        {
+                            <input asp-for="@Model.Offer.Cycles" disabled /><p></p>
+                        }
+                        <select asp-for="@Model.Offer.LCycles" asp-items="@Model.Cycles" multiple="" class="ui dropdown">
+                            <option value="">Please choose new study cycles</option>
+                        </select>
                     </div>
                     <div class="field">
                         <label asp-for="@Model.Offer.Programmes">Study programmes</label>
-                        @Html.DropDownListFor(model => model.Offer.Programmes, Model.Programmes, new { required = "Please choose study programmes for specific offer" })
+                        @if (Model.Offer != null)
+                        {
+                            <input asp-for="@Model.Offer.Programmes" disabled /><p></p>
+                        }
+                        <select asp-for="@Model.Offer.LProgrammes" asp-items="@Model.Programmes" multiple="" class="ui dropdown">
+                            <option value="">Please choose new study programmes</option>
+                        </select>
                     </div>
                 </div>
                 <div class="fields">
@@ -76,10 +110,21 @@
                     </div>
                 </div>
             </div>
-            <button type="submit" class="ui primary button">Save</button>
+            @if (Model.Offer == null)
+            {
+                <button type="submit" class="ui positive button">Save</button>
+            }
+            else if (Model.Offer != null)
+            {
+                <div class="ui buttons">
+                    <button type="submit" class="ui positive button">Save</button>
+                    <div class="or"></div>
+                    <button asp-controller="offers" asp-action="delete" asp-route-id="@Model.Offer.OfferId" class="ui button">Delete</button>
+                </div>
+            }
         </form>
     </div>
-    @if (Model.Offer != null && Model.Nominations.Count!=0)
+    @if (Model.Offer != null && Model.Nominations.Count != 0)
     {
         <h2 class="ui header">Nominations for the offer</h2>
         <table class="ui celled table">
@@ -109,6 +154,10 @@
         </table>
     }
     <script>
+        $(function () {
+            $('.ui.dropdown').dropdown();
+        });
+
         $('#passissue').calendar({
             type: 'date'
         });
@@ -121,6 +170,7 @@
             type: 'date',
             endCalendar: $('#rangeend')
         });
+
         $('#rangeend').calendar({
             type: 'date',
             startCalendar: $('#rangestart')

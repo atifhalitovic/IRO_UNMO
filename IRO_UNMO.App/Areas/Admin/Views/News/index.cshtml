@@ -15,8 +15,14 @@
                         @x.Applicant.ApplicationUser.Name @x.Applicant.ApplicationUser.Surname
                         <div class="subheader">@x.CommentTime</div>
                     </div>
-                    <a asp-route-id="@x.IonId" asp-area="admin" asp-controller="application" asp-action="view">@x.Message</a>
-                    <a asp-route-id="@x.IonId" asp-area="admin" asp-controller="nomination" asp-action="view">@x.Message</a>
+                    @if (x.Applicant.UniversityId == 2)
+                    {
+                        <a asp-route-id="@x.IonId" asp-area="admin" asp-controller="nomination" asp-action="view">@x.Message</a>
+                    }
+                    else
+                    { 
+                        <a asp-route-id="@x.IonId" asp-area="admin" asp-controller="application" asp-action="view">@x.Message</a>
+                    }
                 </div>
             </div>
         </div>

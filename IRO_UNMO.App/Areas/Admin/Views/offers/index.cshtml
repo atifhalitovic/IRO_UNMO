@@ -1,4 +1,5 @@
 ﻿@model IRO_UNMO.App.ViewModels.OffersVM
+@using static IRO_UNMO.App.MyExtensions
 @{
     ViewData["Title"] = "";
     Layout = "_Layout5";
@@ -6,29 +7,6 @@
 <p></p>
 <h2 class="ui header">Dzemal Bijedic current offers</h2>
 <head>
-    @*<meta charset="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-        <!--- Site CSS -->
-        <link rel="stylesheet" type="text/css" href="~/dist/components/reset.css">
-        <link rel="stylesheet" type="text/css" href="~/dist/components/site.css">
-        <link rel="stylesheet" type="text/css" href="~/dist/components/grid.css">
-        <!--- Component CSS -->
-        <link rel="stylesheet" type="text/css" href="~/dist/components/icon.css">
-        <link rel="stylesheet" type="text/css" href="~/dist/components/table.css">
-        <link rel="stylesheet" type="text/css" href="~/dist/components/button.css">
-        <link rel="stylesheet" type="text/css" href="~/dist/components/transition.css">
-        <link rel="stylesheet" type="text/css" href="~/dist/components/popup.css">
-        <link rel="stylesheet" type="text/css" href="~/dist/components/accordion.css">
-
-        <script src="~/assets/library/jquery.min.js"></script>
-        <script src="~/assets/library/iframe-content.js"></script>
-
-        <script type="text/javascript" src="~/dist/components/popup.js"></script>
-        <script type="text/javascript" src="~/dist/components/transition.js"></script>
-        <script type="text/javascript" src="~/dist/components/accordion.js"></script>
-        <script type="text/javascript" src="~/dist/components/modal.js"></script>
-        <script type="text/javascript" src="~/dist/components/dimmer.js"></script>*@
     <style>
         .ui.celled.table {
             width: 720px;
@@ -61,11 +39,11 @@
                 </div>
 
                 <div class="seven wide column" style="padding-bottom: 3em">
-                    <a href="/courses/course/7754-incoming-erasmus-mobility-1sem-1-sem?search=80283">Outgoing Erasmus+ Mobility (@x.Semester)</a>
+                    <a>Outgoing Erasmus+ Mobility (@x.Semester)</a>
                     <h5>Information</h5>
                     <p>
-                    <p>Study cycles: @x.Cycles</p>
-                    <p>Study programmes: @x.Programmes</p>
+                    <p>Study cycles: <a class="ui red horizontal tiny label"> @x.Cycles </a></p>
+                    <p>Study programmes: <a class="ui yellow horizontal tiny label"> @x.Programmes </a></p>
                     <p>More info: <a>@x.Info</a></p>
                 </div>
                 <div class="five wide apply column">
@@ -81,7 +59,7 @@
                                             Application start
                                         </div>
                                         <div class="description">
-                                            @x.Start.ToShortDateString()
+                                            @x.Start.ToMyStrDMYYYY()
                                         </div>
                                     </div>
                                 </div>
@@ -91,7 +69,7 @@
                                         <div class="header">
                                             Application deadline
                                         </div>
-                                        <div class="description"><span>@x.End.ToShortDateString() <span class="grayed">Europe/Mostar time</span></span></div>
+                                        <div class="description"><span>@x.End.ToMyStrDMYYYY() <span class="grayed">Europe/Mostar time</span></span></div>
                                     </div>
                                 </div>
                             </div>
@@ -101,20 +79,6 @@
                             <br />
                             <br />
                             <a asp-controller="offers" asp-action="delete" asp-route-id="@x.OfferId" class="ui right floated basic red button">Delete</a>
-                            @*<button asp-action="delete" asp-controller="offers" class="ui right floated basic red button modal-trigger" asp-route-id="@x.OfferId" id="test">Delete</button>
-                                <div class="ui modal test">
-                                    <i class="close icon"></i>
-                                    <div class="ui small header">
-                                        Are you sure you want to delete selected offer?
-                                        You will delete all applications for it.
-                                    </div>
-                                    <div class="actions">
-                                        <div class="ui black deny button">
-                                            No
-                                        </div>
-                                        <a asp-action="delete" asp-controller="offers" class="ui right floated red button" asp-route-id="@x.OfferId"><i class="checkmark icon"></i>Yes, delete this offer.</a>
-                                    </div>
-                                </div>*@
                         </div>
                     </div>
                 </div>
@@ -147,11 +111,11 @@
                 </div>
 
                 <div class="seven wide column" style="padding-bottom: 3em">
-                    <a href="/courses/course/7754-incoming-erasmus-mobility-1sem-1-sem?search=80283">Outgoing Erasmus+ Mobility (@x.Semester)</a>
+                    <a>Outgoing Erasmus+ Mobility (@x.Semester)</a>
                     <h5>Information</h5>
                     <p>
-                    <p>Study cycles: @x.Cycles</p>
-                    <p>Study programmes: @x.Programmes</p>
+                    <p>Study cycles: <a class="ui red horizontal tiny label"> @x.Cycles </a></p>
+                    <p>Study programmes: <a class="ui yellow horizontal tiny label"> @x.Programmes </a></p>
                     <p>More info: <a>@x.Info</a></p>
                 </div>
                 <div class="five wide apply column">
@@ -167,7 +131,7 @@
                                             Application start
                                         </div>
                                         <div class="description">
-                                            @x.Start.ToShortDateString()
+                                            @x.Start.ToMyStrDMYYYY()
                                         </div>
                                     </div>
                                 </div>
@@ -177,7 +141,7 @@
                                         <div class="header">
                                             Application deadline
                                         </div>
-                                        <div class="description"><span>@x.End.ToShortDateString() <span class="grayed">Europe/Mostar time</span></span></div>
+                                        <div class="description"><span>@x.End.ToMyStrDMYYYY()  <span class="grayed">Europe/Mostar time</span></span></div>
                                     </div>
                                 </div>
                             </div>
@@ -187,20 +151,6 @@
                             <br />
                             <br />
                             <a asp-controller="offers" asp-action="delete" asp-route-id="@x.OfferId" class="ui right floated basic red button">Delete</a>
-                            @*<button asp-action="delete" asp-controller="offers" class="ui right floated basic red button modal-trigger" asp-route-id="@x.OfferId" id="test">Delete</button>
-                                <div class="ui modal test">
-                                    <i class="close icon"></i>
-                                    <div class="ui small header">
-                                        Are you sure you want to delete selected offer?
-                                        You will delete all applications for it.
-                                    </div>
-                                    <div class="actions">
-                                        <div class="ui black deny button">
-                                            No
-                                        </div>
-                                        <a asp-action="delete" asp-controller="offers" class="ui right floated red button" asp-route-id="@x.OfferId"><i class="checkmark icon"></i>Yes, delete this offer.</a>
-                                    </div>
-                                </div>*@
                         </div>
                     </div>
                 </div>
@@ -233,11 +183,11 @@
                 </div>
 
                 <div class="seven wide column" style="padding-bottom: 3em">
-                    <a href="/courses/course/7754-incoming-erasmus-mobility-1sem-1-sem?search=80283">Outgoing Erasmus+ Mobility (@x.Semester)</a>
+                    <a>Outgoing Erasmus+ Mobility (@x.Semester)</a>
                     <h5>Information</h5>
                     <p>
-                    <p>Study cycles: @x.Cycles</p>
-                    <p>Study programmes: @x.Programmes</p>
+                    <p>Study cycles: <a class="ui red horizontal tiny label"> @x.Cycles </a></p>
+                    <p>Study programmes: <a class="ui yellow horizontal tiny label"> @x.Programmes </a></p>
                     <p>More info: <a>@x.Info</a></p>
                 </div>
                 <div class="five wide apply column">
@@ -253,7 +203,7 @@
                                             Application start
                                         </div>
                                         <div class="description">
-                                            @x.Start.ToShortDateString()
+                                            @x.Start.ToMyStrDMYYYY()
                                         </div>
                                     </div>
                                 </div>
@@ -263,7 +213,7 @@
                                         <div class="header">
                                             Application deadline
                                         </div>
-                                        <div class="description"><span>@x.End.ToShortDateString() <span class="grayed">Europe/Mostar time</span></span></div>
+                                        <div class="description"><span>@x.End.ToMyStrDMYYYY() <span class="grayed">Europe/Mostar time</span></span></div>
                                     </div>
                                 </div>
                             </div>
@@ -273,20 +223,6 @@
                             <br />
                             <br />
                             <a asp-controller="offers" asp-action="delete" asp-route-id="@x.OfferId" class="ui right floated basic red button">Delete</a>
-                            @*<button asp-action="delete" asp-controller="offers" class="ui right floated basic red button modal-trigger" asp-route-id="@x.OfferId" id="test">Delete</button>
-                                <div class="ui modal test">
-                                    <i class="close icon"></i>
-                                    <div class="ui small header">
-                                        Are you sure you want to delete selected offer?
-                                        You will delete all applications for it.
-                                    </div>
-                                    <div class="actions">
-                                        <div class="ui black deny button">
-                                            No
-                                        </div>
-                                        <a asp-action="delete" asp-controller="offers" class="ui right floated red button" asp-route-id="@x.OfferId"><i class="checkmark icon"></i>Yes, delete this offer.</a>
-                                    </div>
-                                </div>*@
                         </div>
                     </div>
                 </div>

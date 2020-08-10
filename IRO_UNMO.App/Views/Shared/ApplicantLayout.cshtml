@@ -4,7 +4,7 @@
     var controller = ViewContext.RouteData.Values["Controller"];
     var action = MyExtensions.FirstCharToUpper(ViewContext.RouteData.Values["Action"].ToString().Replace("_", " "));
     var applicantId = TempData["applicantId"];
-    var current = context.Users.Where(a => a.Id == applicantId.ToString()).FirstOrDefault();
+    //var current = context.Users.Where(a => a.Id == applicantId.ToString()).FirstOrDefault();
 }
 
 
@@ -188,14 +188,14 @@
                         </div>
                     </div>
                 </div>
-                @if (current == null)
+                @*@if (current == null)
                 {
                     <a class="item">KURCINA?</a>
                 }
                 else
                 {
                     <a class="item">Welcome, @current.Name @current.Surname</a>
-                }
+                }*@
                 <a asp-area="" asp-controller="account" asp-action="logout" class="item">Logout</a>
             </div>
         </div>

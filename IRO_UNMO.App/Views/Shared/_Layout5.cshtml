@@ -46,7 +46,6 @@
 
     <script src="~/js/ajax.js"></script>
     <script src="~/js/signalr.js"></script>
-    <script src="~/js/notifikacijaSignalR.js"></script>
     <!--- Component JS -->
     <script type="text/javascript" src="~/dist/components/popup.js"></script>
     <script type="text/javascript" src="~/dist/components/transition.js"></script>
@@ -254,16 +253,66 @@
                 on: 'click'
             });
 
-        $(document).ready(function () {
-            // Override the default dimmer page behaviour for Sidebar
-            $('.sidebar')
-                .sidebar({
-                    dimPage: false,
-                    closable: false
-                })
-                .sidebar('attach events', '#vk-header-icon-a')
-                .sidebar('setting', 'transition', 'push');
+        var connection = new signalR.HubConnectionBuilder().withUrl("/signalServer").build();
+
+        connection.on("getNotification", function (obj) {
+            var x = generateNotification(obj);
+            $("#notifikacije").prepend(x);
+            incrementNotificationNumber();
         });
+
+        connection.on("getAll", function (obj) {
+            obj.forEach(element => {
+                var x = generateNotification(element);
+                $("#notifikacije").prepend(x);
+                if (!element.seen) {
+                    incrementNotificationNumber();
+                }
+            });
+        });
+
+        function incrementNotificationNumber() {
+            var x = $("#counter").text();
+            if (x != "") {
+                var br = parseInt(x);
+                var y = br + 1;
+                $("#counter").text(y);
+                return;
+            }
+            $("#counter").text("1");
+        }
+
+        function generateNotification(obj) {
+            //var o = "";
+            //if (!obj.seen) {
+            //    o = "style='background-color:#d6e6ff'";
+            //}
+            var element =
+                '<a onClick="deselectNotification(' + obj.notificationId + ')" class="item" href="' + obj.url + '">' +
+                '<div class="content">' + '<a class="header">' + obj.user + '</a>' +
+                '<span class="date"> ' + obj.time + '</span>' +
+                '<div class="description">' + obj.message + '</div></div><div class="ui divider"></div></a>';
+
+            var codeBlock = '<div class="content">' +
+                '<h1>This is a heading</h1>' +
+                '<p>This is a paragraph of text.</p>' +
+                '<p><strong>Note:</strong> If you don\'t escape "quotes" properly, it will not work.</p>' +
+                '</div>';
+
+            return element;
+        }
+
+        function deselectNotification(id) {
+            connection.invoke('deselectNotification', id);
+        }
+
+        connection.start().then(function () {
+            console.log("connected");
+            connection.invoke('getNotification', 20);
+
+        }).catch(function (err) {
+            return console.error(err.toString());
+            });
     </script>
 </body>
 </html>

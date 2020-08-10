@@ -73,6 +73,7 @@ namespace IRO_UNMO.App.Areas.Applicant.Controllers
             a.ApplicantId = vm.Applicant.ApplicantId;
             a.CreatedApp = DateTime.Now;
             a.LastEdited = DateTime.Now;
+            a.Finished = false;
             a.StatusOfApplication = "Unknown";
 
             Models.Applicant applicant = _db.Applicant.Where(xa => xa.ApplicantId == a.ApplicantId).Include(xq => xq.ApplicationUser).ThenInclude(xe => xe.Country).Include(xw => xw.University).FirstOrDefault();

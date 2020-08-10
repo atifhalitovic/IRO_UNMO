@@ -87,430 +87,493 @@
 </head>
 <body>
     @Html.HiddenFor(x => x.Applicant.ApplicantId)
-    <div class="ui container">
-        <h2 class="ui header">
-            Application for the Dzemal Bijedic University
-            <div class="sub header">Started: @Model.Application.CreatedApp</div>
-        </h2>
-
-        @if (Model.Application.StatusOfApplication == "Unknown")
-        {
-            <div class="ui label">Status: <div class="detail">@Model.Application.StatusOfApplication</div></div>
-        }
-        else if (Model.Application.StatusOfApplication == "Review - on hold" || Model.Application.StatusOfApplication == "Review - successful")
-        {
-            <div class="ui orange label">Status: <div class="detail">@Model.Application.StatusOfApplication</div></div>
-        }
-        else if (Model.Application.StatusOfApplication == "Enrolled")
-        {
-            <div class="ui green label">Status: <div class="detail">@Model.Application.StatusOfApplication</div></div>
-        }
-        else
-        {
-            <div class="ui red label">Status: <div class="detail">@Model.Application.StatusOfApplication</div></div>
-        }
-
-        <p></p>
-        <p></p>
-        <p></p>
-
-        <form class="ui compact segment" method="post">
-            @Html.HiddenFor(x => x.Application.ApplicationId)
-            <div class="ui small equal width form">
-                <h5>Please select current status of nomination</h5>
-                <div class="field">
-                    @Html.DropDownListFor(model => model.Application.StatusOfApplication, Model.Statuses)
-                </div>
-                <button class="ui primary submit button" asp-controller="application" asp-action="status" asp-route-id="@Model.Application.ApplicationId">Save</button>
-            </div>
-        </form>
-
-
-        <p></p>
-        <p></p>
-        <p></p>
-
-        <div class="ui styled accordion">
-            <div class=" title">
-                <i class="dropdown icon"></i>Applicant info
-            </div>
-            <div class="content">
-                <table class="ui definition table">
-                    <tbody>
-                        <tr>
-                            <td class="five wide column">Full name</td>
-                            <td>@Model.Applicant.ApplicationUser.Name @Model.Applicant.ApplicationUser.Surname</td>
-                        </tr>
-                        <tr>
-                            <td>Account created</td>
-                            <td>@Model.Applicant.CreatedProfile</td>
-                        </tr>
-                        <tr>
-                            <td>Account verification</td>
-                            <td>@Model.Applicant.Verified</td>
-                        </tr>
-                        <tr><td></td><td></td></tr>
-                        <tr>
-                            <td class="five wide column">Gender</td>
-                            <td>@Model.Application.Infos.Gender</td>
-                        </tr>
-                        <tr>
-                            <td>Date of birth</td>
-                            <td>@Model.Application.Infos.DateOfBirth.ToShortDateString()</td>
-                        </tr>
-                        <tr>
-                            <td>Place of birth</td>
-                            <td>@Model.Application.Infos.PlaceOfBirth</td>
-                        </tr>
-                        <tr>
-                            <td>Citizenship</td>
-                            <td>@Model.Application.Infos.Citizenship.Name</td>
-                        </tr>
-                        <tr>
-                            <td>Passport number</td>
-                            <td>@Model.Application.Infos.PassportNumber</td>
-                        </tr>
-                        <tr>
-                            <td>Passport issue date</td>
-                            <td>@Model.Application.Infos.PassportIssueDate.ToShortDateString()</td>
-                        </tr>
-                        <tr>
-                            <td>Passport expiry date</td>
-                            <td>@Model.Application.Infos.PassportExpiryDate.ToShortDateString()</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <a asp-action="edit" asp-route-id="@Model.Application.ApplicationId" class="ui primary button">Edit</a>
-            </div>
-            <div class=" title">
-                <i class="dropdown icon"></i>Contact
-            </div>
-            <div class="content">
-                <table class="ui definition table">
-                    <tbody>
-                        <tr>
-                            <td class="five wide column">Email</td>
-                            <td>
-                                <p>@Model.Application.Contacts.Email</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Phone number</td>
-                            <td>
-                                <p>@Model.Application.Contacts.Telephone</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Street name</td>
-                            <td>
-                                <p>@Model.Application.Contacts.StreetName</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>City, town, village</td>
-                            <td>
-                                <p>@Model.Application.Contacts.PlaceName</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Postal code</td>
-                            <td>
-                                <p>@Model.Application.Contacts.PostalCode</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Country of residence</td>
-                            <td>
-                                <p>@Model.Application.Contacts.Country.Name</p>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class=" title">
-                <i class="dropdown icon"></i>Languages
-            </div>
-            <div class="content">
-                <table class="ui definition table">
-                    <tbody>
-                        <tr>
-                            <td class="seven wide column">Native language</td>
-                            <td>
-                                <p>@Model.Application.Languages.Native</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>First foreign</td>
-                            <td>
-                                <p>@Model.Application.Languages.ForeignFirst | @Model.Application.Languages.ForeignFirstProficiency</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Second foreign</td>
-                            <td>
-                                <p>@Model.Application.Languages.ForeignSecond | @Model.Application.Languages.ForeignSecondProficiency</p>
-                            </td>
-                        </tr>
-                        @if (Model.Application.Languages.ForeignThird != null)
-                        {
-
-                            <tr>
-                                <td>Third foreign</td>
-                                <td>
-                                    <p>@Model.Application.Languages.ForeignThird | @Model.Application.Languages.ForeignThirdProficiency</p>
-                                </td>
-                            </tr>
-                        }
-                        <tr>
-                            <td>Number of foreign experiences</td>
-                            <td>
-                                <p>@Model.Application.Languages.ForeignExperienceNumber</p>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class=" title">
-                <i class="dropdown icon"></i>Home institution
-            </div>
-            <div class="content">
-                <table class="ui definition table">
-                    <tbody>
-                        <tr>
-                            <td class="six wide column">Official name</td>
-                            <td>
-                                <p>@Model.Application.HomeInstitutions.OfficialName</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Faculty</td>
-                            <td>
-                                <p>@Model.Applicant.FacultyName</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Department name</td>
-                            <td>
-                                <p>@Model.Application.HomeInstitutions.DepartmentName</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Study programme</td>
-                            <td>
-                                <p>@Model.Application.HomeInstitutions.StudyProgramme</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Study cycle</td>
-                            <td>
-                                <p>@Model.Application.HomeInstitutions.LevelOfEducation</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Current term/year</td>
-                            <td>
-                                <p>@Model.Application.HomeInstitutions.CurrentTermOrYear</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>Coordinator full name</td>
-                            <td>
-                                <p>@Model.Application.HomeInstitutions.CoordinatorFullName</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Coordinator email</td>
-                            <td>
-                                <p>@Model.Application.HomeInstitutions.CoordinatorEmail</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Coordinator phone number</td>
-                            <td>
-                                <p>@Model.Application.HomeInstitutions.CoordinatorPhoneNum</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Coordinator address</td>
-                            <td>
-                                <p>@Model.Application.HomeInstitutions.CoordinatorAddress</p>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class=" title">
-                <i class="dropdown icon"></i>Other
-            </div>
-            <div class="content">
-                <table class="ui definition table">
-                    <tbody>
-                        <tr>
-                            <td class="five wide column">Medical info</td>
-                            <td>
-                                <p>@Model.Application.Others.MedicalInfo</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Additional requests</td>
-                            <td>
-                                <p>@Model.Application.Others.AdditionalRequests</p>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="title">
-                <i class="dropdown icon"></i>Documents
-            </div>
-            <div class="content">
-                <table class="ui definition table">
-                    <tbody>
-                        <tr>
-                            <td class="seven wide column">Learning agreement</td>
-                            @if (Model.Application.Documents.LearningAgreement != null)
-                            {
-                                <td>
-                                    @Html.ActionLink(Model.Application.Documents.LearningAgreement, "download", new { fileName = Model.Application.Documents.LearningAgreement })
-                                </td>
-                            }
-                            else
-                            {
-                                <td>
-                                    Not uploaded yet.
-                                </td>
-                            }
-                        </tr>
-                        <tr>
-                            <td>Curriculum vitae</td>
-                            @if (Model.Application.Documents.CV != null)
-                            {
-                                <td>
-                                    @Html.ActionLink(Model.Application.Documents.CV, "download", new { fileName = Model.Application.Documents.CV })
-                                </td>
-                            }
-                            else
-                            {
-                                <td><p>Not uploaded yet.</p></td>
-                            }
-                        </tr>
-                        <tr>
-                            <td>English language proficiency</td>
-                            @if (Model.Application.Documents.EngProficiency != null)
-                            {
-                                <td>
-                                    @Html.ActionLink(Model.Application.Documents.EngProficiency, "download", new { fileName = Model.Application.Documents.EngProficiency })
-                                </td>
-                            }
-                            else
-                            {
-                                <td><p>Not uploaded yet.</p></td>
-                            }
-                        </tr>
-                        <tr>
-                            <td>Transcript of records</td>
-                            @if (Model.Application.Documents.TranscriptOfRecords != null)
-                            {
-                                <td>
-                                    @Html.ActionLink(Model.Application.Documents.TranscriptOfRecords, "download", new { fileName = Model.Application.Documents.TranscriptOfRecords })
-                                </td>
-                            }
-                            else
-                            {
-                                <td><p>Not uploaded yet.</p></td>
-                            }
-                        </tr>
-                        <tr>
-                            <td>Motivation letter</td>
-                            @if (Model.Application.Documents.MotivationLetter != null)
-                            {
-                                <td>
-                                    @Html.ActionLink(Model.Application.Documents.MotivationLetter, "download", new { fileName = Model.Application.Documents.MotivationLetter })
-                                </td>
-                            }
-                            else
-                            {
-                                <td><p>Not uploaded yet.</p></td>
-                            }
-                        </tr>
-                        <tr>
-                            <td>Reference letter</td>
-                            @if (Model.Application.Documents.ReferenceLetter != null)
-                            {
-                                <td>
-                                    @Html.ActionLink(Model.Application.Documents.ReferenceLetter, "download", new { fileName = Model.Application.Documents.ReferenceLetter })
-                                </td>
-                            }
-                            else
-                            {
-                                <td><p>Not uploaded yet.</p></td>
-                            }
-                        </tr>
-                    </tbody>
-                </table>
-                <a asp-action="docs" asp-route-id="@Model.Application.ApplicationId" class="ui primary button"><i class="file icon"></i>Edit documents</a>
-            </div>
-            <div class=" title">
-                <i class="dropdown icon"></i>Comments
-            </div>
-            <div class=" content">
-                @if (Model.Comments.Count == 0)
-                {
-                    <div class="row">
-                        <div class="col-md-4">
-                            <label>No comments yet.</label>
-                        </div>
+    <div class="ui compact segments">
+        <div class="ui piled segment">
+            <h2 class="ui header">
+                Application for the Dzemal Bijedic University
+                <div class="sub header">Started: @Model.Application.CreatedApp</div>
+            </h2>
+            @if (Model.Application.StatusOfApplication == "Unknown")
+            {
+                <div class="ui label">Status: <div class="detail">@Model.Application.StatusOfApplication</div></div>
+            }
+            else if (Model.Application.StatusOfApplication == "Review - on hold" || Model.Application.StatusOfApplication == "Review - successful")
+            {
+                <div class="ui orange label">Status: <div class="detail">@Model.Application.StatusOfApplication</div></div>
+            }
+            else if (Model.Application.StatusOfApplication == "Enrolled")
+            {
+                <div class="ui green label">Status: <div class="detail">@Model.Application.StatusOfApplication</div></div>
+            }
+            else
+            {
+                <div class="ui red label">Status: <div class="detail">@Model.Application.StatusOfApplication</div></div>
+            }
+            <p></p>
+            @if (Model.Application.Finished == true)
+            {
+                <div class="ui green label">Submitted:<div class="detail">@Model.Application.FinishedTime</div></div>
+            }
+            else if (Model.Application.Finished == false)
+            {
+                <div class="ui label">Submitted:<div class="detail">Not yet</div></div>
+            }
+            <p></p>
+            <p></p>
+            <p></p>
+            <form class="ui compact segment" method="post">
+                @Html.HiddenFor(x => x.Application.ApplicationId)
+                <div class="ui small equal width form">
+                    <h5>Please select current status of nomination</h5>
+                    <div class="field">
+                        @Html.DropDownListFor(model => model.Application.StatusOfApplication, Model.Statuses)
                     </div>
-                }
-                else
-                {
-                    @foreach (var x in Model.Comments)
+                    <button class="ui primary submit button" asp-controller="application" asp-action="status" asp-route-id="@Model.Application.ApplicationId">Save</button>
+                </div>
+            </form>
+            <p></p>
+            <p></p>
+            <p></p>
+        </div>
+        <div class="ui piled segment">
+            <div class="ui top attached label">Applicant info</div>
+            <table class="ui definition table">
+                <tbody>
+                    <tr>
+                        <td class="five wide column">Full name</td>
+                        <td>@Model.Applicant.ApplicationUser.Name @Model.Applicant.ApplicationUser.Surname</td>
+                    </tr>
+                    <tr>
+                        <td>Account created</td>
+                        <td>@Model.Applicant.CreatedProfile</td>
+                    </tr>
+                    <tr>
+                        <td>Account verification</td>
+                        <td>@Model.Applicant.Verified</td>
+                    </tr>
+                    <tr><td></td><td></td></tr>
+                    <tr>
+                        <td class="five wide column">Gender</td>
+                        <td>@Model.Application.Infos.Gender</td>
+                    </tr>
+                    <tr>
+                        <td>Date of birth</td>
+                        <td>@Model.Application.Infos.DateOfBirth.ToShortDateString()</td>
+                    </tr>
+                    <tr>
+                        <td>Place of birth</td>
+                        <td>@Model.Application.Infos.PlaceOfBirth</td>
+                    </tr>
+                    <tr>
+                        <td>Citizenship</td>
+                        <td>@Model.Application.Infos.Citizenship.Name</td>
+                    </tr>
+                    <tr>
+                        <td>Passport number</td>
+                        <td>@Model.Application.Infos.PassportNumber</td>
+                    </tr>
+                    <tr>
+                        <td>Passport issue date</td>
+                        <td>@Model.Application.Infos.PassportIssueDate.ToShortDateString()</td>
+                    </tr>
+                    <tr>
+                        <td>Passport expiry date</td>
+                        <td>@Model.Application.Infos.PassportExpiryDate.ToShortDateString()</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="ui piled segment">
+            <div class="ui top attached label">Contact</div>
+            <table class="ui definition table">
+                <tbody>
+                    <tr>
+                        <td class="five wide column">Email</td>
+                        <td>
+                            <p>@Model.Application.Contacts.Email</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Phone number</td>
+                        <td>
+                            <p>@Model.Application.Contacts.Telephone</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Street name</td>
+                        <td>
+                            <p>@Model.Application.Contacts.StreetName</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>City, town, village</td>
+                        <td>
+                            <p>@Model.Application.Contacts.PlaceName</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Postal code</td>
+                        <td>
+                            <p>@Model.Application.Contacts.PostalCode</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Country of residence</td>
+                        <td>
+                            <p>@Model.Application.Contacts.Country.Name</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="ui piled segment">
+            <div class="ui top attached label">Languages</div>
+            <table class="ui definition table">
+                <tbody>
+                    <tr>
+                        <td class="six wide column">Native language</td>
+                        <td>
+                            <p>@Model.Application.Languages.Native</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>First foreign</td>
+                        <td>
+                            <p>@Model.Application.Languages.ForeignFirst | @Model.Application.Languages.ForeignFirstProficiency</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Second foreign</td>
+                        <td>
+                            <p>@Model.Application.Languages.ForeignSecond | @Model.Application.Languages.ForeignSecondProficiency</p>
+                        </td>
+                    </tr>
+                    @if (Model.Application.Languages.ForeignThird != null)
                     {
-                        @if (x.Message != null)
+
+                        <tr>
+                            <td>Third foreign</td>
+                            <td>
+                                <p>@Model.Application.Languages.ForeignThird | @Model.Application.Languages.ForeignThirdProficiency</p>
+                            </td>
+                        </tr>
+                    }
+                    <tr>
+                        <td>Number of foreign experiences</td>
+                        <td>
+                            <p>@Model.Application.Languages.ForeignExperienceNumber</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="ui piled segment">
+            <div class="ui top attached label">Home institution</div>
+            <table class="ui definition table">
+                <tbody>
+                    <tr>
+                        <td class="six wide column">Official name</td>
+                        <td>
+                            <p>@Model.Application.HomeInstitutions.OfficialName</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Faculty</td>
+                        <td>
+                            <p>@Model.Applicant.FacultyName</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Department name</td>
+                        <td>
+                            <p>@Model.Application.HomeInstitutions.DepartmentName</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Study programme</td>
+                        <td>
+                            <p>@Model.Application.HomeInstitutions.StudyProgramme</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Study cycle</td>
+                        <td>
+                            <p>@Model.Application.HomeInstitutions.LevelOfEducation</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Current term/year</td>
+                        <td>
+                            <p>@Model.Application.HomeInstitutions.CurrentTermOrYear</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Coordinator full name</td>
+                        <td>
+                            <p>@Model.Application.HomeInstitutions.CoordinatorFullName</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Coordinator email</td>
+                        <td>
+                            <p>@Model.Application.HomeInstitutions.CoordinatorEmail</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Coordinator phone number</td>
+                        <td>
+                            <p>@Model.Application.HomeInstitutions.CoordinatorPhoneNum</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Coordinator address</td>
+                        <td>
+                            <p>@Model.Application.HomeInstitutions.CoordinatorAddress</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="ui piled segment">
+            <div class="ui top attached label">Other</div>
+            <table class="ui definition table">
+                <tbody>
+                    <tr>
+                        <td class="five wide column">Medical info</td>
+                        <td>
+                            <p>@Model.Application.Others.MedicalInfo</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Additional requests</td>
+                        <td>
+                            <p>@Model.Application.Others.AdditionalRequests</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="ui piled segment">
+            <div class="ui top attached label">Documents uploaded by applicant</div>
+            <table class="ui definition table">
+                <tbody>
+                    <tr>
+                        <td class="seven wide column"><i class="file pdf icon"></i>Learning agreement</td>
+                        @if (Model.Application.Documents.LearningAgreement != null)
                         {
-                            <div class="ui comments">
-                                <div class="comment">
-                                    <div class="content">
-                                        @if (x.ApplicantId != null)
-                                        {
-                                            <a class="author">@x.Applicant.ApplicationUser.Name @x.Applicant.ApplicationUser.Surname</a>
-                                        }
-                                        else /*if (x.AdministratorId != null)*/
-                                        {
-                                            <a class="author">Administrator@*@x.Administrator.ApplicationUser.Name @x.Administrator.ApplicationUser.Surname*@</a>
-                                        }
-                                        <div class="metadata"><div class="date">@x.CommentTime</div></div>
-                                        <div class="text">@x.Message</div>
-                                    </div>
+                            <td>
+                                @Html.ActionLink(Model.Application.Documents.LearningAgreement, "download", new { fileName = Model.Application.Documents.LearningAgreement })
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                Not uploaded yet.
+                            </td>
+                        }
+                    </tr>
+                    <tr>
+                        <td><i class="file pdf icon"></i>Curriculum vitae</td>
+                        @if (Model.Application.Documents.CV != null)
+                        {
+                            <td>
+                                @Html.ActionLink(Model.Application.Documents.CV, "download", new { fileName = Model.Application.Documents.CV })
+                            </td>
+                        }
+                        else
+                        {
+                            <td><p>Not uploaded yet.</p></td>
+                        }
+                    </tr>
+                    <tr>
+                        <td><i class="file pdf icon"></i>English language proficiency</td>
+                        @if (Model.Application.Documents.EngProficiency != null)
+                        {
+                            <td>
+                                @Html.ActionLink(Model.Application.Documents.EngProficiency, "download", new { fileName = Model.Application.Documents.EngProficiency })
+                            </td>
+                        }
+                        else
+                        {
+                            <td><p>Not uploaded yet.</p></td>
+                        }
+                    </tr>
+                    <tr>
+                        <td><i class="file pdf icon"></i>Transcript of records</td>
+                        @if (Model.Application.Documents.TranscriptOfRecords != null)
+                        {
+                            <td>
+                                @Html.ActionLink(Model.Application.Documents.TranscriptOfRecords, "download", new { fileName = Model.Application.Documents.TranscriptOfRecords })
+                            </td>
+                        }
+                        else
+                        {
+                            <td><p>Not uploaded yet.</p></td>
+                        }
+                    </tr>
+                    <tr>
+                        <td><i class="file pdf icon"></i>Motivation letter</td>
+                        @if (Model.Application.Documents.MotivationLetter != null)
+                        {
+                            <td>
+                                @Html.ActionLink(Model.Application.Documents.MotivationLetter, "download", new { fileName = Model.Application.Documents.MotivationLetter })
+                            </td>
+                        }
+                        else
+                        {
+                            <td><p>Not uploaded yet.</p></td>
+                        }
+                    </tr>
+                    <tr>
+                        <td><i class="file pdf icon"></i>Reference letter</td>
+                        @if (Model.Application.Documents.ReferenceLetter != null)
+                        {
+                            <td>
+                                @Html.ActionLink(Model.Application.Documents.ReferenceLetter, "download", new { fileName = Model.Application.Documents.ReferenceLetter })
+                            </td>
+                        }
+                        else
+                        {
+                            <td><p>Not uploaded yet.</p></td>
+                        }
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="ui piled segment">
+            <div class="ui top attached label">Documents uploaded by host institution</div>
+            <table class="ui definition table">
+                <tbody>
+                    <tr>
+                        <td class="collapsing">
+                            <i class="file pdf icon"></i>Learning agreement host
+                        </td>
+                        @if (Model.Application.Documents.LearningAgreementHost != null)
+                        {
+                            <td class="collapsing">@Html.ActionLink(Model.Application.Documents.LearningAgreementHost, "download", new { fileName = Model.Application.Documents.LearningAgreementHost })</td>
+                        }
+                        else
+                        {
+                            <td>Not uploaded yet.</td>
+                        }
+                    </tr>
+                    <tr>
+                        <td class="collapsing">
+                            <i class="file pdf icon"></i>Certificate of arrival
+                        </td>
+                        @if (Model.Application.Documents.CertificateOfArrival != null)
+                        {
+                            <td class="collapsing">@Html.ActionLink(Model.Application.Documents.CertificateOfArrival, "download", new { fileName = Model.Application.Documents.CertificateOfArrival })</td>
+                        }
+                        else
+                        {
+                            <td>Not uploaded yet.</td>
+                        }
+                    </tr>
+                    <tr>
+                        <td class="collapsing">
+                            <i class="file pdf icon"></i>Student transcript of records host institution
+                        </td>
+                        @if (Model.Application.Documents.StudentTranscriptOfRecords != null)
+                        {
+                            <td>@Html.ActionLink(Model.Application.Documents.StudentTranscriptOfRecords, "download", new { fileName = Model.Application.Documents.StudentTranscriptOfRecords })</td>
+                        }
+                        else
+                        {
+                            <td>Not uploaded yet.</td>
+                        }
+                    </tr>
+                    <tr>
+                        <td class="collapsing">
+                            <i class="file pdf icon"></i>Exchange student record sheet
+                        </td>
+                        @if (Model.Application.Documents.StudentRecordSheet != null)
+                        {
+                            <td>@Html.ActionLink(Model.Application.Documents.StudentRecordSheet, "download", new { fileName = Model.Application.Documents.StudentRecordSheet })</td>
+                        }
+                        else
+                        {
+                            <td>Not uploaded yet.</td>
+                        }
+                    </tr>
+                    <tr>
+                        <td class="collapsing">
+                            <i class="file pdf icon"></i>Certificate of departure
+                        </td>
+                        @if (Model.Application.Documents.CertificateOfDeparture != null)
+                        {
+                            <td>@Html.ActionLink(Model.Application.Documents.CertificateOfDeparture, "download", new { fileName = Model.Application.Documents.CertificateOfDeparture })</td>
+                        }
+                        else
+                        {
+                            <td>Not uploaded yet.</td>
+                        }
+                    </tr>
+                </tbody>
+            </table>
+            <a asp-action="docs" asp-route-id="@Model.Application.ApplicationId" class="ui primary button">Edit documents</a>
+        </div>
+        <div class="ui piled segment">
+            <div class="ui top attached label">Comments</div>
+            @if (Model.Comments.Count == 0)
+            {
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>No comments yet.</label>
+                    </div>
+                </div>
+            }
+            else
+            {
+                @foreach (var x in Model.Comments)
+                {
+                    @if (x.Message != null)
+                    {
+                        <div class="ui comments">
+                            <div class="comment">
+                                <div class="content">
+                                    @if (x.ApplicantId != null)
+                                    {
+                                        <a class="author">@x.Applicant.ApplicationUser.Name @x.Applicant.ApplicationUser.Surname</a>
+                                    }
+                                    else /*if (x.AdministratorId != null)*/
+                                    {
+                                        <a class="author">Administrator@*@x.Administrator.ApplicationUser.Name @x.Administrator.ApplicationUser.Surname*@</a>
+                                    }
+                                    <div class="metadata"><div class="date">@x.CommentTime</div></div>
+                                    <div class="text">@x.Message</div>
                                 </div>
                             </div>
-                        }
+                        </div>
                     }
                 }
-                <form class="ui reply form" method="post">
-                    @Html.HiddenFor(x => x.Applicant.ApplicantId)
-                    @Html.HiddenFor(x => x.Application.ApplicationId)
-                    <h5>Please write comment in text box if you want to comment or send reply to administrator.</h5>
-                    <div class="field">
-                        @Html.TextAreaFor(model => model.NewComment, 10, 10, null)
-                    </div>
-                    <button class="ui primary submit labeled icon button" asp-controller="application" asp-action="comment" asp-route-id="@Model.Application.ApplicationId"><i class="icon edit"></i>Add reply</button>
-                </form>
-            </div>
+            }
+            <form class="ui reply form" method="post">
+                @Html.HiddenFor(x => x.Applicant.ApplicantId)
+                @Html.HiddenFor(x => x.Application.ApplicationId)
+                <h5>Please write comment in text box if you want to comment or send reply to administrator.</h5>
+                <div class="field">
+                    @Html.TextAreaFor(model => model.NewComment, 10, 10, null)
+                </div>
+                <button class="ui primary submit labeled icon button" asp-controller="application" asp-action="comment" asp-route-id="@Model.Application.ApplicationId"><i class="icon edit"></i>Add reply</button>
+            </form>
         </div>
-        <p></p>
-        <p></p>
-        <p></p>
+    </div>
+    <p></p>
+    <p></p>
+    <p></p>
+    @if (Model.Application.Finished)
+    {
         <div class="ui form">
             <form asp-action="pdf" asp-route-id="@Model.Application.ApplicationId" method="post">
                 @Html.HiddenFor(x => x.Application.ApplicationId)
                 <button type="submit" class="ui basic green button"><i class="file pdf outline icon"></i>PDF</button>
             </form>
         </div>
-    </div>
+    }
 </body>
 

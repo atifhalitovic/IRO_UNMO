@@ -3,23 +3,19 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Mime;
-using System.Reflection.Metadata;
-using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using IRO_UNMO.App.Data;
 using IRO_UNMO.App.Models;
+using IRO_UNMO.App.Subscription;
 using IRO_UNMO.App.ViewModels;
 using IRO_UNMO.Util;
 using IRO_UNMO.Web.Helper;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.FileProviders;
-using Microsoft.Extensions.Logging;
 
 namespace IRO_UNMO.App.Areas.Applicant.Controllers
 {
@@ -33,9 +29,10 @@ namespace IRO_UNMO.App.Areas.Applicant.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly UrlEncoder _urlEncoder;
+        private readonly INotification _notificationService;
 
         public NominationController(ApplicationDbContext db, IHostingEnvironment environment, UserManager<ApplicationUser> userManager,
-        SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager, UrlEncoder urlEncoder) // ILogger<HomeController> logger)
+        SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager, UrlEncoder urlEncoder, INotification notification)
         {
             _db = db;
             hosting = environment;
@@ -44,6 +41,7 @@ namespace IRO_UNMO.App.Areas.Applicant.Controllers
             _roleManager = roleManager;
             _urlEncoder = urlEncoder;
             _userManagementHelper = new UserManagementHelper(_db);
+            _notificationService = notification;
         }
 
         [Autorizacija(false, false, true)]
@@ -314,8 +312,19 @@ namespace IRO_UNMO.App.Areas.Applicant.Controllers
                 newComment.Message = model.NewComment;
                 newComment.ApplicantId = HttpContext.GetLoggedUser().Id;
                 newComment.IonId = current.NominationId;
-                //newComment.Nomination = _db.Nomination.Where(a => a.NominationId == current.NominationId).FirstOrDefault();
+
                 newComment.CommentTime = DateTime.Now;
+
+                var admini = _db.Administrator.Include(a => a.ApplicationUser).ToList();
+                
+                foreach(var x in admini)
+                {
+                    _notificationService.sendToAdmin(x.AdministratorId, HttpContext.GetLoggedUser().Id, new IRO_UNMO.App.Subscription.NotificationVM()
+                    {
+                        Message = model.NewComment,
+                        Url = "/admin/nomination/view/" + current.NominationId
+                    });
+                }
 
                 _db.Comment.Add(newComment);
                 _db.SaveChanges();

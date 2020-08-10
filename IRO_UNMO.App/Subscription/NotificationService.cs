@@ -1,5 +1,4 @@
 ﻿using IRO_UNMO.App.Data;
-using IRO_UNMO.App.Infrastructure;
 using IRO_UNMO.App.Models;
 using Microsoft.AspNetCore.SignalR;
 using System;
@@ -52,12 +51,12 @@ namespace IRO_UNMO.App.Subscription
 
         public void sendToAdmin(string to, string from, NotificationVM msg)
         {
-            var applicant = _db.Applicant.Where(x => x.ApplicantId == to).Select(x => x.ApplicationUser).FirstOrDefault();
-            var user = _user.getUserById(from.ToString()).Result;
+            var admin = _db.Administrator.Where(x => x.AdministratorId == to).Select(x => x.ApplicationUser).FirstOrDefault();
+            var applicant = _db.Applicant.Where(x => x.ApplicantId == from).Select(x => x.ApplicationUser).FirstOrDefault();
 
             var vrijeme = DateTime.Now;
             //message.Picture = user.Picture;
-            msg.User = user.Name + " " + user.Surname;
+            msg.User = applicant.Name + " " + applicant.Surname;
             msg.Seen = false;
             msg.Time = vrijeme.ToString("hh:mm:ss");
             var temp = new Notification()
@@ -65,8 +64,8 @@ namespace IRO_UNMO.App.Subscription
                 Seen = msg.Seen,
                 Message = msg.Message,
                 URL = msg.Url,
+                UserToID = to,
                 UserFromID = from,
-                UserToID = applicant.Id,
                 DateTime = vrijeme
             };
             _db.Notification.Add(temp);
@@ -74,13 +73,13 @@ namespace IRO_UNMO.App.Subscription
             _db.SaveChanges();
 
             msg.NotificationId = temp.NotificationId;
-            _Hub.Clients.Clients(applicant.SignalRToken).SendAsync("GetNotification", msg);
+            _Hub.Clients.Clients(admin.SignalRToken).SendAsync("GetNotification", msg);
 
         }
 
         public Task getAll(int br, string connectionId)
         {
-            List<NotificationVM> notifikacije = _db.Notification.OrderBy(x => x.DateTime).Where(x => x.UserTo.SignalRToken == connectionId).Select(x => new NotificationVM()
+            List<NotificationVM> notifikacije = _db.Notification.OrderBy(x => x.DateTime).Where(x => x.UserTo.SignalRToken == connectionId && x.Seen==false).Select(x => new NotificationVM()
             {
                 NotificationId = x.NotificationId,
                 Message = x.Message,

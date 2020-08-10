@@ -71,6 +71,10 @@ namespace IRO_UNMO.App.Migrations
 
                     b.Property<int?>("DocumentsId");
 
+                    b.Property<bool>("Finished");
+
+                    b.Property<DateTime>("FinishedTime");
+
                     b.Property<int?>("HomeInstitutionId");
 
                     b.Property<int?>("InfoId");

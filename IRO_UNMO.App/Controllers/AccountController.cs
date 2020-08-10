@@ -111,6 +111,7 @@ namespace IRO_UNMO.App.Controllers
                 _db.Token.Remove(t);
             }
 
+            loggedUser.LastLogin = DateTime.Now;
             _db.SaveChanges();
 
             Response.Cookies.Delete("loggedUser");
@@ -183,7 +184,7 @@ namespace IRO_UNMO.App.Controllers
             _db.Applicant.Add(applicant);
             _db.SaveChanges();
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("index", "dashboard");
         }
 
         [AllowAnonymous]
@@ -245,7 +246,7 @@ namespace IRO_UNMO.App.Controllers
             _db.Administrator.Add(admin);
             _db.SaveChanges();
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("index", "dashboard");
         }
 
         [HttpPost]

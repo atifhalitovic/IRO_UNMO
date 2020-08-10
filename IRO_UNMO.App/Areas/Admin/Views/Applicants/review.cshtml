@@ -167,6 +167,18 @@
                                     <div class="description"><span>@Model.Application.LastEdited<span class="grayed"> Europe/Mostar time</span></span></div>
                                 </div>
                             </div>
+                            @if (Model.Application.Finished)
+                            {
+                                <div class="item">
+                                    <i class="top aligned checkmark large icon"></i>
+                                    <div class="content">
+                                        <div class="header">
+                                            Submitted
+                                        </div>
+                                        <div class="description"><span>@Model.Application.FinishedTime<span class="grayed"> Europe/Mostar time</span></span></div>
+                                    </div>
+                                </div>
+                            }
                         </div>
                     }
                     else
@@ -323,7 +335,6 @@
 
                             </div>
                             }
-
                             else
                             {
                                 <p>Applicant didn't create any nomination yet.</p>

@@ -9,13 +9,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace IRO_UNMO.App.Infrastructure
+namespace IRO_UNMO.App.Subscription
 {
-    //[Authorize]
+    [Authorize]
     public class SignalServer : Hub
     {
         private readonly IMyUser _user;
-        private readonly NameUserIdProvider mrka;
         private readonly ApplicationDbContext  _db;
         private readonly INotification _notifikacijaService;
         private readonly UserManager<ApplicationUser> _userManager;
@@ -23,9 +22,9 @@ namespace IRO_UNMO.App.Infrastructure
         public SignalServer(IMyUser user, UserManager<ApplicationUser> userManager, ApplicationDbContext db, INotification notifikacija)
         {
             _notifikacijaService = notifikacija;
+            _db = db;
             _userManager = userManager;
             _user = user;
-            _db = db;
         }
         
         public  Task getNotification(int brNoti)
@@ -44,9 +43,9 @@ namespace IRO_UNMO.App.Infrastructure
         }
 
         public override Task OnConnectedAsync()
-         {
-            var Userid = Context.UserIdentifier;
-            //var UserId2 = mrka.GetUserId(connection);
+        {
+            var Userid =  Context.UserIdentifier;
+            var userName = Context.User.Identity.Name;
             var ConnectionId = Context.ConnectionId;
             var x = _user.updateUser(Userid, ConnectionId).Result;
 
@@ -56,6 +55,5 @@ namespace IRO_UNMO.App.Infrastructure
             }
             return null;
         }
-
     }
 }

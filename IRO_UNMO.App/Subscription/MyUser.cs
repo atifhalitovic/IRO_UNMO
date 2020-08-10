@@ -13,14 +13,6 @@ namespace IRO_UNMO.App.Subscription
     {
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public class NameUserIdProvider : IUserIdProvider
-        {
-            public string GetUserId(HubConnectionContext connection)
-            {
-                return connection.User?.FindFirst(ClaimTypes.Name)?.Value;
-            }
-        }
-
         public MyUser(UserManager<ApplicationUser> userManager)
         {
             _userManager = userManager;
@@ -39,7 +31,7 @@ namespace IRO_UNMO.App.Subscription
         {
             try
             {
-                ApplicationUser appUser = await _userManager.FindByNameAsync(id);
+                ApplicationUser appUser = await _userManager.FindByIdAsync(id);
                 appUser.SignalRToken = token;
                 var x = await _userManager.UpdateAsync(appUser);
                 if (x.Succeeded)

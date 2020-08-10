@@ -5,43 +5,6 @@
     Layout = "_Layout5";
 }
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <!--- Site CSS -->
-    <link rel="stylesheet" type="text/css" href="~/dist/components/reset.css">
-    <link rel="stylesheet" type="text/css" href="~/dist/components/site.css">
-    <link rel="stylesheet" type="text/css" href="~/dist/components/grid.css">
-    <!--- Component CSS -->
-    <link rel="stylesheet" type="text/css" href="~/dist/components/icon.css">
-    <link rel="stylesheet" type="text/css" href="~/dist/components/table.css">
-    <link rel="stylesheet" type="text/css" href="~/dist/components/button.css">
-    <link rel="stylesheet" type="text/css" href="~/dist/components/transition.css">
-    <link rel="stylesheet" type="text/css" href="~/dist/components/popup.css">
-    <link rel="stylesheet" type="text/css" href="~/dist/components/accordion.css">
-    <!--- Component JS -->
-    @*<script src="~/lib/jquery/dist/jquery.min.js"></script>
-        <script src="~/dist/semantic.min.js"></script>*@
-
-    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.0/jquery.min.js"></script>*@
-    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>*@
-
-    <script src="~/assets/library/jquery.min.js"></script>
-    <script src="~/assets/library/iframe-content.js"></script>
-
-    <script type="text/javascript" src="~/dist/components/popup.js"></script>
-    <script type="text/javascript" src="~/dist/components/transition.js"></script>
-    <script type="text/javascript" src="~/dist/components/accordion.js"></script>
-
-    <!--- Show Names -->
-    @*<script src="~/assets/show-examples.js"></script>*@
-    <!--- Example Javascript -->
-    <script>
-        $(document).ready(function () {
-            $('.ui.accordion').accordion();
-        });
-    </script>
-
     <script>
         var fileExtentionRange = '.zip .rar .tar .pdf .doc .docx .xls .xlsx .ppt .pptx';
         var MAX_SIZE = 30; // MB
@@ -169,19 +132,12 @@
         </div>
         <div class="ui piled segment">
             <div class="ui top attached label">Documents</div>
-            <table class="ui celled striped table">
-                <thead>
-                    <tr>
-                        <th colspan="2">
-                            Uploaded documents
-                        </th>
-                    </tr>
-                </thead>
+            <table class="ui definition table">
                 <tbody>
                     @if (Model.Applicant.TypeOfApplication == "Student")
                     {
                         <tr>
-                            <td class="five wide column"><i class="file icon"></i>Learning agreement</td>
+                            <td class="seven wide column"><i class="pdf file icon"></i>Learning agreement</td>
                             @if (Model.Nomination.LearningAgreement != null)
                             {
                                 <td>
@@ -199,7 +155,7 @@
                     else
                     {
                         <tr>
-                            <td class="seven wide column"><i class="file icon"></i>Work plan</td>
+                            <td class="seven wide column"><i class="pdf file icon"></i>Work plan</td>
                             @if (Model.Nomination.WorkPlan != null)
                             {
                                 <td>
@@ -215,7 +171,7 @@
                         </tr>
                     }
                     <tr>
-                        <td><i class="file icon"></i>Curriculum vitae</td>
+                        <td><i class="pdf file icon"></i>Curriculum vitae</td>
                         @if (Model.Nomination.CV != null)
                         {
                             <td>
@@ -228,7 +184,7 @@
                         }
                     </tr>
                     <tr>
-                        <td><i class="file icon"></i>English language proficiency</td>
+                        <td><i class="pdf file icon"></i>English language proficiency</td>
                         @if (Model.Nomination.EngProficiency != null)
                         {
                             <td>
@@ -241,7 +197,7 @@
                         }
                     </tr>
                     <tr>
-                        <td><i class="file icon"></i>Transcript of records</td>
+                        <td><i class="pdf file icon"></i>Transcript of records</td>
                         @if (Model.Nomination.TranscriptOfRecords != null)
                         {
                             <td>
@@ -254,7 +210,7 @@
                         }
                     </tr>
                     <tr>
-                        <td><i class="file icon"></i>Motivation letter</td>
+                        <td><i class="pdf file icon"></i>Motivation letter</td>
                         @if (Model.Nomination.MotivationLetter != null)
                         {
                             <td>
@@ -267,7 +223,7 @@
                         }
                     </tr>
                     <tr>
-                        <td><i class="file icon"></i>Reference letter</td>
+                        <td><i class="pdf file icon"></i>Reference letter</td>
                         @if (Model.Nomination.ReferenceLetter != null)
                         {
                             <td>

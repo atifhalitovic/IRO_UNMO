@@ -5,32 +5,8 @@
     Layout = "_Layout5";
 }
 <h2 class="ui header">Welcome to documents upload page for Dzemal Bijedic University's application</h2>
+
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <!--- Site CSS -->
-    <link rel="stylesheet" type="text/css" href="~/dist/components/reset.css">
-    <link rel="stylesheet" type="text/css" href="~/dist/components/site.css">
-    <link rel="stylesheet" type="text/css" href="~/dist/components/grid.css">
-    <!--- Component CSS -->
-    <link rel="stylesheet" type="text/css" href="~/dist/components/icon.css">
-    <link rel="stylesheet" type="text/css" href="~/dist/components/table.css">
-    <link rel="stylesheet" type="text/css" href="~/dist/components/button.css">
-    <link rel="stylesheet" type="text/css" href="~/dist/components/transition.css">
-    <link rel="stylesheet" type="text/css" href="~/dist/components/popup.css">
-    <link rel="stylesheet" type="text/css" href="~/dist/components/accordion.css">
-    <!--- Component JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.2/semantic.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-
-    <script src="~/assets/library/jquery.min.js"></script>
-    <script src="~/assets/library/iframe-content.js"></script>
-
-    <script type="text/javascript" src="~/dist/components/popup.js"></script>
-    <script type="text/javascript" src="~/dist/components/transition.js"></script>
-
-    <!--- Example Javascript -->
     <script>
         var fileExtentionRange = '.zip .rar .tar .pdf .doc .docx .xls .xlsx .ppt .pptx';
         var MAX_SIZE = 30; // MB
@@ -70,9 +46,6 @@
             }
         });
     </script>
-    <style>
-
-    </style>
 </head>
 <body>
     <form asp-action="docs" method="post" enctype="multipart/form-data">
@@ -83,7 +56,7 @@
                 <thead>
                     <tr>
                         <th colspan="2">
-                            Documents for upload
+                            Documents uploaded by applicant
                         </th>
                     </tr>
                 </thead>
@@ -100,13 +73,6 @@
                         {
                             <td>Not uploaded yet.</td>
                         }
-                        @*<td class="collapsing">
-                            <div class="field">
-                                <label asp-for="@Model.Application.Documents.LearningAgreement" class="ui icon button">
-                                    <input asp-for="@Model.LearningAgreement" type="file" class="custom-file-input">
-                                </label>
-                            </div>
-                        </td>*@
                     </tr>
                     <tr>
                         <td class="collapsing">
@@ -120,11 +86,6 @@
                         {
                             <td>Not uploaded yet.</td>
                         }
-                        @*<td>
-                            <label asp-for="@Model.Application.Documents.CV" class="ui icon button">
-                                <input asp-for="@Model.CV" type="file" class="custom-file-input">
-                            </label>
-                        </td>*@
                     </tr>
                     <tr>
                         <td class="collapsing">
@@ -138,13 +99,6 @@
                         {
                             <td>Not uploaded yet.</td>
                         }
-                        @*<td>
-                            <div>
-                                <label asp-for="@Model.Application.Documents.EngProficiency" class="ui icon button">
-                                    <input asp-for="@Model.EngProficiency" type="file" class="custom-file-input">
-                                </label>
-                            </div>
-                        </td>*@
                     </tr>
                     <tr>
                         <td class="collapsing">
@@ -158,13 +112,6 @@
                         {
                             <td>Not uploaded yet.</td>
                         }
-                        @*<td>
-                            <div>
-                                <label asp-for="@Model.Application.Documents.TranscriptOfRecords" class="ui icon button">
-                                    <input asp-for="@Model.TranscriptOfRecords" type="file" class="custom-file-input">
-                                </label>
-                            </div>
-                        </td>*@
                     </tr>
                     <tr>
                         <td class="collapsing">
@@ -178,13 +125,6 @@
                         {
                             <td>Not uploaded yet.</td>
                         }
-                        @*<td>
-                            <div>
-                                <label asp-for="@Model.Application.Documents.MotivationLetter" class="ui icon button">
-                                    <input asp-for="@Model.MotivationLetter" type="file" class="custom-file-input">
-                                </label>
-                            </div>
-                        </td>*@
                     </tr>
                     <tr>
                         <td class="collapsing">
@@ -198,25 +138,28 @@
                         {
                             <td>Not uploaded yet.</td>
                         }
-                        @*<td>
-                            <div>
-                                <label asp-for="@Model.Application.Documents.ReferenceLetter" class="ui icon button">
-                                    <input asp-for="@Model.ReferenceLetter" type="file" class="custom-file-input">
-                                </label>
-                            </div>
-                        </td>*@
                     </tr>
-
                 </tbody>
             </table>
             <p></p>
             <p></p>
             <p></p>
+        </div>
+        <div class="ui negative message">
+            <i class="close icon"></i>
+            <div class="header">
+                Warning!
+            </div>
+            <p>
+                Please have in mind that all documents have to be uploaded in pdf, otherwise they won't be saved.
+            </p>
+        </div>
+        <div class="ui compact segment">
             <table class="ui compact celled striped table compact">
                 <thead>
                     <tr>
                         <th colspan="3">
-                            Documents upload by hosting institution
+                            Documents uploaded by hosting institution
                         </th>
                     </tr>
                 </thead>
@@ -324,5 +267,11 @@
             <button class="ui primary button">Save</button>
         </div>
     </form>
+    <script>
+        $('.message .close')
+            .on('click', function () {
+                $(this).closest('.message').transition('fade');
+            });
+    </script>
 </body>
 

@@ -4,7 +4,7 @@ using System;
 using System.Globalization;
 using System.Linq;
 
-namespace IRO_UNMO.Util
+namespace IRO_UNMO.App
 {
     public static class MyExtensions
     {

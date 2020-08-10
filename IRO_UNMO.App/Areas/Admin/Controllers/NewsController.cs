@@ -48,7 +48,7 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
         {
             NewsVM vm = new NewsVM();
             //LastLogin za admina
-            vm.Comments = _db.Comment.Include(a => a.Applicant).ThenInclude(b=>b.ApplicationUser).Where(x=>x.CommentTime<DateTime.Now).Where(y=>y.AdministratorId==null).ToList();
+            vm.Comments = _db.Comment.Include(a => a.Applicant).ThenInclude(b => b.ApplicationUser).Where(x => x.CommentTime > HttpContext.GetLoggedUser().LastLogin).Where(y => y.AdministratorId == null).ToList();
             return View(vm);
         }
 

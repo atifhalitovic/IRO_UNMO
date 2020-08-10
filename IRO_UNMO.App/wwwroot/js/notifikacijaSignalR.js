@@ -1,5 +1,4 @@
 ﻿"use strict";
-
 var connection = new signalR.HubConnectionBuilder().withUrl("/signalServer").build();
 
 connection.on("GetNotification", function (obj) {
@@ -13,11 +12,9 @@ connection.on("getAll", function (obj) {
         var x = generateNotification(element);
         $("#notifikacije").prepend(x);
         if (!element.seen) {
-
         incrementNotificationNumber();
         }
     });
-   
 });
 
 function incrementNotificationNumber() {
@@ -25,7 +22,6 @@ function incrementNotificationNumber() {
     if (x != "") {
         var br = parseInt(x);
         var y = br + 1;
-
         $("#counter").text(y);
         return;
     }
@@ -34,24 +30,23 @@ function incrementNotificationNumber() {
 }
 
 function generateNotification(obj) {
-    var o = "";
-    if (!obj.seen) {
-        o = "style='background-color:#d6e6ff'";
-    }
-    var element2 = 
-        '<a onClick="deselectNotification(' + obj.notificationId + ')" class="item" href="' + obj.url + '">'+
-        '<div class="content">' + '<a class="header">' + obj.user  + '</a>' + 
-        '<span class="time"> ' +  obj.time + '</span>' + 
-        '<div class="description">' + obj.message + '</div>' + 
-        '<div class="extra">Thanks you for your support</div></div></div></a>';
-
+    //var o = "";
+    //if (!obj.seen) {
+    //    o = "style='background-color:#d6e6ff'";
+    //}
     var element1 =
-        '<a onClick="deselectNotification(' + obj.notificationId + ')" class="item" href="' + obj.url + '">' +
+        '<div onClick="deselectNotification(' + obj.notificationId + ')" class="item" href="' + obj.url + '">' +
         '<div class="content">' + '<a class="header">' + obj.user + '</a>' +
         '<span class="date"> ' + obj.time + '</span>' +
-        '<div class="description">' + obj.message + '</div></div></h4><div class="ui divider"></div>';
+        '<div class="description">' + obj.message + '</div></div><div class="ui divider"></div></div>';
 
-    return element1;
+    var codeBlock = '<div class="content">' +
+        '<h1>This is a heading</h1>' +
+        '<p>This is a paragraph of text.</p>' +
+        '<p><strong>Note:</strong> If you don\'t escape "quotes" properly, it will not work.</p>' +
+        '</div>';
+
+    return codeBlock;
 }
 function deselectNotification(id) {
     connection

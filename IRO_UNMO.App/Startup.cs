@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using IRO_UNMO.App.Data;
@@ -11,13 +10,12 @@ using IRO_UNMO.App.Models;
 using Microsoft.Extensions.FileProviders;
 using System.IO;
 using IRO_UNMO.App.Subscription;
-using IRO_UNMO.App.Infrastructure;
+using IRO_UNMO.Util;
 using Microsoft.AspNetCore.Identity.UI.Services;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Mvc.Authorization;
-using Microsoft.AspNetCore.Authorization;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using IRO_UNMO.App.Hubs;
 using Microsoft.AspNetCore.SignalR;
+using System;
 
 namespace IRO_UNMO.App
 {
@@ -50,44 +48,20 @@ namespace IRO_UNMO.App
             services.AddScoped<IMyUser, MyUser>();
             services.AddScoped<INotification, NotificationService>();
             services.Configure<AuthMessageSenderOptions>(Configuration);
+            //services.AddSession(options => {
+            //    //options.IdleTimeout = TimeSpan.FromSeconds(3600);
+            //});
+            //services.Configure<CookiePolicyOptions>(options =>
+            //{
+            //    options.CheckConsentNeeded = context => true;
+            //});
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddAuthorization();
-            services.AddSingleton<IUserIdProvider, NameUserIdProvider>();
             services.AddSignalR();
-
-            //services.AddMvc(config =>
-            //{
-            //    var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
-            //    config.Filters.Add(new AuthorizeFilter(policy));
-            //});
-
-            //services.ConfigureApplicationCookie(options =>
-            //{
-            //    // Cookie settings
-            //    options.Cookie.HttpOnly = true;
-            //    //options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
-
-            //    options.LoginPath = "/Account/Login";
-            //    options.AccessDeniedPath = "/Account/AccessDenied";
-            //    options.LogoutPath = "/Account/Logout";
-
-            //    options.SlidingExpiration = true;
-
-            //    options.Events = new Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationEvents
-            //    {
-            //        OnRedirectToLogin = ctx =>
-            //        {
-            //            ctx.Response.Redirect("/Account/Login?returnurl=" + ctx.Request.Path + ctx.Request.QueryString);
-            //            //ctx.Response.Redirect("/Account/Login?returnurl=" + ctx.RedirectUri);
-
-            //            return Task.CompletedTask;
-            //        }
-            //    };
-            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IHubContext<SignalServer> hubContext)
         {
             if (env.IsDevelopment())
             {

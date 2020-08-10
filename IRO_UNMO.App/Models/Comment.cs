@@ -15,6 +15,10 @@ namespace IRO_UNMO.App.Models
         public string ApplicantId { get; set; }
         public Applicant Applicant { get; set; }
         public int IonId { get; set; }
+        //public int? ApplicationId { get; set; }
+        //public int? NominationId { get; set; }
+        //public Application Application { get; set; }
+        //public Nomination Nomination { get; set; }
         public string Message { get; set; }
         public DateTime CommentTime { get; set; }
     }
