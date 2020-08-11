@@ -8,7 +8,7 @@
 
 <head>
     <script>
-        var fileExtentionRange = '.zip .rar .tar .pdf .doc .docx .xls .xlsx .ppt .pptx';
+        var fileExtentionRange = '.pdf'; //.zip .rar .tar .pdf .doc .docx .xls .xlsx .ppt .pptx';
         var MAX_SIZE = 30; // MB
 
         $(document).on('change', '.btn-file :file', function () {
@@ -170,7 +170,10 @@
                         </td>
                         @if (Model.Application.Documents.LearningAgreementHost != null)
                         {
-                            <td class="collapsing">@Html.ActionLink(Model.Application.Documents.LearningAgreementHost, "download", new { fileName = Model.Application.Documents.LearningAgreement })</td>
+                            <td class="collapsing">
+                                @Html.ActionLink(Model.Application.Documents.LearningAgreementHost, "download", new { fileName = Model.Application.Documents.LearningAgreementHost })
+                                <a asp-action="delete" asp-route-fileType="LearningAgreementHost" asp-route-fileName="@Model.Application.Documents.LearningAgreementHost" asp-route-id="@Model.ApplicationId" class="ui mini red right floated label">Remove</a>
+                            </td>
                         }
                         else
                         {
@@ -190,7 +193,10 @@
                         </td>
                         @if (Model.Application.Documents.CertificateOfArrival != null)
                         {
-                            <td class="collapsing">@Html.ActionLink(Model.Application.Documents.CertificateOfArrival, "download", new { fileName = Model.Application.Documents.CertificateOfArrival })</td>
+                            <td class="collapsing">
+                                @Html.ActionLink(Model.Application.Documents.CertificateOfArrival, "download", new { fileName = Model.Application.Documents.CertificateOfArrival })
+                                <a asp-action="delete" asp-route-fileType="CertificateOfArrival" asp-route-fileName="@Model.Application.Documents.CertificateOfArrival" asp-route-id="@Model.ApplicationId" class="ui mini red right floated label">Remove</a>
+                            </td>
                         }
                         else
                         {
@@ -210,7 +216,10 @@
                         </td>
                         @if (Model.Application.Documents.StudentTranscriptOfRecords != null)
                         {
-                            <td>@Html.ActionLink(Model.Application.Documents.StudentTranscriptOfRecords, "download", new { fileName = Model.Application.Documents.StudentTranscriptOfRecords })</td>
+                            <td>
+                                @Html.ActionLink(Model.Application.Documents.StudentTranscriptOfRecords, "download", new { fileName = Model.Application.Documents.StudentTranscriptOfRecords })
+                                <a asp-action="delete" asp-route-fileType="StudentTranscriptOfRecords" asp-route-fileName="@Model.Application.Documents.StudentTranscriptOfRecords" asp-route-id="@Model.ApplicationId" class="ui mini red right floated label">Remove</a>
+                            </td>
                         }
                         else
                         {
@@ -228,7 +237,10 @@
                         </td>
                         @if (Model.Application.Documents.StudentRecordSheet != null)
                         {
-                            <td>@Html.ActionLink(Model.Application.Documents.StudentRecordSheet, "download", new { fileName = Model.Application.Documents.StudentRecordSheet })</td>
+                            <td>
+                                @Html.ActionLink(Model.Application.Documents.StudentRecordSheet, "download", new { fileName = Model.Application.Documents.StudentRecordSheet })
+                                <a asp-action="delete" asp-route-fileType="StudentRecordSheet" asp-route-fileName="@Model.Application.Documents.StudentRecordSheet" asp-route-id="@Model.ApplicationId" class="ui mini red right floated label">Remove</a>
+                            </td>
                         }
                         else
                         {
@@ -248,7 +260,10 @@
                         </td>
                         @if (Model.Application.Documents.CertificateOfDeparture != null)
                         {
-                            <td>@Html.ActionLink(Model.Application.Documents.CertificateOfDeparture, "download", new { fileName = Model.Application.Documents.CertificateOfDeparture })</td>
+                            <td>
+                                @Html.ActionLink(Model.Application.Documents.CertificateOfDeparture, "download", new { fileName = Model.Application.Documents.CertificateOfDeparture })
+                                <a asp-action="delete" asp-route-fileType="CertificateOfDeparture" asp-route-fileName="@Model.Application.Documents.CertificateOfDeparture" asp-route-id="@Model.ApplicationId" class="ui mini red right floated label">Remove</a>
+                            </td>
                         }
                         else
                         {

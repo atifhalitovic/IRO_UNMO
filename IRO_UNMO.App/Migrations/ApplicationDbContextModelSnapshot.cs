@@ -419,6 +419,8 @@ namespace IRO_UNMO.App.Migrations
 
                     b.Property<int>("OfferId");
 
+                    b.Property<string>("Passport");
+
                     b.Property<string>("ReferenceLetter");
 
                     b.Property<string>("StatusOfNomination");

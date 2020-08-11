@@ -184,6 +184,19 @@
                         }
                     </tr>
                     <tr>
+                        <td><i class="pdf file icon"></i>Passport</td>
+                        @if (Model.Nomination.Passport != null)
+                        {
+                            <td>
+                                @Html.ActionLink(Model.Nomination.Passport, "download", new { fileName = Model.Nomination.Passport })
+                            </td>
+                        }
+                        else
+                        {
+                            <td><p>Not uploaded yet.</p></td>
+                        }
+                    </tr>
+                    <tr>
                         <td><i class="pdf file icon"></i>English language proficiency</td>
                         @if (Model.Nomination.EngProficiency != null)
                         {

@@ -25,6 +25,7 @@ namespace IRO_UNMO.App.Models
         public string TranscriptOfRecords { get; set; }
         public string MotivationLetter { get; set; }
         public string ReferenceLetter { get; set; }
+        public string Passport { get; set; }
         public bool Verified { get; set; }
         public string StatusOfNomination { get; set; }
 

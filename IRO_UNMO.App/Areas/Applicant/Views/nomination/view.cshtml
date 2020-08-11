@@ -137,11 +137,17 @@
                         {
                             <tr>
                                 <td class="collapsing">
-                                    <i class="file icon"></i>Learning agreement
+                                    <i class="pdf file icon"></i>Learning agreement
                                 </td>
                                 @if (Model.Nomination.LearningAgreement != null)
                                 {
-                                    <td class="collapsing">@Html.ActionLink(Model.Nomination.LearningAgreement, "download", new { fileName = Model.Nomination.LearningAgreement })</td>
+                                    <td class="collapsing">
+                                        @Html.ActionLink(Model.Nomination.LearningAgreement, "download", new { fileName = Model.Nomination.LearningAgreement })
+                                        @if (!Model.Nomination.Finished)
+                                        {
+                                            <a asp-action="delete" asp-route-fileType="LearningAgreement" asp-route-fileName="@Model.Nomination.LearningAgreement" asp-route-id="@Model.Nomination.NominationId" class="ui mini red right floated label">Remove</a>
+                                        }
+                                    </td>
                                 }
                                 else
                                 {
@@ -163,11 +169,16 @@
                         {
                             <tr>
                                 <td class="collapsing">
-                                    <i class="file icon"></i>Work plan
+                                    <i class="pdf file icon"></i>Work plan
                                 </td>
                                 @if (Model.Nomination.WorkPlan != null)
                                 {
-                                    <td>@Html.ActionLink(Model.Nomination.WorkPlan, "download", new { fileName = Model.Nomination.WorkPlan })</td>
+                                    <td>
+                                        @Html.ActionLink(Model.Nomination.WorkPlan, "download", new { fileName = Model.Nomination.WorkPlan })
+                                        @if (!Model.Nomination.Finished)
+                                        {<a asp-action="delete" asp-route-fileType="WorkPlan" asp-route-fileName="@Model.Nomination.WorkPlan" asp-route-id="@Model.Nomination.NominationId" class="ui mini red right floated label">Remove</a>
+                                        }
+                                    </td>
                                 }
                                 else
                                 {
@@ -187,11 +198,16 @@
                         }
                         <tr>
                             <td class="collapsing">
-                                <i class="file icon"></i>Curriculum vitae
+                                <i class="pdf file icon"></i>Curriculum vitae
                             </td>
                             @if (Model.Nomination.CV != null)
                             {
-                                <td>@Html.ActionLink(Model.Nomination.CV, "download", new { fileName = Model.Nomination.CV })</td>
+                                <td>
+                                    @Html.ActionLink(Model.Nomination.CV, "download", new { fileName = Model.Nomination.CV })
+                                    @if (!Model.Nomination.Finished)
+                                    {<a asp-action="delete" asp-route-fileType="CV" asp-route-fileName="@Model.Nomination.CV" asp-route-id="@Model.Nomination.NominationId" class="ui mini red right floated label">Remove</a>
+                                    }
+                                </td>
                             }
                             else
                             {
@@ -208,11 +224,42 @@
                         </tr>
                         <tr>
                             <td class="collapsing">
-                                <i class="file icon"></i>English proficiency
+                                <i class="pdf file icon"></i>Passport
+                            </td>
+                            @if (Model.Nomination.Passport != null)
+                            {
+                                <td>
+                                    @Html.ActionLink(Model.Nomination.Passport, "download", new { fileName = Model.Nomination.Passport })
+                                    @if (!Model.Nomination.Finished)
+                                    {<a asp-action="delete" asp-route-fileType="Passport" asp-route-fileName="@Model.Nomination.Passport" asp-route-id="@Model.Nomination.NominationId" class="ui mini red right floated label">Remove</a>
+                                    }
+                                </td>
+                            }
+                            else
+                            {
+                                <td>Not uploaded yet.</td>
+                            }
+                            @if (!Model.Nomination.Finished)
+                            {
+                                <td>
+                                    <label asp-for="@Model.Nomination.Passport" class="ui icon button">
+                                        <input asp-for="@Model.Passport" type="file" class="custom-file-input">
+                                    </label>
+                                </td>
+                            }
+                        </tr>
+                        <tr>
+                            <td class="collapsing">
+                                <i class="pdf file icon"></i>English proficiency
                             </td>
                             @if (Model.Nomination.EngProficiency != null)
                             {
-                                <td>@Html.ActionLink(Model.Nomination.EngProficiency, "download", new { fileName = Model.Nomination.EngProficiency })</td>
+                                <td>
+                                    @Html.ActionLink(Model.Nomination.EngProficiency, "download", new { fileName = Model.Nomination.EngProficiency })
+                                    @if (!Model.Nomination.Finished)
+                                    {<a asp-action="delete" asp-route-fileType="EngProficiency" asp-route-fileName="@Model.Nomination.EngProficiency" asp-route-id="@Model.Nomination.NominationId" class="ui mini red right floated label">Remove</a>
+                                    }
+                                </td>
                             }
                             else
                             {
@@ -231,11 +278,16 @@
                         </tr>
                         <tr>
                             <td class="collapsing">
-                                <i class="file icon"></i>Transcript of records
+                                <i class="pdf file icon"></i>Transcript of records
                             </td>
                             @if (Model.Nomination.TranscriptOfRecords != null)
                             {
-                                <td>@Html.ActionLink(Model.Nomination.TranscriptOfRecords, "download", new { fileName = Model.Nomination.TranscriptOfRecords })</td>
+                                <td>
+                                    @Html.ActionLink(Model.Nomination.TranscriptOfRecords, "download", new { fileName = Model.Nomination.TranscriptOfRecords })
+                                    @if (!Model.Nomination.Finished)
+                                    {<a asp-action="delete" asp-route-fileType="TranscriptOfRecords" asp-route-fileName="@Model.Nomination.TranscriptOfRecords" asp-route-id="@Model.Nomination.NominationId" class="ui mini red right floated label">Remove</a>
+                                    }
+                                </td>
                             }
                             else
                             {
@@ -254,11 +306,16 @@
                         </tr>
                         <tr>
                             <td class="collapsing">
-                                <i class="file icon"></i>Motivation letter
+                                <i class="pdf file icon"></i>Motivation letter
                             </td>
                             @if (Model.Nomination.MotivationLetter != null)
                             {
-                                <td>@Html.ActionLink(Model.Nomination.MotivationLetter, "download", new { fileName = Model.Nomination.MotivationLetter })</td>
+                                <td>
+                                    @Html.ActionLink(Model.Nomination.MotivationLetter, "download", new { fileName = Model.Nomination.MotivationLetter })
+                                    @if (!Model.Nomination.Finished)
+                                    {<a asp-action="delete" asp-route-fileType="MotivationLetter" asp-route-fileName="@Model.Nomination.MotivationLetter" asp-route-id="@Model.Nomination.NominationId" class="ui mini red right floated label">Remove</a>
+                                    }
+                                </td>
                             }
                             else
                             {
@@ -277,11 +334,16 @@
                         </tr>
                         <tr>
                             <td class="collapsing">
-                                <i class="file icon"></i>Reference letter
+                                <i class="pdf file icon"></i>Reference letter
                             </td>
                             @if (Model.Nomination.ReferenceLetter != null)
                             {
-                                <td>@Html.ActionLink(Model.Nomination.ReferenceLetter, "download", new { fileName = Model.Nomination.ReferenceLetter })</td>
+                                <td>
+                                    @Html.ActionLink(Model.Nomination.ReferenceLetter, "download", new { fileName = Model.Nomination.ReferenceLetter })
+                                    @if (!Model.Nomination.Finished)
+                                    {<a asp-action="delete" asp-route-fileType="ReferenceLetter" asp-route-fileName="@Model.Nomination.ReferenceLetter" asp-route-id="@Model.Nomination.NominationId" class="ui mini red right floated label">Remove</a>
+                                    }
+                                </td>
                             }
                             else
                             {
@@ -359,7 +421,7 @@
                 @Html.HiddenFor(x => x.Nomination.NominationId)
                 <div class="ui small equal width form">
                     <h4>It is possible to submit application when all documents are uploaded.</h4>
-                    @if (Model.Nomination.LearningAgreement != null && Model.Nomination.MotivationLetter != null && Model.Nomination.CV != null && Model.Nomination.TranscriptOfRecords != null && Model.Nomination.ReferenceLetter != null && Model.Nomination.EngProficiency != null)
+                    @if (Model.Nomination.LearningAgreement != null && Model.Nomination.MotivationLetter != null && Model.Nomination.CV != null && Model.Nomination.TranscriptOfRecords != null && Model.Nomination.ReferenceLetter != null && Model.Nomination.EngProficiency != null && Model.Nomination.Passport != null)
                     {
                         <div class="field">
                             <button class="ui green submit button" asp-controller="nomination" asp-action="submit" asp-route-id="@Model.Nomination.NominationId"><i class="save outline icon"></i>Submit nomination</button>

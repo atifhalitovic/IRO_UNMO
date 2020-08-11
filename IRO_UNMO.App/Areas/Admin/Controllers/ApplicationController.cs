@@ -507,22 +507,46 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
             return File(memory, MediaTypeNames.Application.Octet, Path.GetFileName(path));
         }
 
-        public bool delete(string fileName)
+        public IActionResult delete(string fileType, string fileName, int id)
         {
             var path = Path.Combine(
                 Directory.GetCurrentDirectory(),
                 "wwwroot\\uploads\\", fileName);
 
-            try //Maybe error could happen like Access denied or Presses Already User used
+            try
             {
                 System.IO.File.Delete(path);
-                return true;
             }
-            catch (Exception e)
+            catch
             {
-                //Debug.WriteLine(e.Message);
+
             }
-            return false;
+
+            var docs = _db.Application.Where(a => a.ApplicationId == id).Include(b => b.Documents).FirstOrDefault().Documents;
+
+            if (fileType == "LearningAgreementHost")
+            {
+                docs.LearningAgreementHost = null;
+            }
+            if (fileType == "CertificateOfArrival")
+            {
+                docs.CertificateOfArrival = null;
+            }
+            if (fileType == "StudentTranscriptOfRecords")
+            {
+                docs.StudentTranscriptOfRecords = null;
+            }
+            if (fileType == "CertificateOfDeparture")
+            {
+                docs.CertificateOfDeparture = null;
+            }
+            if (fileType == "StudentRecordSheet")
+            {
+                docs.StudentRecordSheet = null;
+            }
+            _db.SaveChanges();
+
+            return RedirectToAction("docs", "application", new { id });
         }
 
         [Autorizacija(true, false, false)]

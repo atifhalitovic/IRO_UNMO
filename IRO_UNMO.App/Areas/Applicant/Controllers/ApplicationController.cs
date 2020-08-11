@@ -72,159 +72,176 @@ namespace IRO_UNMO.App.Areas.Applicant.Controllers
                 string uniqueFileNameToR= null;
                 string uniqueFileNameML= null;
                 string uniqueFileNameRL= null;
-                string uniqueFileNameLAH= null;
-                string uniqueFileNameCOA= null;
-                string uniqueFileNameToRH= null;
-                string uniqueFileNameExSR= null;
-                string uniqueFileNameCOD=null;
 
                 if (model.LearningAgreement != null)
                 {
-                    // The image must be uploaded to the images folder in wwwroot
-                    // To get the path of the wwwroot folder we are using the inject
-                    // HostingEnvironment service provided by ASP.NET Core
-                    string uploadsFolder = Path.Combine(hosting.WebRootPath, "uploads");
-                    // To make sure the file name is unique we are appending a new
-                    // GUID value and and an underscore to the file name
-                    uniqueFileNameLA = newApp.ApplicationId + "_" + model.LearningAgreement.FileName;
-                    //uniqueFileNameLA = Guid.NewGuid().ToString() + "_" + model.LearningAgreement.FileName;
-                    string filePath = Path.Combine(uploadsFolder, uniqueFileNameLA);
-                    var nesto = new FileStream(filePath, FileMode.Create);
-                    // Use CopyTo() method provided by IFormFile interface to
-                    // copy the file to wwwroot/images folder
-                    model.LearningAgreement.CopyTo(nesto);
-                    nesto.Close();
-                    docs.LearningAgreement = uniqueFileNameLA;
+                    string fileExt = Path.GetExtension(model.LearningAgreement.FileName);
+                    if (fileExt == ".pdf")
+                    {
+                        // The image must be uploaded to the images folder in wwwroot
+                        // To get the path of the wwwroot folder we are using the inject
+                        // HostingEnvironment service provided by ASP.NET Core
+                        string uploadsFolder = Path.Combine(hosting.WebRootPath, "uploads");
+                        // To make sure the file name is unique we are appending a new
+                        // GUID value and and an underscore to the file name
+                        uniqueFileNameLA = newApp.ApplicationId + "_" + model.LearningAgreement.FileName;
+                        //uniqueFileNameLA = Guid.NewGuid().ToString() + "_" + model.LearningAgreement.FileName;
+                        string filePath = Path.Combine(uploadsFolder, uniqueFileNameLA);
+                        var nesto = new FileStream(filePath, FileMode.Create);
+                        // Use CopyTo() method provided by IFormFile interface to
+                        // copy the file to wwwroot/images folder
+                        model.LearningAgreement.CopyTo(nesto);
+                        nesto.Close();
+                        docs.LearningAgreement = uniqueFileNameLA;
+                    }
                 }
 
                 if (model.CV != null)
                 {
-                    string uploadsFolder = Path.Combine(hosting.WebRootPath, "uploads");
-                    uniqueFileNameCV = newApp.ApplicationId + "_" + model.CV.FileName;
-                    string filePath = Path.Combine(uploadsFolder, uniqueFileNameCV);
-                    var nesto = new FileStream(filePath, FileMode.Create);
-                    model.CV.CopyTo(nesto);
-                    nesto.Close();
-                    docs.CV = uniqueFileNameCV;
+                    string fileExt = Path.GetExtension(model.CV.FileName);
+                    if (fileExt == ".pdf")
+                    {
+                        string uploadsFolder = Path.Combine(hosting.WebRootPath, "uploads");
+                        uniqueFileNameCV = newApp.ApplicationId + "_" + model.CV.FileName;
+                        string filePath = Path.Combine(uploadsFolder, uniqueFileNameCV);
+                        var nesto = new FileStream(filePath, FileMode.Create);
+                        model.CV.CopyTo(nesto);
+                        nesto.Close();
+                        docs.CV = uniqueFileNameCV;
+                    }
                 }
 
                 if (model.Passport != null)
                 {
-                    string uploadsFolder = Path.Combine(hosting.WebRootPath, "uploads");
-                    uniqueFileNamePass = newApp.ApplicationId + "_" + model.Passport.FileName;
-                    string filePath = Path.Combine(uploadsFolder, uniqueFileNamePass);
-                    var nesto = new FileStream(filePath, FileMode.Create);
-                    model.Passport.CopyTo(nesto);
-                    nesto.Close();
-                    docs.Passport = uniqueFileNamePass;
+                    string fileExt = Path.GetExtension(model.Passport.FileName);
+                    if (fileExt == ".pdf")
+                    {
+                        string uploadsFolder = Path.Combine(hosting.WebRootPath, "uploads");
+                        uniqueFileNamePass = newApp.ApplicationId + "_" + model.Passport.FileName;
+                        string filePath = Path.Combine(uploadsFolder, uniqueFileNamePass);
+                        var nesto = new FileStream(filePath, FileMode.Create);
+                        model.Passport.CopyTo(nesto);
+                        nesto.Close();
+                        docs.Passport = uniqueFileNamePass;
+                    }
                 }
 
                 if (model.EngProficiency != null)
                 {
-                    string uploadsFolder = Path.Combine(hosting.WebRootPath, "uploads");
-                    uniqueFileNameEng = newApp.ApplicationId + "_" + model.EngProficiency.FileName;
-                    string filePath = Path.Combine(uploadsFolder, uniqueFileNameEng);
-                    var nesto = new FileStream(filePath, FileMode.Create);
-                    model.EngProficiency.CopyTo(nesto);
-                    nesto.Close();
-                    docs.EngProficiency = uniqueFileNameEng;
+                    string fileExt = Path.GetExtension(model.EngProficiency.FileName);
+                    if (fileExt == ".pdf")
+                    {
+                        string uploadsFolder = Path.Combine(hosting.WebRootPath, "uploads");
+                        uniqueFileNameEng = newApp.ApplicationId + "_" + model.EngProficiency.FileName;
+                        string filePath = Path.Combine(uploadsFolder, uniqueFileNameEng);
+                        var nesto = new FileStream(filePath, FileMode.Create);
+                        model.EngProficiency.CopyTo(nesto);
+                        nesto.Close();
+                        docs.EngProficiency = uniqueFileNameEng;
+                    }
                 }
 
                 if (model.TranscriptOfRecords != null)
                 {
-                    string uploadsFolder = Path.Combine(hosting.WebRootPath, "uploads");
-                    uniqueFileNameToR = newApp.ApplicationId + "_" + model.TranscriptOfRecords.FileName;
-                    string filePath = Path.Combine(uploadsFolder, uniqueFileNameToR);
-                    var nesto = new FileStream(filePath, FileMode.Create);
-                    model.TranscriptOfRecords.CopyTo(nesto);
-                    nesto.Close();
-                    docs.TranscriptOfRecords = uniqueFileNameToR;
+                    string fileExt = Path.GetExtension(model.TranscriptOfRecords.FileName);
+                    if (fileExt == ".pdf")
+                    {
+                        string uploadsFolder = Path.Combine(hosting.WebRootPath, "uploads");
+                        uniqueFileNameToR = newApp.ApplicationId + "_" + model.TranscriptOfRecords.FileName;
+                        string filePath = Path.Combine(uploadsFolder, uniqueFileNameToR);
+                        var nesto = new FileStream(filePath, FileMode.Create);
+                        model.TranscriptOfRecords.CopyTo(nesto);
+                        nesto.Close();
+                        docs.TranscriptOfRecords = uniqueFileNameToR;
+                    }
                 }
 
                 if (model.MotivationLetter != null)
                 {
-                    string uploadsFolder = Path.Combine(hosting.WebRootPath, "uploads");
-                    uniqueFileNameML = newApp.ApplicationId + "_" + model.MotivationLetter.FileName;
-                    string filePath = Path.Combine(uploadsFolder, uniqueFileNameML);
-                    var nesto = new FileStream(filePath, FileMode.Create);
-                    model.MotivationLetter.CopyTo(nesto);
-                    nesto.Close();
-                    docs.MotivationLetter = uniqueFileNameML;
+                    string fileExt = Path.GetExtension(model.MotivationLetter.FileName);
+                    if (fileExt == ".pdf")
+                    {
+                        string uploadsFolder = Path.Combine(hosting.WebRootPath, "uploads");
+                        uniqueFileNameML = newApp.ApplicationId + "_" + model.MotivationLetter.FileName;
+                        string filePath = Path.Combine(uploadsFolder, uniqueFileNameML);
+                        var nesto = new FileStream(filePath, FileMode.Create);
+                        model.MotivationLetter.CopyTo(nesto);
+                        nesto.Close();
+                        docs.MotivationLetter = uniqueFileNameML;
+                    }
                 }
 
                 if (model.ReferenceLetter != null)
                 {
-                    string uploadsFolder = Path.Combine(hosting.WebRootPath, "uploads");
-                    uniqueFileNameRL = newApp.ApplicationId + "_" + model.ReferenceLetter.FileName;
-                    string filePath = Path.Combine(uploadsFolder, uniqueFileNameRL);
-                    var nesto = new FileStream(filePath, FileMode.Create);
-                    model.ReferenceLetter.CopyTo(nesto);
-                    nesto.Close();
-                    docs.ReferenceLetter = uniqueFileNameRL;
-                }
-
-                if (model.LearningAgreementHost != null)
-                {
-                    string uploadsFolder = Path.Combine(hosting.WebRootPath, "uploads");
-                    uniqueFileNameLAH = newApp.ApplicationId + "_" + model.LearningAgreementHost.FileName;
-                    string filePath = Path.Combine(uploadsFolder, uniqueFileNameLAH);
-                    var nesto = new FileStream(filePath, FileMode.Create);
-                    model.LearningAgreementHost.CopyTo(nesto);
-                    nesto.Close();
-                    docs.LearningAgreementHost = uniqueFileNameLAH;
-                }
-
-                if (model.CertificateOfArrival != null)
-                {
-                    string uploadsFolder = Path.Combine(hosting.WebRootPath, "uploads");
-                    uniqueFileNameCOA = newApp.ApplicationId + "_" + model.CertificateOfArrival.FileName;
-                    string filePath = Path.Combine(uploadsFolder, uniqueFileNameCOA);
-                    var nesto = new FileStream(filePath, FileMode.Create);
-                    model.CertificateOfArrival.CopyTo(nesto);
-                    nesto.Close();
-                    docs.CertificateOfArrival = uniqueFileNameCOA;
-                }
-
-                if (model.CertificateOfDeparture != null)
-                {
-                    string uploadsFolder = Path.Combine(hosting.WebRootPath, "uploads");
-                    uniqueFileNameCOD = newApp.ApplicationId + "_" + model.CertificateOfDeparture.FileName;
-                    string filePath = Path.Combine(uploadsFolder, uniqueFileNameCOD);
-                    var nesto = new FileStream(filePath, FileMode.Create);
-                    model.CertificateOfDeparture.CopyTo(nesto);
-                    nesto.Close();
-                    docs.CertificateOfDeparture = uniqueFileNameCOD;
-                }
-
-                if (model.StudentRecordSheet != null)
-                {
-                    string uploadsFolder = Path.Combine(hosting.WebRootPath, "uploads");
-                    uniqueFileNameExSR = newApp.ApplicationId + "_" + model.StudentRecordSheet.FileName;
-                    string filePath = Path.Combine(uploadsFolder, uniqueFileNameExSR);
-                    var nesto = new FileStream(filePath, FileMode.Create);
-                    model.StudentRecordSheet.CopyTo(nesto);
-                    nesto.Close();
-                    docs.StudentRecordSheet = uniqueFileNameExSR;
-                }
-
-                if (model.StudentTranscriptOfRecords != null)
-                {
-                    string uploadsFolder = Path.Combine(hosting.WebRootPath, "uploads");
-                    uniqueFileNameToRH = newApp.ApplicationId + "_" + model.StudentTranscriptOfRecords.FileName;
-                    string filePath = Path.Combine(uploadsFolder, uniqueFileNameToRH);
-                    var nesto = new FileStream(filePath, FileMode.Create);
-                    model.StudentTranscriptOfRecords.CopyTo(nesto);
-                    nesto.Close();
-                    docs.StudentTranscriptOfRecords = uniqueFileNameToRH;
+                    string fileExt = Path.GetExtension(model.ReferenceLetter.FileName);
+                    if (fileExt == ".pdf")
+                    {
+                        string uploadsFolder = Path.Combine(hosting.WebRootPath, "uploads");
+                        uniqueFileNameRL = newApp.ApplicationId + "_" + model.ReferenceLetter.FileName;
+                        string filePath = Path.Combine(uploadsFolder, uniqueFileNameRL);
+                        var nesto = new FileStream(filePath, FileMode.Create);
+                        model.ReferenceLetter.CopyTo(nesto);
+                        nesto.Close();
+                        docs.ReferenceLetter = uniqueFileNameRL;
+                    }
                 }
 
                 _db.SaveChanges();
 
                 //return RedirectToAction("details", "home", new { id = newApp.ApplicantId });
-                return RedirectToAction("view", "application", new { id = newApp.ApplicationId });
+                return RedirectToAction("docs", "application", new { id = newApp.ApplicationId });
+            }
+            return View();
+        }
+
+        public IActionResult delete(string fileType, string fileName, int id)
+        {
+            var path = Path.Combine(
+                Directory.GetCurrentDirectory(),
+                "wwwroot\\uploads\\", fileName);
+
+            try
+            {
+                System.IO.File.Delete(path);
+            }
+            catch
+            {
+
             }
 
-            return View();
+            var docs = _db.Application.Where(a => a.ApplicationId == id).Include(b => b.Documents).FirstOrDefault().Documents;
+
+            if (fileType == "LearningAgreement")
+            {
+                docs.LearningAgreement = null;
+            }
+            if (fileType == "CV")
+            {
+                docs.CV = null;
+            }
+            if (fileType == "Passport")
+            {
+                docs.CV = null;
+            }
+            if (fileType == "EngProficiency")
+            {
+                docs.EngProficiency = null;
+            }
+            if (fileType == "TranscriptOfRecords")
+            {
+                docs.TranscriptOfRecords = null;
+            }
+            if (fileType == "MotivationLetter")
+            {
+                docs.MotivationLetter = null;
+            }
+            if (fileType == "ReferenceLetter")
+            {
+                docs.ReferenceLetter = null;
+            }
+            _db.SaveChanges();
+
+            return RedirectToAction("docs", "application", new { id });
         }
 
         public async Task<FileResult> download(string fileName)

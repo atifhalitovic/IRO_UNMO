@@ -49,6 +49,15 @@
     </script>
 </head>
 <body>
+    <div class="ui negative message">
+        <i class="close icon"></i>
+        <div class="header">
+            Warning!
+        </div>
+        <p>
+            Please have in mind that all documents have to be uploaded in pdf, otherwise they won't be saved.
+        </p>
+    </div>
     <form asp-action="docs" method="post" enctype="multipart/form-data">
         <div class="ui compact segment">
             @Html.HiddenFor(x => x.ApplicationId)
@@ -68,7 +77,10 @@
                         </td>
                         @if (Model.Application.Documents.LearningAgreement != null)
                         {
-                            <td class="collapsing">@Html.ActionLink(Model.Application.Documents.LearningAgreement, "download", new { fileName = Model.Application.Documents.LearningAgreement })</td>
+                            <td class="collapsing">
+                                @Html.ActionLink(Model.Application.Documents.LearningAgreement, "download", new { fileName = Model.Application.Documents.LearningAgreement })
+                                <a asp-action="delete" asp-route-fileType="LearningAgreement" asp-route-fileName="@Model.Application.Documents.LearningAgreement" asp-route-id="@Model.ApplicationId" class="ui mini red right floated label">Remove</a>
+                            </td>
                         }
                         else
                         {
@@ -88,7 +100,10 @@
                         </td>
                         @if (Model.Application.Documents.CV != null)
                         {
-                            <td>@Html.ActionLink(Model.Application.Documents.CV, "download", new { fileName = Model.Application.Documents.CV })</td>
+                            <td>
+                                @Html.ActionLink(Model.Application.Documents.CV, "download", new { fileName = Model.Application.Documents.CV })
+                                <a asp-action="delete" asp-route-fileType="CV" asp-route-fileName="@Model.Application.Documents.CV" asp-route-id="@Model.ApplicationId" class="ui mini red right floated label">Remove</a>
+                            </td>
                         }
                         else
                         {
@@ -102,11 +117,35 @@
                     </tr>
                     <tr>
                         <td class="collapsing">
+                            <i class="file pdf icon"></i>Passport
+                        </td>
+                        @if (Model.Application.Documents.Passport != null)
+                        {
+                            <td>
+                                @Html.ActionLink(Model.Application.Documents.Passport, "download", new { fileName = Model.Application.Documents.Passport })
+                                <a asp-action="delete" asp-route-fileType="Passport" asp-route-fileName="@Model.Application.Documents.Passport" asp-route-id="@Model.ApplicationId" class="ui mini red right floated label">Remove</a>
+                            </td>
+                        }
+                        else
+                        {
+                            <td>Not uploaded yet.</td>
+                        }
+                        <td>
+                            <label asp-for="@Model.Application.Documents.Passport" class="ui icon button">
+                                <input asp-for="@Model.Passport" type="file" class="custom-file-input">
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="collapsing">
                             <i class="file pdf icon"></i>English proficiency
                         </td>
                         @if (Model.Application.Documents.EngProficiency != null)
                         {
-                            <td>@Html.ActionLink(Model.Application.Documents.EngProficiency, "download", new { fileName = Model.Application.Documents.EngProficiency })</td>
+                            <td>
+                                @Html.ActionLink(Model.Application.Documents.EngProficiency, "download", new { fileName = Model.Application.Documents.EngProficiency })
+                                <a asp-action="delete" asp-route-fileType="EngProficiency" asp-route-fileName="@Model.Application.Documents.EngProficiency" asp-route-id="@Model.ApplicationId" class="ui mini red right floated label">Remove</a>
+                            </td>
                         }
                         else
                         {
@@ -126,7 +165,10 @@
                         </td>
                         @if (Model.Application.Documents.TranscriptOfRecords != null)
                         {
-                            <td>@Html.ActionLink(Model.Application.Documents.TranscriptOfRecords, "download", new { fileName = Model.Application.Documents.TranscriptOfRecords })</td>
+                            <td>
+                                @Html.ActionLink(Model.Application.Documents.TranscriptOfRecords, "download", new { fileName = Model.Application.Documents.TranscriptOfRecords })
+                                <a asp-action="delete" asp-route-fileType="TranscriptOfRecords" asp-route-fileName="@Model.Application.Documents.TranscriptOfRecords" asp-route-id="@Model.ApplicationId" class="ui mini red right floated label">Remove</a>
+                            </td>
                         }
                         else
                         {
@@ -146,7 +188,10 @@
                         </td>
                         @if (Model.Application.Documents.MotivationLetter != null)
                         {
-                            <td>@Html.ActionLink(Model.Application.Documents.MotivationLetter, "download", new { fileName = Model.Application.Documents.MotivationLetter })</td>
+                            <td>
+                                @Html.ActionLink(Model.Application.Documents.MotivationLetter, "download", new { fileName = Model.Application.Documents.MotivationLetter })
+                                <a asp-action="delete" asp-route-fileType="MotivationLetter" asp-route-fileName="@Model.Application.Documents.MotivationLetter" asp-route-id="@Model.ApplicationId" class="ui mini red right floated label">Remove</a>
+                            </td>
                         }
                         else
                         {
@@ -166,7 +211,10 @@
                         </td>
                         @if (Model.Application.Documents.ReferenceLetter != null)
                         {
-                            <td>@Html.ActionLink(Model.Application.Documents.ReferenceLetter, "download", new { fileName = Model.Application.Documents.ReferenceLetter })</td>
+                            <td>
+                                @Html.ActionLink(Model.Application.Documents.ReferenceLetter, "download", new { fileName = Model.Application.Documents.ReferenceLetter })
+                                <a asp-action="delete" asp-route-fileType="ReferenceLetter" asp-route-fileName="@Model.Application.Documents.ReferenceLetter" asp-route-id="@Model.ApplicationId" class="ui mini red right floated label">Remove</a>
+                            </td>
                         }
                         else
                         {
@@ -266,4 +314,10 @@
             </table>
         </div>
     </form>
+    <script>
+        $('.message .close')
+            .on('click', function () {
+                $(this).closest('.message').transition('fade');
+            });
+    </script>
 </body>

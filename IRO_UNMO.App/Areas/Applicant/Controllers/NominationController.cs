@@ -44,6 +44,56 @@ namespace IRO_UNMO.App.Areas.Applicant.Controllers
             _notificationService = notification;
         }
 
+        public IActionResult delete(string fileType, string fileName, int id)
+        {
+            var path = Path.Combine(
+                Directory.GetCurrentDirectory(),
+                "wwwroot\\uploads\\", fileName);
+
+            try
+            {
+                System.IO.File.Delete(path);
+            }
+            catch
+            {
+
+            }
+
+            var docs = _db.Nomination.Where(a => a.NominationId == id).FirstOrDefault();
+
+            if (fileType == "LearningAgreement")
+            {
+                docs.LearningAgreement = null;
+            }
+            if (fileType == "CV")
+            {
+                docs.CV = null;
+            }
+            if (fileType == "Passport")
+            {
+                docs.Passport = null;
+            }
+            if (fileType == "EngProficiency")
+            {
+                docs.EngProficiency = null;
+            }
+            if (fileType == "TranscriptOfRecords")
+            {
+                docs.TranscriptOfRecords = null;
+            }
+            if (fileType == "MotivationLetter")
+            {
+                docs.MotivationLetter = null;
+            }
+            if (fileType == "ReferenceLetter")
+            {
+                docs.ReferenceLetter = null;
+            }
+            _db.SaveChanges();
+
+            return RedirectToAction("view", "nomination", new { id });
+        }
+
         [Autorizacija(false, false, true)]
         public async Task<FileResult> download(string fileName)
         {
@@ -132,6 +182,7 @@ namespace IRO_UNMO.App.Areas.Applicant.Controllers
             if (ModelState.IsValid)
             {
                 string uniqueFileNameLA = null;
+                string uniqueFileNamePASS = null;
                 string uniqueFileNameWP = null;
                 string uniqueFileNameCV = null;
                 string uniqueFileNameEng = null;
@@ -143,99 +194,144 @@ namespace IRO_UNMO.App.Areas.Applicant.Controllers
                 // has selected an image to upload.
                 if (model.LearningAgreement != null)
                 {
-                    // The image must be uploaded to the images folder in wwwroot
-                    // To get the path of the wwwroot folder we are using the inject
-                    // HostingEnvironment service provided by ASP.NET Core
-                    string uploadsFolder = Path.Combine(hosting.WebRootPath, "uploads");
-                    // To make sure the file name is unique we are appending a new
-                    // GUID value and and an underscore to the file name
-                    uniqueFileNameLA = newNom.NominationId + "_" + model.LearningAgreement.FileName;
-                    //uniqueFileNameLA = Guid.NewGuid().ToString() + "_" + model.LearningAgreement.FileName;
-                    string filePath = Path.Combine(uploadsFolder, uniqueFileNameLA);
-                    var nesto = new FileStream(filePath, FileMode.Create);
-                    // Use CopyTo() method provided by IFormFile interface to
-                    // copy the file to wwwroot/images folder
-                    model.LearningAgreement.CopyTo(nesto);
-                    nesto.Close();
-                    newNom.LearningAgreement = uniqueFileNameLA;
+                    string fileExt = Path.GetExtension(model.LearningAgreement.FileName);
+                    if (fileExt == ".pdf")
+                    {
+                        // The image must be uploaded to the images folder in wwwroot
+                        // To get the path of the wwwroot folder we are using the inject
+                        // HostingEnvironment service provided by ASP.NET Core
+                        string uploadsFolder = Path.Combine(hosting.WebRootPath, "uploads");
+                        // To make sure the file name is unique we are appending a new
+                        // GUID value and and an underscore to the file name
+                        uniqueFileNameLA = newNom.NominationId + "_" + model.LearningAgreement.FileName;
+                        //uniqueFileNameLA = Guid.NewGuid().ToString() + "_" + model.LearningAgreement.FileName;
+                        string filePath = Path.Combine(uploadsFolder, uniqueFileNameLA);
+                        var nesto = new FileStream(filePath, FileMode.Create);
+                        // Use CopyTo() method provided by IFormFile interface to
+                        // copy the file to wwwroot/images folder
+                        model.LearningAgreement.CopyTo(nesto);
+                        nesto.Close();
+                        newNom.LearningAgreement = uniqueFileNameLA;
+                    }
                 }
 
                 if (model.WorkPlan != null)
                 {
-                    string uploadsFolder = Path.Combine(hosting.WebRootPath, "uploads");
-                    uniqueFileNameWP = newNom.NominationId + "_" + model.WorkPlan.FileName;
-                    string filePath = Path.Combine(uploadsFolder, uniqueFileNameWP);
-                    var nesto = new FileStream(filePath, FileMode.Create);
-                    // Use CopyTo() method provided by IFormFile interface to
-                    // copy the file to wwwroot/images folder
-                    model.WorkPlan.CopyTo(nesto);
-                    nesto.Close();
-                    newNom.WorkPlan = uniqueFileNameWP;
+                    string fileExt = Path.GetExtension(model.WorkPlan.FileName);
+                    if (fileExt == ".pdf")
+                    {
+                        string uploadsFolder = Path.Combine(hosting.WebRootPath, "uploads");
+                        uniqueFileNameWP = newNom.NominationId + "_" + model.WorkPlan.FileName;
+                        string filePath = Path.Combine(uploadsFolder, uniqueFileNameWP);
+                        var nesto = new FileStream(filePath, FileMode.Create);
+                        // Use CopyTo() method provided by IFormFile interface to
+                        // copy the file to wwwroot/images folder
+                        model.WorkPlan.CopyTo(nesto);
+                        nesto.Close();
+                        newNom.WorkPlan = uniqueFileNameWP;
+                    }
                 }
 
                 if (model.CV != null)
                 {
-                    string uploadsFolder = Path.Combine(hosting.WebRootPath, "uploads");
-                    uniqueFileNameCV = newNom.NominationId + "_" + model.CV.FileName;
-                    string filePath = Path.Combine(uploadsFolder, uniqueFileNameCV);
-                    var nesto = new FileStream(filePath, FileMode.Create);
-                    // Use CopyTo() method provided by IFormFile interface to
-                    // copy the file to wwwroot/images folder
-                    model.CV.CopyTo(nesto);
-                    nesto.Close();
-                    newNom.CV = uniqueFileNameCV;
+                    string fileExt = Path.GetExtension(model.CV.FileName);
+                    if (fileExt == ".pdf")
+                    {
+                        string uploadsFolder = Path.Combine(hosting.WebRootPath, "uploads");
+                        uniqueFileNameCV = newNom.NominationId + "_" + model.CV.FileName;
+                        string filePath = Path.Combine(uploadsFolder, uniqueFileNameCV);
+                        var nesto = new FileStream(filePath, FileMode.Create);
+                        // Use CopyTo() method provided by IFormFile interface to
+                        // copy the file to wwwroot/images folder
+                        model.CV.CopyTo(nesto);
+                        nesto.Close();
+                        newNom.CV = uniqueFileNameCV;
+                    }
+                }
+
+                if (model.Passport != null)
+                {
+                    string fileExt = Path.GetExtension(model.Passport.FileName);
+                    if (fileExt == ".pdf")
+                    {
+                        string uploadsFolder = Path.Combine(hosting.WebRootPath, "uploads");
+                        uniqueFileNamePASS = newNom.NominationId + "_" + model.Passport.FileName;
+                        string filePath = Path.Combine(uploadsFolder, uniqueFileNamePASS);
+                        var nesto = new FileStream(filePath, FileMode.Create);
+                        // Use CopyTo() method provided by IFormFile interface to
+                        // copy the file to wwwroot/images folder
+                        model.Passport.CopyTo(nesto);
+                        nesto.Close();
+                        newNom.Passport = uniqueFileNamePASS;
+                    }
                 }
 
                 if (model.EngProficiency != null)
                 {
-                    string uploadsFolder = Path.Combine(hosting.WebRootPath, "uploads");
-                    uniqueFileNameEng = newNom.NominationId + "_" + model.EngProficiency.FileName;
-                    string filePath = Path.Combine(uploadsFolder, uniqueFileNameEng);
-                    var nesto = new FileStream(filePath, FileMode.Create);
-                    // Use CopyTo() method provided by IFormFile interface to
-                    // copy the file to wwwroot/images folder
-                    model.EngProficiency.CopyTo(nesto);
-                    nesto.Close();
-                    newNom.EngProficiency = uniqueFileNameEng;
+                    string fileExt = Path.GetExtension(model.EngProficiency.FileName);
+                    if (fileExt == ".pdf")
+                    {
+                        string uploadsFolder = Path.Combine(hosting.WebRootPath, "uploads");
+                        uniqueFileNameEng = newNom.NominationId + "_" + model.EngProficiency.FileName;
+                        string filePath = Path.Combine(uploadsFolder, uniqueFileNameEng);
+                        var nesto = new FileStream(filePath, FileMode.Create);
+                        // Use CopyTo() method provided by IFormFile interface to
+                        // copy the file to wwwroot/images folder
+                        model.EngProficiency.CopyTo(nesto);
+                        nesto.Close();
+                        newNom.EngProficiency = uniqueFileNameEng;
+                    }
                 }
 
                 if (model.TranscriptOfRecords != null)
                 {
-                    string uploadsFolder = Path.Combine(hosting.WebRootPath, "uploads");
-                    uniqueFileNameToR = newNom.NominationId + "_" + model.TranscriptOfRecords.FileName;
-                    string filePath = Path.Combine(uploadsFolder, uniqueFileNameToR);
-                    var nesto = new FileStream(filePath, FileMode.Create);
-                    // Use CopyTo() method provided by IFormFile interface to
-                    // copy the file to wwwroot/images folder
-                    model.TranscriptOfRecords.CopyTo(nesto);
-                    nesto.Close();
-                    newNom.TranscriptOfRecords = uniqueFileNameToR;
+                    string fileExt = Path.GetExtension(model.TranscriptOfRecords.FileName);
+                    if (fileExt == ".pdf")
+                    {
+                        string uploadsFolder = Path.Combine(hosting.WebRootPath, "uploads");
+                        uniqueFileNameToR = newNom.NominationId + "_" + model.TranscriptOfRecords.FileName;
+                        string filePath = Path.Combine(uploadsFolder, uniqueFileNameToR);
+                        var nesto = new FileStream(filePath, FileMode.Create);
+                        // Use CopyTo() method provided by IFormFile interface to
+                        // copy the file to wwwroot/images folder
+                        model.TranscriptOfRecords.CopyTo(nesto);
+                        nesto.Close();
+                        newNom.TranscriptOfRecords = uniqueFileNameToR;
+                    }
                 }
 
                 if (model.MotivationLetter != null)
                 {
-                    string uploadsFolder = Path.Combine(hosting.WebRootPath, "uploads");
-                    uniqueFileNameML = newNom.NominationId + "_" + model.MotivationLetter.FileName;
-                    string filePath = Path.Combine(uploadsFolder, uniqueFileNameML);
-                    var nesto = new FileStream(filePath, FileMode.Create);
-                    // Use CopyTo() method provided by IFormFile interface to
-                    // copy the file to wwwroot/images folder
-                    model.MotivationLetter.CopyTo(nesto);
-                    nesto.Close();
-                    newNom.MotivationLetter = uniqueFileNameML;
+                    string fileExt = Path.GetExtension(model.MotivationLetter.FileName);
+                    if (fileExt == ".pdf")
+                    {
+                        string uploadsFolder = Path.Combine(hosting.WebRootPath, "uploads");
+                        uniqueFileNameML = newNom.NominationId + "_" + model.MotivationLetter.FileName;
+                        string filePath = Path.Combine(uploadsFolder, uniqueFileNameML);
+                        var nesto = new FileStream(filePath, FileMode.Create);
+                        // Use CopyTo() method provided by IFormFile interface to
+                        // copy the file to wwwroot/images folder
+                        model.MotivationLetter.CopyTo(nesto);
+                        nesto.Close();
+                        newNom.MotivationLetter = uniqueFileNameML;
+                    }
                 }
 
                 if (model.ReferenceLetter != null)
                 {
-                    string uploadsFolder = Path.Combine(hosting.WebRootPath, "uploads");
-                    uniqueFileNameRL = newNom.NominationId + "_" + model.ReferenceLetter.FileName;
-                    string filePath = Path.Combine(uploadsFolder, uniqueFileNameRL);
-                    var nesto = new FileStream(filePath, FileMode.Create);
-                    // Use CopyTo() method provided by IFormFile interface to
-                    // copy the file to wwwroot/images folder
-                    model.ReferenceLetter.CopyTo(nesto);
-                    nesto.Close();
-                    newNom.ReferenceLetter = uniqueFileNameRL;
+                    string fileExt = Path.GetExtension(model.ReferenceLetter.FileName);
+                    if (fileExt == ".pdf")
+                    {
+                        string uploadsFolder = Path.Combine(hosting.WebRootPath, "uploads");
+                        uniqueFileNameRL = newNom.NominationId + "_" + model.ReferenceLetter.FileName;
+                        string filePath = Path.Combine(uploadsFolder, uniqueFileNameRL);
+                        var nesto = new FileStream(filePath, FileMode.Create);
+                        // Use CopyTo() method provided by IFormFile interface to
+                        // copy the file to wwwroot/images folder
+                        model.ReferenceLetter.CopyTo(nesto);
+                        nesto.Close();
+                        newNom.ReferenceLetter = uniqueFileNameRL;
+                    }
                 }
 
                 newNom.LastEdited = DateTime.Now;
@@ -243,7 +339,6 @@ namespace IRO_UNMO.App.Areas.Applicant.Controllers
 
                 return RedirectToAction("view", "nomination", new { id = newNom.NominationId });
             }
-
             return View();
         }
 
