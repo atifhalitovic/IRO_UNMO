@@ -40,13 +40,13 @@ namespace IRO_UNMO.App
 
         public static string ToMyStrDMYY_HMM(this DateTime? source, string valueForNull)
         {
-            return source.HasValue ? source.Value.ToString("dd'.'MM'.'yy'.,' HH':'mm") : valueForNull;
+            return source.HasValue ? source.Value.ToString("dd'.'MM'.'yy'. ' HH':'mm") : valueForNull;
         }
 
 
         public static string ToMyStrDMYYYY_HMM(this DateTime? source, string valueForNull)
         {
-            return source.HasValue ? source.Value.ToString("dd'.'MM'.'yyyy'.,' HH':'mm") : valueForNull;
+            return source.HasValue ? source.Value.ToString("dd'.'MM'.'yyyy'. ' HH':'mm") : valueForNull;
         }
 
         public static string ToMyStrDM(this DateTime source)

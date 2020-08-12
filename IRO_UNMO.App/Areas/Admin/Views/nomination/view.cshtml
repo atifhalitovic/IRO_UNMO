@@ -297,6 +297,15 @@
             </form>
         </div>
     </div>
+    @if (Model.Nomination.Finished)
+    {
+        <div class="ui form">
+            <form asp-action="pdf" asp-route-id="@Model.Nomination.NominationId" method="post">
+                @Html.HiddenFor(x => x.Nomination.NominationId)
+                <button type="submit" class="ui basic green button"><i class="file pdf outline icon"></i>PDF</button>
+            </form>
+        </div>
+    }
     <p></p>
     <p></p>
     <p></p>

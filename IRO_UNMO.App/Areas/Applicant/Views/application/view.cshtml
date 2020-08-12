@@ -182,7 +182,7 @@
             <table class="ui definition table">
                 <tbody>
                     <tr>
-                        <td class="six wide column">Native language</td>
+                        <td class="seven wide column">Native language</td>
                         <td>
                             <p>@Model.Application.Languages.Native</p>
                         </td>
@@ -223,7 +223,7 @@
             <table class="ui definition table">
                 <tbody>
                     <tr>
-                        <td class="five wide column">Official name</td>
+                        <td class="six wide column">Official name</td>
                         <td>
                             <p>@Model.Application.HomeInstitutions.OfficialName</p>
                         </td>
@@ -294,7 +294,7 @@
             <table class="ui definition table">
                 <tbody>
                     <tr>
-                        <td class="four wide column">Medical info</td>
+                        <td class="five wide column">Medical info</td>
                         <td>
                             <p>@Model.Application.Others.MedicalInfo</p>
                         </td>
@@ -313,7 +313,7 @@
             <table class="ui definition table">
                 <tbody>
                     <tr>
-                        <td class="six wide column"><i class="file pdf icon"></i>Learning agreement</td>
+                        <td class="seven wide column"><i class="file pdf icon"></i>Learning agreement</td>
                         @if (Model.Application.Documents.LearningAgreement != null)
                         {
                             <td>
@@ -333,6 +333,19 @@
                         {
                             <td>
                                 @Html.ActionLink(Model.Application.Documents.CV, "download", new { fileName = Model.Application.Documents.CV })
+                            </td>
+                        }
+                        else
+                        {
+                            <td><p>Not uploaded yet.</p></td>
+                        }
+                    </tr>
+                    <tr>
+                        <td><i class="file pdf icon"></i>Passport</td>
+                        @if (Model.Application.Documents.Passport != null)
+                        {
+                            <td>
+                                @Html.ActionLink(Model.Application.Documents.Passport, "download", new { fileName = Model.Application.Documents.Passport })
                             </td>
                         }
                         else
