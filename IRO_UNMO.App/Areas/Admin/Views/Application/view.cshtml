@@ -121,6 +121,27 @@
             <p></p>
             <p></p>
             <p></p>
+            @if (Model.Application.Finished)
+            {
+                <div class="ui form">
+                    <form asp-action="pdf" asp-route-id="@Model.Application.ApplicationId" method="post">
+                        @Html.HiddenFor(x => x.Application.ApplicationId)
+                        <button type="submit" class="ui basic green button"><i class="file pdf outline icon"></i>Export to PDF</button>
+                    </form>
+                </div>
+            }
+            @if (!Model.Application.Finished)
+            {
+                <div class="ui form">
+                    <form asp-action="pdf" asp-route-id="@Model.Application.ApplicationId" method="post">
+                        @Html.HiddenFor(x => x.Application.ApplicationId)
+                        <button type="submit" class="ui basic green button disabled"><i class="file pdf outline icon"></i>Export to PDF</button>
+                    </form>
+                </div>
+            }
+            <p></p>
+            <p></p>
+            <p></p>
             <form class="ui compact segment" method="post">
                 @Html.HiddenFor(x => x.Application.ApplicationId)
                 <div class="ui small equal width form">
@@ -576,17 +597,5 @@
             </form>
         </div>
     </div>
-    <p></p>
-    <p></p>
-    <p></p>
-    @if (Model.Application.Finished)
-    {
-        <div class="ui form">
-            <form asp-action="pdf" asp-route-id="@Model.Application.ApplicationId" method="post">
-                @Html.HiddenFor(x => x.Application.ApplicationId)
-                <button type="submit" class="ui basic green button"><i class="file pdf outline icon"></i>PDF</button>
-            </form>
-        </div>
-    }
 </body>
 

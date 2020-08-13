@@ -50,8 +50,8 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
         public IActionResult Index()
         {
             ApplicantsVM vm = new ApplicantsVM();
-            vm.IApplicants = _db.Applicant.Include(y => y.ApplicationUser).Include(q=>q.University).Where(a=>a.UniversityId!=2).ToList();
-            vm.OApplicants = _db.Applicant.Include(a => a.ApplicationUser).Include(b => b.University).ToList().Where(x => x.UniversityId == 2).ToList();
+            vm.IApplicants = _db.Applicant.Include(y => y.ApplicationUser).Include(q=>q.University).Where(a=>a.UniversityId!=2).OrderBy(x=>x.CreatedProfile).ToList();
+            vm.OApplicants = _db.Applicant.Include(a => a.ApplicationUser).Include(b => b.University).ToList().Where(x => x.UniversityId == 2).OrderBy(y => y.CreatedProfile).ToList();
             return View(vm);
         }
 

@@ -82,6 +82,18 @@
             <p></p>
             <p></p>
             <p></p>
+            @if (Model.Nomination.Finished)
+            {
+                <div class="ui form">
+                    <form asp-action="pdf" asp-route-id="@Model.Nomination.NominationId" method="post">
+                        @Html.HiddenFor(x => x.Nomination.NominationId)
+                        <button type="submit" class="ui basic green button"><i class="file pdf outline icon"></i>Export to PDF</button>
+                    </form>
+                </div>
+            }
+            <p></p>
+            <p></p>
+            <p></p>
             <form class="ui compact segment" method="post">
                 @Html.HiddenFor(x => x.Nomination.NominationId)
                 <div class="ui small equal width form">
@@ -102,6 +114,7 @@
             <p></p>
             <p></p>
             <p></p>
+
         </div>
         <div class="ui piled segment">
             <div class="ui top attached label">Basic info</div>
@@ -112,16 +125,28 @@
                         <td>@Model.Applicant.ApplicationUser.Name @Model.Applicant.ApplicationUser.Surname</td>
                     </tr>
                     <tr>
+                        <td>Email</td>
+                        <td>@Model.Applicant.ApplicationUser.Email</td>
+                    </tr>
+                    <tr>
+                        <td>Phone number</td>
+                        <td>@Model.Applicant.ApplicationUser.PhoneNumber</td>
+                    </tr>
+                    <tr>
+                        <td>Nationality</td>
+                        <td>@Model.Applicant.ApplicationUser.Country.Name</td>
+                    </tr>
+                    <tr>
+                        <td>Student/staff</td>
+                        <td>@Model.Applicant.TypeOfApplication</td>
+                    </tr>
+                    <tr>
                         <td>Faculty</td>
                         <td>@Model.Applicant.FacultyName</td>
                     </tr>
                     <tr>
                         <td>University</td>
                         <td>@Model.Applicant.University.Name</td>
-                    </tr>
-                    <tr>
-                        <td>Student/staff</td>
-                        <td>@Model.Applicant.TypeOfApplication</td>
                     </tr>
                     <tr>
                         <td>Account created</td>
@@ -297,16 +322,5 @@
             </form>
         </div>
     </div>
-    @if (Model.Nomination.Finished)
-    {
-        <div class="ui form">
-            <form asp-action="pdf" asp-route-id="@Model.Nomination.NominationId" method="post">
-                @Html.HiddenFor(x => x.Nomination.NominationId)
-                <button type="submit" class="ui basic green button"><i class="file pdf outline icon"></i>PDF</button>
-            </form>
-        </div>
-    }
-    <p></p>
-    <p></p>
-    <p></p>
+   
 </body>

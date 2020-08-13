@@ -76,11 +76,11 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
 
             //Create a PDF Template.
 
-            PdfTemplate template = new PdfTemplate(800, 800);
+            PdfTemplate template = new PdfTemplate(900, 900);
 
             //Draw a rectangle on the template graphics 
 
-            template.Graphics.DrawRectangle(PdfBrushes.White, new Syncfusion.Drawing.RectangleF(0, 0, 800, 800));
+            template.Graphics.DrawRectangle(PdfBrushes.White, new Syncfusion.Drawing.RectangleF(0, 0, 900, 900));
 
             PdfFont font = new PdfStandardFont(PdfFontFamily.Helvetica, 12);
             PdfFont font2 = new PdfStandardFont(PdfFontFamily.Helvetica, 20);
@@ -90,7 +90,7 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
 
             //Draw a string using the graphics of the template.
 
-            RectangleF bounds = new RectangleF(0, 0, pdfDocument.Pages[0].GetClientSize().Width, 52);
+            RectangleF bounds = new RectangleF(0, 0, pdfDocument.Pages[0].GetClientSize().Width, 52); //dirao
 
             PdfPageTemplateElement header = new PdfPageTemplateElement(bounds);
 
@@ -102,41 +102,44 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
 
             //Draw the image in the header.
 
-            header.Graphics.DrawImage(image, new PointF(190, 0), new SizeF(140, 50));
+            header.Graphics.DrawImage(image, new PointF(75, 0), new SizeF(137, 52));
+            header.Graphics.DrawString("Nomination number " + mrki.NominationId, font2, brush, 205, 12);
 
             //Add the header at the top.
 
             pdfDocument.Template.Top = header;
 
-            template.Graphics.DrawString("Nomination number " + mrki.NominationId, font2, brush, 140, 5);
-            template.Graphics.DrawString("Started: ", font, brush, 140, 30);
-            template.Graphics.DrawString(mrki.CreatedNom.ToString(), font, brush, 185, 30);
+            template.Graphics.DrawString("Full name: ", font, brush, 32, 15);
+            template.Graphics.DrawString(mrki.Applicant.ApplicationUser.Name + " " + mrki.Applicant.ApplicationUser.Surname, font, brush, 280, 15);
 
-            template.Graphics.DrawString("Full name: ", font, brush, 32, 65);
-            template.Graphics.DrawString(mrki.Applicant.ApplicationUser.Name + " " + mrki.Applicant.ApplicationUser.Surname, font, brush, 280, 65);
+            template.Graphics.DrawString("Account created: ", font, brush, 32, 30);
+            template.Graphics.DrawString(mrki.Applicant.CreatedProfile.ToString(), font, brush, 280, 30);
 
-            template.Graphics.DrawString("Account created: ", font, brush, 32, 82);
-            template.Graphics.DrawString(mrki.CreatedNom.ToString(), font, brush, 280, 82);
+            template.Graphics.DrawString("Nomination created: ", font, brush, 32, 45);
+            template.Graphics.DrawString(mrki.CreatedNom.ToString(), font, brush, 280, 45);
 
-            template.Graphics.DrawString("Information", font3, brush, 10, 107);
+            template.Graphics.DrawString("Nomination submitted: ", font, brush, 32, 60);
+            template.Graphics.DrawString(mrki.FinishedTime.ToString(), font, brush, 280, 60);
 
-            template.Graphics.DrawString("E-mail: ", font, brush, 32, 132);
-            template.Graphics.DrawString(mrki.Applicant.ApplicationUser.Email.ToString(), font, brush, 280, 132);
+            template.Graphics.DrawString("Information", font3, brush, 10, 87);
 
-            template.Graphics.DrawString("Phone number: ", font, brush, 32, 149);
-            template.Graphics.DrawString(mrki.Applicant.ApplicationUser.PhoneNumber.ToString(), font, brush, 280, 149);
+            template.Graphics.DrawString("E-mail: ", font, brush, 32, 112);
+            template.Graphics.DrawString(mrki.Applicant.ApplicationUser.Email.ToString(), font, brush, 280, 112);
 
-            template.Graphics.DrawString("Nationality: ", font, brush, 32, 166);
-            template.Graphics.DrawString(mrki.Applicant.ApplicationUser.Country.Name.ToString(), font, brush, 280, 166);
+            template.Graphics.DrawString("Phone number: ", font, brush, 32, 127);
+            template.Graphics.DrawString(mrki.Applicant.ApplicationUser.PhoneNumber.ToString(), font, brush, 280, 127);
 
-            template.Graphics.DrawString("University: ", font, brush, 32, 183);
-            template.Graphics.DrawString(mrki.Applicant.University.Name.ToString(), font, brush, 280, 183);
+            template.Graphics.DrawString("Nationality: ", font, brush, 32, 142);
+            template.Graphics.DrawString(mrki.Applicant.ApplicationUser.Country.Name.ToString(), font, brush, 280, 142);
 
-            template.Graphics.DrawString("Faculty: ", font, brush, 32, 200);
-            template.Graphics.DrawString(mrki.Applicant.FacultyName.ToString(), font, brush, 280, 200);
+            template.Graphics.DrawString("Faculty: ", font, brush, 32, 157);
+            template.Graphics.DrawString(mrki.Applicant.FacultyName.ToString(), font, brush, 280, 157);
 
-            template.Graphics.DrawString("Student/staff: ", font, brush, 32, 217);
-            template.Graphics.DrawString(mrki.Applicant.TypeOfApplication.ToString(), font, brush, 280, 217);
+            template.Graphics.DrawString("University: ", font, brush, 32, 172);
+            template.Graphics.DrawString(mrki.Applicant.University.Name.ToString(), font, brush, 280, 172);
+
+            template.Graphics.DrawString("Student/staff: ", font, brush, 32, 187);
+            template.Graphics.DrawString(mrki.Applicant.TypeOfApplication.ToString(), font, brush, 280, 187);
 
             var path1 = Path.Combine(
              Directory.GetCurrentDirectory(),

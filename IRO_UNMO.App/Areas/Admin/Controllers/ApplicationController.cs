@@ -71,13 +71,13 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
 
             //Create a PDF Template.
 
-            PdfTemplate template = new PdfTemplate(800, 800);
-            PdfTemplate template2 = new PdfTemplate(800, 800);
+            PdfTemplate template = new PdfTemplate(900, 900);
+            PdfTemplate template2 = new PdfTemplate(900, 900);
 
             //Draw a rectangle on the template graphics 
 
-            template.Graphics.DrawRectangle(PdfBrushes.White, new Syncfusion.Drawing.RectangleF(0, 0, 800, 800));
-            template2.Graphics.DrawRectangle(PdfBrushes.White, new Syncfusion.Drawing.RectangleF(0, 0, 800, 800));
+            template.Graphics.DrawRectangle(PdfBrushes.White, new Syncfusion.Drawing.RectangleF(0, 0, 900, 900));
+            template2.Graphics.DrawRectangle(PdfBrushes.White, new Syncfusion.Drawing.RectangleF(0, 0, 900, 900));
 
             PdfFont font = new PdfStandardFont(PdfFontFamily.Helvetica, 12);
             PdfFont font2 = new PdfStandardFont(PdfFontFamily.Helvetica, 20);
@@ -100,21 +100,26 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
 
             //Draw the image in the header.
 
-            header.Graphics.DrawImage(image, new PointF(190, 0), new SizeF(140, 50));
+            header.Graphics.DrawImage(image, new PointF(75, 0), new SizeF(137, 52));
+            header.Graphics.DrawString("Application number " + mrki.ApplicationId, font2, brush, 205, 12);
 
             //Add the header at the top.
 
             pdfDocument.Template.Top = header;
 
-            template.Graphics.DrawString("Application number " + mrki.ApplicationId, font2, brush, 140, 5);
-            template.Graphics.DrawString("Started: ", font, brush, 140, 30);
-            template.Graphics.DrawString(mrki.CreatedApp.ToString(), font, brush, 185, 30);
+            template.Graphics.DrawString("About", font3, brush, 10, 17);
 
-            template.Graphics.DrawString("Full name: ", font, brush, 32, 65);
-            template.Graphics.DrawString(mrki.Applicant.ApplicationUser.Name + " " + mrki.Applicant.ApplicationUser.Surname, font, brush, 280, 65);
+            template.Graphics.DrawString("Full name: ", font, brush, 32, 42);
+            template.Graphics.DrawString(mrki.Applicant.ApplicationUser.Name + " " + mrki.Applicant.ApplicationUser.Surname, font, brush, 280, 42);
 
-            template.Graphics.DrawString("Account created: ", font, brush, 32, 82);
-            template.Graphics.DrawString(mrki.CreatedApp.ToString(), font, brush, 280, 82);
+            template.Graphics.DrawString("Account created: ", font, brush, 32, 57);
+            template.Graphics.DrawString(mrki.Applicant.CreatedProfile.ToString(), font, brush, 280, 57);
+
+            template.Graphics.DrawString("Application created: ", font, brush, 32, 72);
+            template.Graphics.DrawString(mrki.CreatedApp.ToString(), font, brush, 280, 72);
+
+            template.Graphics.DrawString("Application submitted: ", font, brush, 32, 87);
+            template.Graphics.DrawString(mrki.FinishedTime.ToString(), font, brush, 280, 87);
 
             template.Graphics.DrawString("Information", font3, brush, 10, 107);
 
@@ -122,7 +127,7 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
             template.Graphics.DrawString(mrki.Infos.Gender, font, brush, 280, 132);
 
             template.Graphics.DrawString("Date of birth: ", font, brush, 32, 149);
-            template.Graphics.DrawString(mrki.Infos.DateOfBirth.ToString(), font, brush, 280, 149);
+            template.Graphics.DrawString(mrki.Infos.DateOfBirth.ToShortDateString(), font, brush, 280, 149);
 
             template.Graphics.DrawString("Place of birth: ", font, brush, 32, 166);
             template.Graphics.DrawString(mrki.Infos.PlaceOfBirth.ToString(), font, brush, 280, 166);
@@ -134,10 +139,10 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
             template.Graphics.DrawString(mrki.Infos.PassportNumber.ToString(), font, brush, 280, 200);
 
             template.Graphics.DrawString("Passport issue date: ", font, brush, 32, 217);
-            template.Graphics.DrawString(mrki.Infos.PassportIssueDate.ToString(), font, brush, 280, 217);
+            template.Graphics.DrawString(mrki.Infos.PassportIssueDate.ToShortDateString(), font, brush, 280, 217);
 
             template.Graphics.DrawString("Passport expiry date: ", font, brush, 32, 234);
-            template.Graphics.DrawString(mrki.Infos.PassportExpiryDate.ToString(), font, brush, 280, 234);
+            template.Graphics.DrawString(mrki.Infos.PassportExpiryDate.ToShortDateString(), font, brush, 280, 234);
 
             template.Graphics.DrawString("Contacts", font3, brush, 10, 259);
 

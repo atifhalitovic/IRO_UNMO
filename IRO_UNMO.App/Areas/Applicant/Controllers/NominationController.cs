@@ -118,26 +118,18 @@ namespace IRO_UNMO.App.Areas.Applicant.Controllers
             model.ApplicantId = id;
             model.Applicant = _db.Applicant.Where(a => a.ApplicantId == id).Include(b => b.ApplicationUser).ThenInclude(c => c.Country).FirstOrDefault();
 
-            var offers = _db.Offer.Include(a => a.University).ThenInclude(b => b.Country).Where(x => x.Start <= DateTime.Now && x.End >= DateTime.Now).OrderBy(a => a.Start).ToList();
-            var nominations = _db.Nomination.Where(a => a.ApplicantId == id).Select(q=>q.Offer).ToList();
-            var offersR = new List<Offer>();
-            if (nominations.Count() != 0 && nominations.Count()<offers.Count())
+            List<Offer> allOffers = _db.Offer.Include(a => a.University).ThenInclude(b => b.Country).Where(x => x.Start <= DateTime.Now && x.End >= DateTime.Now).OrderBy(a => a.Start).ToList();
+            List<Offer> userNominations = _db.Nomination.Where(a => a.ApplicantId == id).Select(q=>q.Offer).OrderBy(a => a.Start).ToList();
+
+            List<Offer> offersWithoutNom = allOffers.Except(userNominations).ToList();
+
+            if (userNominations.Count() != 0 && userNominations.Count() <= allOffers.Count()) 
             {
-                foreach (var x in nominations)
-                {
-                    foreach (var y in offers)
-                    {
-                        if (x!=y)
-                        {
-                            offersR.Add(y);
-                        }
-                    }
-                }
-                model.Offers = offersR;
+                model.Offers = offersWithoutNom;
             }
             else
             {
-                model.Offers = offers;
+                model.Offers = allOffers;
             }
             return View("create", model);
         }
