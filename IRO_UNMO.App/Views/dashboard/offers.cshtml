@@ -38,17 +38,16 @@
                 </div>
 
                 <div class="seven wide column" style="padding-bottom: 3em">
-                    <a href="/courses/course/7754-incoming-erasmus-mobility-1sem-1-sem?search=80283">Outgoing Erasmus+ Mobility (@x.Semester)</a>
+                    <a>Outgoing Erasmus+ Mobility (@x.Semester)</a>
                     <h5>Information</h5>
                     <p>
-                    <p>Study cycles: @x.Cycles</p>
-                    <p>Study programmes: @x.Programmes</p>
+                    <p>Study cycles: <a class="ui red horizontal tiny label"> @x.Cycles </a></p>
+                    <p>Study programmes: <a class="ui yellow horizontal tiny label"> @x.Programmes </a></p>
                     <p>More info: <a>@x.Info</a></p>
                 </div>
                 <div class="five wide apply column">
                     <div class="ui very relaxed list">
                         <div class="item">
-                            @*<a asp-controller="offers" asp-action="offer" asp-route-id="@x.OfferId" class="ui small fluid primary icon apply button">Edit current offer info</a>*@
                             <div class="ui tiny list">
                                 <div class="item">
                                     <i class="top aligned university large icon"></i>
@@ -57,7 +56,7 @@
                                             Application start
                                         </div>
                                         <div class="description">
-                                            @x.Start.ToShortDateString()
+                                            @x.Start.ToMyStrDMYYYY()
                                         </div>
                                     </div>
                                 </div>
@@ -67,7 +66,7 @@
                                         <div class="header">
                                             Application deadline
                                         </div>
-                                        <div class="description"><span>@x.End.ToShortDateString() <span class="grayed">Europe/Mostar time</span></span></div>
+                                        <div class="description"><span>@x.End.ToMyStrDMYYYY() <span class="grayed">Europe/Mostar time</span></span></div>
                                     </div>
                                 </div>
                             </div>
@@ -76,7 +75,6 @@
                             <br />
                             <br />
                             <br />
-                            @*<a asp-controller="offers" asp-action="delete" asp-route-id="@x.OfferId" class="ui right floated basic red button">Delete</a>*@
                         </div>
                     </div>
                 </div>

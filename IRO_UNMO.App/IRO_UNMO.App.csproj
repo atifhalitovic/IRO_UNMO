@@ -646,7 +646,7 @@
     <Content Update="Areas\Applicant\Views\dashboard\emergency.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-    <Content Update="Areas\Applicant\Views\dashboard\enrollment.cshtml">
+    <Content Update="Areas\Applicant\Views\dashboard\enrolment.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Areas\Applicant\Views\dashboard\index.cshtml">
@@ -691,7 +691,7 @@
     <Content Update="Views\dashboard\emergency.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-    <Content Update="Views\dashboard\enrollment.cshtml">
+    <Content Update="Views\dashboard\enrolment.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Views\dashboard\study-in-mostar.cshtml">

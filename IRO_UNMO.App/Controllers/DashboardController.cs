@@ -56,7 +56,7 @@ namespace IRO_UNMO.App.Controllers
             return View();
         }
 
-        public IActionResult enrollment()
+        public IActionResult enrolment()
         {
             return View();
         }

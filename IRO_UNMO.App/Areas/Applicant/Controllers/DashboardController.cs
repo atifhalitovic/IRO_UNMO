@@ -135,7 +135,7 @@ namespace IRO_UNMO.App.Areas.Applicant.Controllers
             return View();
         }
 
-        public IActionResult enrollment()
+        public IActionResult enrolment()
         {
             TempData["applicantId"] = HttpContext.GetLoggedUser().Id;
             return View();
