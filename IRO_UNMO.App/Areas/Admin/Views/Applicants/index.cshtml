@@ -33,7 +33,6 @@
         <thead>
             <tr>
                 <th>Full name</th>
-                @*<th>Faculty</th>*@
                 <th>University</th>
                 <th>Created profile</th>
                 <th>Verified</th>
@@ -46,11 +45,10 @@
                 <tr>
                     <td>@x.ApplicationUser.Name @x.ApplicationUser.Surname</td>
                     <td>@x.University.Name</td>
-                    <td>@x.CreatedProfile</td>
+                    <td>@x.CreatedProfile.ToMyStrDMYYYY_HMM()</td>
                     @if (x.Verified)
                     {
                         <td><div class="ui green large horizontal label">@x.Verified</div></td>
-
                     }
                     else
                     {
@@ -58,7 +56,6 @@
                     }
                     <td>
                         <a asp-action="review" asp-controller="applicants" asp-route-id="@x.ApplicantId" class="ui primary button">Review</a>
-                        @*<a asp-action="docs" asp-controller="application" asp-route-id="@x.ApplicationId" class="ui primary button">Docs</a>*@
                     </td>
                 </tr>
             </tbody>
@@ -83,7 +80,7 @@
                     <td>@x.ApplicationUser.Name @x.ApplicationUser.Surname</td>
                     <td>@x.FacultyName</td>
                     <td>@x.University.Name</td>
-                    <td>@x.CreatedProfile</td>
+                    <td>@x.CreatedProfile.ToMyStrDMYYYY_HMM()</td>
                     <td><a asp-action="review" asp-controller="applicants" asp-route-id="@x.ApplicantId" class="ui primary button">Review</a></td>
                 </tr>
             </tbody>

@@ -30,12 +30,12 @@ namespace IRO_UNMO.App
 
         public static string ToMyStrDMYY_HMM(this DateTime source)
         {
-            return source.ToString("dd'.'MM'.'yy'.,' HH':'mm");
+            return source.ToString("dd'.'MM'.'yy'.  ' HH':'mm");
         }
 
         public static string ToMyStrDMYYYY_HMM(this DateTime source)
         {
-            return source.ToString("dd'.'MM'.'yyyy'.,' HH':'mm");
+            return source.ToString("dd'.'MM'.'yyyy'. ' HH':'mm");
         }
 
         public static string ToMyStrDMYY_HMM(this DateTime? source, string valueForNull)

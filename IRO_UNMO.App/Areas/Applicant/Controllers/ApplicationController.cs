@@ -187,8 +187,6 @@ namespace IRO_UNMO.App.Areas.Applicant.Controllers
                 }
 
                 _db.SaveChanges();
-
-                //return RedirectToAction("details", "home", new { id = newApp.ApplicantId });
                 return RedirectToAction("docs", "application", new { id = newApp.ApplicationId });
             }
             return View();
@@ -385,8 +383,22 @@ namespace IRO_UNMO.App.Areas.Applicant.Controllers
             homeInst.CoordinatorAddress = vm.Application.HomeInstitutions.CoordinatorAddress;
 
             Other other = _db.Application.Where(a => a.ApplicationId == newApp.ApplicationId).Include(b => b.Others).FirstOrDefault().Others;
-            other.MedicalInfo = vm.Application.Others.MedicalInfo;
-            other.AdditionalRequests = vm.Application.Others.AdditionalRequests;
+            if (vm.Application.Others.MedicalInfo == null)
+            {
+                other.MedicalInfo = "none";
+            }
+            else
+            {
+                other.MedicalInfo = vm.Application.Others.MedicalInfo;
+            }
+            if (vm.Application.Others.AdditionalRequests == null)
+            {
+                other.AdditionalRequests = "none";
+            }
+            else
+            {
+                other.AdditionalRequests = vm.Application.Others.AdditionalRequests;
+            }
 
             _db.SaveChanges();
             return RedirectToAction("profile", "dashboard", new { id = newApp.ApplicantId });

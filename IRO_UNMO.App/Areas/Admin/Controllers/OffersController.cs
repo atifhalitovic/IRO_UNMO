@@ -68,14 +68,20 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
 
                 vm.Semesters.Add(new SelectListItem()
                 {
-                    Value = "summer",
-                    Text = "summer"
+                    Value = "Erasmus+, summer",
+                    Text = "Erasmus+, summer"
                 });
 
                 vm.Semesters.Add(new SelectListItem()
                 {
-                    Value = "winter",
-                    Text = "winter"
+                    Value = "Erasmus+, winter",
+                    Text = "Erasmus+, winter"
+                });
+
+                vm.Semesters.Add(new SelectListItem()
+                {
+                    Value = "other",
+                    Text = "other"
                 });
 
                 vm.Programmes = new List<SelectListItem>();
@@ -157,14 +163,20 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
 
                 vm.Semesters.Add(new SelectListItem()
                 {
-                    Value = "summer",
-                    Text = "summer"
+                    Value = "Erasmus+, summer",
+                    Text = "Erasmus+, summer"
                 });
 
                 vm.Semesters.Add(new SelectListItem()
                 {
-                    Value = "winter",
-                    Text = "winter"
+                    Value = "Erasmus+, winter",
+                    Text = "Erasmus+, winter"
+                });
+
+                vm.Semesters.Add(new SelectListItem()
+                {
+                    Value = "other",
+                    Text = "other"
                 });
 
                 vm.Programmes = new List<SelectListItem>();

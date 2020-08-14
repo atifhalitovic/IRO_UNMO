@@ -84,12 +84,12 @@
                         <p>Available for applicants from:</p>
                         <div class="ui computer tablet only">
                             <a>
-                                <img src="~/unmo_preloader.png" style="height:80px;width:80px;">
+                                <img src="~/unmo_preloader.png" style="height:120px;width:120px;">
                             </a>
                         </div>
                         <div>
                             <i class="ui university icon mobile only"></i>
-                            <a>Dzemal Bijedic University of Mostar</a>
+                            <a href="https:\\www.unmo.ba">Dzemal Bijedic University of Mostar</a>
                         </div>
                         <small class="ui computer tablet only">Bosnia and Herzegovina</small>
                     </div>
@@ -97,13 +97,11 @@
                 </div>
 
                 <div class="seven wide column" style="padding-bottom: 3em">
-                    <a href="/courses/course/7754-incoming-erasmus-mobility-1sem-1-sem?search=80283">Outgoing Erasmus+ Mobility (@x.Semester)</a>
+                    <a>Outgoing Mobility (@x.Semester)</a>
                     <h5>Information</h5>
-                    <p>
-                    <p>Study cycles: @x.Cycles</p>
-                    <p>Study programmes: @x.Programmes</p>
+                    <p>Study cycles: <a class="ui red horizontal tiny label"> @x.Cycles </a></p>
+                    <p>Study programmes: <a class="ui yellow horizontal tiny label"> @x.Programmes </a></p>
                     <p>More info: <a>@x.Info</a></p>
-                    </p>
                 </div>
                 <div class="five wide apply column">
                     <div class="ui very relaxed list">
@@ -118,7 +116,7 @@
                                             Application start
                                         </div>
                                         <div class="description">
-                                            @x.Start.ToShortDateString()
+                                            @x.Start.ToMyStrDMYYYY()
                                         </div>
                                     </div>
                                 </div>
@@ -128,7 +126,7 @@
                                         <div class="header">
                                             Application deadline
                                         </div>
-                                        <div class="description"><span>@x.End.ToShortDateString() <span class="grayed">Europe/Mostar time</span></span></div>
+                                        <div class="description"><span>@x.End.ToMyStrDMYYYY() <span class="grayed">Europe/Mostar time</span></span></div>
                                     </div>
                                 </div>
                             </div>

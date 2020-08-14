@@ -4,7 +4,6 @@
     var controller = ViewContext.RouteData.Values["Controller"];
     var action = MyExtensions.FirstCharToUpper(ViewContext.RouteData.Values["Action"].ToString().Replace("_", " "));
     var applicantId = TempData["applicantId"];
-    //var current = context.Users.Where(a => a.Id == applicantId.ToString()).FirstOrDefault();
 }
 
 
@@ -27,6 +26,7 @@
     <link rel="stylesheet" type="text/css" href="~/dist/components/grid.css">
     <!--- Component CSS -->
     <link rel="stylesheet" type="text/css" href="~/dist/components/icon.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/flag.css">
     <link rel="stylesheet" type="text/css" href="~/dist/components/table.css">
     <link rel="stylesheet" type="text/css" href="~/dist/components/button.css">
     <link rel="stylesheet" type="text/css" href="~/dist/components/transition.css">

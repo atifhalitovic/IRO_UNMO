@@ -143,7 +143,7 @@
                     <tr>
                         <td>@x.Applicant.ApplicationUser.Name @x.Applicant.ApplicationUser.Surname</td>
                         <td>@x.Applicant.FacultyName</td>
-                        <td>@x.CreatedNom</td>
+                        <td>@x.CreatedNom.ToMyStrDMYYYY_HMM()</td>
                         <td>@x.Finished</td>
                         <td>
                             <a asp-action="view" asp-controller="nomination" asp-route-id="@x.NominationId" class="ui primary button">Review</a>

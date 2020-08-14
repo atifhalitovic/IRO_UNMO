@@ -3,11 +3,8 @@
 @{
     Layout = "ApplicantLayout";
 }
-
 <h2 class="ui header">Basic profile info</h2>
 <head>
-    <!--- Show Names -->
-    @*<script src="~/assets/show-examples.js"></script>*@
     <!--- Example Javascript -->
     <script>
         var fileExtentionRange = '.zip .rar .tar .pdf .doc .docx .xls .xlsx .ppt .pptx';
@@ -102,7 +99,7 @@
                         </tr>
                         <tr>
                             <td>Account created</td>
-                            <td>@Model.Applicant.CreatedProfile</td>
+                            <td>@Model.Applicant.CreatedProfile.ToMyStrDMYYYY_HMM()</td>
                         </tr>
                         <tr>
                             <td>Account verification</td>
@@ -160,7 +157,7 @@
                             <div class="ui divider"></div>
                             <p>Available for applicants from:</p>
                             <div class="ui computer tablet only">
-                                <a><img src="https://img.cdn.dreamapply.com/eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJkcmVhbS1hcHBseSIsImF1ZCI6ImRyZWFtLWltYWdlIiwicGxkIjp7InBhdGgiOiJkcmVhbS1hcHBseTpzaGFyZDMzOFwvaW5zdGl0dXRpb25fbG9nb3NcLzEzMTAub241c2hjIiwidHJhbnNmb3JtYXRpb25zIjpbeyJuYW1lIjoiZml0IiwicGFyYW1zIjp7IndpZHRoIjoiMTIwIiwiaGVpZ2h0IjoiNDIiLCJxdWFsaXR5IjoiOTUiLCJleHRlbmQiOiIyNTUsMjU1LDI1NSJ9fV0sImNhY2hlIjoibWF4LWFnZT0zMTUzNjAwMCwgcHVibGljIiwib3V0cHV0X2Zvcm1hdCI6InNhbWUiLCJzZGtfdmVyc2lvbiI6IjEuMCJ9fQ.Fhbl7nvMffj-cF9WhCHsYKmYSYOemJDRduIf-2Yohco__jXRaWR5_88LN2_-gc7IOHQMH3Jp36Q3dB3q5t8knWVWRdiIQim0PFrMRzZyyoQ_guY9G4EgHdmAMNL9kkNsPriDAVP71qzVXcXdVg-s8-fJqBOc_ovcgiaVaHOSgRVByhSPud_q1-HJ8mF7EURKBUy1yupsSR8CIHMYxqtUT4Ce-EaSgsVu1ttYrNgJ6ALmr0ZK0VCmpuYP1WRONd1nN1TVzHrQHn_8yhTDCjMlIVSWB72jtFIxXWNoEiO20lGc9K5W9Q-YQ6H00_JsGxOSL_apnDv42A9NGLrgk0_zsA" /></a>
+                                <a><img src="https://img.cdn.dreamapply.com/eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJkcmVhbS1hcHBseSIsImF1ZCI6ImRyZWFtLWltYWdlIiwicGxkIjp7InBhdGgiOiJkcmVhbS1hcHBseTpzaGFyZDMzOFwvaW5zdGl0dXRpb25fbG9nb3NcLzEzMTAub241c2hjIiwidHJhbnNmb3JtYXRpb25zIjpbeyJuYW1lIjoiZml0IiwicGFyYW1zIjp7IndpZHRoIjoiMTIwIiwiaGVpZ2h0IjoiNDIiLCJxdWFsaXR5IjoiOTUiLCJleHRlbmQiOiIyNTUsMjU1LDI1NSJ9fV0sImNhY2hlIjoibWF4LWFnZT0zMTUzNjAwMCwgcHVibGljIiwib3V0cHV0X2Zvcm1hdCI6InNhbWUiLCJzZGtfdmVyc2lvbiI6IjEuMCJ9fQ.Fhbl7nvMffj-cF9WhCHsYKmYSYOemJDRduIf-2Yohco__jXRaWR5_88LN2_-gc7IOHQMH3Jp36Q3dB3q5t8knWVWRdiIQim0PFrMRzZyyoQ_guY9G4EgHdmAMNL9kkNsPriDAVP71qzVXcXdVg-s8-fJqBOc_ovcgiaVaHOSgRVByhSPud_q1-HJ8mF7EURKBUy1yupsSR8CIHMYxqtUT4Ce-EaSgsVu1ttYrNgJ6ALmr0ZK0VCmpuYP1WRONd1nN1TVzHrQHn_8yhTDCjMlIVSWB72jtFIxXWNoEiO20lGc9K5W9Q-YQ6H00_JsGxOSL_apnDv42A9NGLrgk0_zsA" style:{height="120px", width="120px"} /></a>
                             </div>
                             <div>
                                 <i class="ui university icon mobile only"></i>
@@ -171,7 +168,6 @@
                         </div>
                         <div class="ui mobile only divider"></div>
                     </div>
-
                     <div class="seven wide column" style="padding-bottom: 3em">
                         <a>Incoming mobility (1 semester)</a>
                         @if (Model.Applicant.Verified && Model.Application != null)
@@ -185,7 +181,7 @@
                                             Created
                                         </div>
                                         <div class="description">
-                                            @Model.Application.CreatedApp
+                                            @Model.Application.CreatedApp.ToMyStrDMYYYY_HMM()
                                         </div>
                                     </div>
                                 </div>
@@ -193,7 +189,7 @@
                                     <i class="top aligned edit large icon"></i>
                                     <div class="content">
                                         <div class="header">Last change</div>
-                                        <div class="description"><span>@Model.Application.LastEdited<span class="grayed"> Europe/Mostar time</span></span></div>
+                                        <div class="description"><span>@Model.Application.LastEdited.ToMyStrDMYYYY_HMM()<span class="grayed"> Europe/Mostar time</span></span></div>
                                     </div>
                                 </div>
                                 @if (Model.Application.Finished)
@@ -204,7 +200,7 @@
                                             <div class="header">
                                                 Submitted
                                             </div>
-                                            <div class="description"><span>@Model.Application.FinishedTime<span class="grayed"> Europe/Mostar time</span></span></div>
+                                            <div class="description"><span>@Model.Application.FinishedTime.ToMyStrDMYYYY_HMM()<span class="grayed"> Europe/Mostar time</span></span></div>
                                         </div>
                                     </div>
                                 }
@@ -216,7 +212,7 @@
                                 <p></p>
                                 <h5>Information</h5>
                                 <p>Study cycles: bachelor, master, doctoral</p>
-                                <p>Study programmes: <a href="https://iro.unmo.ba/ba/incoming/offer-for-incoming-students/">Offer for incoming students</a></p>
+                                <p>Study programmes: <a href="https://iro.unmo.ba/incoming/offer-for-incoming-students/">Offer for incoming students</a></p>
                             </div>
                         }
                     </div>
@@ -268,7 +264,7 @@
                                             Application start
                                         </div>
                                         <div class="description">
-                                            @Model.Timing.From.ToShortDateString()
+                                            @Model.Timing.From.ToMyStrDMYYYY()
                                         </div>
                                     </div>
                                 </div>
@@ -278,12 +274,11 @@
                                         <div class="header">
                                             Nomination deadline
                                         </div>
-                                        <div class="description">@Model.Timing.To.ToShortDateString()</div>
+                                        <div class="description">@Model.Timing.To.ToMyStrDMYYYY()</div>
                                     </div>
                                 </div>
                             </div>
                         }
-
                     </div>
                 </div>
             </div>
@@ -311,12 +306,12 @@
                         <td>@Model.Applicant.ApplicationUser.Country.Name</td>
                     </tr>
                     <tr>
-                        <td>University</td>
-                        <td>@Model.Applicant.University.Name</td>
-                    </tr>
-                    <tr>
                         <td>Faculty</td>
                         <td>@Model.Applicant.FacultyName</td>
+                    </tr>
+                    <tr>
+                        <td>University</td>
+                        <td>@Model.Applicant.University.Name</td>
                     </tr>
                     <tr>
                         <td>Student/staff</td>
@@ -343,8 +338,8 @@
                             @if (x != null)
                             {
                                 <div class="meta">
-                                    <p>Created: @x.CreatedNom</p>
-                                    <p>Last change: @x.LastEdited</p>
+                                    <p>Created: @x.CreatedNom.ToMyStrDMYYYY_HMM()</p>
+                                    <p>Last change: @x.LastEdited.ToMyStrDMYYYY_HMM()</p>
                                     <p>Status: @x.StatusOfNomination </p>
                                     @if (x.Finished)
                                     {
@@ -359,7 +354,7 @@
                                         </div>
                                     }
                                     <p></p>
-                                    <div class="ui light red label">Application deadline: <div class="detail">@x.Offer.End.ToShortDateString()</div></div>
+                                    <div class="ui light red label">Application deadline: <div class="detail">@x.Offer.End.ToMyStrDMYYYY_HMM()</div></div>
                                     <p></p>
                                     <p></p>
                                     <a asp-action="view" asp-controller="nomination" asp-route-id="@x.NominationId" class="ui secondary basic button"><i class="eye"></i>Review nomination</a>
