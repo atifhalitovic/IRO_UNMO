@@ -13,6 +13,7 @@
             background-color: #dedede;
         }
     </style>
+
 </head>
 <body>
     @if (errorMessage != null)
@@ -27,10 +28,10 @@
             </p>
         </div>
     }
-    <form class="ui form" asp-controller="account" asp-action="incoming" method="post">
+    <form id="registration" class="ui form" asp-controller="account" asp-action="outgoing" method="post">
         <p></p>
         <div class="ui compact segment">
-            <h3 class="ui green dividing header"><i class="sign in alternate icon"></i>Registration for incoming applicant at UNMO</h3>
+            <h3 class="ui red dividing header"><i class="exchange alternate icon"></i>Registration for outgoing applicant from UNMO</h3>
             <div class="fields">
                 <div class="ui small equal width form">
                     <div class="fields">
@@ -39,21 +40,21 @@
                             <input class="ui input" name="name" asp-for="@Model.Name" type="text">
                         </div>
                         <div class="field">
-                            <label>Last name</label>
-                            <input class="ui input" name="surname" asp-for="@Model.Surname" type="text" />
-                        </div>
-                        <div class="field">
-                            <label asp-for="@Model.TypeOfApplication">Applicant type</label>
-                            @Html.DropDownListFor(model => model.TypeOfApplication, Model.TypesOfApplicant, new { @id = "type", @Name = "type", @class = "ui dropdown" })
+                            <label>Surname</label>
+                            <input class="ui input" name="surname" asp-for="@Model.Surname" type="text">
                         </div>
                     </div>
                     <div class="fields">
                         <div class="field">
-                            <label>Phone number</label>
+                            <label asp-for="@Model.PhoneNumber">Phone number</label>
                             <input name="PhoneNumber" asp-for="@Model.PhoneNumber" type="text" />
                         </div>
+                        @*<div class="field">
+                        <label asp-for="@Model.PhoneNumber">Phone number</label>
+                        <input name="PhoneNumber" asp-for="@Model.PhoneNumber" type="text" autocomplete="off" required />
+                        </div>*@
                         <div class="field">
-                            <label>E-mail</label>
+                            <label asp-for="@Model.Email">E-mail</label>
                             <input class="ui input" name="email" asp-for="@Model.Email" type="text" />
                         </div>
                         <div class="field">
@@ -63,16 +64,12 @@
                     </div>
                     <div class="fields">
                         <div class="field">
-                            <label asp-for="@Model.StudyField">Study field</label>
-                            <input class="ui input" name="studyfield" asp-for="@Model.StudyField" type="text" autocomplete="off" />
+                            <label asp-for="@Model.TypeOfApplication">Applicant type</label>
+                            @Html.DropDownListFor(model => model.TypeOfApplication, Model.TypesOfApplicant, new { @id = "type", @Name = "type", @class = "ui dropdown" })
                         </div>
                         <div class="field">
-                            <label asp-for="@Model.StudyCycle">Study cycle</label>
-                            @Html.DropDownListFor(model => model.StudyCycle, Model.StudyCycles, new { @id = "studycycle", @Name = "studycycle", @class = "ui dropdown" })
-                        </div>
-                        <div class="field">
-                            <label asp-for="@Model.UniversityId">University</label>
-                            @Html.DropDownListFor(model => model.UniversityId, Model.Universities, new { @id = "uni", @Name = "university", @class = "ui dropdown" })
+                            <label asp-for="@Model.FacultyName">Faculty</label>
+                            @Html.DropDownListFor(model => model.FacultyName, Model.Faculties, new { @id = "faculty", @Name = "faculty", @class = "ui dropdown" })
                         </div>
                     </div>
                 </div>
@@ -125,24 +122,6 @@
                             }
                         ]
                     },
-                    studyfield: {
-                        identifier: 'studyfield',
-                        rules: [
-                            {
-                                type: 'empty',
-                                prompt: 'Please enter your study field'
-                            }
-                        ]
-                    },
-                    studycycle: {
-                        identifier: 'studycycle',
-                        rules: [
-                            {
-                                type: 'empty',
-                                prompt: 'Please select a study cycle'
-                            }
-                        ]
-                    },
                     nationality: {
                         identifier: 'nationality',
                         rules: [
@@ -161,12 +140,12 @@
                             }
                         ]
                     },
-                    uni: {
-                        identifier: 'uni',
+                    faculty: {
+                        identifier: 'faculty',
                         rules: [
                             {
                                 type: 'empty',
-                                prompt: 'Please select your university'
+                                prompt: 'Please select your faculty'
                             }
                         ]
                     }

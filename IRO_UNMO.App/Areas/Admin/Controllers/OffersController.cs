@@ -54,205 +54,12 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
         public IActionResult offer(int id = 0)
         {
             ViewBag.ID = id;
-            EditOffersVM vm = new EditOffersVM();
 
-            if (id == 0)
-            {
-                vm.Universities = _db.University.Include(a => a.Country).Where(b => b.UniversityId != 2).Select(x => new SelectListItem()
-                {
-                    Value = x.UniversityId.ToString(),
-                    Text = x.Name
-                }).ToList();
+            EditOffersVM vm = _userManagementHelper.prepOffer();
+            vm.OfferId = id;
+            vm.Offer = _db.Offer.Where(a => a.OfferId == id).Include(x => x.University).ThenInclude(c => c.Country).FirstOrDefault();
+            vm.Nominations = _db.Nomination.Where(a => a.OfferId == id).Include(b => b.Applicant).ThenInclude(c => c.ApplicationUser).ToList();
 
-                vm.Semesters = new List<SelectListItem>();
-
-                vm.Semesters.Add(new SelectListItem()
-                {
-                    Value = "Erasmus+, summer",
-                    Text = "Erasmus+, summer"
-                });
-
-                vm.Semesters.Add(new SelectListItem()
-                {
-                    Value = "Erasmus+, winter",
-                    Text = "Erasmus+, winter"
-                });
-
-                vm.Semesters.Add(new SelectListItem()
-                {
-                    Value = "other",
-                    Text = "other"
-                });
-
-                vm.Programmes = new List<SelectListItem>();
-
-                vm.Programmes.Add(new SelectListItem()
-                {
-                    Value = "other",
-                    Text = "other"
-                });
-
-                vm.Programmes.Add(new SelectListItem()
-                {
-                    Value = "mechanic engineering",
-                    Text = "mechanics engineering"
-                });
-
-                vm.Programmes.Add(new SelectListItem()
-                {
-                    Value = "civil engineering",
-                    Text = "civil engineering"
-                });
-
-                vm.Programmes.Add(new SelectListItem()
-                {
-                    Value = "IT",
-                    Text = "IT"
-                });
-
-                vm.Programmes.Add(new SelectListItem()
-                {
-                    Value = "business administration",
-                    Text = "business administration"
-                });
-
-                vm.Programmes.Add(new SelectListItem()
-                {
-                    Value = "available in info link",
-                    Text = "available in info link"
-                });
-
-                vm.Cycles = new List<SelectListItem>();
-
-                vm.Cycles.Add(new SelectListItem()
-                {
-                    Value = "bachelor",
-                    Text = "bachelor"
-                });
-
-                vm.Cycles.Add(new SelectListItem()
-                {
-                    Value = "master",
-                    Text = "master"
-                });
-
-                vm.Cycles.Add(new SelectListItem()
-                {
-                    Value = "doctoral",
-                    Text = "doctoral"
-                });
-
-                vm.Cycles.Add(new SelectListItem()
-                {
-                    Value = "other",
-                    Text = "other"
-                });
-            }
-            else
-            {
-                vm.OfferId = id;
-                vm.Offer = _db.Offer.Where(a => a.OfferId == id).Include(x => x.University).ThenInclude(c => c.Country).FirstOrDefault();
-                vm.Nominations = _db.Nomination.Where(a => a.OfferId == id).Include(b => b.Applicant).ThenInclude(c => c.ApplicationUser).ToList();
-                vm.Universities = _db.University.Include(a => a.Country).Select(x => new SelectListItem()
-                {
-                    Value = x.UniversityId.ToString(),
-                    Text = x.Name
-                }).ToList();
-
-                vm.Semesters = new List<SelectListItem>();
-
-                vm.Semesters.Add(new SelectListItem()
-                {
-                    Value = "Erasmus+, summer",
-                    Text = "Erasmus+, summer"
-                });
-
-                vm.Semesters.Add(new SelectListItem()
-                {
-                    Value = "Erasmus+, winter",
-                    Text = "Erasmus+, winter"
-                });
-
-                vm.Semesters.Add(new SelectListItem()
-                {
-                    Value = "other",
-                    Text = "other"
-                });
-
-                vm.Programmes = new List<SelectListItem>();
-
-                vm.Programmes.Add(new SelectListItem()
-                {
-                    Value = "other",
-                    Text = "other",
-                    Selected = false
-                });
-
-                vm.Programmes.Add(new SelectListItem()
-                {
-                    Value = "mechanic engineering",
-                    Text = "mechanics engineering",
-                    Selected = false
-                });
-
-                vm.Programmes.Add(new SelectListItem()
-                {
-                    Value = "civil engineering",
-                    Text = "civil engineering",
-                    Selected = false
-                });
-
-                vm.Programmes.Add(new SelectListItem()
-                {
-                    Value = "IT",
-                    Text = "IT",
-                    Selected = false
-                });
-
-                vm.Programmes.Add(new SelectListItem()
-                {
-                    Value = "business administration",
-                    Text = "business administration",
-                    Selected = false
-                });
-
-                vm.Programmes.Add(new SelectListItem()
-                {
-                    Value = "available in info link",
-                    Text = "available in info link",
-                    Selected = false
-                });
-
-                vm.Cycles = new List<SelectListItem>();
-
-                vm.Cycles.Add(new SelectListItem()
-                {
-                    Value = "bachelor",
-                    Text = "bachelor",
-                    Selected = false
-                });
-
-                vm.Cycles.Add(new SelectListItem()
-                {
-                    Value = "master",
-                    Text = "master",
-                    Selected = false
-                });
-
-                vm.Cycles.Add(new SelectListItem()
-                {
-                    Value = "doctoral",
-                    Text = "doctoral",
-                    Selected = false
-                });
-
-                vm.Cycles.Add(new SelectListItem()
-                {
-                    Value = "other",
-                    Text = "other",
-                    Selected = false
-                });
-            }
             return View(vm);
         }
 
@@ -266,7 +73,7 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
                 Offer novi = new Offer();
                 novi.Semester = vm.Offer.Semester;
                 novi.Cycles = "";
-                if (vm.Offer.LCycles!=null)
+                if (vm.Offer.LCycles != null)
                 {
                     for (int i = 0; i < vm.Offer.LCycles.Count(); i++)
                     {
@@ -281,7 +88,7 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
                     }
                 }
                 novi.Programmes = "";
-                if (vm.Offer.LProgrammes!=null)
+                if (vm.Offer.LProgrammes != null)
                 {
                     for (int i = 0; i < vm.Offer.LProgrammes.Count(); i++)
                     {

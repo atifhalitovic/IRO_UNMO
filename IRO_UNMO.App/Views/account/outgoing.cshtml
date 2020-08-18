@@ -4,27 +4,9 @@
     string errorMessage = (string)TempData["errorMessage"];
 }
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <!--- Site CSS -->
-    <link rel="stylesheet" type="text/css" href="~/dist/components/reset.css">
-    <link rel="stylesheet" type="text/css" href="~/dist/components/site.css">
-    <link rel="stylesheet" type="text/css" href="~/dist/components/grid.css">
-    <!--- Component CSS -->
-    <link rel="stylesheet" type="text/css" href="~/dist/components/icon.css">
-    <link rel="stylesheet" type="text/css" href="~/dist/components/table.css">
-    <link rel="stylesheet" type="text/css" href="~/dist/components/button.css">
-    <link rel="stylesheet" type="text/css" href="~/dist/components/transition.css">
-    <link rel="stylesheet" type="text/css" href="~/dist/components/popup.css">
-    <link rel="stylesheet" type="text/css" href="~/dist/components/accordion.css">
-
-    <script src="~/assets/library/jquery.min.js"></script>
-    <script src="~/assets/library/iframe-content.js"></script>
-
-    <script type="text/javascript" src="~/dist/components/popup.js"></script>
-    <script type="text/javascript" src="~/dist/components/transition.js"></script>
-    <script type="text/javascript" src="~/dist/components/accordion.js"></script>
+    <script type="text/javascript" src="~/dist/components/form.js"></script>
+    <script type="text/javascript" src="~/dist/components/dropdown.js"></script>
+    <script type="text/javascript" src="~/dist/components/dropdown.min.js"></script>
 
     <style>
         .ui.compact.segment {
@@ -46,7 +28,7 @@
             </p>
         </div>
     }
-    <form id="registration" asp-controller="account" asp-action="outgoing" method="post">
+    <form id="registration" class="ui form" asp-controller="account" asp-action="outgoing" method="post">
         <p></p>
         <div class="ui compact segment">
             <h3 class="ui red dividing header"><i class="exchange alternate icon"></i>Registration for outgoing applicant from UNMO</h3>
@@ -54,37 +36,45 @@
                 <div class="ui small equal width form">
                     <div class="fields">
                         <div class="field">
-                            <label>First name</label>
-                            <input asp-for="@Model.Name" type="text" min="2" max="20" autocomplete="off" required />
+                            <label>Name</label>
+                            <input class="ui input" name="name" asp-for="@Model.Name" type="text">
                         </div>
                         <div class="field">
-                            <label>Last name</label>
-                            <input asp-for="@Model.Surname" type="text" min="2" max="20" autocomplete="off" required>
+                            <label>Surname</label>
+                            <input class="ui input" name="surname" asp-for="@Model.Surname" type="text">
                         </div>
                     </div>
                     <div class="fields">
                         <div class="field">
                             <label asp-for="@Model.PhoneNumber">Phone number</label>
-                            <input name="PhoneNumber" asp-for="@Model.PhoneNumber" type="text" autocomplete="off" required />
+                            <input name="PhoneNumber" asp-for="@Model.PhoneNumber" type="text" />
                         </div>
-                        <p></p>
                         <div class="field">
                             <label asp-for="@Model.Email">E-mail</label>
-                            <input name="Email" asp-for="@Model.Email" type="text" autocomplete="off" required />
+                            <input class="ui input" name="email" asp-for="@Model.Email" type="text" />
                         </div>
                         <div class="field">
                             <label asp-for="@Model.CountryId">Nationality</label>
-                            @Html.DropDownListFor(model => model.CountryId, Model.Countries, new { required = "required", @class = "ui selection dropdown" })
+                            <select asp-for="@Model.CountryId" asp-items="@Model.Countries" class="ui dropdown" id="nationality" name="nationality">
+                                <option value="">Please select your nationality</option>
+                            </select>
+                            @*@Html.DropDownListFor(model => model.CountryId, Model.Countries, new { @id = "nationality", @Name = "nationality", @class = "ui dropdown" })*@
                         </div>
                     </div>
                     <div class="fields">
                         <div class="field">
                             <label asp-for="@Model.TypeOfApplication">Applicant type</label>
-                            @Html.DropDownListFor(model => model.TypeOfApplication, Model.TypesOfApplicant, new { required = "required", @class = "ui selection dropdown" })
+                            <select asp-for="@Model.TypeOfApplication" asp-items="@Model.TypesOfApplicant" class="ui dropdown" id="type" name="type">
+                                <option value="">Please select your applicant type</option>
+                            </select>
+                            @*@Html.DropDownListFor(model => model.TypeOfApplication, Model.TypesOfApplicant, new { @id = "type", @Name = "type", @class = "ui dropdown" })*@
                         </div>
                         <div class="field">
                             <label asp-for="@Model.FacultyName">Faculty</label>
-                            @Html.DropDownListFor(model => model.FacultyName, Model.Faculties,  new { required = "required", @class = "ui selection dropdown" })
+                            <select asp-for="@Model.FacultyName" asp-items="@Model.Faculties" class="ui dropdown" id="faculty" name="faculty">
+                                <option value="">Please select your faculty</option>
+                            </select>
+                            @*@Html.DropDownListFor(model => model.FacultyName, Model.Faculties, new { @id = "faculty", @Name = "faculty", @class = "ui dropdown" })*@
                         </div>
                     </div>
                 </div>
@@ -93,8 +83,80 @@
                 <button type="submit" class="ui primary button">Register</button>
             </div>
         </div>
+        <div class="ui error message"></div>
     </form>
     <script>
+        $('.ui.dropdown').dropdown();
+
+        $('.ui.form')
+            .form({
+                fields: {
+                    name: {
+                        identifier: 'name',
+                        rules: [
+                            {
+                                type: 'empty',
+                                prompt: 'Please enter your name'
+                            },
+                        ]
+                    },
+                    surname: {
+                        identifier: 'surname',
+                        rules: [
+                            {
+                                type: 'empty',
+                                prompt: 'Please enter your surname'
+                            }
+                        ]
+                    },
+                    email: {
+                        identifier: 'email',
+                        rules: [
+                            {
+                                type: 'email',
+                                prompt: 'Please enter your valid email address'
+                            }
+                        ]
+                    },
+                    phone: {
+                        identifier: 'PhoneNumber',
+                        rules: [
+                            {
+                                type: 'empty',
+                                prompt: 'Please enter your phone number'
+                            }
+                        ]
+                    },
+                    nationality: {
+                        identifier: 'nationality',
+                        rules: [
+                            {
+                                type: 'empty',
+                                prompt: 'Please select your nationality'
+                            }
+                        ]
+                    },
+                    type: {
+                        identifier: 'type',
+                        rules: [
+                            {
+                                type: 'empty',
+                                prompt: 'Please select your applicant type'
+                            }
+                        ]
+                    },
+                    faculty: {
+                        identifier: 'faculty',
+                        rules: [
+                            {
+                                type: 'empty',
+                                prompt: 'Please select your faculty'
+                            }
+                        ]
+                    }
+                }
+            });
+
         $('.message .close')
             .on('click', function () {
                 $(this).closest('.message').transition('fade');

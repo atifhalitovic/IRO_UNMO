@@ -74,7 +74,7 @@
                     </tr>
                     <tr>
                         <td>Account created</td>
-                        <td>@Model.Applicant.CreatedProfile</td>
+                        <td>@Model.Applicant.CreatedProfile.ToMyStrDMYYYY_HMM()</td>
                     </tr>
                     @if (Model.Applicant.Verified)
                     {
@@ -154,7 +154,7 @@
                                         Created
                                     </div>
                                     <div class="description">
-                                        @Model.Application.CreatedApp
+                                        @Model.Application.CreatedApp.ToMyStrDMYYYY_HMM()
                                     </div>
                                 </div>
                             </div>
@@ -164,7 +164,7 @@
                                     <div class="header">
                                         Last change
                                     </div>
-                                    <div class="description"><span>@Model.Application.LastEdited<span class="grayed"> Europe/Mostar time</span></span></div>
+                                    <div class="description"><span>@Model.Application.LastEdited.ToMyStrDMYYYY_HMM()<span class="grayed"> Europe/Mostar time</span></span></div>
                                 </div>
                             </div>
                             @if (Model.Application.Finished)
@@ -175,7 +175,7 @@
                                         <div class="header">
                                             Submitted
                                         </div>
-                                        <div class="description"><span>@Model.Application.FinishedTime<span class="grayed"> Europe/Mostar time</span></span></div>
+                                        <div class="description"><span>@Model.Application.FinishedTime.ToMyStrDMYYYY_HMM()<span class="grayed"> Europe/Mostar time</span></span></div>
                                     </div>
                                 </div>
                             }
@@ -232,7 +232,7 @@
                                     Application start
                                 </div>
                                 <div class="description">
-                                    @Model.Timing.From.ToShortDateString()
+                                    @Model.Timing.From.ToMyStrDMYYYY_HMM()
                                 </div>
                             </div>
                         </div>
@@ -242,7 +242,7 @@
                                 <div class="header">
                                     Application deadline
                                 </div>
-                                <div class="description"><span>@Model.Timing.To.ToShortDateString()</span></div>
+                                <div class="description"><span>@Model.Timing.To.ToMyStrDMYYYY_HMM()</span></div>
                             </div>
                         </div>
                     </div>
@@ -285,7 +285,7 @@
                     </tr>
                     <tr>
                         <td>Account created</td>
-                        <td>@Model.Applicant.CreatedProfile</td>
+                        <td>@Model.Applicant.CreatedProfile.ToMyStrDMYYYY_HMM()</td>
                     </tr>
                 </tbody>
             </table>
@@ -307,9 +307,9 @@
                             {
                             <div class="meta">
                                 <p></p>
-                                <p>Created: @x.CreatedNom</p>
+                                <p>Created: @x.CreatedNom.ToMyStrDMYYYY_HMM()</p>
                                 <p></p>
-                                <p>Last change: @x.LastEdited</p>
+                                <p>Last change: @x.LastEdited.ToMyStrDMYYYY_HMM()</p>
                                 <p></p>
                                 <p>Status: @x.StatusOfNomination </p>
                                 <p></p>
@@ -326,7 +326,7 @@
                                     </div>
                                 }
                                 <p></p>
-                                <div class="ui light red label">Application deadline: <div class="detail">@x.Offer.End.ToShortDateString()</div></div>
+                                <div class="ui light red label">Application deadline: <div class="detail">@x.Offer.End.ToMyStrDMYYYY_HMM()</div></div>
                                 <p></p>
                                 @if (x.Finished)
                                 {

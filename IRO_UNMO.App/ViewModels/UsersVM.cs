@@ -16,7 +16,6 @@ namespace IRO_UNMO.App.ViewModels
         [Required]
         public string Surname { get; set; }
         public string UniqueCode { get; set; }
-        [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
         public bool Verified { get; set; }

@@ -1,4 +1,5 @@
-﻿using IRO_UNMO.App.Data;
+﻿using IRO_UNMO.App.Areas.Admin.ViewModels;
+using IRO_UNMO.App.Data;
 using IRO_UNMO.App.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -17,9 +18,112 @@ namespace IRO_UNMO.Util
             _db = db;
         }
 
+        public EditOffersVM prepOffer()
+        {
+            EditOffersVM model = new EditOffersVM();
+
+            model.Universities = _db.University.Include(a => a.Country).Where(b => b.UniversityId != 2).Select(x => new SelectListItem()
+            {
+                Value = x.UniversityId.ToString(),
+                Text = x.Name
+            }).OrderBy(a => a.Value).ToList();
+
+            model.Universities.Insert(0, new SelectListItem { Value = "", Text = "" });
+
+            model.Semesters = new List<SelectListItem>();
+
+            model.Semesters.Add(new SelectListItem()
+            {
+                Value = "",
+                Text = ""
+            });
+
+            model.Semesters.Add(new SelectListItem()
+            {
+                Value = "Erasmus+, summer",
+                Text = "Erasmus+, summer"
+            });
+
+            model.Semesters.Add(new SelectListItem()
+            {
+                Value = "Erasmus+, winter",
+                Text = "Erasmus+, winter"
+            });
+
+            model.Semesters.Add(new SelectListItem()
+            {
+                Value = "other",
+                Text = "other"
+            });
+
+            model.Programmes = new List<SelectListItem>();
+
+            model.Programmes.Add(new SelectListItem()
+            {
+                Value = "other",
+                Text = "other"
+            });
+
+            model.Programmes.Add(new SelectListItem()
+            {
+                Value = "mechanic engineering",
+                Text = "mechanics engineering"
+            });
+
+            model.Programmes.Add(new SelectListItem()
+            {
+                Value = "civil engineering",
+                Text = "civil engineering"
+            });
+
+            model.Programmes.Add(new SelectListItem()
+            {
+                Value = "IT",
+                Text = "IT"
+            });
+
+            model.Programmes.Add(new SelectListItem()
+            {
+                Value = "business administration",
+                Text = "business administration"
+            });
+
+            model.Programmes.Add(new SelectListItem()
+            {
+                Value = "available in info link",
+                Text = "available in info link"
+            });
+
+            model.Cycles = new List<SelectListItem>();
+
+            model.Cycles.Add(new SelectListItem()
+            {
+                Value = "bachelor",
+                Text = "bachelor"
+            });
+
+            model.Cycles.Add(new SelectListItem()
+            {
+                Value = "master",
+                Text = "master"
+            });
+
+            model.Cycles.Add(new SelectListItem()
+            {
+                Value = "doctoral",
+                Text = "doctoral"
+            });
+
+            model.Cycles.Add(new SelectListItem()
+            {
+                Value = "other",
+                Text = "other"
+            });
+
+            return model;
+        }
         public UsersVM prepUser()
         {
-
             UsersVM model = new UsersVM();
 
             model.Countries = new List<SelectListItem>();
@@ -28,9 +132,9 @@ namespace IRO_UNMO.Util
             {
                 Value = x.CountryId.ToString(),
                 Text = x.Name
-            }).ToList();
+            }).OrderBy(a=>a.Text).ToList();
 
-            model.Countries.Insert(0, new SelectListItem { Value = "", Text = "Please select your nationality" });
+            model.Countries.Insert(0, new SelectListItem { Value = "", Text = "" });    
 
             model.Universities = new List<SelectListItem>();
 
@@ -40,32 +144,32 @@ namespace IRO_UNMO.Util
                 Text = x.Name
             }).ToList();
 
-            model.Universities.Insert(0, new SelectListItem { Value = "", Text = "Please select your university" });
+            model.Universities.Insert(0, new SelectListItem { Value = "", Text = "" });
 
             model.TypesOfApplicant = new List<SelectListItem>();
 
             model.TypesOfApplicant.Add(new SelectListItem()
             {
                 Value = "",
-                Text = "Please select your type of applicant"
+                Text = ""
             });
 
             model.TypesOfApplicant.Add(new SelectListItem()
             {
-                Value = "Student",
-                Text = "Student"
+                Value = "student",
+                Text = "student"
             });
 
             model.TypesOfApplicant.Add(new SelectListItem()
             {
-                Value = "Staff",
-                Text = "Staff"
+                Value = "staff",
+                Text = "staff"
             });
 
             model.TypesOfApplicant.Add(new SelectListItem()
             {
-                Value = "Other",
-                Text = "Other"
+                Value = "other",
+                Text = "other"
             });
 
             model.StudyCycles = new List<SelectListItem>();
@@ -73,7 +177,7 @@ namespace IRO_UNMO.Util
             model.StudyCycles.Add(new SelectListItem()
             {
                 Value = "",
-                Text = "Please select your study cycle"
+                Text = ""
             });
 
             model.StudyCycles.Add(new SelectListItem()
@@ -95,12 +199,18 @@ namespace IRO_UNMO.Util
                 Text = "doctoral"
             });
 
+            model.StudyCycles.Add(new SelectListItem()
+            {
+                Value = "other",
+                Text = "other"
+            });
+
             model.Faculties = new List<SelectListItem>();
 
             model.Faculties.Add(new SelectListItem()
             {
                 Value = "",
-                Text = "Please select your faculty"
+                Text = ""
             });
 
             model.Faculties.Add(new SelectListItem()
@@ -162,7 +272,7 @@ namespace IRO_UNMO.Util
             model.Languages.Add(new SelectListItem()
             {
                 Value = "",
-                Text = "Please select your language"
+                Text = ""
             });
 
             model.Languages.Add(new SelectListItem()
@@ -194,25 +304,25 @@ namespace IRO_UNMO.Util
             model.Genders.Add(new SelectListItem()
             {
                 Value = "",
-                Text = "Please select your gender"
+                Text = ""
             });
 
             model.Genders.Add(new SelectListItem()
             {
-                Value = "Male",
-                Text = "Male"
+                Value = "male",
+                Text = "male"
             });
 
             model.Genders.Add(new SelectListItem()
             {
-                Value = "Female",
-                Text = "Female"
+                Value = "female",
+                Text = "female"
             });
 
             model.Genders.Add(new SelectListItem()
             {
-                Value = "Not specified",
-                Text = "Not specified"
+                Value = "not specified",
+                Text = "not specified"
             });
 
             model.Countries = _db.Country.Select(x => new SelectListItem()
@@ -221,26 +331,26 @@ namespace IRO_UNMO.Util
                 Text = x.Name
             }).ToList();
 
-            model.Countries.Insert(0, new SelectListItem { Value = "", Text = "Please select your nationality" });
+            model.Countries.Insert(0, new SelectListItem { Value = "", Text = "" });
 
             model.StudyCycles = new List<SelectListItem>();
 
             model.StudyCycles.Add(new SelectListItem()
             {
                 Value = "",
-                Text = "Please select your study cycle"
+                Text = ""
             });
 
             model.StudyCycles.Add(new SelectListItem()
             {
-                Value = "Bachelor",
-                Text = "Bachelor"
+                Value = "bachelor",
+                Text = "bachelor"
             });
 
             model.StudyCycles.Add(new SelectListItem()
             {
-                Value = "Master",
-                Text = "Master"
+                Value = "master",
+                Text = "master"
             });
 
             model.StudyTerms = new List<SelectListItem>();
@@ -248,7 +358,7 @@ namespace IRO_UNMO.Util
             model.StudyTerms.Add(new SelectListItem()
             {
                 Value = "",
-                Text = "Please select your study term"
+                Text = ""
             });
 
             model.StudyTerms.Add(new SelectListItem()
@@ -299,7 +409,7 @@ namespace IRO_UNMO.Util
             model.LangProfiency.Add(new SelectListItem()
             {
                 Value = "",
-                Text = "Please select proficiency for selected foreign language"
+                Text = ""
             });
 
             model.LangProfiency.Add(new SelectListItem()
