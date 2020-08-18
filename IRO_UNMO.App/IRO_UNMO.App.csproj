@@ -675,6 +675,9 @@
     <Content Update="Areas\Applicant\Views\News\index.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+    <Content Update="Views\account\incoming2.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Views\account\logout.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

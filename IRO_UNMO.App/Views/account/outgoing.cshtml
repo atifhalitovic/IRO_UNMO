@@ -1,6 +1,7 @@
 ﻿@model IRO_UNMO.App.ViewModels.UsersVM
 @{
     Layout = "BasicLayout";
+    string errorMessage = (string)TempData["errorMessage"];
 }
 <head>
     <meta charset="utf-8" />
@@ -33,7 +34,19 @@
 
 </head>
 <body>
-    <form asp-controller="account" asp-action="outgoing" method="post">
+    @if (errorMessage != null)
+    {
+        <div class="ui negative message">
+            <i class="close icon"></i>
+            <div class="header">
+                Warning!
+            </div>
+            <p>
+                @errorMessage
+            </p>
+        </div>
+    }
+    <form id="registration" asp-controller="account" asp-action="outgoing" method="post">
         <p></p>
         <div class="ui compact segment">
             <h3 class="ui red dividing header"><i class="exchange alternate icon"></i>Registration for outgoing applicant from UNMO</h3>
@@ -61,17 +74,17 @@
                         </div>
                         <div class="field">
                             <label asp-for="@Model.CountryId">Nationality</label>
-                            @Html.DropDownListFor(model => model.CountryId, Model.Countries)
+                            @Html.DropDownListFor(model => model.CountryId, Model.Countries, new { required = "required", @class = "ui selection dropdown" })
                         </div>
                     </div>
                     <div class="fields">
                         <div class="field">
                             <label asp-for="@Model.TypeOfApplication">Applicant type</label>
-                            @Html.DropDownListFor(model => model.TypeOfApplication, Model.TypesOfApplicant)
+                            @Html.DropDownListFor(model => model.TypeOfApplication, Model.TypesOfApplicant, new { required = "required", @class = "ui selection dropdown" })
                         </div>
                         <div class="field">
                             <label asp-for="@Model.FacultyName">Faculty</label>
-                            @Html.DropDownListFor(model => model.FacultyName, Model.Faculties)
+                            @Html.DropDownListFor(model => model.FacultyName, Model.Faculties,  new { required = "required", @class = "ui selection dropdown" })
                         </div>
                     </div>
                 </div>
@@ -81,4 +94,10 @@
             </div>
         </div>
     </form>
+    <script>
+        $('.message .close')
+            .on('click', function () {
+                $(this).closest('.message').transition('fade');
+            });
+    </script>
 </body>

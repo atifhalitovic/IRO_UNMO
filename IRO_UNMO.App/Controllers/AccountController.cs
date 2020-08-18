@@ -136,8 +136,13 @@ namespace IRO_UNMO.App.Controllers
         [HttpPost]
         public async Task<IActionResult> incoming(UsersVM model)
         {
-            bool x = await _roleManager.RoleExistsAsync("IncomingApplicant");
+            if (_db.Users.Any(i => i.Email == model.Email))
+            {
+                TempData["errorMessage"] = "E-mail you choosed is currently in use. Please use another e-mail.";
+                return RedirectToAction("incoming");
+            }
 
+            bool x = await _roleManager.RoleExistsAsync("IncomingApplicant");
 
             if (!x)
             {
@@ -184,7 +189,8 @@ namespace IRO_UNMO.App.Controllers
             _db.Applicant.Add(applicant);
             _db.SaveChanges();
 
-            return RedirectToAction("index", "dashboard");
+            TempData["successMessage"] = "You have successfully registered! Now you can log in.";
+            return RedirectToAction("login", "account");
         }
 
         [AllowAnonymous]
@@ -194,6 +200,66 @@ namespace IRO_UNMO.App.Controllers
             return View("outgoing", model);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> outgoing(UsersVM model)
+        {
+            if (_db.Users.Any(i => i.Email == model.Email))
+            {
+                TempData["errorMessage"] = "E-mail you choosed is currently in use. Please use another e-mail.";
+                return RedirectToAction("outgoing");
+            }
+
+            bool x = await _roleManager.RoleExistsAsync("OutgoingApplicant");
+
+            if (!x)
+            {
+                await _roleManager.CreateAsync(new IdentityRole
+                {
+                    Name = "OutgoingApplicant"
+                });
+            }
+
+            //password must be strong enough in order for userManager.CreateAsync to work!!!
+            string password = "myP@ssW0r@d123";
+
+            var brojKorisnika = _db.Users.Count();
+
+            brojac = ++brojKorisnika;
+
+            ApplicationUser user = new ApplicationUser
+            {
+                Name = model.Name,
+                Surname = model.Surname,
+                Email = model.Email,
+                PhoneNumber = model.PhoneNumber,
+                CountryId = model.CountryId,
+                UserName = model.Name.ToLower() + '.' + model.Surname.ToLower(),
+                UniqueCode = GetRandomizedString(brojac),
+                LastLogin = DateTime.Now
+            };
+
+            await _userManager.CreateAsync(user, password);
+
+            await _userManager.AddToRoleAsync(user, "OutgoingApplicant");
+
+            Applicant applicant = new Applicant
+            {
+                ApplicantId = user.Id,
+                CreatedProfile = DateTime.Now,
+                UniversityId = 2,
+                FacultyName = model.FacultyName,
+                TypeOfApplication = model.TypeOfApplication,
+                StudyCycle = model.StudyCycle,
+                StudyField = model.StudyField,
+                Verified = false
+            };
+
+            _db.Applicant.Add(applicant);
+            _db.SaveChanges();
+
+            TempData["successMessage"] = "You have successfully registered! Now you can log in.";
+            return RedirectToAction("login", "account");
+        }
 
         public IActionResult admin()
         {
@@ -247,60 +313,6 @@ namespace IRO_UNMO.App.Controllers
             _db.SaveChanges();
 
             return RedirectToAction("index", "dashboard");
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> outgoing(UsersVM model)
-        {
-            bool x = await _roleManager.RoleExistsAsync("OutgoingApplicant");
-
-            if (!x)
-            {
-                await _roleManager.CreateAsync(new IdentityRole
-                {
-                    Name = "OutgoingApplicant"
-                });
-            }
-
-            //password must be strong enough in order for userManager.CreateAsync to work!!!
-            string password = "myP@ssW0r@d123";
-
-            var brojKorisnika = _db.Users.Count();
-
-            brojac = ++brojKorisnika;
-
-            ApplicationUser user = new ApplicationUser
-            {
-                Name = model.Name,
-                Surname = model.Surname,
-                Email = model.Email,
-                PhoneNumber = model.PhoneNumber,
-                CountryId = model.CountryId,
-                UserName = model.Name.ToLower() + '.' + model.Surname.ToLower(),
-                UniqueCode = GetRandomizedString(brojac),
-                LastLogin = DateTime.Now
-            };
-
-            await _userManager.CreateAsync(user, password);
-
-            await _userManager.AddToRoleAsync(user, "OutgoingApplicant");
-
-            Applicant applicant = new Applicant
-            {
-                ApplicantId = user.Id,
-                CreatedProfile = DateTime.Now,
-                UniversityId = 2,
-                FacultyName = model.FacultyName,
-                TypeOfApplication = model.TypeOfApplication,
-                StudyCycle = model.StudyCycle,
-                StudyField = model.StudyField,
-                Verified = false
-            };
-
-            _db.Applicant.Add(applicant);
-            _db.SaveChanges();
-
-            return RedirectToAction("Index", "Home");
         }
 
         // Returns a string that is the encoded representation of the input number, and a random value 
@@ -375,7 +387,6 @@ namespace IRO_UNMO.App.Controllers
             else
                 return result.ToString();
         }
-
 
         [AllowAnonymous]
         public IActionResult denied()

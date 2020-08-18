@@ -19,6 +19,7 @@ namespace IRO_UNMO.App.Models
         [RegularExpression(@"^[A-Ža-ž\s]+$")]
         public string Surname { get; set; }
         public string UniqueCode { get; set; }
+        [Required(ErrorMessage = "Please choose country of residence.")]
         public int CountryId { get; set; }
         public Country Country { get; set; }
         public DateTime LastLogin { get; set; }

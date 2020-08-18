@@ -1,6 +1,7 @@
 ﻿@model IRO_UNMO.App.ViewModels.UsersVM
 @{
-    Layout = "_Layout1";
+    Layout = "BasicLayout";
+    string errorMessage = (string)TempData["errorMessage"];
 }
 <head>
     <meta charset="utf-8" />
@@ -34,7 +35,20 @@
 
 </head>
 <body>
-    <form asp-controller="applicant" asp-action="incoming" method="post">
+    @if (errorMessage != null)
+    {
+        <div class="ui negative message">
+            <i class="close icon"></i>
+            <div class="header">
+                Warning!
+            </div>
+            <p>
+                @errorMessage
+            </p>
+        </div>
+    }
+    <form id="registration" asp-controller="account" asp-action="incoming" method="post">
+        <p></p>
         <div class="ui compact segment">
             <h3 class="ui green dividing header"><i class="sign in alternate icon"></i>Registration for incoming applicant at UNMO</h3>
             <div class="fields">
@@ -42,39 +56,52 @@
                     <div class="fields">
                         <div class="field">
                             <label>First name</label>
-                            <input asp-for="@Model.Name" type="text" min="2" max="20" autocomplete="off" required />
+                            <small class="name-error-message"></small>
+                            <input name="name" asp-for="@Model.Name" type="text" autocomplete="off" />
                         </div>
                         <div class="field">
                             <label>Last name</label>
-                            <input asp-for="@Model.Surname" type="text" min="2" max="20" autocomplete="off" required>
+                            <small class="surname-error-message"></small>
+                            <input name="surname" asp-for="@Model.Surname" type="text" autocomplete="off" />
+                        </div>
+                        <div class="field">
+                            <label asp-for="@Model.TypeOfApplication">Applicant type</label>
+                            <small class="type-error-message"></small>
+                            @Html.DropDownListFor(model => model.TypeOfApplication, Model.TypesOfApplicant, new { required = "required", @class = "ui selection dropdown" })
                         </div>
                     </div>
                     <div class="fields">
                         <div class="field">
                             <label>Phone number</label>
-                            <input name="PhoneNumber" asp-for="@Model.PhoneNumber" type="text" autocomplete="off" required />
+                            <small class="mobile-error-message"></small>
+                            <input name="mobile" asp-for="@Model.PhoneNumber" type="text" autocomplete="off" />
                         </div>
                         <div class="field">
                             <label>E-mail</label>
-                            <input name="Email" asp-for="@Model.Email" type="text" autocomplete="off" required />
+                            <small class="email-error-message"></small>
+                            <input name="email" asp-for="@Model.Email" type="text" autocomplete="off" />
                         </div>
                         <div class="field">
                             <label asp-for="@Model.CountryId">Nationality</label>
-                            @Html.DropDownListFor(model => model.CountryId, Model.Countries, new { @class = "form-control", required = "Please select your nationality" }))
+                            <small class="nationality-error-message"></small>
+                            @Html.DropDownListFor(model => model.CountryId, Model.Countries, new { @Name = "nationality", required = "required", @class = "ui selection dropdown" })
                         </div>
                     </div>
                     <div class="fields">
                         <div class="field">
                             <label asp-for="@Model.StudyField">Study field</label>
-                            <input name="StudyField" asp-for="@Model.StudyField" type="text" autocomplete="off" required />
+                            <small class="studyfield-error-message"></small>
+                            <input name="studyfield" asp-for="@Model.StudyField" type="text" autocomplete="off" />
                         </div>
                         <div class="field">
                             <label asp-for="@Model.StudyCycle">Study cycle</label>
-                            @Html.DropDownListFor(model => model.StudyCycle, Model.StudyCycles, new { @class = "form-control", required = "Please select your study cycle" }))
+                            <small class="studycycle-error-message"></small>
+                            @Html.DropDownListFor(model => model.StudyCycle, Model.StudyCycles, new { required = "required", @class = "ui selection dropdown" })
                         </div>
                         <div class="field">
                             <label asp-for="@Model.UniversityId">University</label>
-                            @Html.DropDownListFor(model => model.UniversityId, Model.Universities, new { @class = "form-control", required = "Please select your university" })))
+                            <small class="uni-error-message"></small>
+                            @Html.DropDownListFor(model => model.UniversityId, Model.Universities, new { required = "required", @class = "ui selection dropdown" })
                         </div>
                     </div>
                 </div>
@@ -84,4 +111,13 @@
             </div>
         </div>
     </form>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/js/Validacija/prijava.js"></script>
+    <script>
+        $('.message .close')
+            .on('click', function () {
+                $(this).closest('.message').transition('fade');
+            });
+    </script>
 </body>

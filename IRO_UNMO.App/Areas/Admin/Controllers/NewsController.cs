@@ -47,9 +47,19 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
         public IActionResult Index()
         {
             NewsVM vm = new NewsVM();
-            //LastLogin za admina
-            vm.Comments = _db.Comment.Include(a => a.Applicant).ThenInclude(b => b.ApplicationUser).Where(x => x.CommentTime > HttpContext.GetLoggedUser().LastLogin).Where(y => y.AdministratorId == null).ToList();
+            vm.Comments = _db.Comment.Include(a => a.Applicant).ThenInclude(b => b.ApplicationUser).Where(y => y.AdministratorId == null && y.Seen==false).OrderByDescending(x=>x.CommentTime).ToList();
             return View(vm);
+        }
+
+        public IActionResult seen(int id)
+        {
+            var n = _db.Comment.Where(x => x.CommentId == id).FirstOrDefault();
+            if (n != null)
+            {
+                n.Seen = true;
+                _db.SaveChanges();
+            }
+            return RedirectToAction("index", "news", new { area = "admin" });
         }
 
         [Autorizacija(true, false, false)]

@@ -49,8 +49,7 @@ function generateNotification(obj) {
     return codeBlock;
 }
 function deselectNotification(id) {
-    connection
-        .invoke('deselectNotification', id);
+    connection.invoke('deselectNotification', id);
 }
 connection.start().then(function () {
     console.log("connected");

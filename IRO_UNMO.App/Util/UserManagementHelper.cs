@@ -22,19 +22,33 @@ namespace IRO_UNMO.Util
 
             UsersVM model = new UsersVM();
 
+            model.Countries = new List<SelectListItem>();
+
             model.Countries = _db.Country.Select(x => new SelectListItem()
             {
                 Value = x.CountryId.ToString(),
                 Text = x.Name
             }).ToList();
 
-            model.Universities = _db.University.Select(x => new SelectListItem()
+            model.Countries.Insert(0, new SelectListItem { Value = "", Text = "Please select your nationality" });
+
+            model.Universities = new List<SelectListItem>();
+
+            model.Universities = _db.University.Where(a => a.UniversityId != 2).Select(x => new SelectListItem()
             {
                 Value = x.UniversityId.ToString(),
                 Text = x.Name
             }).ToList();
 
+            model.Universities.Insert(0, new SelectListItem { Value = "", Text = "Please select your university" });
+
             model.TypesOfApplicant = new List<SelectListItem>();
+
+            model.TypesOfApplicant.Add(new SelectListItem()
+            {
+                Value = "",
+                Text = "Please select your type of applicant"
+            });
 
             model.TypesOfApplicant.Add(new SelectListItem()
             {
@@ -54,22 +68,40 @@ namespace IRO_UNMO.Util
                 Text = "Other"
             });
 
-
             model.StudyCycles = new List<SelectListItem>();
 
             model.StudyCycles.Add(new SelectListItem()
             {
-                Value = "Bachelor",
-                Text = "Bachelor"
+                Value = "",
+                Text = "Please select your study cycle"
             });
 
             model.StudyCycles.Add(new SelectListItem()
             {
-                Value = "Master",
-                Text = "Master"
+                Value = "bachelor",
+                Text = "bachelor"
+            });
+
+            model.StudyCycles.Add(new SelectListItem()
+            {
+                Value = "master",
+                Text = "master"
+            });
+
+
+            model.StudyCycles.Add(new SelectListItem()
+            {
+                Value = "doctoral",
+                Text = "doctoral"
             });
 
             model.Faculties = new List<SelectListItem>();
+
+            model.Faculties.Add(new SelectListItem()
+            {
+                Value = "",
+                Text = "Please select your faculty"
+            });
 
             model.Faculties.Add(new SelectListItem()
             {
@@ -118,7 +150,6 @@ namespace IRO_UNMO.Util
                 Value = "Pravni fakultet",
                 Text = "Pravni fakultet"
             });
-
 
             return model;
         }
@@ -190,7 +221,7 @@ namespace IRO_UNMO.Util
                 Text = x.Name
             }).ToList();
 
-            model.Countries.Insert(0, new SelectListItem { Value = "", Text = "Please select country of your address" });
+            model.Countries.Insert(0, new SelectListItem { Value = "", Text = "Please select your nationality" });
 
             model.StudyCycles = new List<SelectListItem>();
 

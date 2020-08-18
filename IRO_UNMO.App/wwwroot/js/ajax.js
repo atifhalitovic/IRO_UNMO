@@ -1,6 +1,4 @@
-﻿
-
-function DodajAjaxEvente() {
+﻿function DodajAjaxEvente() {
     $("button[ajax-poziv='da']").click(function (event) {
         $(this).attr("ajax-poziv", "dodan");
 
@@ -73,9 +71,7 @@ $(document).ready(function () {
 });
 
 $(document).ajaxComplete(function () {
-
     console.log("dd2");
-
     // izvršava nakon bilo kojeg ajax poziva
     DodajAjaxEvente();
 });

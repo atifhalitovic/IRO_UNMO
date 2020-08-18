@@ -32,7 +32,7 @@ namespace IRO_UNMO.App.Subscription
            return  _notifikacijaService.getAll(brNoti, Context.ConnectionId);
         } 
         
-        public  void deselectNotification(int id)
+        public void deselectNotification(int id)
         {
             var n = _db.Notification.Where(x => x.NotificationId == id).FirstOrDefault();
             if (n!=null)
