@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace IRO_UNMO.App.Subscription
 {
-    [Authorize]
+    //[Authorize]
     public class SignalServer : Hub
     {
         private readonly IMyUser _user;

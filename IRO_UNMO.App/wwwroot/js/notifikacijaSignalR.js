@@ -40,13 +40,19 @@ function generateNotification(obj) {
         '<span class="date"> ' + obj.time + '</span>' +
         '<div class="description">' + obj.message + '</div></div><div class="ui divider"></div></div>';
 
+    var element = '<div onClick="deselectNotification(' + obj.notificationId + ')" class="content">' +
+        '<h4>' + obj.user + '</h4>' +
+        '<p>' + obj.time + '</p>' +
+        '<p>' + obj.message + '</p>' +
+        '<div class="ui divider"></div></div>';
+
     var codeBlock = '<div class="content">' +
-        '<h1>This is a heading</h1>' +
+        '<h4>This is a heading</h4>' +
         '<p>This is a paragraph of text.</p>' +
         '<p><strong>Note:</strong> If you don\'t escape "quotes" properly, it will not work.</p>' +
         '</div>';
 
-    return codeBlock;
+    return element;
 }
 function deselectNotification(id) {
     connection.invoke('deselectNotification', id);
