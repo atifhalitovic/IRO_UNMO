@@ -3,14 +3,6 @@
   "defaultProvider": "unpkg",
   "libraries": [
     {
-      "library": "@aspnet/signalr@1.0.3",
-      "destination": "wwwroot/lib/@aspnet/signalr/",
-      "files": [
-        "dist/browser/signalr.js",
-        "dist/browser/signalr.min.js"
-      ]
-    },
-    {
       "provider": "cdnjs",
       "library": "signalr.js@2.4.1",
       "destination": "wwwroot/lib/signalr.js/"
@@ -19,6 +11,14 @@
       "provider": "cdnjs",
       "library": "aspnet-signalr@1.0.3",
       "destination": "wwwroot/lib/aspnet-signalr/"
+    },
+    {
+      "library": "@aspnet/signalr@1.0.3",
+      "destination": "wwwroot/lib/signalr/",
+      "files": [
+        "dist/browser/signalr.js",
+        "dist/browser/signalr.min.js"
+      ]
     }
   ]
 }

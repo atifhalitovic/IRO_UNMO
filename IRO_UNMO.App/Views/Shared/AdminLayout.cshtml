@@ -1,9 +1,12 @@
-﻿@inject IRO_UNMO.App.Data.ApplicationDbContext context
+﻿@using Microsoft.AspNetCore.Identity
+@using System.Security.Claims;
 @using IRO_UNMO.Util
+@inject SignInManager<ApplicationUser> signInManager
+@inject UserManager<ApplicationUser> userManager
 @{
+    var returnUrl = @Context.Request.Query["returnurl"];
     var controller = ViewContext.RouteData.Values["Controller"];
     var action = MyExtensions.FirstCharToUpper(ViewContext.RouteData.Values["Action"].ToString().Replace("_", " "));
-    var applicantId = TempData["applicantId"];
 }
 
 
@@ -42,7 +45,8 @@
     <script src="~/lib/jquery/dist/jquery.min.js" type="text/javascript"></script>
 
     <script src="~/js/ajax.js"></script>
-    <script src="~/js/signalr.js"></script>
+    <script src="~/lib/signalr/dist/browser/signalr.js"></script>
+    <script src="~/lib/signalr/dist/browser/signalr.min.js"></script>
     <script src="~/js/notifikacijaSignalR.js"></script>
     <!--- Component JS -->
     <script type="text/javascript" src="~/dist/components/popup.js"></script>
@@ -96,16 +100,6 @@
                 margin-bottom: 0;
                 font-size: 16px;
             }
-
-                #sidebar .ui.menu > a.item.x {
-                    padding: 10px 20px;
-                    line-height: 20px;
-                    color: #922822;
-                    border-radius: 0 !important;
-                    margin-top: 0;
-                    margin-bottom: 0;
-                    font-size: 13px;
-                }
 
                 #sidebar .ui.menu > a.item.disabled {
                     padding: 10px 20px;
@@ -170,10 +164,11 @@
         }
     </style>
 </head>
+
 <body id="root">
     <div class="ui tablet computer only padded grid">
         <div class="ui inverted borderless top fixed fluid menu">
-            <a class="header item">IRO-UNMO Applicant</a>
+            <a class="header item">IRO-UNMO Admin</a>
             <div class="right menu">
                 <div class="item" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="bell outline icon"></i>
@@ -182,19 +177,18 @@
                         <div class="ui link celled selection list" style="width:200px;" aria-labelledby="messagesDropdown">
                             <h4 class="ui header">Notifications</h4>
                             <div id="notifikacije">
+
                             </div>
                         </div>
                     </div>
                 </div>
-                <a class="item">Welcome applicant</a>
-                <a asp-area="applicant" asp-controller="home" asp-action="details" class="item">Profile</a>
-                <a asp-area="" asp-controller="account" asp-action="logout" class="item">Logout</a>
+                <a asp-area="" asp-action="logout" asp-controller="account" class="item">Logout</a>
             </div>
         </div>
     </div>
     <div class="ui mobile only padded grid">
         <div class="ui top fixed borderless fluid inverted menu">
-            <a class="header item">IRO-UNMO Applicant</a>
+            <a class="header item">IRO-UNMO Admin</a>
             <div class="right menu">
                 <div class="item">
                     <button class="ui icon toggle basic inverted button">
@@ -203,9 +197,9 @@
                 </div>
             </div>
             <div class="ui vertical borderless inverted fluid menu">
-                <a class="item">Welcome applicant</a>
-                <a asp-area="applicant" asp-controller="home" asp-action="details" class="item">Profile</a>
-                <a asp-area="" asp-controller="account" asp-action="logout" class="item">Logout</a>
+                <a class="item">Dashboard</a> <a class="item">Settings</a>
+                <a class="item">Profile</a> <a class="item">Help</a>
+                <div class="ui fitted divider"></div>
             </div>
         </div>
     </div>
@@ -213,21 +207,13 @@
         <div class="three wide tablet only three wide computer only column" id="sidebar">
             <div class="ui vertical borderless fluid text menu">
                 <a class="item disabled"><img src="~/unmo_logo.png" /></a>
-                <a asp-controller="home" asp-action="index" class="item">Overview</a>
+                <a asp-controller="dashboard" asp-action="index" class="item">Overview</a>
                 <div class="ui divider"></div>
-                <a class="item" asp-controller="home" asp-action="details" asp-area="applicant">My information</a>
-                <a class="item" asp-controller="nomination" asp-action="create" asp-area="applicant">Offers</a>
-                @*//if inc or out nom or app*@
+                <a class="item" asp-controller="applicants" asp-action="index" asp-area="admin">Applicants</a>
+                <a class="item" asp-controller="news" asp-action="index" asp-area="admin">Messages and comments</a>
                 <div class="ui divider"></div>
-                <a class="item">More information</a>
-                <a class="item x" asp-area="" asp-controller="home" asp-action="mostar">Study in Mostar</a>
-                <a class="item x"> Enrolment procedure</a>
-                <a class="item x"> Tuition fees</a>
-                <a class="item x"> Student activities</a>
-                <a class="item x"> Administrative formalities</a>
-                <a class="item x"> Accomodation</a>
-                <a class="item x"> Insurance</a>
-                <a class="item x"> Emergency numbers</a>
+                <a asp-action="index" asp-controller="partners" asp-area="admin" class="item">Partners</a>
+                <a asp-action="index" asp-controller="offers" asp-area="admin" class="item">Offers</a>
             </div>
         </div>
         <div class="sixteen wide mobile thirteen wide tablet thirteen wide computer right floated column" id="content">
@@ -262,22 +248,13 @@
             </div>
         </div>
     </div>
+
     <script>
         $('.ui.teal.label')
             .popup({
                 on: 'click'
             });
-
-        $(document).ready(function () {
-            // Override the default dimmer page behaviour for Sidebar
-            $('.sidebar')
-                .sidebar({
-                    dimPage: false,
-                    closable: false
-                })
-                .sidebar('attach events', '#vk-header-icon-a')
-                .sidebar('setting', 'transition', 'push');
-        });
     </script>
 </body>
 </html>
+<script src="~/lib/signalr/dist/browser/signalr.js"></script>

@@ -10,12 +10,8 @@ using IRO_UNMO.App.Models;
 using Microsoft.Extensions.FileProviders;
 using System.IO;
 using IRO_UNMO.App.Subscription;
-using IRO_UNMO.Util;
 using Microsoft.AspNetCore.Identity.UI.Services;
-using Microsoft.AspNetCore.Http;
-using IRO_UNMO.App.Hubs;
 using Microsoft.AspNetCore.SignalR;
-using System;
 
 namespace IRO_UNMO.App
 {
@@ -48,6 +44,7 @@ namespace IRO_UNMO.App
             services.AddScoped<IMyUser, MyUser>();
             services.AddScoped<INotification, NotificationService>();
             services.Configure<AuthMessageSenderOptions>(Configuration);
+
             //services.AddSession(options => {
             //    //options.IdleTimeout = TimeSpan.FromSeconds(3600);
             //});
@@ -55,6 +52,7 @@ namespace IRO_UNMO.App
             //{
             //    options.CheckConsentNeeded = context => true;
             //});
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddAuthorization();
             services.AddSignalR();

@@ -112,7 +112,6 @@
     <None Include="Areas\Admin\Views\Applicants\review.cshtml" />
     <None Include="Areas\Admin\Views\Application\docs.cshtml" />
     <None Include="Areas\Admin\Views\Application\view.cshtml" />
-    <None Include="Areas\Admin\Views\Application\view1.cshtml" />
     <None Include="Areas\Admin\Views\dashboard\index.cshtml" />
     <None Include="Areas\Admin\Views\dashboard\partners.cshtml" />
     <None Include="Areas\Admin\Views\news\index.cshtml" />
@@ -128,12 +127,10 @@
     <None Include="Areas\Applicant\Views\application\docs.cshtml" />
     <None Include="Areas\Applicant\Views\application\edit.cshtml" />
     <None Include="Areas\Applicant\Views\application\view.cshtml" />
-    <None Include="Areas\Applicant\Views\application\ViewDocs.cshtml" />
     <None Include="Areas\Applicant\Views\dashboard\profile.cshtml" />
     <None Include="Areas\Applicant\Views\nomination\create.cshtml" />
     <None Include="Areas\Applicant\Views\nomination\docs.cshtml" />
     <None Include="Areas\Applicant\Views\nomination\view.cshtml" />
-    <None Include="Areas\Applicant\Views\nomination\ViewNom - Copy.cshtml" />
     <None Include="Areas\Applicant\Views\_ViewImports.cshtml" />
     <None Include="Areas\Applicant\Views\_ViewStart.cshtml" />
     <None Include="Areas\Identity\Pages\Account\AccessDenied.cshtml" />
@@ -159,13 +156,7 @@
     <None Include="Views\dashboard\index.cshtml" />
     <None Include="Views\Shared\Error.cshtml" />
     <None Include="Views\Shared\_CookieConsentPartial.cshtml" />
-    <None Include="Views\Shared\_Layout.cshtml" />
-    <None Include="Views\Shared\_Layout1.cshtml" />
-    <None Include="Views\Shared\_Layout11.cshtml" />
-    <None Include="Views\Shared\_Layout2.cshtml" />
-    <None Include="Views\Shared\_Layout3.cshtml" />
-    <None Include="Views\Shared\_Layout5.cshtml" />
-    <None Include="Views\Shared\_Layout6.cshtml" />
+    <None Include="Views\Shared\AdminLayout.cshtml" />
     <None Include="Views\Shared\_LoginPartial.cshtml" />
     <None Include="Views\Shared\_ValidationScriptsPartial.cshtml" />
     <None Include="Views\_ViewImports.cshtml" />
@@ -671,9 +662,6 @@
       <Pack>$(IncludeRazorContentInPack)</Pack>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Update="Areas\Applicant\Views\News\index.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
     <Content Update="Views\account\incoming2.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
@@ -705,9 +693,6 @@
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Views\dashboard\study-in-mostar.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Views\Shared\OApplicantLayout.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Views\Shared\BasicLayout.cshtml">
