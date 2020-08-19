@@ -44,7 +44,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Remove="Areas\Admin\Views\Timing\timing.cshtml" />
     <Content Remove="Areas\Identity\Pages\Account\Register.cshtml" />
   </ItemGroup>
 
@@ -120,7 +119,6 @@
     <None Include="Areas\Admin\Views\offers\offer.cshtml" />
     <None Include="Areas\Admin\Views\partners\index.cshtml" />
     <None Include="Areas\Admin\Views\partners\partner.cshtml" />
-    <None Include="Areas\Admin\Views\Timing\tiiming.cshtml" />
     <None Include="Areas\Admin\Views\_ViewImports.cshtml" />
     <None Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <None Include="Areas\Applicant\Views\application\create.cshtml" />

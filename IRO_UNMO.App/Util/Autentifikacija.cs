@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Linq;
-
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
-
 using IRO_UNMO.App.Data;
 using IRO_UNMO.App.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace IRO_UNMO.Web.Helper
 {

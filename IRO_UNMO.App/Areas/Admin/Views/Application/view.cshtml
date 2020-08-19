@@ -179,7 +179,7 @@
                     </tr>
                     <tr>
                         <td>Date of birth</td>
-                        <td>@Model.Application.Infos.DateOfBirth.ToShortDateString()</td>
+                        <td>@Model.Application.Infos.DateOfBirth.ToMyStrDMYYYY_HMM()</td>
                     </tr>
                     <tr>
                         <td>Place of birth</td>
@@ -195,11 +195,11 @@
                     </tr>
                     <tr>
                         <td>Passport issue date</td>
-                        <td>@Model.Application.Infos.PassportIssueDate.ToShortDateString()</td>
+                        <td>@Model.Application.Infos.PassportIssueDate.ToMyStrDMYYYY_HMM()</td>
                     </tr>
                     <tr>
                         <td>Passport expiry date</td>
-                        <td>@Model.Application.Infos.PassportExpiryDate.ToShortDateString()</td>
+                        <td>@Model.Application.Infos.PassportExpiryDate.ToMyStrDMYYYY_HMM()</td>
                     </tr>
                 </tbody>
             </table>

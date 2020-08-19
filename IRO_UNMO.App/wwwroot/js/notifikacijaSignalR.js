@@ -12,7 +12,7 @@ connection.on("getAll", function (obj) {
         var x = generateNotification(element);
         $("#notifikacije").prepend(x);
         if (!element.seen) {
-        incrementNotificationNumber();
+            incrementNotificationNumber();
         }
     });
 });
@@ -40,10 +40,10 @@ function generateNotification(obj) {
         '<span class="date"> ' + obj.time + '</span>' +
         '<div class="description">' + obj.message + '</div></div><div class="ui divider"></div></div>';
 
-    var element = '<div onClick="deselectNotification(' + obj.notificationId + ')" class="content">' +
+    var element = '<div class="content">' +
         '<h4>' + obj.user + '</h4>' +
-        '<p>' + obj.time + '</p>' +
-        '<p>' + obj.message + '</p>' +
+        '<p> ' + obj.time.toString() + '</p>' +
+        '<a onClick="deselectNotification(' + obj.notificationId + ')" href="' + obj.url + '">' + obj.message + '</a>' +
         '<div class="ui divider"></div></div>';
 
     var codeBlock = '<div class="content">' +

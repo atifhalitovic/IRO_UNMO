@@ -1,13 +1,11 @@
 ﻿using IRO_UNMO.App.Data;
 using IRO_UNMO.App.Models;
-using IRO_UNMO.App.Subscription;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using IRO_UNMO.Web.Helper;
+using Microsoft.AspNetCore.Http;
 
 namespace IRO_UNMO.App.Subscription
 {
@@ -44,8 +42,7 @@ namespace IRO_UNMO.App.Subscription
 
         public override Task OnConnectedAsync()
         {
-            var Userid = "f362f63b-9ab9-4193-a262-25eaf6261de0";
-            var userName = Context.User.Identity.Name;
+            var Userid = IRO_UNMO.Web.Helper.Autentifikacija.GetLoggedUser(Context.GetHttpContext()).Id;
             var ConnectionId = Context.ConnectionId;
             var x = _user.updateUser(Userid, ConnectionId).Result;
 
