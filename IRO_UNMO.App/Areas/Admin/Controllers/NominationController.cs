@@ -66,7 +66,7 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
 
             //Convert URL to PDF
 
-            Nomination mrki = _db.Nomination.Where(a => a.NominationId == id).Include(b => b.Applicant).ThenInclude(q=>q.University).Include(b => b.Applicant).ThenInclude(c => c.ApplicationUser).ThenInclude(x=>x.Country).FirstOrDefault();
+            Nomination mrki = _db.Nomination.Where(a => a.NominationId == id).Include(b => b.Applicant).ThenInclude(q => q.University).Include(b => b.Applicant).ThenInclude(c => c.ApplicationUser).ThenInclude(x => x.Country).FirstOrDefault();
 
             PdfDocument pdfDocument = new PdfDocument();
 
@@ -207,7 +207,8 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
 
             //Define the file name
             FileStreamResult nova = new FileStreamResult(stream, "nomination/pdf");
-            nova.FileDownloadName = "Invoice.pdf";
+            string nameOfFile = "Nomination_" + mrki.NominationId + "_" + mrki.Applicant.ApplicationUser.Name + "_" + mrki.Applicant.ApplicationUser.Surname + ".pdf";
+            nova.FileDownloadName = nameOfFile;
             return nova;
         }
 
@@ -243,7 +244,7 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
         public IActionResult view(int id)
         {
             ViewNomVM model = new ViewNomVM();
-            model.Nomination = _db.Nomination.Where(a => a.NominationId == id).Include(q=>q.Offer).ThenInclude(a => a.University).ThenInclude(d=>d.Country).FirstOrDefault();
+            model.Nomination = _db.Nomination.Where(a => a.NominationId == id).Include(q => q.Offer).ThenInclude(a => a.University).ThenInclude(d => d.Country).FirstOrDefault();
             model.Applicant = _db.Applicant.Where(x => x.ApplicantId == model.Nomination.ApplicantId).Include(a => a.ApplicationUser).ThenInclude(b => b.Country).Include(c => c.University).FirstOrDefault();
             model.Comments = _db.Comment.Where(x => x.IonId == id).ToList();
             model.Statuses = new List<SelectListItem>();
@@ -295,8 +296,8 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
         {
             var id1 = HttpContext.GetLoggedUser().Id;
             Nomination current = _db.Nomination.Where(a => a.NominationId == model.Nomination.NominationId).Include(a => a.University).FirstOrDefault();
-           
-            if(model.NewComment != null)
+
+            if (model.NewComment != null)
             {
                 Comment newComment = new Comment();
                 newComment.Message = model.NewComment;

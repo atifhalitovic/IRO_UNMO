@@ -138,7 +138,7 @@ namespace IRO_UNMO.App.Controllers
         {
             if (_db.Users.Any(i => i.Email == model.Email))
             {
-                TempData["errorMessage"] = "E-mail you choosed is currently in use. Please use another e-mail.";
+                TempData["errorMessage"] = "E-mail you choosed is currently in use. Please use another.";
                 return RedirectToAction("incoming");
             }
 
@@ -205,7 +205,7 @@ namespace IRO_UNMO.App.Controllers
         {
             if (_db.Users.Any(i => i.Email == model.Email))
             {
-                TempData["errorMessage"] = "E-mail you choosed is currently in use. Please use another e-mail.";
+                TempData["errorMessage"] = "E-mail you choosed is currently in use. Please use another.";
                 return RedirectToAction("outgoing");
             }
 

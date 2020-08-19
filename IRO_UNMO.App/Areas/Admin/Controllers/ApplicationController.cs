@@ -289,7 +289,8 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
 
             //Define the file name
             FileStreamResult nova = new FileStreamResult(stream, "application/pdf");
-            nova.FileDownloadName = "Invoice.pdf";
+            string nameOfFile = "Application_" + mrki.ApplicationId + "_" + mrki.Applicant.ApplicationUser.Name + "_" + mrki.Applicant.ApplicationUser.Surname + ".pdf";
+            nova.FileDownloadName = nameOfFile;
             return nova;
         }
         public IActionResult docs(int id)

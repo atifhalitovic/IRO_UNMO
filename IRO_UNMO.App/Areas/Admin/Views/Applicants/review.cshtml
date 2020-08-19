@@ -44,7 +44,7 @@
                     </tr>
                     <tr>
                         <td>Account created</td>
-                        <td>@Model.Applicant.CreatedProfile</td>
+                        <td>@Model.Applicant.CreatedProfile.ToMyStrDMYYYY_HMM()</td>
                     </tr>
                     @if (Model.Applicant.Verified)
                     {
@@ -124,7 +124,7 @@
                                         Created
                                     </div>
                                     <div class="description">
-                                        @Model.Application.CreatedApp
+                                        @Model.Application.CreatedApp.ToMyStrDMYYYY_HMM()
                                     </div>
                                 </div>
                             </div>
@@ -134,7 +134,7 @@
                                     <div class="header">
                                         Last change
                                     </div>
-                                    <div class="description"><span>@Model.Application.LastEdited<span class="grayed"> Europe/Mostar time</span></span></div>
+                                    <div class="description"><span>@Model.Application.LastEdited.ToMyStrDMYYYY_HMM()<span class="grayed"> Europe/Mostar time</span></span></div>
                                 </div>
                             </div>
                             @if (Model.Application.Finished)
@@ -145,7 +145,7 @@
                                         <div class="header">
                                             Submitted
                                         </div>
-                                        <div class="description"><span>@Model.Application.FinishedTime<span class="grayed"> Europe/Mostar time</span></span></div>
+                                        <div class="description"><span>@Model.Application.FinishedTime.ToMyStrDMYYYY_HMM()<span class="grayed"> Europe/Mostar time</span></span></div>
                                     </div>
                                 </div>
                             }
@@ -242,12 +242,12 @@
                         <td>@Model.Applicant.ApplicationUser.Country.Name</td>
                     </tr>
                     <tr>
-                        <td>University</td>
-                        <td>@Model.Applicant.University.Name</td>
-                    </tr>
-                    <tr>
                         <td>Faculty</td>
                         <td>@Model.Applicant.FacultyName</td>
+                    </tr>
+                    <tr>
+                        <td>University</td>
+                        <td>@Model.Applicant.University.Name</td>
                     </tr>
                     <tr>
                         <td>Student/staff</td>
@@ -255,7 +255,7 @@
                     </tr>
                     <tr>
                         <td>Account created</td>
-                        <td>@Model.Applicant.CreatedProfile</td>
+                        <td>@Model.Applicant.CreatedProfile.ToMyStrDMYYYY_HMM()</td>
                     </tr>
                 </tbody>
             </table>
@@ -275,39 +275,39 @@
                             </div>
                             @if (x != null)
                             {
-                            <div class="meta">
-                                <p></p>
-                                <p>Created: @x.CreatedNom</p>
-                                <p></p>
-                                <p>Last change: @x.LastEdited</p>
-                                <p></p>
-                                <p>Status: @x.StatusOfNomination </p>
-                                <p></p>
-                                @if (x.Finished)
-                                {
-                                    <div class="ui green label">
-                                        Submitted: @x.Finished
-                                    </div>
-                                }
-                                else
-                                {
-                                    <div class="ui red label">
-                                        Submitted: @x.Finished
-                                    </div>
-                                }
-                                <p></p>
-                                <div class="ui light red label">Application deadline: <div class="detail">@x.Offer.End.ToShortDateString()</div></div>
-                                <p></p>
-                                @if (x.Finished)
-                                {
-                                    <a asp-action="view" asp-controller="nomination" asp-route-id="@x.NominationId" class="ui secondary basic button"><i class="eye"></i>Review nomination</a>
-                                }
-                                else
-                                {
-                                    <a asp-action="view" asp-controller="nomination" asp-route-id="@x.NominationId" class="ui secondary basic disabled button"><i class="eye"></i>Review nomination</a>
-                                }
+                                <div class="meta">
+                                    <p></p>
+                                    <p>Created: @x.CreatedNom.ToMyStrDMYYYY_HMM()</p>
+                                    <p></p>
+                                    <p>Last change: @x.LastEdited.ToMyStrDMYYYY_HMM()</p>
+                                    <p></p>
+                                    <p>Status: @x.StatusOfNomination </p>
+                                    <p></p>
+                                    @if (x.Finished)
+                                    {
+                                        <div class="ui green label">
+                                            Submitted: @x.Finished
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="ui red label">
+                                            Submitted: @x.Finished
+                                        </div>
+                                    }
+                                    <p></p>
+                                    <div class="ui light red label">Application deadline: <div class="detail">@x.Offer.End.ToMyStrDMYYYY_HMM()</div></div>
+                                    <p></p>
+                                    @if (x.Finished)
+                                    {
+                                        <a asp-action="view" asp-controller="nomination" asp-route-id="@x.NominationId" class="ui secondary basic button"><i class="eye"></i>Review nomination</a>
+                                    }
+                                    else
+                                    {
+                                        <a asp-action="view" asp-controller="nomination" asp-route-id="@x.NominationId" class="ui secondary basic disabled button"><i class="eye"></i>Review nomination</a>
+                                    }
 
-                            </div>
+                                </div>
                             }
                             else
                             {
@@ -326,7 +326,7 @@
                 </h4>
             </div>
         }
-         
+
     }
 </body>
 <script>

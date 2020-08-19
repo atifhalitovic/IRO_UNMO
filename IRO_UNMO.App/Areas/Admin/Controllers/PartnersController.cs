@@ -68,6 +68,7 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
                     Value = x.CountryId.ToString(),
                     Text = x.Name
                 }).OrderBy(a => a.Text).ToList();
+                vm.Countries.Insert(0, new SelectListItem { Value = "", Text = "" });
             }
             else
             {
@@ -78,6 +79,7 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
                     Value = x.CountryId.ToString(),
                     Text = x.Name
                 }).ToList();
+                vm.Countries.Insert(0, new SelectListItem { Value = "", Text = "" });
             }
             return View(vm);
         }

@@ -35,21 +35,6 @@
                 <div class="ui small equal width form">
                     <div class="fields">
                         <div class="field">
-                            <label>Country</label>
-                            <div class="ui fluid search selection dropdown">
-                                <input asp-for="@Model.CountryId" type="hidden" name="country">
-                                <i class="dropdown icon"></i>
-                                <div class="default text">Select Country</div>
-                                <div class="menu">
-                                    @Html.DropDownListFor(model => model.TypeOfApplication, Model.TypesOfApplicant, new { @id = "type", @Name = "type", @class = "ui dropdown" })
-                                    @foreach (var x in Model.Countries)
-                                    {
-                                        <div class="item" data-value="@x.Value">@x.Text</div>
-                                    }
-                                </div>
-                            </div>
-                        </div>
-                        <div class="field">
                             <label>Name</label>
                             <input class="ui input" name="name" asp-for="@Model.Name" type="text">
                         </div>
@@ -65,11 +50,11 @@
                     <div class="fields">
                         <div class="field">
                             <label>Phone number</label>
-                            <input class="ui input" name="mobile" asp-for="@Model.PhoneNumber" type="text" autocomplete="off" />
+                            <input name="PhoneNumber" asp-for="@Model.PhoneNumber" type="text" />
                         </div>
                         <div class="field">
                             <label>E-mail</label>
-                            <input class="ui input" name="email" asp-for="@Model.Email" type="text" autocomplete="off" />
+                            <input class="ui input" name="email" asp-for="@Model.Email" type="text" />
                         </div>
                         <div class="field">
                             <label asp-for="@Model.CountryId">Nationality</label>
@@ -99,6 +84,8 @@
         <div class="ui error message"></div>
     </form>
     <script>
+        $('.ui.dropdown').dropdown();
+
         $('.ui.form')
             .form({
                 fields: {
@@ -120,6 +107,24 @@
                             }
                         ]
                     },
+                    type: {
+                        identifier: 'type',
+                        rules: [
+                            {
+                                type: 'empty',
+                                prompt: 'Please select your applicant type'
+                            }
+                        ]
+                    },
+                    phone: {
+                        identifier: 'PhoneNumber',
+                        rules: [
+                            {
+                                type: 'empty',
+                                prompt: 'Please enter your phone number'
+                            }
+                        ]
+                    },
                     email: {
                         identifier: 'email',
                         rules: [
@@ -129,12 +134,12 @@
                             }
                         ]
                     },
-                    mobile: {
-                        identifier: 'mobile',
+                    nationality: {
+                        identifier: 'nationality',
                         rules: [
                             {
                                 type: 'empty',
-                                prompt: 'Please enter your phone number'
+                                prompt: 'Please select your nationality'
                             }
                         ]
                     },
@@ -153,24 +158,6 @@
                             {
                                 type: 'empty',
                                 prompt: 'Please select a study cycle'
-                            }
-                        ]
-                    },
-                    nationality: {
-                        identifier: 'nationality',
-                        rules: [
-                            {
-                                type: 'empty',
-                                prompt: 'Please select your nationality'
-                            }
-                        ]
-                    },
-                    type: {
-                        identifier: 'type',
-                        rules: [
-                            {
-                                type: 'empty',
-                                prompt: 'Please select your applicant type'
                             }
                         ]
                     },

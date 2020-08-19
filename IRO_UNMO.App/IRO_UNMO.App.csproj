@@ -112,7 +112,6 @@
     <None Include="Areas\Admin\Views\Application\docs.cshtml" />
     <None Include="Areas\Admin\Views\Application\view.cshtml" />
     <None Include="Areas\Admin\Views\dashboard\index.cshtml" />
-    <None Include="Areas\Admin\Views\dashboard\partners.cshtml" />
     <None Include="Areas\Admin\Views\news\index.cshtml" />
     <None Include="Areas\Admin\Views\nomination\view.cshtml" />
     <None Include="Areas\Admin\Views\offers\index.cshtml" />
@@ -144,10 +143,8 @@
     <None Include="Views\account\admin.cshtml" />
     <None Include="Views\account\code.cshtml" />
     <None Include="Views\account\denied.cshtml" />
-    <None Include="Views\account\details - Copy.cshtml" />
     <None Include="Views\account\details.cshtml" />
     <None Include="Views\account\incoming.cshtml" />
-    <None Include="Views\account\login - Copy.cshtml" />
     <None Include="Views\account\login.cshtml" />
     <None Include="Views\account\outgoing.cshtml" />
     <None Include="Views\account\type.cshtml" />
@@ -659,9 +656,6 @@
     <Content Update="Areas\Applicant\Views\dashboard\tuition.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Update="Views\account\incoming2.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Views\account\logout.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>

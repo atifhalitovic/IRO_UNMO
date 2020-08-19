@@ -51,7 +51,7 @@
         <div class="ui piled segment">
             <h2 class="ui header">
                 Application for the Dzemal Bijedic University
-                <div class="sub header">Started: @Model.Application.CreatedApp</div>
+                <div class="sub header">Started: @Model.Application.CreatedApp.ToMyStrDMYYYY_HMM()</div>
             </h2>
             @if (Model.Application.StatusOfApplication == "Unknown")
             {
@@ -72,7 +72,7 @@
             <p></p>
             @if (Model.Application.Finished == true)
             {
-                <div class="ui green label">Submitted:<div class="detail">@Model.Application.FinishedTime</div></div>
+                <div class="ui green label">Submitted:<div class="detail">@Model.Application.FinishedTime.ToMyStrDMYYYY_HMM()</div></div>
             }
             else if (Model.Application.Finished == false)
             {
@@ -92,7 +92,7 @@
                     </tr>
                     <tr>
                         <td>Account created</td>
-                        <td>@Model.Applicant.CreatedProfile</td>
+                        <td>@Model.Applicant.CreatedProfile.ToMyStrDMYYYY_HMM()</td>
                     </tr>
                     <tr>
                         <td>Account verification</td>
@@ -105,7 +105,7 @@
                     </tr>
                     <tr>
                         <td>Date of birth</td>
-                        <td>@Model.Application.Infos.DateOfBirth.ToShortDateString()</td>
+                        <td>@Model.Application.Infos.DateOfBirth.ToMyStrDMYYYY()</td>
                     </tr>
                     <tr>
                         <td>Place of birth</td>
@@ -121,11 +121,11 @@
                     </tr>
                     <tr>
                         <td>Passport issue date</td>
-                        <td>@Model.Application.Infos.PassportIssueDate.ToShortDateString()</td>
+                        <td>@Model.Application.Infos.PassportIssueDate.ToMyStrDMYYYY()</td>
                     </tr>
                     <tr>
                         <td>Passport expiry date</td>
-                        <td>@Model.Application.Infos.PassportExpiryDate.ToShortDateString()</td>
+                        <td>@Model.Application.Infos.PassportExpiryDate.ToMyStrDMYYYY()</td>
                     </tr>
                 </tbody>
             </table>
@@ -133,7 +133,7 @@
             {
                 <a asp-action="edit" asp-route-id="@Model.Application.ApplicationId" class="ui primary button">Edit</a>
             }
-            </div>
+        </div>
         <div class="ui piled segment">
             <div class="ui top attached label">Contact</div>
             <table class="ui definition table">
@@ -532,15 +532,15 @@
                     @if (Model.Application.Documents.LearningAgreement != null && Model.Application.Documents.MotivationLetter != null && Model.Application.Documents.CV != null && Model.Application.Documents.TranscriptOfRecords != null && Model.Application.Documents.ReferenceLetter != null && Model.Application.Documents.EngProficiency != null)
                     {
                         <div class="field">
-                            <button class="ui green submit button" asp-controller="application" asp-action="submit" asp-route-id="@Model.Application.ApplicationId"><i class="save outline icon"></i>Submit nomination</button>
+                            <button class="ui green submit button" asp-controller="application" asp-action="submit" asp-route-id="@Model.Application.ApplicationId"><i class="save outline icon"></i>Submit application </button>
                         </div>
                     }
                     else
                     {
                         <div class="field">
-                            <button class="ui green submit disabled button" asp-controller="application" asp-action="submit" asp-route-id="@Model.Application.ApplicationId"><i class="save outline icon"></i>Submit nomination</button>
+                            <button class="ui green submit disabled button" asp-controller="application" asp-action="submit" asp-route-id="@Model.Application.ApplicationId"><i class="save outline icon"></i>Submit application</button>
                         </div>
-                      }
+                    }
                 </div>
             </form>
         }
@@ -549,6 +549,3 @@
     <p></p>
     <p></p>
 </body>
-<script src="~/lib/signalr/dist/browser/signalr.js"></script>
-<script src="~/js/chat.js"></script>
-
