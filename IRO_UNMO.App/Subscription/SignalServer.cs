@@ -44,7 +44,7 @@ namespace IRO_UNMO.App.Subscription
 
         public override Task OnConnectedAsync()
         {
-            var Userid =  Context.UserIdentifier;
+            var Userid = "f362f63b-9ab9-4193-a262-25eaf6261de0";
             var userName = Context.User.Identity.Name;
             var ConnectionId = Context.ConnectionId;
             var x = _user.updateUser(Userid, ConnectionId).Result;

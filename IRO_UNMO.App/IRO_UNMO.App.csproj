@@ -37,6 +37,7 @@
     <Compile Remove="Subscription\ILoggedUser.cs" />
     <Compile Remove="Subscription\LoggedUserService.cs" />
     <Compile Remove="Subscription\NotificationDatabaseSubscription.cs" />
+    <Compile Remove="Subscription\NotificationHub.cs" />
     <Compile Remove="Util\EmailSettings.cs" />
     <Compile Remove="Util\IUserRepository.cs" />
     <Compile Remove="Util\UserRepository.cs" />
@@ -233,8 +234,6 @@
     <None Include="wwwroot\Scripts\jquery-2.2.3.js" />
     <None Include="wwwroot\Scripts\jquery-2.2.3.min.js" />
     <None Include="wwwroot\Scripts\jquery-2.2.3.min.map" />
-    <None Include="wwwroot\Scripts\jquery.signalR-2.2.0.js" />
-    <None Include="wwwroot\Scripts\jquery.signalR-2.2.0.min.js" />
     <None Include="wwwroot\Scripts\jquery.validate-vsdoc.js" />
     <None Include="wwwroot\Scripts\jquery.validate.js" />
     <None Include="wwwroot\Scripts\jquery.validate.min.js" />

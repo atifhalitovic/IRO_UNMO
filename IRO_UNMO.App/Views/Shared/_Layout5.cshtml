@@ -45,7 +45,6 @@
     <script src="~/lib/jquery/dist/jquery.min.js" type="text/javascript"></script>
 
     <script src="~/js/ajax.js"></script>
-    <script src="~/js/signalr.js"></script>
     <!--- Component JS -->
     <script type="text/javascript" src="~/dist/components/popup.js"></script>
     <script type="text/javascript" src="~/dist/components/transition.js"></script>
@@ -247,6 +246,7 @@
         </div>
     </div>
 
+    <script src="~/js/signalr.js"></script>
     <script>
         $('.ui.teal.label')
             .popup({
@@ -312,7 +312,7 @@
 
         }).catch(function (err) {
             return console.error(err.toString());
-            });
+        });
     </script>
 </body>
 </html>
