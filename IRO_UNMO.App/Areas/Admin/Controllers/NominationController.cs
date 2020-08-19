@@ -9,6 +9,7 @@ using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using IRO_UNMO.App.Data;
 using IRO_UNMO.App.Models;
+using IRO_UNMO.App.Subscription;
 using IRO_UNMO.App.ViewModels;
 using IRO_UNMO.Util;
 using IRO_UNMO.Web.Helper;
@@ -38,8 +39,10 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
         private readonly ILogger<DashboardController> _logger;
         private readonly UrlEncoder _urlEncoder;
 
+        private readonly INotification _notificationService;
+
         public NominationController(ApplicationDbContext db, IHostingEnvironment environment, UserManager<ApplicationUser> userManager,
-        SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager, UrlEncoder urlEncoder, ILogger<DashboardController> logger)
+        SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager, UrlEncoder urlEncoder, ILogger<DashboardController> logger, INotification notification)
         {
             _db = db;
             hosting = environment;
@@ -49,6 +52,19 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
             _urlEncoder = urlEncoder;
             _logger = logger;
             _userManagementHelper = new UserManagementHelper(_db);
+            _notificationService = notification;
+        }
+
+        [Autorizacija(true, false, false)]
+        public IActionResult cancel(int id)
+        {
+            Nomination current = _db.Nomination.Where(a => a.NominationId == id).FirstOrDefault();
+            if (current != null)
+            {
+                _db.Nomination.Remove(current);
+                _db.SaveChanges();
+            }
+            return RedirectToAction("review", "applicants", new { id = current.ApplicantId });
         }
 
         [HttpPost]
@@ -303,11 +319,15 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
                 newComment.Message = model.NewComment;
                 newComment.AdministratorId = id1;
                 newComment.IonId = current.NominationId;
-                //newComment.Nomination = _db.Nomination.Where(a => a.NominationId == current.NominationId).FirstOrDefault();
                 newComment.CommentTime = DateTime.Now;
 
                 _db.Comment.Add(newComment);
                 _db.SaveChanges();
+                _notificationService.sendToApplicant(current.ApplicantId, HttpContext.GetLoggedUser().Id, new IRO_UNMO.App.Subscription.NotificationVM()
+                {
+                    Message = model.NewComment,
+                    Url = "/admin/nomination/view/" + current.NominationId
+                });
             }
             else
             {
@@ -332,6 +352,11 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
             Nomination current = _db.Nomination.Where(a => a.NominationId == model.Nomination.NominationId).Include(a => a.University).FirstOrDefault();
             current.StatusOfNomination = model.Nomination.StatusOfNomination;
             _db.SaveChanges();
+            _notificationService.sendToApplicant(current.ApplicantId, HttpContext.GetLoggedUser().Id, new IRO_UNMO.App.Subscription.NotificationVM()
+            {
+                Message = "Your nomination status has been changed. New status is " + model.Nomination.StatusOfNomination + ".",
+                Url = "/applicant/nomination/view/" + current.NominationId
+            });
             return RedirectToAction("view", "nomination", new { id = model.Nomination.NominationId });
         }
     }

@@ -77,14 +77,14 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
             if (v.Verified == true)
             {
                 v.Verified = false;
-                status = "Succesfully unverified!";
+                status = "succesfully unverified!";
             }
             _db.Applicant.Update(v);
             _db.SaveChanges();
             _notificationService.sendToApplicant(id, HttpContext.GetLoggedUser().Id, new IRO_UNMO.App.Subscription.NotificationVM()
             {
                 Message = "Your account verification has been changed. Now you are " + status,
-                Url = "/applicant/dashboard/profile?id=" + id
+                Url = "/applicant/dashboard/profile/" + id
             });
             return RedirectToAction("review", "applicants", new { id = v.ApplicantId });
         }
@@ -97,14 +97,14 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
             if (v.Verified == false)
             {
                 v.Verified = true;
-                status = "Succesfully verified!";
+                status = "succesfully verified!";
             }
             _db.Applicant.Update(v);
             _db.SaveChanges();
             _notificationService.sendToApplicant(id, HttpContext.GetLoggedUser().Id, new IRO_UNMO.App.Subscription.NotificationVM()
             {
                 Message = "Your account verification has been changed. Now you are " + status,
-                Url = "#"
+                Url = "/applicant/dashboard/profile/" + id
             });
             return RedirectToAction("review", "applicants", new { id =  v.ApplicantId });
         }

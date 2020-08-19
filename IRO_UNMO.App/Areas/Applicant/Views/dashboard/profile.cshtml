@@ -319,7 +319,7 @@
                     </tr>
                     <tr>
                         <td>Account created</td>
-                        <td>@Model.Applicant.CreatedProfile</td>
+                        <td>@Model.Applicant.CreatedProfile.ToMyStrDMYYYY_HMM()</td>
                     </tr>
                 </tbody>
             </table>
@@ -354,7 +354,7 @@
                                         </div>
                                     }
                                     <p></p>
-                                    <div class="ui light red label">Application deadline: <div class="detail">@x.Offer.End.ToMyStrDMYYYY_HMM()</div></div>
+                                    <div class="ui light red label">Application deadline: <div class="detail">@x.Offer.End.ToMyStrDMYYYY()</div></div>
                                     <p></p>
                                     <p></p>
                                     <a asp-action="view" asp-controller="nomination" asp-route-id="@x.NominationId" class="ui secondary basic button"><i class="eye"></i>Review nomination</a>

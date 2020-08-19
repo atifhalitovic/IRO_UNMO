@@ -61,7 +61,7 @@
         <div class="ui piled segment">
             <h2 class="ui header">
                 Nomination for the @Model.Nomination.Offer.University.Name
-                <div class="sub header">Started: @Model.Nomination.CreatedNom</div>
+                <div class="sub header">Started: @Model.Nomination.CreatedNom.ToMyStrDMYYYY_HMM()</div>
             </h2>
             @if (Model.Nomination.StatusOfNomination == "Unknown")
             {
@@ -82,7 +82,7 @@
             <p></p>
             @if (Model.Nomination.Finished == true)
             {
-                <div class="ui green label">Submitted:<div class="detail">@Model.Nomination.FinishedTime</div></div>
+                <div class="ui green label">Submitted:<div class="detail">@Model.Nomination.FinishedTime.ToMyStrDMYYYY_HMM()</div></div>
             }
             else if (Model.Nomination.Finished == false)
             {
@@ -114,7 +114,7 @@
                     </tr>
                     <tr>
                         <td>Account created</td>
-                        <td>@Model.Applicant.CreatedProfile</td>
+                        <td>@Model.Applicant.CreatedProfile.ToMyStrDMYYYY_HMM()</td>
                     </tr>
                 </tbody>
             </table>
@@ -396,7 +396,7 @@
                                     {
                                         <a class="author">Administrator@*@x.Administrator.ApplicationUser.Name @x.Administrator.ApplicationUser.Surname*@</a>
                                     }
-                                    <div class="metadata"><div class="date">@x.CommentTime</div></div>
+                                    <div class="metadata"><div class="date">@x.CommentTime.ToMyStrDMYYYY_HMM()</div></div>
                                     <div class="text">@x.Message</div>
                                 </div>
                             </div>

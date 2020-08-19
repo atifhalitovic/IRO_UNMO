@@ -302,25 +302,6 @@ namespace IRO_UNMO.App.Areas.Applicant.Controllers
         }
 
         [Autorizacija(false, true, false)]
-        public IActionResult status(int id)
-        {
-            TempData["applicantId"] = HttpContext.GetLoggedUser().Id;
-            ViewAppVM model = new ViewAppVM();
-            model.Application = _db.Application.Where(a => a.ApplicationId == id).FirstOrDefault();
-            model.Applicant = _db.Applicant.Where(a => a.ApplicantId == model.Application.ApplicantId).FirstOrDefault();
-            return View("status", model);
-        }
-
-        [HttpPost]
-        public IActionResult status(ViewAppVM model)
-        {
-            Application current = _db.Application.Where(a => a.ApplicationId == model.Application.ApplicationId).FirstOrDefault();
-            current.StatusOfApplication = model.Application.StatusOfApplication;
-            _db.SaveChanges();
-            return RedirectToAction("view", "application", new { id = model.Application.ApplicationId });
-        }
-
-        [Autorizacija(false, true, false)]
         public IActionResult edit(int id)
         {
             TempData["applicantId"] = HttpContext.GetLoggedUser().Id;
@@ -454,8 +435,20 @@ namespace IRO_UNMO.App.Areas.Applicant.Controllers
             Application current = _db.Application.Where(a => a.ApplicationId == model.Application.ApplicationId).Include(b => b.Infos).ThenInclude(q => q.Citizenship).Include(c => c.Contacts).ThenInclude(q => q.Country).Include(d => d.HomeInstitutions).Include(e => e.Others).Include(f => f.Documents).Include(g => g.Languages).FirstOrDefault();
             current.Finished = true;
             current.FinishedTime = DateTime.Now;
+
+            var admini = _db.Administrator.Include(a => a.ApplicationUser).ToList();
+
+            foreach (var x in admini)
+            {
+                _notificationService.sendToAdmin(x.AdministratorId, HttpContext.GetLoggedUser().Id, new IRO_UNMO.App.Subscription.NotificationVM()
+                {
+                    Message = "Application nr. " + current.ApplicationId + " has been submitted. Now you can review it!",
+                    Url = "/admin/application/view/" + current.ApplicationId
+                });
+            }
+
             _db.SaveChanges();
-            return RedirectToAction("view", "application", new { id = model.Application.ApplicationId });
+            return RedirectToAction("view", "application", new { id = current.ApplicationId });
         }
     }
 }

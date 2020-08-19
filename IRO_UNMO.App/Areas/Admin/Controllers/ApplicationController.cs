@@ -19,6 +19,7 @@ using Syncfusion.Drawing;
 using Syncfusion.HtmlConverter;
 using Syncfusion.Pdf.Graphics;
 using IRO_UNMO.Web.Helper;
+using IRO_UNMO.App.Subscription;
 
 namespace IRO_UNMO.App.Areas.Admin.Controllers
 {
@@ -33,8 +34,10 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly UrlEncoder _urlEncoder;
 
+        private readonly INotification _notificationService;
+
         public ApplicationController(ApplicationDbContext db, IHostingEnvironment environment, UserManager<ApplicationUser> userManager,
-        SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager, UrlEncoder urlEncoder)
+        SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager, UrlEncoder urlEncoder, INotification notification)
         {
             _db = db;
             hosting = environment;
@@ -43,6 +46,7 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
             _roleManager = roleManager;
             _urlEncoder = urlEncoder;
             _userManagementHelper = new UserManagementHelper(_db);
+            _notificationService = notification;
         }
 
         [HttpPost]
@@ -513,6 +517,18 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
             return File(memory, MediaTypeNames.Application.Octet, Path.GetFileName(path));
         }
 
+        [Autorizacija(true, false, false)]
+        public IActionResult cancel(int id)
+        {
+            Application current = _db.Application.Where(a => a.ApplicationId == id).Include(b => b.Infos).ThenInclude(q => q.Citizenship).Include(c => c.Contacts).Include(d => d.HomeInstitutions).Include(e => e.Others).FirstOrDefault();
+            if (current != null)
+            {
+                _db.Application.Remove(current);
+                _db.SaveChanges();
+            }
+            return RedirectToAction("review", "applicants", new { id = current.ApplicantId });
+        }
+
         public IActionResult delete(string fileType, string fileName, int id)
         {
             var path = Path.Combine(
@@ -611,7 +627,12 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
             Application current = _db.Application.Where(a => a.ApplicationId == model.Application.ApplicationId).FirstOrDefault();
             current.StatusOfApplication = model.Application.StatusOfApplication;
             _db.SaveChanges();
-            return RedirectToAction("view", "application", new { id = model.Application.ApplicationId });
+            _notificationService.sendToApplicant(current.ApplicantId, HttpContext.GetLoggedUser().Id, new IRO_UNMO.App.Subscription.NotificationVM()
+            {
+                Message = "Your application status has been changed. New status is " + model.Application.StatusOfApplication + ".",
+                Url = "/applicant/application/view/" + current.ApplicationId
+            });
+            return RedirectToAction("view", "application", new { id = current.ApplicationId });
         }
 
         [Autorizacija(true, false, false)]
@@ -639,6 +660,11 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
 
                 _db.Comment.Add(newComment);
                 _db.SaveChanges();
+                _notificationService.sendToApplicant(current.ApplicantId, HttpContext.GetLoggedUser().Id, new IRO_UNMO.App.Subscription.NotificationVM()
+                {
+                    Message = model.NewComment,
+                    Url = "/admin/application/view/" + current.ApplicationId
+                });
             }
             else
             {

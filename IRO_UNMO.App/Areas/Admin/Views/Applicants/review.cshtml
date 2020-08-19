@@ -187,6 +187,7 @@
                             else if (Model.Applicant.Verified == true && Model.Application != null && Model.Application.Finished)
                             {
                                 <a asp-action="view" asp-controller="application" asp-route-id="@Model.Application.ApplicationId" class="ui basic black button"><i class="eye"></i>View complete application</a>
+                                <a asp-action="cancel" asp-controller="application" class="ui basic red button" asp-route-id="@Model.Application.ApplicationId">Delete</a>
                             }
                             else if (Model.Applicant.Verified == true && Model.Application != null && !Model.Application.Finished)
                             {
@@ -296,7 +297,7 @@
                                         </div>
                                     }
                                     <p></p>
-                                    <div class="ui light red label">Application deadline: <div class="detail">@x.Offer.End.ToMyStrDMYYYY_HMM()</div></div>
+                                    <div class="ui light red label">Application deadline: <div class="detail">@x.Offer.End.ToMyStrDMYYYY()</div></div>
                                     <p></p>
                                     @if (x.Finished)
                                     {

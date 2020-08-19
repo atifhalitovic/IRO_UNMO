@@ -426,9 +426,19 @@ namespace IRO_UNMO.App.Areas.Applicant.Controllers
         [HttpPost]
         public IActionResult submit(ViewNomVM model)
         {
-            Nomination current = _db.Nomination.Where(a => a.NominationId == model.Nomination.NominationId).Include(a => a.University).FirstOrDefault();
+            Nomination current = _db.Nomination.Where(a => a.NominationId == model.Nomination.NominationId).Include(q=>q.Applicant).ThenInclude(w=>w.ApplicationUser).Include(a => a.University).FirstOrDefault();
             current.Finished = true;
             current.FinishedTime = DateTime.Now;
+
+            var admini = _db.Administrator.Include(a => a.ApplicationUser).ToList();
+            foreach (var x in admini)
+            {
+                _notificationService.sendToAdmin(x.AdministratorId, HttpContext.GetLoggedUser().Id, new IRO_UNMO.App.Subscription.NotificationVM()
+                {
+                    Message = "Nomination nr. " + current.NominationId + " has been submitted. Now you can review it!",
+                    Url = "/admin/nomination/view/" + current.NominationId
+                });
+            }
             _db.SaveChanges();
             return RedirectToAction("view", "nomination", new { id = model.Nomination.NominationId });
         }
