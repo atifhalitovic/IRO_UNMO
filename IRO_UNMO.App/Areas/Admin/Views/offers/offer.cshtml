@@ -5,9 +5,6 @@
 }
 
 <head>
-    <script type="text/javascript" src="~/dist/components/form.js"></script>
-    <script type="text/javascript" src="~/dist/components/dropdown.js"></script>
-    <script type="text/javascript" src="~/dist/components/dropdown.min.js"></script>
     <script type="text/javascript" src="~/dist/calendar.min.js"></script>
     <link rel="stylesheet" href="~/dist/calendar.min.css" />
     <style>
@@ -27,7 +24,7 @@
         <h2 class="ui header">Edit offer</h2>
     }
     <div class="ui small equal width form">
-        <form class="ui form" asp-area="admin" asp-controller="offers" asp-action="offer" method="post">
+        <form asp-area="admin" asp-controller="offers" asp-action="offer" method="post">
             @Html.HiddenFor(a => a.Offer.OfferId)
             <div class="ui compact segment">
                 <div class="fields">
@@ -38,7 +35,7 @@
                             <div class="ui calendar" id="rangestart">
                                 <div class="ui input left icon">
                                     <i class="calendar icon"></i>
-                                    <input type="text" asp-for="@Model.Offer.Start" placeholder="Start" id="from">
+                                    <input type="text" asp-for="@Model.Offer.Start" placeholder="Start">
                                 </div>
                             </div>
                         }
@@ -59,7 +56,7 @@
                             <div class="ui calendar" id="rangeend">
                                 <div class="ui input left icon">
                                     <i class="calendar icon"></i>
-                                    <input type="text" asp-for="@Model.Offer.End" placeholder="End" id="to">
+                                    <input type="text" asp-for="@Model.Offer.End" placeholder="End">
                                 </div>
                             </div>
                         }
@@ -77,11 +74,11 @@
                 <div class="fields">
                     <div class="field">
                         <label asp-for="@Model.Offer.Semester">Semester</label>
-                        @Html.DropDownListFor(model => model.Offer.Semester, Model.Semesters, new { @id = "sem", @Name = "Offer.Semester", @class = "ui dropdown", })
+                        @Html.DropDownListFor(model => model.Offer.Semester, Model.Semesters, new { required = "Please choose semester for specific offer" })
                     </div>
                     <div class="field">
                         <label asp-for="@Model.Offer.University">University</label>
-                        @Html.DropDownListFor(model => model.Offer.UniversityId, Model.Universities, new { @id = "uniCountry", @Name = "uniCountry", @class = "ui dropdown" })
+                        @Html.DropDownListFor(model => model.Offer.UniversityId, Model.Universities, new { required = "Please choose university for specific offer" })
                     </div>
                 </div>
                 <div class="fields">
@@ -89,17 +86,11 @@
                         <label asp-for="@Model.Offer.Cycles">Study cycles</label>
                         @if (Model.Offer != null)
                         {
-                                <input asp-for="@Model.Offer.Cycles" disabled /><p></p>
-                                <select asp-for="@Model.Offer.LCycles" asp-items="@Model.Cycles" multiple="" class="ui dropdown">
-                                    <option value="">Please choose new study cycles</option>
-                                </select>
+                            <input asp-for="@Model.Offer.Cycles" disabled /><p></p>
                         }
-                        else if (Model.Offer == null)
-                        {
-                            <select asp-for="@Model.Offer.LCycles" asp-items="@Model.Cycles" multiple="" class="ui dropdown">
-                                <option value="">Please choose new study cycles</option>
-                            </select>
-                        }
+                        <select asp-for="@Model.Offer.LCycles" asp-items="@Model.Cycles" multiple="" class="ui dropdown">
+                            <option value="">Please choose new study cycles</option>
+                        </select>
                     </div>
                     <div class="field">
                         <label asp-for="@Model.Offer.Programmes">Study programmes</label>
@@ -119,8 +110,18 @@
                     </div>
                 </div>
             </div>
-            <div class="ui error message"></div>
-            <button type="submit" class="ui left floated positive button">Save</button>
+            @if (Model.Offer == null)
+            {
+                <button type="submit" class="ui positive button">Save</button>
+            }
+            else if (Model.Offer != null)
+            {
+                <div class="ui buttons">
+                    <button type="submit" class="ui positive button">Save</button>
+                    <div class="or"></div>
+                    <button asp-controller="offers" asp-action="delete" asp-route-id="@Model.Offer.OfferId" class="ui button">Delete</button>
+                </div>
+            }
         </form>
     </div>
     @if (Model.Offer != null && Model.Nominations.Count != 0)
@@ -153,67 +154,9 @@
         </table>
     }
     <script>
-        $('.ui.dropdown').dropdown();
-
-        $('.ui.form')
-            .form({
-                fields: {
-                    from: {
-                        identifier: 'Offer.Start',
-                        rules: [
-                            {
-                                type: 'empty',
-                                prompt: 'Please select start date'
-                            }
-                        ]
-                    },
-                    to: {
-                        identifier: 'Offer.End',
-                        rules: [
-                            {
-                                type: 'empty',
-                                prompt: 'Please select end date'
-                            }
-                        ]
-                    },
-                    sem: {
-                        identifier: 'sem',
-                        rules: [
-                            {
-                                type: 'empty',
-                                prompt: 'Please select semester'
-                            }
-                        ]
-                    },
-                    uniCountry: {
-                        identifier: 'uniCountry',
-                        rules: [
-                            {
-                                type: 'empty',
-                                prompt: 'Please select university'
-                            }
-                        ]
-                    },
-                    cycles: {
-                        identifier: 'Offer.LCycles',
-                        rules: [
-                            {
-                                type: 'empty',
-                                prompt: 'Please select at least one study cycle'
-                            }
-                        ]
-                    },
-                    progrms: {
-                        identifier: 'Offer.LProgrammes',
-                        rules: [
-                            {
-                                type: 'empty',
-                                prompt: 'Please select at least one study programme'
-                            }
-                        ]
-                    },
-                }
-            });
+        $(function () {
+            $('.ui.dropdown').dropdown();
+        });
 
         $('#passissue').calendar({
             type: 'date'

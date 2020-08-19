@@ -91,7 +91,7 @@
         <div class="ui piled segment">
             <h2 class="ui header">
                 Application for the Dzemal Bijedic University
-                <div class="sub header">Started: @Model.Application.CreatedApp.ToMyStrDMYYYY_HMM()</div>
+                <div class="sub header">Started: @Model.Application.CreatedApp</div>
             </h2>
             @if (Model.Application.StatusOfApplication == "Unknown")
             {
@@ -112,7 +112,7 @@
             <p></p>
             @if (Model.Application.Finished == true)
             {
-                <div class="ui green label">Submitted:<div class="detail">@Model.Application.FinishedTime.ToMyStrDMYYYY_HMM()</div></div>
+                <div class="ui green label">Submitted:<div class="detail">@Model.Application.FinishedTime</div></div>
             }
             else if (Model.Application.Finished == false)
             {
@@ -166,7 +166,7 @@
                     </tr>
                     <tr>
                         <td>Account created</td>
-                        <td>@Model.Applicant.CreatedProfile.ToMyStrDMYYYY_HMM()</td>
+                        <td>@Model.Applicant.CreatedProfile</td>
                     </tr>
                     <tr>
                         <td>Account verification</td>

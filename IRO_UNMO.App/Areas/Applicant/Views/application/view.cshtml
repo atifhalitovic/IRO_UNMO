@@ -532,13 +532,13 @@
                     @if (Model.Application.Documents.LearningAgreement != null && Model.Application.Documents.MotivationLetter != null && Model.Application.Documents.CV != null && Model.Application.Documents.TranscriptOfRecords != null && Model.Application.Documents.ReferenceLetter != null && Model.Application.Documents.EngProficiency != null)
                     {
                         <div class="field">
-                            <button class="ui green submit button" asp-controller="application" asp-action="submit" asp-route-id="@Model.Application.ApplicationId"><i class="save outline icon"></i>Submit application </button>
+                            <button class="ui green submit button" asp-controller="application" asp-action="submit" asp-route-id="@Model.Application.ApplicationId"><i class="save outline icon"></i>Submit nomination</button>
                         </div>
                     }
                     else
                     {
                         <div class="field">
-                            <button class="ui green submit disabled button" asp-controller="application" asp-action="submit" asp-route-id="@Model.Application.ApplicationId"><i class="save outline icon"></i>Submit application</button>
+                            <button class="ui green submit disabled button" asp-controller="application" asp-action="submit" asp-route-id="@Model.Application.ApplicationId"><i class="save outline icon"></i>Submit nomination</button>
                         </div>
                       }
                 </div>

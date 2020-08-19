@@ -6,11 +6,38 @@
 <p></p>
 <h2 class="ui header">Dzemal Bijedic current application time</h2>
 <head>
-    <script type="text/javascript" src="~/dist/calendar.min.js"></script>
-    <script type="text/javascript" src="~/dist/components/form.js"></script>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <!--- Site CSS -->
+    <link rel="stylesheet" type="text/css" href="~/dist/components/reset.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/site.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/grid.css">
+    <!--- Component CSS -->
+    <link rel="stylesheet" type="text/css" href="~/dist/components/icon.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/table.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/button.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/transition.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/popup.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/accordion.css">
+
+    <script src="~/assets/library/jquery.min.js"></script>
+    <script src="~/assets/library/iframe-content.js"></script>
+    <script type="text/javascript" src="~/dist/components/modal.js"></script>
+    <script type="text/javascript" src="~/dist/components/popup.js"></script>
+    <script type="text/javascript" src="~/dist/components/transition.js"></script>
+    <script type="text/javascript" src="~/dist/components/accordion.js"></script>
+    <script type="text/javascript" src="~/dist/components/checkbox.js"></script>
     <script type="text/javascript" src="~/dist/components/dropdown.js"></script>
-    <script type="text/javascript" src="~/dist/components/dropdown.min.js"></script>
+
+    <script type="text/javascript" src="~/dist/calendar.min.js"></script>
     <link rel="stylesheet" href="~/dist/calendar.min.css" />
+
+    <style>
+        .ui.celled.table {
+            width: 720px;
+        }
+    </style>
 </head>
 <body>
     <div class="ui small equal width form">
@@ -20,7 +47,7 @@
                 <div class="fields">
                     <div class="field">
                         <label asp-for="@Model.current.Semester">Semester</label>
-                        @Html.DropDownListFor(model => model.current.Semester, Model.Semesters, new { @class="ui dropdown", required = "Please choose semester for specific offer" })
+                        @Html.DropDownListFor(model => model.current.Semester, Model.Semesters, new { required = "Please choose semester for specific offer" })
                     </div>
                     <div class="field">
                         <label asp-for="@Model.current.From">Date from</label>
@@ -108,6 +135,7 @@
                             <br />
                             <br />
                             <br />
+                            @*<a asp-controller="offers" asp-action="delete" asp-route-id="@x.OfferId" class="ui right floated basic red button">Delete</a>*@
                             <a asp-action="delete" asp-controller="offers" class="ui right floated basic red button" asp-route-id="@x.OfferId" id="test">Delete</a>
                             <div class="ui modal test">
                                 <i class="close icon"></i>
@@ -122,6 +150,7 @@
                                     <a asp-action="delete" asp-controller="offers" class="ui right floated red button" asp-route-id="@x.OfferId" id="test"><i class="checkmark icon"></i>Yes, delete this offer.</a>
                                 </div>
                             </div>
+                            @*<button asp-action="delete" asp-controller="offers" asp-route-id="@x.OfferId" class="ui right floated basic red button"><i class="eye"></i>Delete</button>*@
                         </div>
                     </div>
                 </div>
@@ -131,8 +160,6 @@
     <a asp-controller="offers" asp-action="offer" class="ui basic green button">Add</a>
 </body>
 <script>
-    $('.ui.dropdown').dropdown();   
-
     $('#passissue').calendar({
         type: 'date'
     });
