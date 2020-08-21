@@ -55,26 +55,23 @@
                         </div>
                         <div class="field">
                             <label asp-for="@Model.CountryId">Nationality</label>
-                            <select asp-for="@Model.CountryId" asp-items="@Model.Countries" class="ui dropdown" id="nationality" name="nationality">
+                            <select asp-for="@Model.CountryId" asp-items="@Model.Countries" class="ui dropdown">
                                 <option value="">Please select your nationality</option>
                             </select>
-                            @*@Html.DropDownListFor(model => model.CountryId, Model.Countries, new { @id = "nationality", @Name = "nationality", @class = "ui dropdown" })*@
                         </div>
                     </div>
                     <div class="fields">
                         <div class="field">
                             <label asp-for="@Model.TypeOfApplication">Applicant type</label>
-                            <select asp-for="@Model.TypeOfApplication" asp-items="@Model.TypesOfApplicant" class="ui dropdown" id="type" name="type">
+                            <select asp-for="@Model.TypeOfApplication" asp-items="@Model.TypesOfApplicant" class="ui dropdown">
                                 <option value="">Please select your applicant type</option>
                             </select>
-                            @*@Html.DropDownListFor(model => model.TypeOfApplication, Model.TypesOfApplicant, new { @id = "type", @Name = "type", @class = "ui dropdown" })*@
                         </div>
                         <div class="field">
                             <label asp-for="@Model.FacultyName">Faculty</label>
-                            <select asp-for="@Model.FacultyName" asp-items="@Model.Faculties" class="ui dropdown" id="faculty" name="faculty">
+                            <select asp-for="@Model.FacultyName" asp-items="@Model.Faculties" class="ui dropdown">
                                 <option value="">Please select your faculty</option>
                             </select>
-                            @*@Html.DropDownListFor(model => model.FacultyName, Model.Faculties, new { @id = "faculty", @Name = "faculty", @class = "ui dropdown" })*@
                         </div>
                     </div>
                 </div>
@@ -119,7 +116,7 @@
                         ]
                     },
                     email: {
-                        identifier: 'email',
+                        identifier: 'Email',
                         rules: [
                             {
                                 type: 'email',
@@ -128,7 +125,7 @@
                         ]
                     },
                     nationality: {
-                        identifier: 'nationality',
+                        identifier: 'CountryId',
                         rules: [
                             {
                                 type: 'empty',
@@ -137,7 +134,7 @@
                         ]
                     },
                     type: {
-                        identifier: 'type',
+                        identifier: 'TypeOfApplication',
                         rules: [
                             {
                                 type: 'empty',
@@ -146,7 +143,7 @@
                         ]
                     },
                     faculty: {
-                        identifier: 'faculty',
+                        identifier: 'FacultyName',
                         rules: [
                             {
                                 type: 'empty',

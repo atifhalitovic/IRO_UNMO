@@ -1,16 +1,54 @@
 ﻿@model IRO_UNMO.App.ViewModels.ForgotUniqueCodeVM
 @{
     Layout = "BasicLayout";
+    string errorMessage = (string)TempData["errorMessage"];
+    string successMessage = (string)TempData["successMessage"];
 }
 <p></p>
-<h3>Welcome to Forgot unique code page.</h3>
-<div class="form">
-    <form asp-controller="account" asp-action="code" method="post">
-        <div class="form-group">
-            <label>Enter your email (to send you new unique code)</label>
-            <input asp-for="@Model.Email" class="form-control" />
-            <span asp-validation-for="@Model.Email"></span>
+@if (errorMessage != null)
+{
+    <div class="ui negative message">
+        <i class="close icon"></i>
+        <div class="header">
+            Warning!
         </div>
-        <input type="submit" class="btn btn-success" value="Send new unique code" style="margin: 10px 10px 10px 10px;" />
-    </form>
+        <p>
+            @errorMessage
+        </p>
+    </div>
+}
+@if (successMessage != null)
+{
+    <div class="ui positive message">
+        <i class="close icon"></i>
+        <div class="header">
+            Done!
+        </div>
+        <p>
+            @successMessage
+        </p>
+    </div>
+}
+<div class="ui paded grid">
+    <p></p>
+    <p></p>
+    <p></p>
+    <div class="ui container center aligned">
+        <div class="ui centered card">
+            <p></p>
+            <div class="meta">
+                <form asp-controller="account" asp-action="code" method="post">
+                    <div class="ui top attached label">Enter your email (to send you new unique code)</div>
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <i class="mail icon"></i>
+                            <input asp-for="@Model.Email" class="form-control" />
+                            <span asp-validation-for="@Model.Email"></span>
+                        </div>
+                    </div>
+                    <input type="submit" class="ui teal submit button" value="Log in" style="margin: 10px 10px 10px 10px;" />
+                </form>
+            </div>
+        </div>
+    </div>
 </div>

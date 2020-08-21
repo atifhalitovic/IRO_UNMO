@@ -10,8 +10,8 @@ using IRO_UNMO.App.Models;
 using Microsoft.Extensions.FileProviders;
 using System.IO;
 using IRO_UNMO.App.Subscription;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.SignalR;
+using IRO_UNMO.App.Services;
 
 namespace IRO_UNMO.App
 {
@@ -40,10 +40,8 @@ namespace IRO_UNMO.App
               .AddRoles<IdentityRole>()
               .AddDefaultTokenProviders();
 
-            services.AddTransient<IEmailSender, EmailSender>();
             services.AddScoped<IMyUser, MyUser>();
             services.AddScoped<INotification, NotificationService>();
-            services.Configure<AuthMessageSenderOptions>(Configuration);
 
             //services.AddSession(options => {
             //    //options.IdleTimeout = TimeSpan.FromSeconds(3600);

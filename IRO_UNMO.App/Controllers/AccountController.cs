@@ -6,6 +6,7 @@ using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using IRO_UNMO.App.Data;
 using IRO_UNMO.App.Models;
+using IRO_UNMO.App.Services;
 using IRO_UNMO.App.ViewModels;
 using IRO_UNMO.Util;
 using IRO_UNMO.Web.Helper;
@@ -14,14 +15,17 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
 namespace IRO_UNMO.App.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly IHostingEnvironment hosting;
         private ApplicationDbContext _db;
+        private IConfiguration _configuration;
+
+        private readonly IHostingEnvironment hosting;
         private UserManagementHelper _userManagementHelper;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
@@ -30,7 +34,7 @@ namespace IRO_UNMO.App.Controllers
         private readonly UrlEncoder _urlEncoder;
 
         public AccountController(ApplicationDbContext db, IHostingEnvironment environment, UserManager<ApplicationUser> userManager,
-        SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager, UrlEncoder urlEncoder, ILogger<AccountController> logger)
+        SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager, UrlEncoder urlEncoder, ILogger<AccountController> logger, IConfiguration config)
         {
             _db = db;
             hosting = environment;
@@ -39,6 +43,7 @@ namespace IRO_UNMO.App.Controllers
             _roleManager = roleManager;
             _urlEncoder = urlEncoder;
             _logger = logger;
+            _configuration = config;
             _userManagementHelper = new UserManagementHelper(_db);
         }
 
@@ -77,7 +82,7 @@ namespace IRO_UNMO.App.Controllers
                 HttpContext.SetLoggedUser(user, true);
                 TempData["applicantId"] = user.Id;
                 return RedirectToAction("profile", "dashboard", new { area = "applicant", @id = user.Id });
-        }
+            }
             else if (userRole == "OutgoingApplicant")
             {
                 HttpContext.SetLoggedUser(user, true);
@@ -189,6 +194,9 @@ namespace IRO_UNMO.App.Controllers
             _db.Applicant.Add(applicant);
             _db.SaveChanges();
 
+            string msg = "Your unique code is: " + user.UniqueCode + "\nPlease login with it.";
+            EmailSettings.SendEmail(_configuration, user.Name + " " + user.Surname, user.Email, "Login info", msg);
+
             TempData["successMessage"] = "You have successfully registered! Now you can log in.";
             return RedirectToAction("login", "account");
         }
@@ -209,56 +217,65 @@ namespace IRO_UNMO.App.Controllers
                 return RedirectToAction("outgoing");
             }
 
-            bool x = await _roleManager.RoleExistsAsync("OutgoingApplicant");
-
-            if (!x)
+            if (ModelState.IsValid)
             {
-                await _roleManager.CreateAsync(new IdentityRole
+                bool x = await _roleManager.RoleExistsAsync("OutgoingApplicant");
+
+                if (!x)
                 {
-                    Name = "OutgoingApplicant"
-                });
+                    await _roleManager.CreateAsync(new IdentityRole
+                    {
+                        Name = "OutgoingApplicant"
+                    });
+                }
+
+                //password must be strong enough in order for userManager.CreateAsync to work!!!
+                string password = "myP@ssW0r@d123";
+
+                var brojKorisnika = _db.Users.Count();
+
+                brojac = ++brojKorisnika;
+
+                ApplicationUser user = new ApplicationUser
+                {
+                    Name = model.Name,
+                    Surname = model.Surname,
+                    Email = model.Email,
+                    PhoneNumber = model.PhoneNumber,
+                    CountryId = model.CountryId,
+                    UserName = model.Name.ToLower() + '.' + model.Surname.ToLower(),
+                    UniqueCode = GetRandomizedString(brojac),
+                    LastLogin = DateTime.Now
+                };
+
+                await _userManager.CreateAsync(user, password);
+
+                await _userManager.AddToRoleAsync(user, "OutgoingApplicant");
+
+                Applicant applicant = new Applicant
+                {
+                    ApplicantId = user.Id,
+                    ApplicationUser = user,
+                    CreatedProfile = DateTime.Now,
+                    UniversityId = 2,
+                    FacultyName = model.FacultyName,
+                    TypeOfApplication = model.TypeOfApplication,
+                    StudyCycle = model.StudyCycle,
+                    StudyField = model.StudyField,
+                    Verified = false
+                };
+
+                _db.Applicant.Add(applicant);
+                _db.SaveChanges();
+
+                string msg = "Your unique code is: " + user.UniqueCode + "\nPlease login with it.";
+                EmailSettings.SendEmail(_configuration, user.Name + " " + user.Surname, user.Email, "Login info", msg);
+
+                TempData["successMessage"] = "You have successfully registered! Now you can log in.";
+                return RedirectToAction("login", "account");
             }
-
-            //password must be strong enough in order for userManager.CreateAsync to work!!!
-            string password = "myP@ssW0r@d123";
-
-            var brojKorisnika = _db.Users.Count();
-
-            brojac = ++brojKorisnika;
-
-            ApplicationUser user = new ApplicationUser
-            {
-                Name = model.Name,
-                Surname = model.Surname,
-                Email = model.Email,
-                PhoneNumber = model.PhoneNumber,
-                CountryId = model.CountryId,
-                UserName = model.Name.ToLower() + '.' + model.Surname.ToLower(),
-                UniqueCode = GetRandomizedString(brojac),
-                LastLogin = DateTime.Now
-            };
-
-            await _userManager.CreateAsync(user, password);
-
-            await _userManager.AddToRoleAsync(user, "OutgoingApplicant");
-
-            Applicant applicant = new Applicant
-            {
-                ApplicantId = user.Id,
-                CreatedProfile = DateTime.Now,
-                UniversityId = 2,
-                FacultyName = model.FacultyName,
-                TypeOfApplication = model.TypeOfApplication,
-                StudyCycle = model.StudyCycle,
-                StudyField = model.StudyField,
-                Verified = false
-            };
-
-            _db.Applicant.Add(applicant);
-            _db.SaveChanges();
-
-            TempData["successMessage"] = "You have successfully registered! Now you can log in.";
-            return RedirectToAction("login", "account");
+            TempData["errorMessage"] = "Something went wrong, please try again.";
+            return RedirectToAction("outgoing", "account");
         }
 
         public IActionResult admin()
@@ -404,8 +421,11 @@ namespace IRO_UNMO.App.Controllers
         public IActionResult code(ForgotUniqueCodeVM model)
         {
             ApplicationUser user = _db.Users.FirstOrDefault(u => u.Email == model.Email);
-            if (user == null) return RedirectToAction("denied");
-
+            if (user == null)
+            {
+                TempData["errorMessage"] = "There is no user with this email. Please try again.";
+                return View(model);
+            }
 
             var brojKorisnika = _db.Users.Count();
             brojac = ++brojKorisnika;
@@ -413,6 +433,11 @@ namespace IRO_UNMO.App.Controllers
             user.UniqueCode = GetRandomizedString(brojac);
 
             _db.SaveChanges();
+
+            string msg = "Your new unique code is: " + user.UniqueCode + "\nNow you can login with the new code.";
+            EmailSettings.SendEmail(_configuration, user.Name + " " + user.Surname, user.Email, "New login info", msg);
+
+            TempData["successMessage"] = "You have successfully changed your code! Check for it at your email and you can log in.";
             return RedirectToAction("login", "account");
         }
 

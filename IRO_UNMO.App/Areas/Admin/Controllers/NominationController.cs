@@ -157,10 +157,20 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
             template.Graphics.DrawString("Student/staff: ", font, brush, 32, 187);
             template.Graphics.DrawString(mrki.Applicant.TypeOfApplication.ToString(), font, brush, 280, 187);
 
-            var path1 = Path.Combine(
-             Directory.GetCurrentDirectory(),
-             "wwwroot\\uploads\\", mrki.LearningAgreement);
+            var path1 = "";
 
+            if (mrki.LearningAgreement != null)
+            {
+                path1 = Path.Combine(
+                Directory.GetCurrentDirectory(),
+                "wwwroot\\uploads\\", mrki.LearningAgreement);
+            }
+            else if (mrki.WorkPlan != null)
+            {
+                path1 = Path.Combine(
+                Directory.GetCurrentDirectory(),
+                "wwwroot\\uploads\\", mrki.WorkPlan);
+            }
 
             var path2 = Path.Combine(
              Directory.GetCurrentDirectory(),
@@ -323,10 +333,10 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
 
                 _db.Comment.Add(newComment);
                 _db.SaveChanges();
-                _notificationService.sendToApplicant(current.ApplicantId, HttpContext.GetLoggedUser().Id, new IRO_UNMO.App.Subscription.NotificationVM()
+                _notificationService.sendToApplicant(current.ApplicantId, id1, new IRO_UNMO.App.Subscription.NotificationVM()
                 {
                     Message = model.NewComment,
-                    Url = "/admin/nomination/view/" + current.NominationId
+                    Url = "/applicant/nomination/view/" + current.NominationId
                 });
             }
             else
