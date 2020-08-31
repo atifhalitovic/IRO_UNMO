@@ -1,11 +1,14 @@
 ﻿using AutoMapper;
+using IRO_UNMO.WebAPI.Database;
+using IRO_UNMO.Model.Requests;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Swashbuckle.AspNetCore.Swagger;
-using Swashbuckle.AspNetCore.SwaggerGen;
+using IRO_UNMO.WebAPI.Services;
+using Microsoft.AspNetCore.Authentication;
 
 namespace IRO_UNMO.WebAPI
 {
@@ -21,20 +24,22 @@ namespace IRO_UNMO.WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAutoMapper(typeof(Startup));
-
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc();
 
             #pragma warning restore CS0618 // Type or member is obsolete
+
+            var connection = Configuration.GetConnectionString("LocalDB");
+
+            services.AddDbContext<IRO_UNMO_Context>(options => options.UseSqlServer(connection));
+
+            services.AddAutoMapper(typeof(Startup));
+
+            services.AddScoped<ICRUDService<Model.Country, Model.Country, Model.Country, Model.Country>, BaseCRUDService<Model.Country, Model.Country, Database.Country, Model.Country, Model.Country>>();
 
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "IRO_UNMO API v1", Version = "v1" });
             });
-
-            var connection = Configuration.GetConnectionString("LocalDB");
-
-            //services.AddDbContext<TravelEurope_Context>(options => options.UseSqlServer(connection));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,6 +53,11 @@ namespace IRO_UNMO.WebAPI
             {
                 app.UseHsts();
             }
+
+
+            app.UseAuthentication();
+
+            //app.UseHttpsRedirection();
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>

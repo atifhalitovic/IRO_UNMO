@@ -19,12 +19,6 @@ namespace IRO_UNMO.WebAPI.Database
         {
         }
 
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    if (!optionsBuilder.IsConfigured)
-        //    {
-        //        optionsBuilder.UseSqlServer(@"Server=.;Database=TravelEurope_RS2-3;Trusted_Connection=True;ConnectRetryCount=0");
-        //    }
-        //}
+        public DbSet<Country> Countries { get; set; }
     }
 }
