@@ -34,7 +34,8 @@ namespace IRO_UNMO.WebAPI
 
             services.AddAutoMapper(typeof(Startup));
 
-            services.AddScoped<ICRUDService<Model.Country, Model.Country, Model.Country, Model.Country>, BaseCRUDService<Model.Country, Model.Country, Database.Country, Model.Country, Model.Country>>();
+            services.AddScoped<ICountryService, CountryService>();
+            services.AddScoped<IApplicantService, ApplicantService>();
 
             services.AddSwaggerGen(c =>
             {

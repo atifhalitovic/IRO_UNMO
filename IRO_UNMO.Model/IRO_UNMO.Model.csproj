@@ -4,4 +4,8 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\IRO_UNMO.App\IRO_UNMO.App.csproj" />
+  </ItemGroup>
+
 </Project>

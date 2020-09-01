@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Security\BasicAuthenticationHandler.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Helper\" />
     <Folder Include="Migrations\" />
     <Folder Include="Security\" />

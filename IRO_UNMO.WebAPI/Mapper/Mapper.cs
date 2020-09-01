@@ -14,8 +14,17 @@ namespace IRO_UNMO.WebAPI.Mapper
     {
         public Mapper()
         {
-            CreateMap<IRO_UNMO.WebAPI.Database.Country, Model.Country>().ReverseMap();
-            CreateMap<IRO_UNMO.WebAPI.Database.Country, CountryRequest>().ReverseMap();
+            CreateMap<Database.Country, Model.Country>();
+            CreateMap<Database.Applicant, Model.Applicant>();
+            CreateMap<Database.ApplicationUser, Model.ApplicationUser>();
+            CreateMap<Database.University, Model.University>();
+            CreateMap<Database.Country, Model.Country>().ReverseMap();
+            CreateMap<Database.Applicant, Model.Applicant>().ReverseMap();
+            CreateMap<Database.University, Model.University>().ReverseMap();
+            CreateMap<Database.ApplicationUser, Model.ApplicationUser>().ReverseMap();
+            CreateMap<Database.Country, Model.Requests.CountryInsertRequest>().ReverseMap();
+            CreateMap<Database.Applicant, Model.Requests.ApplicantInsertRequest>().ReverseMap();
+            CreateMap<Database.Applicant, Model.Requests.ApplicantSearchRequest>().ReverseMap();
         }
     }
 }

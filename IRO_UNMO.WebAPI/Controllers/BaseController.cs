@@ -27,7 +27,6 @@ namespace IRO_UNMO.WebAPI.Controllers
             return Ok(list);
         }
 
-        //Get AutorbyID
         [HttpGet("{id}")]
         public ActionResult<TModel> GetById(int id)
         {
