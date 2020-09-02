@@ -27,5 +27,11 @@ namespace IRO_UNMO.WebAPI.Controllers
         {
             return _service.Get(request);
         }
+        [HttpGet("MyProfile")]
+        //[Authorize]
+        public Model.Applicant MyProfile()
+        {
+            return _service.MyProfile();
+        }
     }
 }

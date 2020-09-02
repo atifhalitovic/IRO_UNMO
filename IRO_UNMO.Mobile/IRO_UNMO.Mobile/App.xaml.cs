@@ -13,7 +13,7 @@ namespace IRO_UNMO.Mobile
         public App()
         {
             InitializeComponent();
-            MainPage = new LoginPage();
+            MainPage = new ApplicantsPage();
         }
 
         protected override void OnStart()

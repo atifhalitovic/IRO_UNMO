@@ -21,13 +21,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="NewViews\ApplicantPage.xaml">
+    <EmbeddedResource Update="NewViews\ApplicantsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="NewViews\LoginPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="NewViews\UniversityPage.xaml">
+    <EmbeddedResource Update="NewViews\LoginPage1.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>

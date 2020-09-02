@@ -12,5 +12,6 @@ namespace IRO_UNMO.WebAPI.Services
         List<Model.Applicant> Get(Model.Requests.ApplicantSearchRequest request);
         Applicant GetById(string id);
         Model.Applicant Authenticiraj(string uniqueCode);
+        Applicant MyProfile();
     }
 }

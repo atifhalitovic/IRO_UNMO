@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="IRO_UNMO.Mobile.NewViews.ApplicantsPage">
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout>
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                    <StackLayout BackgroundColor="DarkBlue">
+                        <Label Margin="0,7" 
+                       FontSize="16" 
+                       TextColor="White" 
+                       Text="All registered applicants on International Relations Office:"
+                       HorizontalOptions="Center"></Label>
+                    </StackLayout>
+                </StackLayout>
+                <Picker ItemsSource="{Binding UniversityList}" SelectedItem="{Binding SelectedUniversity}" ItemDisplayBinding="{Binding Name}"></Picker>
+                <ListView ItemsSource="{Binding ApplicantList}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout Padding="10" Orientation="Horizontal" Spacing="20">
+                                    <StackLayout Orientation="Vertical" VerticalOptions="Center">
+                                        <StackLayout Orientation="Horizontal" Spacing="10">
+                                            <Label Text="Full name:" 
+                                           LineBreakMode="NoWrap" 
+                                           VerticalTextAlignment="Center"
+                                           Style="{DynamicResource ListItemTextStyle}" 
+                                           FontSize="16" />
+                                            <Label Text="{Binding ApplicationUser.Name}" 
+                                           LineBreakMode="NoWrap" 
+                                           VerticalTextAlignment="End"
+                                           Style="{DynamicResource ListItemTextStyle}" 
+                                           FontSize="16" />
+                                            <Label Text="{Binding ApplicationUser.Surname}" 
+                                           LineBreakMode="NoWrap" 
+                                           VerticalTextAlignment="End"
+                                           Style="{DynamicResource ListItemTextStyle}" 
+                                           FontSize="16" />
+                                        </StackLayout>
+                                        <StackLayout Orientation="Horizontal" Spacing="10">
+                                            <Label Text="Nationality:" 
+                                           LineBreakMode="NoWrap" 
+                                           VerticalTextAlignment="Center"
+                                           Style="{DynamicResource ListItemTextStyle}" 
+                                           FontSize="16" />
+                                           <Label Text="{Binding ApplicationUser.Country.Name}" 
+                                           LineBreakMode="NoWrap"
+                                           VerticalTextAlignment="End"
+                                           Style="{DynamicResource ListItemDetailTextStyle}"
+                                           FontSize="16" />
+                                        </StackLayout>
+                                        <StackLayout Orientation="Horizontal" Spacing="10">
+                                            <Label Text="University:" 
+                                           LineBreakMode="NoWrap" 
+                                           VerticalTextAlignment="Center"
+                                           Style="{DynamicResource ListItemTextStyle}" 
+                                           FontSize="16" />
+                                            <Label Text="{Binding University.Name}" 
+                                           LineBreakMode="NoWrap"
+                                           VerticalTextAlignment="End"
+                                           Style="{DynamicResource ListItemDetailTextStyle}"
+                                           FontSize="16" />
+                                        </StackLayout>
+                                    </StackLayout>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

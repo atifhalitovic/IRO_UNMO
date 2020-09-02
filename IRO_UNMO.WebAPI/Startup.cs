@@ -38,6 +38,7 @@ namespace IRO_UNMO.WebAPI
 
             services.AddScoped<ICountryService, CountryService>();
             services.AddScoped<IApplicantService, ApplicantService>();
+            services.AddScoped<IUniversityService, UniversityService>();
 
             services.AddSwaggerGen(c =>
             {

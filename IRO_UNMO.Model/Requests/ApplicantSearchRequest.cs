@@ -6,8 +6,7 @@ namespace IRO_UNMO.Model.Requests
 {
     public class ApplicantSearchRequest
     {
-        public string ImePrezime { get; set; }
-        public string UserName { get; set; }
-        public bool Aktivan { get; set; }
+        public string FullName { get; set; }
+        public string TypeOfApplicant { get; set; }
     }
 }

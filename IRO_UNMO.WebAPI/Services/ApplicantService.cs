@@ -24,6 +24,17 @@ namespace IRO_UNMO.WebAPI.Services
             _mapper = mapper;
         }
 
+        public Model.Applicant MyProfile()
+        {
+            var query = _context.Applicant.AsQueryable();
+
+            query = query.Where(x => x.ApplicantId == Security.BasicAuthenticationHandler.LoggedUser.ApplicantId);
+
+            var entity = query.FirstOrDefault();
+
+            return _mapper.Map<Model.Applicant>(entity);
+        }
+
         public List<Model.Applicant> Get(ApplicantSearchRequest request)
         {
             var query = _context.Applicant.Include(x => x.ApplicationUser).ThenInclude(y => y.Country).Include(q => q.University).AsQueryable();
