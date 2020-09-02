@@ -27,12 +27,5 @@ namespace IRO_UNMO.WebAPI.Controllers
         {
             return _service.Get(request);
         }
-
-        [HttpPost]
-        //[Authorize(Roles = "Administrator")]
-        public Model.Applicant Insert([FromBody]Model.Requests.ApplicantInsertRequest request)
-        {
-            return _service.Insert(request);
-        }
     }
 }

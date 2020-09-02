@@ -15,7 +15,7 @@ namespace IRO_UNMO.WebAPI.Security
     public class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSchemeOptions>
     {
         private readonly IApplicantService _userService;
-        public static Model.Applicant PrijavljeniKorisnik;
+        public static Model.Applicant LoggedUser;
 
         public BasicAuthenticationHandler(
             IOptionsMonitor<AuthenticationSchemeOptions> options,
@@ -38,24 +38,22 @@ namespace IRO_UNMO.WebAPI.Security
                 var authHeader = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]);
                 var credentialBytes = Convert.FromBase64String(authHeader.Parameter);
                 var credentials = Encoding.UTF8.GetString(credentialBytes).Split(':');
+                var uniqueCode = credentials[2]; // ???
                 var username = credentials[0];
                 var password = credentials[1];
-                PrijavljeniKorisnik = _userService.Authenticiraj(username, password);
+                LoggedUser = _userService.Authenticiraj(uniqueCode);
             }
             catch
             {
                 return AuthenticateResult.Fail("Invalid Authorization Header");
             }
 
-            if (PrijavljeniKorisnik == null)
+            if (LoggedUser == null)
                 return AuthenticateResult.Fail("Invalid Username or Password");
 
             var claims = new List<Claim> {
-                new Claim(ClaimTypes.NameIdentifier, PrijavljeniKorisnik.KorisnickoIme),
-                new Claim(ClaimTypes.Name, PrijavljeniKorisnik.Ime),
+                new Claim(ClaimTypes.NameIdentifier, LoggedUser.ApplicationUser.UniqueCode),
             };
-
-            claims.Add(new Claim(ClaimTypes.Role, PrijavljeniKorisnik.Uloga.Naziv));
 
             var identity = new ClaimsIdentity(claims, Scheme.Name);
             var principal = new ClaimsPrincipal(identity);

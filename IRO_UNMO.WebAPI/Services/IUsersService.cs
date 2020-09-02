@@ -7,10 +7,12 @@ using IRO_UNMO.Model.Requests;
 
 namespace IRO_UNMO.WebAPI.Services
 {
-    public interface IApplicantService
+    public interface IUsersService
     {
         List<Model.Applicant> Get(Model.Requests.ApplicantSearchRequest request);
-        Applicant GetById(string id);
-        Model.Applicant Authenticiraj(string uniqueCode);
+        Model.Applicant Insert(Model.Requests.ApplicantInsertRequest request);
+        Applicant GetById(int id);
+        Applicant MyProfile();
+        Model.Applicant Authenticiraj(string username, string pass);
     }
 }

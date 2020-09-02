@@ -1,103 +1,206 @@
-﻿using IRO_UNMO.Model;
-using Flurl.Http;
-using System;
+﻿using Flurl.Http;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using IRO_UNMO.Model;
 
-namespace IRO_UNMO.MobileApp
+namespace IRO_UNMO.Mobile
 {
     public class APIService
     {
-        public static ApplicationUser PrijavljeniKorisnik { get; set; }
-        public static string username { get; set; }
-        public static string password { get; set; }
-        private readonly string route ;
-        #if DEBUG
+        public static string Username { get; set; }
+        public static string Password { get; set; }
+        public static string UniqueCode { get; set; }
+        public static Model.Applicant LoggedUser { get; set; }
 
-        string _apiURL = "http://localhost:5000/api";
-        #endif
-        #if RELEASE
-        string _apiURL = "https://website.com/api";
-        #endif
-        public APIService(string _route)
+        private readonly string _route;
+        public APIService(string route)
         {
-            route = _route;
+            _route = route;
         }
-        public async Task<T> get<T>(object search, string actionName = "")
-        {
-            var url = $"{_apiURL}/{route}";
 
-            if (actionName != null)
+        //private readonly string APIUrl = "http://192.168.137.1:5000/api"; // za IIS
+        private readonly string APIUrl = "http://localhost:5000/api"; // ZA IIS EXPRESS
+        //private readonly string APIUrl = "https://IRO_UNMOwebapi20190717101945.azurewebsites.net/api"; // AZURE, NE RADI VISE
+
+        public async Task<bool> Remove(int id)
+        {
+            var url = $"{APIUrl}/{_route}/{id}";
+
+            try
             {
-                url += "/";
-                url += actionName;
+                return await url.WithBasicAuth(Username, Password).DeleteAsync().ReceiveJson<bool>();
             }
-
-            if (search != null)
+            catch (FlurlHttpException ex)
             {
-                url += "?";
-                url += await search.ToQueryString();
+                if (ex.Call.HttpStatus == System.Net.HttpStatusCode.Unauthorized)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Greška", "Pogrešan unos podataka ili nemate akaunt!", "OK");
+                    return false;
+                }
+                if (ex.Call.HttpStatus == System.Net.HttpStatusCode.Forbidden)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Greška", "Niste autorizovani", "OK");
+                }
+
+                var errors = await ex.GetResponseJsonAsync<Dictionary<string, string[]>>();
+
+                var stringBuilder = new StringBuilder();
+                foreach (var error in errors)
+                {
+                    stringBuilder.AppendLine($"{error.Key}, {string.Join(",", error.Value)}");
+                }
+
+                await Application.Current.MainPage.DisplayAlert("Greška", "", "OK");
+                return false;
             }
-            return await url.WithBasicAuth(username, password).GetJsonAsync<T>();
         }
 
-
-        public async Task<T> getbyId<T>(object id)
+        public async Task<T> Get<T>(object search, string actionName = null)
         {
-            var url = $"{_apiURL}/{route}/{id}";
-            T result ;
-          
-            result = await url.WithBasicAuth(username, password).GetJsonAsync<T>();
-            return result;
+            var url = $"{APIUrl}/{_route}";
+
+            try
+            {
+                if (actionName != null)
+                {
+                    url += "/" + actionName;
+                }
+
+                if (search != null)
+                {
+                    url += "?";
+                    url += await search.ToQueryString();
+                }
+
+                return await url.WithBasicAuth(Username, Password).GetJsonAsync<T>();
+            }
+            catch (FlurlHttpException ex)
+            {
+                if (ex.Call.HttpStatus == System.Net.HttpStatusCode.Unauthorized)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Greška", "Pogrešan unos podataka ili nemate akaunt!", "OK");
+                }
+                if (ex.Call.HttpStatus == System.Net.HttpStatusCode.Forbidden)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Greška", "Niste autorizovani.", "OK");
+                    return default(T);
+                }
+                throw;
+            }
         }
 
-        public async Task<T> Insert<T>(object request, string actionName = null)
+        public async Task<T> Insert<T>(object entity, string actionName = null)
         {
-            var url = $"{_apiURL}/{route}";
+            var url = $"{APIUrl}/{_route}";
+
             if (actionName != null)
             {
                 url += "/" + actionName;
             }
 
-            if (route=="Klijenti")
+            try
             {
-                return  await url.PostJsonAsync(request).ReceiveJson<T>();
+                return await url.WithBasicAuth(Username, Password).PostJsonAsync(entity).ReceiveJson<T>();
             }
-            return  await url.WithBasicAuth(username, password).PostJsonAsync(request).ReceiveJson<T>();
-        }
-
-        public async Task<T> Update<T>(object id, object request)
-        {
-            var url = $"{_apiURL}/{route}/{id}";
-            var result = await url.WithBasicAuth(username, password).PutJsonAsync(request).ReceiveJson<T>();
-            return result;
-        }
-
-        public async Task<T> UpdateProfie<T>(object request, string actionName = null)
-        {
-            var url = $"{_apiURL}/{route}";
-            if (actionName != null)
+            catch (FlurlHttpException ex)
             {
-                url += "/" + actionName;
-            }
+                if (ex.Call.HttpStatus == System.Net.HttpStatusCode.Unauthorized)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Greška", "Pogrešan unos podataka ili nemate akaunt!", "OK");
+                    return default(T);
+                }
+                if (ex.Call.HttpStatus == System.Net.HttpStatusCode.Forbidden)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Greška", "Niste autorizovani.", "OK");
+                    return default(T);
+                }
 
-            var result = await url.WithBasicAuth(username, password).PutJsonAsync(request).ReceiveJson<T>();
-            return result;
+                var errors = await ex.GetResponseJsonAsync<Dictionary<string, string[]>>();
+
+                var stringBuilder = new StringBuilder();
+                foreach (var error in errors)
+                {
+                    stringBuilder.AppendLine($"{error.Key}, {string.Join(",", error.Value)}");
+                }
+
+                await Application.Current.MainPage.DisplayAlert("Error", stringBuilder.ToString(), "OK");
+                return default(T);
+            }
         }
 
-        public async Task<bool> Remove(int id, string actionName = null)
+        public async Task<T> GetById<T>(int id, string actionName = null)
         {
-            var url = $"{_apiURL}/{route}";
+            var url = $"{APIUrl}/{_route}";
+
+            try
+            {
+                if (actionName != null)
+                    url += "/" + actionName;
+
+                url += "/" + id;
+                return await url.WithBasicAuth(Username, Password).GetJsonAsync<T>();
+            }
+            catch (FlurlHttpException ex)
+            {
+                if (ex.Call.HttpStatus == System.Net.HttpStatusCode.Unauthorized)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Greška", "Pogrešan unos podataka ili nemate akaunt!", "OK");
+                }
+                if (ex.Call.HttpStatus == System.Net.HttpStatusCode.Forbidden)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Greška", "Niste autorizovani.", "OK");
+                    return default(T);
+                }
+                throw;
+            }
+        }
+
+        public async Task<bool> Delete(int id, string actionName = null)
+        {
+            var url = $"{APIUrl}/{_route}";
 
             if (actionName != null)
                 url += "/" + actionName;
 
             url += "/" + id;
 
-            return await url.WithBasicAuth(username, password).DeleteAsync().ReceiveJson<bool>();
+            return await url.WithBasicAuth(Username, Password).DeleteAsync().ReceiveJson<bool>();
+        }
+
+        public async Task<T> Update<T>(int id, object request)
+        {
+            var url = $"{APIUrl}/{_route}/{id}";
+
+            try
+            {
+                return await url.WithBasicAuth(Username, Password).PutJsonAsync(request).ReceiveJson<T>();
+            }
+            catch (FlurlHttpException ex)
+            {
+                if (ex.Call.HttpStatus == System.Net.HttpStatusCode.Unauthorized)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Greška", "Pogrešan unos podataka ili nemate akaunt!", "OK");
+                    return default(T);
+                }
+                if (ex.Call.HttpStatus == System.Net.HttpStatusCode.Forbidden)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Greška", "Niste autorizovani.", "OK");
+                    return default(T);
+                }
+
+                var errors = await ex.GetResponseJsonAsync<Dictionary<string, string[]>>();
+
+                var stringBuilder = new StringBuilder();
+                foreach (var error in errors)
+                {
+                    stringBuilder.AppendLine($"{error.Key}, {string.Join(",", error.Value)}");
+                }
+
+                await Application.Current.MainPage.DisplayAlert("Error", stringBuilder.ToString(), "OK");
+                return default(T);
+            }
         }
     }
 }
-

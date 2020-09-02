@@ -11,13 +11,13 @@ namespace IRO_UNMO.Mobile.Views
     public partial class MainPage : MasterDetailPage
     {
         Dictionary<int, NavigationPage> MenuPages = new Dictionary<int, NavigationPage>();
-        public MainPage()
+        public string AdminId;
+        public MainPage(string admin)
         {
             InitializeComponent();
-
+            AdminId = admin;
             MasterBehavior = MasterBehavior.Popover;
-
-            MenuPages.Add((int)MenuItemType.Browse, (NavigationPage)Detail);
+            //MenuPages.Add((int)MenuItemType.Browse, (NavigationPage)Detail);
         }
 
         public async Task NavigateFromMenu(int id)

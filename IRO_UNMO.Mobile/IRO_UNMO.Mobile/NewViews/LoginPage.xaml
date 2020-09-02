@@ -1,12 +1,22 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:IRO_UNMO.Mobile.ViewModels"
              x:Class="IRO_UNMO.Mobile.NewViews.LoginPage">
-    <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+    
+    <ContentPage.BindingContext>
+        <vm:LoginViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Content >
+        <StackLayout Padding="7"  Spacing="10" VerticalOptions="CenterAndExpand" HorizontalOptions="FillAndExpand">
+            <Label Text="Korisničko Ime :" />
+            <Entry Text="{Binding KorisnickoIme}"></Entry>
+            <Label Text="Password :"/>
+            <Entry  Text="{Binding Lozinka}" IsPassword="True"></Entry>
+            <Button Command="{Binding LoginCommand}" Text="Login" BackgroundColor="RoyalBlue" TextColor="White"></Button>
+            <Label IsVisible="{Binding IsBusy}" Text="..."/>
         </StackLayout>
     </ContentPage.Content>
+    
 </ContentPage>
