@@ -7,156 +7,158 @@
     <script type="text/javascript" src="~/dist/components/form.js"></script>
     <script type="text/javascript" src="~/dist/components/dropdown.js"></script>
     <script type="text/javascript" src="~/dist/components/dropdown.min.js"></script>
-
     <style>
         .ui.compact.segment {
             background-color: #dedede;
         }
     </style>
-
 </head>
-<body>
-    @if (errorMessage != null)
-    {
-        <div class="ui negative message">
-            <i class="close icon"></i>
-            <div class="header">
-                Warning!
-            </div>
-            <p>
-                @errorMessage
-            </p>
+<div class="ui dividing huge header">
+    <p></p>
+    <div class="ui huge breadcrumb">
+        <h2 class="ui header">Registration page - outgoing</h2>
+    </div>
+</div>
+@if (errorMessage != null)
+{
+    <div class="ui negative message">
+        <i class="close icon"></i>
+        <div class="header">
+            Warning!
         </div>
-    }
-    <form id="registration" class="ui form" asp-controller="account" asp-action="outgoing" method="post">
-        <p></p>
-        <div class="ui compact segment">
-            <h3 class="ui red dividing header"><i class="exchange alternate icon"></i>Registration for outgoing applicant from UNMO</h3>
-            <div class="fields">
-                <div class="ui small equal width form">
-                    <div class="fields">
-                        <div class="field">
-                            <label>Name</label>
-                            <input class="ui input" name="name" asp-for="@Model.Name" type="text">
-                        </div>
-                        <div class="field">
-                            <label>Surname</label>
-                            <input class="ui input" name="surname" asp-for="@Model.Surname" type="text">
-                        </div>
+        <p>
+            @errorMessage
+        </p>
+    </div>
+}
+<form id="registration" class="ui form" asp-controller="account" asp-action="outgoing" method="post">
+    <p></p>
+    <div class="ui compact segment">
+        <h3 class="ui red dividing header"><i class="exchange alternate icon"></i>Registration for outgoing applicant from UNMO</h3>
+        <div class="fields">
+            <div class="ui small equal width form">
+                <div class="fields">
+                    <div class="field">
+                        <label>Name</label>
+                        <input class="ui input" name="name" asp-for="@Model.Name" type="text">
                     </div>
-                    <div class="fields">
-                        <div class="field">
-                            <label asp-for="@Model.PhoneNumber">Phone number</label>
-                            <input name="PhoneNumber" asp-for="@Model.PhoneNumber" type="text" />
-                        </div>
-                        <div class="field">
-                            <label asp-for="@Model.Email">E-mail</label>
-                            <input class="ui input" name="email" asp-for="@Model.Email" type="text" />
-                        </div>
-                        <div class="field">
-                            <label asp-for="@Model.CountryId">Nationality</label>
-                            <select asp-for="@Model.CountryId" asp-items="@Model.Countries" class="ui dropdown">
-                                <option value="">Please select your nationality</option>
-                            </select>
-                        </div>
+                    <div class="field">
+                        <label>Surname</label>
+                        <input class="ui input" name="surname" asp-for="@Model.Surname" type="text">
                     </div>
-                    <div class="fields">
-                        <div class="field">
-                            <label asp-for="@Model.TypeOfApplication">Applicant type</label>
-                            <select asp-for="@Model.TypeOfApplication" asp-items="@Model.TypesOfApplicant" class="ui dropdown">
-                                <option value="">Please select your applicant type</option>
-                            </select>
-                        </div>
-                        <div class="field">
-                            <label asp-for="@Model.FacultyName">Faculty</label>
-                            <select asp-for="@Model.FacultyName" asp-items="@Model.Faculties" class="ui dropdown">
-                                <option value="">Please select your faculty</option>
-                            </select>
-                        </div>
+                </div>
+                <div class="fields">
+                    <div class="field">
+                        <label asp-for="@Model.PhoneNumber">Phone number</label>
+                        <input name="PhoneNumber" asp-for="@Model.PhoneNumber" type="text" />
+                    </div>
+                    <div class="field">
+                        <label asp-for="@Model.Email">E-mail</label>
+                        <input class="ui input" name="email" asp-for="@Model.Email" type="text" />
+                    </div>
+                    <div class="field">
+                        <label asp-for="@Model.CountryId">Nationality</label>
+                        <select asp-for="@Model.CountryId" asp-items="@Model.Countries" class="ui dropdown">
+                            <option value="">Please select your nationality</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="fields">
+                    <div class="field">
+                        <label asp-for="@Model.TypeOfApplication">Applicant type</label>
+                        <select asp-for="@Model.TypeOfApplication" asp-items="@Model.TypesOfApplicant" class="ui dropdown">
+                            <option value="">Please select your applicant type</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label asp-for="@Model.FacultyName">Faculty</label>
+                        <select asp-for="@Model.FacultyName" asp-items="@Model.Faculties" class="ui dropdown">
+                            <option value="">Please select your faculty</option>
+                        </select>
                     </div>
                 </div>
             </div>
-            <div class="extra content">
-                <button type="submit" class="ui primary button">Register</button>
-            </div>
         </div>
-        <div class="ui error message"></div>
-    </form>
-    <script>
-        $('.ui.dropdown').dropdown();
+        <div class="extra content">
+            <button type="submit" class="ui primary button">Register</button>
+        </div>
+    </div>
+    <div class="ui error message"></div>
+</form>
+<script>
+    $('.ui.dropdown').dropdown();
 
-        $('.ui.form')
-            .form({
-                fields: {
-                    name: {
-                        identifier: 'name',
-                        rules: [
-                            {
-                                type: 'empty',
-                                prompt: 'Please enter your name'
-                            },
-                        ]
-                    },
-                    surname: {
-                        identifier: 'surname',
-                        rules: [
-                            {
-                                type: 'empty',
-                                prompt: 'Please enter your surname'
-                            }
-                        ]
-                    },
-                    phone: {
-                        identifier: 'PhoneNumber',
-                        rules: [
-                            {
-                                type: 'empty',
-                                prompt: 'Please enter your phone number'
-                            }
-                        ]
-                    },
-                    email: {
-                        identifier: 'Email',
-                        rules: [
-                            {
-                                type: 'email',
-                                prompt: 'Please enter your valid email address'
-                            }
-                        ]
-                    },
-                    nationality: {
-                        identifier: 'CountryId',
-                        rules: [
-                            {
-                                type: 'empty',
-                                prompt: 'Please select your nationality'
-                            }
-                        ]
-                    },
-                    type: {
-                        identifier: 'TypeOfApplication',
-                        rules: [
-                            {
-                                type: 'empty',
-                                prompt: 'Please select your applicant type'
-                            }
-                        ]
-                    },
-                    faculty: {
-                        identifier: 'FacultyName',
-                        rules: [
-                            {
-                                type: 'empty',
-                                prompt: 'Please select your faculty'
-                            }
-                        ]
-                    }
+    $('.ui.form')
+        .form({
+            fields: {
+                name: {
+                    identifier: 'name',
+                    rules: [
+                        {
+                            type: 'empty',
+                            prompt: 'Please enter your name'
+                        },
+                    ]
+                },
+                surname: {
+                    identifier: 'surname',
+                    rules: [
+                        {
+                            type: 'empty',
+                            prompt: 'Please enter your surname'
+                        }
+                    ]
+                },
+                phone: {
+                    identifier: 'PhoneNumber',
+                    rules: [
+                        {
+                            type: 'empty',
+                            prompt: 'Please enter your phone number'
+                        }
+                    ]
+                },
+                email: {
+                    identifier: 'Email',
+                    rules: [
+                        {
+                            type: 'email',
+                            prompt: 'Please enter your valid email address'
+                        }
+                    ]
+                },
+                nationality: {
+                    identifier: 'CountryId',
+                    rules: [
+                        {
+                            type: 'empty',
+                            prompt: 'Please select your nationality'
+                        }
+                    ]
+                },
+                type: {
+                    identifier: 'TypeOfApplication',
+                    rules: [
+                        {
+                            type: 'empty',
+                            prompt: 'Please select your applicant type'
+                        }
+                    ]
+                },
+                faculty: {
+                    identifier: 'FacultyName',
+                    rules: [
+                        {
+                            type: 'empty',
+                            prompt: 'Please select your faculty'
+                        }
+                    ]
                 }
-            });
+            }
+        });
 
-        $('.message .close')
-            .on('click', function () {
-                $(this).closest('.message').transition('fade');
-            });
-    </script>
-</body>
+    $('.message .close')
+        .on('click', function () {
+            $(this).closest('.message').transition('fade');
+        });
+</script>

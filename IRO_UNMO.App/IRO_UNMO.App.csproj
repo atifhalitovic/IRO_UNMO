@@ -44,6 +44,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="Areas\Account\Views\Home\AccessDenied.cshtml" />
+    <Content Remove="Areas\Account\Views\Home\details.cshtml" />
+    <Content Remove="Areas\Account\Views\Home\ForgotUniqueCode.cshtml" />
+    <Content Remove="Areas\Account\Views\Home\incoming.cshtml" />
+    <Content Remove="Areas\Account\Views\Home\Login.cshtml" />
+    <Content Remove="Areas\Account\Views\Home\login0.cshtml" />
+    <Content Remove="Areas\Account\Views\Home\outgoing.cshtml" />
+    <Content Remove="Areas\Account\Views\Home\type.cshtml" />
     <Content Remove="Areas\Identity\Pages\Account\Register.cshtml" />
   </ItemGroup>
 
@@ -92,6 +100,7 @@
 
   <ItemGroup>
     <Folder Include="Areas\Account\Data\" />
+    <Folder Include="Areas\Account\Views\Home\" />
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Applicant\Data\" />
@@ -101,13 +110,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Areas\Account\Views\Home\AccessDenied.cshtml" />
-    <None Include="Areas\Account\Views\Home\details.cshtml" />
-    <None Include="Areas\Account\Views\Home\ForgotUniqueCode.cshtml" />
-    <None Include="Areas\Account\Views\Home\incoming.cshtml" />
-    <None Include="Areas\Account\Views\Home\login0.cshtml" />
-    <None Include="Areas\Account\Views\Home\outgoing.cshtml" />
-    <None Include="Areas\Account\Views\Home\type.cshtml" />
     <None Include="Areas\Admin\Views\Applicants\index.cshtml" />
     <None Include="Areas\Admin\Views\Applicants\review.cshtml" />
     <None Include="Areas\Admin\Views\Application\docs.cshtml" />
@@ -614,9 +616,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="Areas\Account\Views\Home\Login.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
     <Content Update="Areas\Admin\Views\dashboard\timing.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
@@ -630,7 +629,6 @@
     </Content>
     <Content Update="Areas\Applicant\Views\dashboard\administrative.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
     <Content Update="Areas\Applicant\Views\dashboard\emergency.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
@@ -661,13 +659,13 @@
     <Content Update="Views\account\logout.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+    <Content Update="Views\dashboard\administrative.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Views\dashboard\offers.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Views\dashboard\tuition.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Views\dashboard\administrative.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Views\dashboard\activities.cshtml">
@@ -686,6 +684,12 @@
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Views\dashboard\study-in-mostar.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\ApplicantLayout - Copy.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\BasicLayout - Copy.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Views\Shared\BasicLayout.cshtml">

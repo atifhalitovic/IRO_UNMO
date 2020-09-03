@@ -1,5 +1,397 @@
 ﻿@{
     Layout = "BasicLayout";
 }
+<style>
+    #front-cover {
+        margin-top: -30px;
+        padding-top: 20rem;
+        padding-bottom: 2rem;
+        background-size: cover;
+        background-position: top center;
+        background-repeat: no-repeat;
+        background-clip: padding-box;
+        will-change: opacity;
+        opacity: .5;
+    }
 
-<h2>Pocetna stranica.</h2>
+        #front-cover .page.header.compact {
+            padding-bottom: 20rem;
+        }
+
+        #front-cover h1 {
+            font-size: 3rem !important;
+            text-shadow: 1px 1px rgba(0,0,0,.3);
+        }
+
+    h1.ui.header .sub.header {
+        font-size: 1.14285714rem;
+    }
+
+    .ui.centered.grid, .ui.centered.grid > .row, .ui.grid > .centered.row {
+        text-align: center;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+    }
+
+    .ui.grid > .row {
+        position: relative;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+        flex-direction: row;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        -webkit-box-pack: inherit;
+        -ms-flex-pack: inherit;
+        justify-content: inherit;
+        -webkit-box-align: stretch;
+        -ms-flex-align: stretch;
+        align-items: stretch;
+        width: 100% !important;
+        padding: 0;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+    }
+
+    .ui.white.header {
+        color: white;
+    }
+
+    .ui.container {
+        display: block;
+        max-width: 100% !important;
+    }
+
+    main.container {
+        padding-top: 1em;
+        padding-bottom: 4em;
+    }
+
+    .ui.grid {
+        margin-top: -1rem;
+        margin-bottom: -1rem;
+        margin-left: -1rem;
+        margin-right: -1rem;
+    }
+</style>
+<br />
+<p></p>
+<div id="front-cover" class="cover segment" data-cover="~/unmo-building.jpg" style="position: relative; z-index: 2; background-image: url(unmo-building.jpg); opacity: 1;">
+    <div class="ui page grid header center aligned compact">
+    </div>
+    <div class="ui page grid centered overlay aligned">
+        <h1 class="ui white header"><span style="text-transform: uppercase">Start your journey</span><div class="h2 header">Send your online application easily</div></h1>
+        <a href="/account/type" class="ui button big primary">
+            Get started now!
+        </a>
+    </div>
+</div>
+<main class="ui container">
+    <div class="ui two column stackable grid" style="margin-top: 1em">
+        <div class="eight wide column">
+            <div>
+                <p><strong><span class="caps">EXCHANGE</span> <span class="caps">SEMESTERS</span> AT <span class="caps">THE</span> <span class="caps">DŽEMAL BIJEDIĆ</span> <span class="caps">UNIVERSITY</span> OF <span class="caps">MOSTAR</span></strong></p>
+                <p>
+                    The on-line system is opened in period of application and nomination.
+                    All candidates must be officially nominated by their home university.
+                </p>
+                <p>
+                    Documents to be uploaded: <br>
+                    •	Transcript of Records (in English; scanned <span class="caps">PDF</span> file), <br>
+                    •	English certificate (in English; scanned <span class="caps">PDF</span> file), <br>
+                </p><br>
+                <p>Start by choosing the mobility type and apply online!</p>
+                <p>
+                    1) Click “Get started now!”<br>
+                    2) Register as an incoming or outgoing applicant!<br>
+                    3) More details available after successful registration on your profile!<br>
+                    4) Select your mobility and click “Apply now!”
+                </p>
+                <p><strong>Applying for exchange studies has never been so easy!</strong></p>
+            </div>
+        </div>
+        <div class="eight wide column">
+            <div class="ui two doubling front cards">
+                <div class="ui card ">
+                    <a href="/news/new/34-orientation-days--winter-semester-october-2019" class="image" style="background-image: url('https://img.cdn.dreamapply.com/eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJkcmVhbS1hcHBseSIsImF1ZCI6ImRyZWFtLWltYWdlIiwicGxkIjp7InBhdGgiOiJkcmVhbS1hcHBseTpzaGFyZDMzOFwvbmV3X3Bob3Rvc1wvMzQucHdvcHRxIiwidHJhbnNmb3JtYXRpb25zIjpbeyJuYW1lIjoiY3JvcCIsInBhcmFtcyI6eyJ3aWR0aCI6IjMwMCIsImhlaWdodCI6IjI0NiIsInF1YWxpdHkiOiI3MCIsImZvY3VzIjoiWCJ9fV0sImNhY2hlIjoibWF4LWFnZT0zMTUzNjAwMCwgcHVibGljIiwib3V0cHV0X2Zvcm1hdCI6InNhbWUiLCJzZGtfdmVyc2lvbiI6IjEuMCJ9fQ.GS1IAa5UN2R1zvUOor6Gn-6d0i3zVidPJgZNycuXMitK6lNr0nDaDOPtuBUJMpGJKMxoFejT8QQ5uqDa3Ar5pu4-VF1Hvd8jo-h5wSZWo-u5NFLSV7lR8bpvObAYldgd01fv3oTTmUZ8Eq5YoUhJDIxzucZR6K-uYVvSdZ-SqEQY1JgOrjmgjoQFGx1u0sypHM3qG8LGGS1vIh2Xojmn61W9dohPV2mFDTtxkM9BnEXw-j7gikgi1cS9Xy6Mok1pvvVy_tJVuFw3qQR6cW0hHskx39l2gPzRXTfgA92RbMxtF7aZevjS7_Wn7aEjbER-LdU5HCDKNwrxprYCtqOIsw')" tabindex="-1"></a>
+                    <div class="content">
+                        <a href="/news/new/34-orientation-days--winter-semester-october-2019" class="header">
+                            Orientation Days - winter semester (October 2019)
+                        </a>
+                        <div class="meta">23 Aug 2019</div>
+                        <div class="description" style="max-height: 123px; padding-bottom: 2em; position: relative; overflow: hidden">
+                            <p>Orientation Days for international students</p>
+                            <div class="read more">
+                                <a tabindex="-1">Read more...</a>
+                            </div>
+                        </div>
+                    </div>
+                </div><div class="ui card ">
+                    <a href="/news/new/33-orientation-days--summer-semester-february-2019" class="image" style="background-image: url('https://img.cdn.dreamapply.com/eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJkcmVhbS1hcHBseSIsImF1ZCI6ImRyZWFtLWltYWdlIiwicGxkIjp7InBhdGgiOiJkcmVhbS1hcHBseTpzaGFyZDMzOFwvbmV3X3Bob3Rvc1wvMzMucGl1bjEwIiwidHJhbnNmb3JtYXRpb25zIjpbeyJuYW1lIjoiY3JvcCIsInBhcmFtcyI6eyJ3aWR0aCI6IjMwMCIsImhlaWdodCI6IjI0NiIsInF1YWxpdHkiOiI3MCIsImZvY3VzIjoiWCJ9fV0sImNhY2hlIjoibWF4LWFnZT0zMTUzNjAwMCwgcHVibGljIiwib3V0cHV0X2Zvcm1hdCI6InNhbWUiLCJzZGtfdmVyc2lvbiI6IjEuMCJ9fQ.R7Bad2LbKI_ZmZ9Kpp8gwzuDq__xRaYy61EsGAiZ-4jwl5iLuvDJDJUNc77COO4dj4qgVCPGVjsS2cxUrhO5qGszzX1ZHAvcV4eQPUjZ3qtrM0Cppffl236S0hDuYlEZAYKuewse4mZPEP2bnJndbQAsDX6hjERI7OJ_wiOorCvqCcJSYNEg37f2THhWFPUG7xwefXCrfpvsDQX_lzEPZN_op9oKNC4XZSzxFCS4iuILVTRdKUnnk90kY_-z-IrBprooGMreHBpEQgKb19zMqlXvT0TPLsf95BDydJQ9G-ngm1Yb_croi2nbiVLGDkvLTLBWfh9Xos7-MvkTi6xHpQ')" tabindex="-1"></a>
+                    <div class="content">
+                        <a href="/news/new/33-orientation-days--summer-semester-february-2019" class="header">
+                            Orientation Days - summer semester (February 2019)
+                        </a>
+                        <div class="meta">27 Nov 2018</div>
+                        <div class="description" style="max-height: 123px; padding-bottom: 2em; position: relative; overflow: hidden">
+                            <p>Orientation Days are welcoming days for newly arrived international students.</p>
+                            <div class="read more">
+                                <a tabindex="-1">Read more...</a>
+                            </div>
+                        </div>
+                    </div>
+                </div><div class="ui card ">
+                    <a href="/news/new/32-orientation-days--winter-semester-2018" class="image" style="background-image: url('https://img.cdn.dreamapply.com/eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJkcmVhbS1hcHBseSIsImF1ZCI6ImRyZWFtLWltYWdlIiwicGxkIjp7InBhdGgiOiJkcmVhbS1hcHBseTpzaGFyZDMzOFwvbmV3X3Bob3Rvc1wvMzIucDc5czRwIiwidHJhbnNmb3JtYXRpb25zIjpbeyJuYW1lIjoiY3JvcCIsInBhcmFtcyI6eyJ3aWR0aCI6IjMwMCIsImhlaWdodCI6IjI0NiIsInF1YWxpdHkiOiI3MCIsImZvY3VzIjoiWCJ9fV0sImNhY2hlIjoibWF4LWFnZT0zMTUzNjAwMCwgcHVibGljIiwib3V0cHV0X2Zvcm1hdCI6InNhbWUiLCJzZGtfdmVyc2lvbiI6IjEuMCJ9fQ.Ur8Cwf-a3UykSA8Mxk_bVYRa6PlSE-X8Nu5Dgto6SVtIw0OZN4oHln1j06R9tFkLTY1c1wHeGL4Q2pPSMiWpgNgiM91fYA6daLM2GGHHJejkJM6uYHDDJ8eevDUeLIC3eKafCjYREteK2Tm0A_dOm_o4aCSig6X8kmuZGHjX0n7nyb7K0kXdjoyxXMz3ZBQm3cBDGRlSDUzBl6s1m3BVEC0Bc1NxvvmL-2m8QOLEdNOrgTFl3X5qQb6VoCtEPM8pPdhWS5zrnptdf89SUAEoQRJao9DldfjUmKxp7nJQ0QRNfWElovrMMHyoSYkkQIv4HYExhIiE8tmP3CHQYmf7eA')" tabindex="-1"></a>
+                    <div class="content">
+                        <a href="/news/new/32-orientation-days--winter-semester-2018" class="header">
+                            Orientation Days - winter semester 2018
+                        </a>
+                        <div class="meta">16 Apr 2018</div>
+                        <div class="description" style="max-height: 123px; padding-bottom: 2em; position: relative; overflow: hidden">
+                            <p>To help you get settled during first days in Gliwice, we will organize a special orientation programme.</p>
+                            <div class="read more">
+                                <a tabindex="-1">Read more...</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui card ">
+                    <a href="/news/new/3-over-46-000-international-students-poland" class="image" style="background-image: url('https://img.cdn.dreamapply.com/eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJkcmVhbS1hcHBseSIsImF1ZCI6ImRyZWFtLWltYWdlIiwicGxkIjp7InBhdGgiOiJkcmVhbS1hcHBseTpzaGFyZDMzOFwvbmV3X3Bob3Rvc1wvMyIsInRyYW5zZm9ybWF0aW9ucyI6W3sibmFtZSI6ImNyb3AiLCJwYXJhbXMiOnsid2lkdGgiOiIzMDAiLCJoZWlnaHQiOiIyNDYiLCJxdWFsaXR5IjoiNzAiLCJmb2N1cyI6IlgifX1dLCJjYWNoZSI6Im1heC1hZ2U9MzE1MzYwMDAsIHB1YmxpYyIsIm91dHB1dF9mb3JtYXQiOiJzYW1lIiwic2RrX3ZlcnNpb24iOiIxLjAifX0.lLyra9p5k0DmZ8UZ6hY0osbn1lpI7DrDE6KZ4zIK4fIMC0ZvANGsUk8O8tkEkYyLl0sbISP7nLkCWBhVYVANTGd9PDB5vjH-d9Pyk1Ga7Hrk3W6s4eZ0AUxqRHrA3zo-tSw_GOkFmnU3TVa2d4lZb3TNDEL3wS5k-USKRLg8Q1ucuV2qMHBBkn2ZcBSmn56c63mSs3H2yaiBDOgUNo_mMNuVS80YsAwXI25keitKVVEqm7CRtYtgfSWYG9hcKj9v4ncr-LrwIoqT31KPnMUh8bN3XMMqWGqXhBhzCKV2hWT8bs-_ZKEi0FuN_Q7XoaY2aRMTZ-lmAxj3n2d3BgLPCw')" tabindex="-1"></a>
+                    <div class="content">
+                        <a href="/news/new/3-over-46-000-international-students-poland" class="header">
+                            Over 46 000 international students in Poland
+                        </a>
+                        <div class="meta">23 Oct 2015</div>
+                        <div class="description" style="max-height: 123px; padding-bottom: 2em; position: relative; overflow: hidden">
+                            <a tabindex="-1">Read more...</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+    </div>
+    </div>
+</main>
+@*<div class="ui fluid image">
+        <img src="~/unmo-building.jpg">
+        <div style={{position: 'center', width: '100%', height: 'auto'}}>
+            <div class="ui page grid centered overlay aligned">
+                <div class="ui page grid header center aligned compact">
+                    <h1 class="ui white header"><span style="text-transform: uppercase">Start your journey</span><div class="sub white header">Send your online application easily</div></h1>
+                </div>
+                <div class="ui page grid centered overlay aligned">
+                    <div class="bottom aligned row">
+                        <div class="ui column center aligned">
+                            <a href="/account/type" class="ui button big primary">
+                                Get started now!
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+            <main class="ui container">
+                <div class="ui two column stackable grid" style="margin-top: 1em">
+                    <div class="eight wide column">
+                        <div>
+                            <p><strong><span class="caps">SUMMER</span> <span class="caps">SEMESTER</span> AT <span class="caps">THE</span> <span class="caps">SILESIAN</span> <span class="caps">UNIVERSITY</span> OF <span class="caps">TECHNOLOGY</span></strong></p>
+                            <p>
+                                The on-line system will be opened from <strong>01.11.2019</strong> till <strong>01.12.2019</strong> for students, who will apply for the summer semester 2019/2020.<br>
+                                All candidates must be officially nominated by their home university.
+                            </p>
+                            <p>
+                                Documents to be uploaded: <br>
+                                •	Transcript of Records (in English; scanned <span class="caps">PDF</span> file), <br>
+                                •	English certificate (in English; scanned <span class="caps">PDF</span> file), <br>
+                                •	biometrical photo (<span class="caps">PDF</span> or <span class="caps">JPG</span> file).
+                            </p><br>
+                            <p>Start by choosing the mobility type and apply online!</p>
+                            <p>
+                                1) Click “Get started now!”<br>
+                                2) Find your home university<br>
+                                3) Click “Find mobilities”<br>
+                                4) Select your mobility and click “Apply now!”
+                            </p>
+                            <p><strong>Applying for exchange studies has never been so easy!</strong></p>
+                        </div>
+                    </div>
+                    <div class="eight wide column">
+                        <div class="ui two doubling front cards">
+                            <div class="ui card ">
+                                <a href="/news/new/34-orientation-days--winter-semester-october-2019" class="image" style="background-image: url('https://img.cdn.dreamapply.com/eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJkcmVhbS1hcHBseSIsImF1ZCI6ImRyZWFtLWltYWdlIiwicGxkIjp7InBhdGgiOiJkcmVhbS1hcHBseTpzaGFyZDMzOFwvbmV3X3Bob3Rvc1wvMzQucHdvcHRxIiwidHJhbnNmb3JtYXRpb25zIjpbeyJuYW1lIjoiY3JvcCIsInBhcmFtcyI6eyJ3aWR0aCI6IjMwMCIsImhlaWdodCI6IjI0NiIsInF1YWxpdHkiOiI3MCIsImZvY3VzIjoiWCJ9fV0sImNhY2hlIjoibWF4LWFnZT0zMTUzNjAwMCwgcHVibGljIiwib3V0cHV0X2Zvcm1hdCI6InNhbWUiLCJzZGtfdmVyc2lvbiI6IjEuMCJ9fQ.GS1IAa5UN2R1zvUOor6Gn-6d0i3zVidPJgZNycuXMitK6lNr0nDaDOPtuBUJMpGJKMxoFejT8QQ5uqDa3Ar5pu4-VF1Hvd8jo-h5wSZWo-u5NFLSV7lR8bpvObAYldgd01fv3oTTmUZ8Eq5YoUhJDIxzucZR6K-uYVvSdZ-SqEQY1JgOrjmgjoQFGx1u0sypHM3qG8LGGS1vIh2Xojmn61W9dohPV2mFDTtxkM9BnEXw-j7gikgi1cS9Xy6Mok1pvvVy_tJVuFw3qQR6cW0hHskx39l2gPzRXTfgA92RbMxtF7aZevjS7_Wn7aEjbER-LdU5HCDKNwrxprYCtqOIsw')" tabindex="-1"></a>
+                                <div class="content">
+                                    <a href="/news/new/34-orientation-days--winter-semester-october-2019" class="header">
+                                        Orientation Days - winter semester (October 2019)
+                                    </a>
+                                    <div class="meta">23 Aug 2019</div>
+                                    <div class="description" style="max-height: 123px; padding-bottom: 2em; position: relative; overflow: hidden">
+                                        <p>Orientation Days for international students</p>            <div class="read more">
+                                            <a href="/news/new/34-orientation-days--winter-semester-october-2019" tabindex="-1">Read more...</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><div class="ui card ">
+                                <a href="/news/new/33-orientation-days--summer-semester-february-2019" class="image" style="background-image: url('https://img.cdn.dreamapply.com/eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJkcmVhbS1hcHBseSIsImF1ZCI6ImRyZWFtLWltYWdlIiwicGxkIjp7InBhdGgiOiJkcmVhbS1hcHBseTpzaGFyZDMzOFwvbmV3X3Bob3Rvc1wvMzMucGl1bjEwIiwidHJhbnNmb3JtYXRpb25zIjpbeyJuYW1lIjoiY3JvcCIsInBhcmFtcyI6eyJ3aWR0aCI6IjMwMCIsImhlaWdodCI6IjI0NiIsInF1YWxpdHkiOiI3MCIsImZvY3VzIjoiWCJ9fV0sImNhY2hlIjoibWF4LWFnZT0zMTUzNjAwMCwgcHVibGljIiwib3V0cHV0X2Zvcm1hdCI6InNhbWUiLCJzZGtfdmVyc2lvbiI6IjEuMCJ9fQ.R7Bad2LbKI_ZmZ9Kpp8gwzuDq__xRaYy61EsGAiZ-4jwl5iLuvDJDJUNc77COO4dj4qgVCPGVjsS2cxUrhO5qGszzX1ZHAvcV4eQPUjZ3qtrM0Cppffl236S0hDuYlEZAYKuewse4mZPEP2bnJndbQAsDX6hjERI7OJ_wiOorCvqCcJSYNEg37f2THhWFPUG7xwefXCrfpvsDQX_lzEPZN_op9oKNC4XZSzxFCS4iuILVTRdKUnnk90kY_-z-IrBprooGMreHBpEQgKb19zMqlXvT0TPLsf95BDydJQ9G-ngm1Yb_croi2nbiVLGDkvLTLBWfh9Xos7-MvkTi6xHpQ')" tabindex="-1"></a>
+                                <div class="content">
+
+                                    <a href="/news/new/33-orientation-days--summer-semester-february-2019" class="header">
+                                        Orientation Days - summer semester (February 2019)
+                                    </a>
+                                    <div class="meta">27 Nov 2018</div>
+                                    <div class="description" style="max-height: 123px; padding-bottom: 2em; position: relative; overflow: hidden">
+                                        <p>Orientation Days are welcoming days for newly arrived international students.</p>            <div class="read more">
+                                            <a href="/news/new/33-orientation-days--summer-semester-february-2019" tabindex="-1">Read more...</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><div class="ui card ">
+                                <a href="/news/new/32-orientation-days--winter-semester-2018" class="image" style="background-image: url('https://img.cdn.dreamapply.com/eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJkcmVhbS1hcHBseSIsImF1ZCI6ImRyZWFtLWltYWdlIiwicGxkIjp7InBhdGgiOiJkcmVhbS1hcHBseTpzaGFyZDMzOFwvbmV3X3Bob3Rvc1wvMzIucDc5czRwIiwidHJhbnNmb3JtYXRpb25zIjpbeyJuYW1lIjoiY3JvcCIsInBhcmFtcyI6eyJ3aWR0aCI6IjMwMCIsImhlaWdodCI6IjI0NiIsInF1YWxpdHkiOiI3MCIsImZvY3VzIjoiWCJ9fV0sImNhY2hlIjoibWF4LWFnZT0zMTUzNjAwMCwgcHVibGljIiwib3V0cHV0X2Zvcm1hdCI6InNhbWUiLCJzZGtfdmVyc2lvbiI6IjEuMCJ9fQ.Ur8Cwf-a3UykSA8Mxk_bVYRa6PlSE-X8Nu5Dgto6SVtIw0OZN4oHln1j06R9tFkLTY1c1wHeGL4Q2pPSMiWpgNgiM91fYA6daLM2GGHHJejkJM6uYHDDJ8eevDUeLIC3eKafCjYREteK2Tm0A_dOm_o4aCSig6X8kmuZGHjX0n7nyb7K0kXdjoyxXMz3ZBQm3cBDGRlSDUzBl6s1m3BVEC0Bc1NxvvmL-2m8QOLEdNOrgTFl3X5qQb6VoCtEPM8pPdhWS5zrnptdf89SUAEoQRJao9DldfjUmKxp7nJQ0QRNfWElovrMMHyoSYkkQIv4HYExhIiE8tmP3CHQYmf7eA')" tabindex="-1"></a>
+                                <div class="content">
+                                    <a href="/news/new/32-orientation-days--winter-semester-2018" class="header">
+                                        Orientation Days - winter semester 2018
+                                    </a>
+                                    <div class="meta">16 Apr 2018</div>
+                                    <div class="description" style="max-height: 123px; padding-bottom: 2em; position: relative; overflow: hidden">
+                                        <p>To help you get settled during first days in Gliwice, we will organize a special orientation programme.</p>            <div class="read more">
+                                            <a href="/news/new/32-orientation-days--winter-semester-2018" tabindex="-1">Read more...</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><div class="ui card ">
+                                <a href="/news/new/3-over-46-000-international-students-poland" class="image" style="background-image: url('https://img.cdn.dreamapply.com/eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJkcmVhbS1hcHBseSIsImF1ZCI6ImRyZWFtLWltYWdlIiwicGxkIjp7InBhdGgiOiJkcmVhbS1hcHBseTpzaGFyZDMzOFwvbmV3X3Bob3Rvc1wvMyIsInRyYW5zZm9ybWF0aW9ucyI6W3sibmFtZSI6ImNyb3AiLCJwYXJhbXMiOnsid2lkdGgiOiIzMDAiLCJoZWlnaHQiOiIyNDYiLCJxdWFsaXR5IjoiNzAiLCJmb2N1cyI6IlgifX1dLCJjYWNoZSI6Im1heC1hZ2U9MzE1MzYwMDAsIHB1YmxpYyIsIm91dHB1dF9mb3JtYXQiOiJzYW1lIiwic2RrX3ZlcnNpb24iOiIxLjAifX0.lLyra9p5k0DmZ8UZ6hY0osbn1lpI7DrDE6KZ4zIK4fIMC0ZvANGsUk8O8tkEkYyLl0sbISP7nLkCWBhVYVANTGd9PDB5vjH-d9Pyk1Ga7Hrk3W6s4eZ0AUxqRHrA3zo-tSw_GOkFmnU3TVa2d4lZb3TNDEL3wS5k-USKRLg8Q1ucuV2qMHBBkn2ZcBSmn56c63mSs3H2yaiBDOgUNo_mMNuVS80YsAwXI25keitKVVEqm7CRtYtgfSWYG9hcKj9v4ncr-LrwIoqT31KPnMUh8bN3XMMqWGqXhBhzCKV2hWT8bs-_ZKEi0FuN_Q7XoaY2aRMTZ-lmAxj3n2d3BgLPCw')" tabindex="-1"></a>
+                                <div class="content">
+                                    <a href="/news/new/3-over-46-000-international-students-poland" class="header">
+                                        Over 46 000 international students in Poland
+                                    </a>
+                                    <div class="meta">23 Oct 2015</div>
+                                    <div class="description" style="max-height: 123px; padding-bottom: 2em; position: relative; overflow: hidden">
+                                        <p>There are 46,101 international students from 158 countries studying in Poland, 10.000 more than a year ago (28% increase). Polish universities never experienced such a growth. Currently international students make up 3.1% of the total student body in the country (seven years ago the figure was 0.6%, in 2014 – 2.3%).</p>            <div class="read more">
+                                            <a href="/news/new/3-over-46-000-international-students-poland" tabindex="-1">Read more...</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><div class="ui card ">
+                                <a href="/news/new/2-sut-implemented-most-student-friendly-online-application-system-europe" class="image" style="background-image: url('https://img.cdn.dreamapply.com/eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJkcmVhbS1hcHBseSIsImF1ZCI6ImRyZWFtLWltYWdlIiwicGxkIjp7InBhdGgiOiJkcmVhbS1hcHBseTpzaGFyZDMzOFwvbmV3X3Bob3Rvc1wvMiIsInRyYW5zZm9ybWF0aW9ucyI6W3sibmFtZSI6ImNyb3AiLCJwYXJhbXMiOnsid2lkdGgiOiIzMDAiLCJoZWlnaHQiOiIyNDYiLCJxdWFsaXR5IjoiNzAiLCJmb2N1cyI6IlgifX1dLCJjYWNoZSI6Im1heC1hZ2U9MzE1MzYwMDAsIHB1YmxpYyIsIm91dHB1dF9mb3JtYXQiOiJzYW1lIiwic2RrX3ZlcnNpb24iOiIxLjAifX0.UFKwpXMNycmb8u1wFLmrTW9fPyayj2MI-MCPV9Ts8LCeKuo6TArk3lidvtqi5__cB52u6jGX5o7HXF7xO1e9Zd9bSEQrbCHQD_VhFW7--8qR2ZEAEgOr_HzQiJ4Te_ZuoNYYRA7AkUGbbrMYs0DqrTzVVUAPVWO5DIBuiPzYJRp0bCR4eDfqeM_SvsH0kHMIBa934QmolOzChefxE1xBPKBdFUvR7o0L94-GEEAtMxHMcZawynh1Bz4iM9KFZfKy5kP0cew_Ckh9By0-ynSWP90In1-XDAS7obglyT1YDuSgLD8bvuLQ838D3A0xU2me5xx9KDgwfXo1GZxG_Tf7rQ')" tabindex="-1"></a>
+                                <div class="content">
+                                    <a href="/news/new/2-sut-implemented-most-student-friendly-online-application-system-europe" class="header">
+                                        SUT implemented the most student friendly online application system in Europe!
+                                    </a>
+                                    <div class="meta">15 Aug 2015</div>
+                                    <div class="description" style="max-height: 123px; padding-bottom: 2em; position: relative; overflow: hidden">
+                                        <p>We expect that DreamApply will be a great assistance for our potential students who are coming from all across the world. Feel free to start your application and do not hesitate to let us know how you feel about the system. :)</p>            <div class="read more">
+                                            <a href="/news/new/2-sut-implemented-most-student-friendly-online-application-system-europe" tabindex="-1">Read more...</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+            </main>
+        </div>
+        <main class="ui container">
+            <div class="ui two column stackable grid" style="margin-top: 1em">
+                <div class="eight wide column">
+                    <div>
+                        <p><strong><span class="caps">SUMMER</span> <span class="caps">SEMESTER</span> AT <span class="caps">THE</span> <span class="caps">SILESIAN</span> <span class="caps">UNIVERSITY</span> OF <span class="caps">TECHNOLOGY</span></strong></p>
+                        <p>
+                            The on-line system will be opened from <strong>01.11.2019</strong> till <strong>01.12.2019</strong> for students, who will apply for the summer semester 2019/2020.<br>
+                            All candidates must be officially nominated by their home university.
+                        </p>
+                        <p>
+                            Documents to be uploaded: <br>
+                            •	Transcript of Records (in English; scanned <span class="caps">PDF</span> file), <br>
+                            •	English certificate (in English; scanned <span class="caps">PDF</span> file), <br>
+                            •	biometrical photo (<span class="caps">PDF</span> or <span class="caps">JPG</span> file).
+                        </p><br>
+                        <p>Start by choosing the mobility type and apply online!</p>
+                        <p>
+                            1) Click “Get started now!”<br>
+                            2) Find your home university<br>
+                            3) Click “Find mobilities”<br>
+                            4) Select your mobility and click “Apply now!”
+                        </p>
+                        <p><strong>Applying for exchange studies has never been so easy!</strong></p>
+                    </div>
+                </div>
+                <div class="eight wide column">
+                    <div class="ui two doubling front cards">
+                        <div class="ui card ">
+                            <a href="/news/new/34-orientation-days--winter-semester-october-2019" class="image" style="background-image: url('https://img.cdn.dreamapply.com/eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJkcmVhbS1hcHBseSIsImF1ZCI6ImRyZWFtLWltYWdlIiwicGxkIjp7InBhdGgiOiJkcmVhbS1hcHBseTpzaGFyZDMzOFwvbmV3X3Bob3Rvc1wvMzQucHdvcHRxIiwidHJhbnNmb3JtYXRpb25zIjpbeyJuYW1lIjoiY3JvcCIsInBhcmFtcyI6eyJ3aWR0aCI6IjMwMCIsImhlaWdodCI6IjI0NiIsInF1YWxpdHkiOiI3MCIsImZvY3VzIjoiWCJ9fV0sImNhY2hlIjoibWF4LWFnZT0zMTUzNjAwMCwgcHVibGljIiwib3V0cHV0X2Zvcm1hdCI6InNhbWUiLCJzZGtfdmVyc2lvbiI6IjEuMCJ9fQ.GS1IAa5UN2R1zvUOor6Gn-6d0i3zVidPJgZNycuXMitK6lNr0nDaDOPtuBUJMpGJKMxoFejT8QQ5uqDa3Ar5pu4-VF1Hvd8jo-h5wSZWo-u5NFLSV7lR8bpvObAYldgd01fv3oTTmUZ8Eq5YoUhJDIxzucZR6K-uYVvSdZ-SqEQY1JgOrjmgjoQFGx1u0sypHM3qG8LGGS1vIh2Xojmn61W9dohPV2mFDTtxkM9BnEXw-j7gikgi1cS9Xy6Mok1pvvVy_tJVuFw3qQR6cW0hHskx39l2gPzRXTfgA92RbMxtF7aZevjS7_Wn7aEjbER-LdU5HCDKNwrxprYCtqOIsw')" tabindex="-1"></a>
+                            <div class="content">
+                                <a href="/news/new/34-orientation-days--winter-semester-october-2019" class="header">
+                                    Orientation Days - winter semester (October 2019)
+                                </a>
+                                <div class="meta">23 Aug 2019</div>
+                                <div class="description" style="max-height: 123px; padding-bottom: 2em; position: relative; overflow: hidden">
+                                    <p>Orientation Days for international students</p>            <div class="read more">
+                                        <a href="/news/new/34-orientation-days--winter-semester-october-2019" tabindex="-1">Read more...</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><div class="ui card ">
+                            <a href="/news/new/33-orientation-days--summer-semester-february-2019" class="image" style="background-image: url('https://img.cdn.dreamapply.com/eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJkcmVhbS1hcHBseSIsImF1ZCI6ImRyZWFtLWltYWdlIiwicGxkIjp7InBhdGgiOiJkcmVhbS1hcHBseTpzaGFyZDMzOFwvbmV3X3Bob3Rvc1wvMzMucGl1bjEwIiwidHJhbnNmb3JtYXRpb25zIjpbeyJuYW1lIjoiY3JvcCIsInBhcmFtcyI6eyJ3aWR0aCI6IjMwMCIsImhlaWdodCI6IjI0NiIsInF1YWxpdHkiOiI3MCIsImZvY3VzIjoiWCJ9fV0sImNhY2hlIjoibWF4LWFnZT0zMTUzNjAwMCwgcHVibGljIiwib3V0cHV0X2Zvcm1hdCI6InNhbWUiLCJzZGtfdmVyc2lvbiI6IjEuMCJ9fQ.R7Bad2LbKI_ZmZ9Kpp8gwzuDq__xRaYy61EsGAiZ-4jwl5iLuvDJDJUNc77COO4dj4qgVCPGVjsS2cxUrhO5qGszzX1ZHAvcV4eQPUjZ3qtrM0Cppffl236S0hDuYlEZAYKuewse4mZPEP2bnJndbQAsDX6hjERI7OJ_wiOorCvqCcJSYNEg37f2THhWFPUG7xwefXCrfpvsDQX_lzEPZN_op9oKNC4XZSzxFCS4iuILVTRdKUnnk90kY_-z-IrBprooGMreHBpEQgKb19zMqlXvT0TPLsf95BDydJQ9G-ngm1Yb_croi2nbiVLGDkvLTLBWfh9Xos7-MvkTi6xHpQ')" tabindex="-1"></a>
+                            <div class="content">
+
+                                <a href="/news/new/33-orientation-days--summer-semester-february-2019" class="header">
+                                    Orientation Days - summer semester (February 2019)
+                                </a>
+                                <div class="meta">27 Nov 2018</div>
+                                <div class="description" style="max-height: 123px; padding-bottom: 2em; position: relative; overflow: hidden">
+                                    <p>Orientation Days are welcoming days for newly arrived international students.</p>            <div class="read more">
+                                        <a href="/news/new/33-orientation-days--summer-semester-february-2019" tabindex="-1">Read more...</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><div class="ui card ">
+                            <a href="/news/new/32-orientation-days--winter-semester-2018" class="image" style="background-image: url('https://img.cdn.dreamapply.com/eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJkcmVhbS1hcHBseSIsImF1ZCI6ImRyZWFtLWltYWdlIiwicGxkIjp7InBhdGgiOiJkcmVhbS1hcHBseTpzaGFyZDMzOFwvbmV3X3Bob3Rvc1wvMzIucDc5czRwIiwidHJhbnNmb3JtYXRpb25zIjpbeyJuYW1lIjoiY3JvcCIsInBhcmFtcyI6eyJ3aWR0aCI6IjMwMCIsImhlaWdodCI6IjI0NiIsInF1YWxpdHkiOiI3MCIsImZvY3VzIjoiWCJ9fV0sImNhY2hlIjoibWF4LWFnZT0zMTUzNjAwMCwgcHVibGljIiwib3V0cHV0X2Zvcm1hdCI6InNhbWUiLCJzZGtfdmVyc2lvbiI6IjEuMCJ9fQ.Ur8Cwf-a3UykSA8Mxk_bVYRa6PlSE-X8Nu5Dgto6SVtIw0OZN4oHln1j06R9tFkLTY1c1wHeGL4Q2pPSMiWpgNgiM91fYA6daLM2GGHHJejkJM6uYHDDJ8eevDUeLIC3eKafCjYREteK2Tm0A_dOm_o4aCSig6X8kmuZGHjX0n7nyb7K0kXdjoyxXMz3ZBQm3cBDGRlSDUzBl6s1m3BVEC0Bc1NxvvmL-2m8QOLEdNOrgTFl3X5qQb6VoCtEPM8pPdhWS5zrnptdf89SUAEoQRJao9DldfjUmKxp7nJQ0QRNfWElovrMMHyoSYkkQIv4HYExhIiE8tmP3CHQYmf7eA')" tabindex="-1"></a>
+                            <div class="content">
+                                <a href="/news/new/32-orientation-days--winter-semester-2018" class="header">
+                                    Orientation Days - winter semester 2018
+                                </a>
+                                <div class="meta">16 Apr 2018</div>
+                                <div class="description" style="max-height: 123px; padding-bottom: 2em; position: relative; overflow: hidden">
+                                    <p>To help you get settled during first days in Gliwice, we will organize a special orientation programme.</p>            <div class="read more">
+                                        <a href="/news/new/32-orientation-days--winter-semester-2018" tabindex="-1">Read more...</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><div class="ui card ">
+                            <a href="/news/new/3-over-46-000-international-students-poland" class="image" style="background-image: url('https://img.cdn.dreamapply.com/eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJkcmVhbS1hcHBseSIsImF1ZCI6ImRyZWFtLWltYWdlIiwicGxkIjp7InBhdGgiOiJkcmVhbS1hcHBseTpzaGFyZDMzOFwvbmV3X3Bob3Rvc1wvMyIsInRyYW5zZm9ybWF0aW9ucyI6W3sibmFtZSI6ImNyb3AiLCJwYXJhbXMiOnsid2lkdGgiOiIzMDAiLCJoZWlnaHQiOiIyNDYiLCJxdWFsaXR5IjoiNzAiLCJmb2N1cyI6IlgifX1dLCJjYWNoZSI6Im1heC1hZ2U9MzE1MzYwMDAsIHB1YmxpYyIsIm91dHB1dF9mb3JtYXQiOiJzYW1lIiwic2RrX3ZlcnNpb24iOiIxLjAifX0.lLyra9p5k0DmZ8UZ6hY0osbn1lpI7DrDE6KZ4zIK4fIMC0ZvANGsUk8O8tkEkYyLl0sbISP7nLkCWBhVYVANTGd9PDB5vjH-d9Pyk1Ga7Hrk3W6s4eZ0AUxqRHrA3zo-tSw_GOkFmnU3TVa2d4lZb3TNDEL3wS5k-USKRLg8Q1ucuV2qMHBBkn2ZcBSmn56c63mSs3H2yaiBDOgUNo_mMNuVS80YsAwXI25keitKVVEqm7CRtYtgfSWYG9hcKj9v4ncr-LrwIoqT31KPnMUh8bN3XMMqWGqXhBhzCKV2hWT8bs-_ZKEi0FuN_Q7XoaY2aRMTZ-lmAxj3n2d3BgLPCw')" tabindex="-1"></a>
+                            <div class="content">
+                                <a href="/news/new/3-over-46-000-international-students-poland" class="header">
+                                    Over 46 000 international students in Poland
+                                </a>
+                                <div class="meta">23 Oct 2015</div>
+                                <div class="description" style="max-height: 123px; padding-bottom: 2em; position: relative; overflow: hidden">
+                                    <p>There are 46,101 international students from 158 countries studying in Poland, 10.000 more than a year ago (28% increase). Polish universities never experienced such a growth. Currently international students make up 3.1% of the total student body in the country (seven years ago the figure was 0.6%, in 2014 – 2.3%).</p>            <div class="read more">
+                                        <a href="/news/new/3-over-46-000-international-students-poland" tabindex="-1">Read more...</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><div class="ui card ">
+                            <a href="/news/new/2-sut-implemented-most-student-friendly-online-application-system-europe" class="image" style="background-image: url('https://img.cdn.dreamapply.com/eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJkcmVhbS1hcHBseSIsImF1ZCI6ImRyZWFtLWltYWdlIiwicGxkIjp7InBhdGgiOiJkcmVhbS1hcHBseTpzaGFyZDMzOFwvbmV3X3Bob3Rvc1wvMiIsInRyYW5zZm9ybWF0aW9ucyI6W3sibmFtZSI6ImNyb3AiLCJwYXJhbXMiOnsid2lkdGgiOiIzMDAiLCJoZWlnaHQiOiIyNDYiLCJxdWFsaXR5IjoiNzAiLCJmb2N1cyI6IlgifX1dLCJjYWNoZSI6Im1heC1hZ2U9MzE1MzYwMDAsIHB1YmxpYyIsIm91dHB1dF9mb3JtYXQiOiJzYW1lIiwic2RrX3ZlcnNpb24iOiIxLjAifX0.UFKwpXMNycmb8u1wFLmrTW9fPyayj2MI-MCPV9Ts8LCeKuo6TArk3lidvtqi5__cB52u6jGX5o7HXF7xO1e9Zd9bSEQrbCHQD_VhFW7--8qR2ZEAEgOr_HzQiJ4Te_ZuoNYYRA7AkUGbbrMYs0DqrTzVVUAPVWO5DIBuiPzYJRp0bCR4eDfqeM_SvsH0kHMIBa934QmolOzChefxE1xBPKBdFUvR7o0L94-GEEAtMxHMcZawynh1Bz4iM9KFZfKy5kP0cew_Ckh9By0-ynSWP90In1-XDAS7obglyT1YDuSgLD8bvuLQ838D3A0xU2me5xx9KDgwfXo1GZxG_Tf7rQ')" tabindex="-1"></a>
+                            <div class="content">
+                                <a href="/news/new/2-sut-implemented-most-student-friendly-online-application-system-europe" class="header">
+                                    SUT implemented the most student friendly online application system in Europe!
+                                </a>
+                                <div class="meta">15 Aug 2015</div>
+                                <div class="description" style="max-height: 123px; padding-bottom: 2em; position: relative; overflow: hidden">
+                                    <p>We expect that DreamApply will be a great assistance for our potential students who are coming from all across the world. Feel free to start your application and do not hesitate to let us know how you feel about the system. :)</p>            <div class="read more">
+                                        <a href="/news/new/2-sut-implemented-most-student-friendly-online-application-system-europe" tabindex="-1">Read more...</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                </div>
+            </div>
+        </main>*@

@@ -235,6 +235,7 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
             FileStreamResult nova = new FileStreamResult(stream, "nomination/pdf");
             string nameOfFile = "Nomination_" + mrki.NominationId + "_" + mrki.Applicant.ApplicationUser.Name + "_" + mrki.Applicant.ApplicationUser.Surname + ".pdf";
             nova.FileDownloadName = nameOfFile;
+            stream.Close();
             return nova;
         }
 

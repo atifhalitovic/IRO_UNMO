@@ -171,6 +171,7 @@
         }
     </style>
 </head>
+
 <body id="root">
     <div class="ui tablet computer only padded grid">
         <div class="ui inverted borderless top fixed fluid menu">
@@ -217,10 +218,36 @@
             </div>
         </div>
         <div class="sixteen wide mobile thirteen wide tablet thirteen wide computer right floated column" id="content">
-            <div class="ui container">
-                @RenderBody()
+            <div class="ui padded grid">
+                <div class="ui dividing huge header">
+                        <p></p>
+                        <div class="ui huge breadcrumb">
+                            <h1 class="ui header">Information</h1>
+                            @*@if (!controller.Equals("Home"))
+                            {
+                                <h1 class="ui header">
+                                    @controller.ToString().ToUpper()
+                                    @if (action == "Index")
+                                    {
+
+                                    }
+                                    else
+                                    {
+                                        <a>/ @action.ToUpper()</a>
+                                    }
+                                </h1>
+                            }
+                            else
+                            {
+                                <h1 class="ui header">DASHBOARD</h1>
+                            }*@
+                        </div>
+                    </div>
+                <div class="ui container">
+                    @RenderBody()
+                </div>
+                <div class="ui hidden section divider"></div>
             </div>
-            <div class="ui hidden section divider"></div>
         </div>
     </div>
 </body>

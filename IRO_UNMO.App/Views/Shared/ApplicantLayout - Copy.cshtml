@@ -1,13 +1,10 @@
-﻿@using Microsoft.AspNetCore.Identity
-@using System.Security.Claims;
+﻿@inject IRO_UNMO.App.Data.ApplicationDbContext context
 @using IRO_UNMO.Util
-@inject SignInManager<ApplicationUser> signInManager
-@inject UserManager<ApplicationUser> userManager
 @{
     var controller = ViewContext.RouteData.Values["Controller"];
     var action = MyExtensions.FirstCharToUpper(ViewContext.RouteData.Values["Action"].ToString().Replace("_", " "));
+    var applicantId = TempData["applicantId"];
 }
-
 
 <!DOCTYPE html>
 <html>
@@ -27,8 +24,8 @@
     <link rel="stylesheet" type="text/css" href="~/dist/components/site.css">
     <link rel="stylesheet" type="text/css" href="~/dist/components/grid.css">
     <!--- Component CSS -->
-    <link rel="stylesheet" type="text/css" href="~/dist/components/flag.css">
     <link rel="stylesheet" type="text/css" href="~/dist/components/icon.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/components/flag.css">
     <link rel="stylesheet" type="text/css" href="~/dist/components/table.css">
     <link rel="stylesheet" type="text/css" href="~/dist/components/button.css">
     <link rel="stylesheet" type="text/css" href="~/dist/components/transition.css">
@@ -172,12 +169,31 @@
     </style>
 </head>
 <body id="root">
+    @Html.HiddenFor(x => applicantId)
     <div class="ui tablet computer only padded grid">
         <div class="ui inverted borderless top fixed fluid menu">
-            <a class="header item">IRO-UNMO</a>
+            <a class="header item">IRO-UNMO Applicant</a>
             <div class="right menu">
-                <a class="item" asp-area="" asp-controller="account" asp-action="type">Register</a>
-                <a class="item" asp-area="" asp-controller="account" asp-action="login">Login</a>
+                <div class="item" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="bell outline icon"></i>
+                    <div class="ui teal circular mini label" id="counter"></div>
+                    <div class="ui wide notification popup bottom right transition">
+                        <div class="ui link celled selection list" style="width:200px;" aria-labelledby="messagesDropdown">
+                            <h4 class="ui header">Notifications</h4>
+                            <div id="notifikacije">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*@if (current == null)
+                    {
+                        <a class="item">KURCINA?</a>
+                    }
+                    else
+                    {
+                        <a class="item">Welcome, @current.Name @current.Surname</a>
+                    }*@
+                <a asp-area="" asp-controller="account" asp-action="logout" class="item">Logout</a>
             </div>
         </div>
     </div>
@@ -192,8 +208,8 @@
                 </div>
             </div>
             <div class="ui vertical borderless inverted fluid menu">
-                <a class="item">Welcome applicant</a>
-                <a asp-area="applicant" asp-controller="dashboard" asp-action="details" class="item">Profile</a>
+                <a class="item">Welcome!</a>
+                <a asp-area="" asp-controller="account" asp-action="logout" class="item">Logout</a>
             </div>
         </div>
     </div>
@@ -201,27 +217,60 @@
         <div class="three wide tablet only three wide computer only column" id="sidebar">
             <div class="ui vertical borderless fluid text menu">
                 <a class="item disabled"><img src="~/unmo_logo.png" /></a>
-                <a asp-controller="dashboard" asp-action="index" asp-area="" class="item">Overview</a>
                 <div class="ui divider"></div>
-                <a class="item" asp-controller="dashboard" asp-action="offers" asp-area="">Find offers</a>
+                <a class="item" asp-route-id="@applicantId" asp-action="profile" asp-controller="dashboard" asp-area="applicant">My information</a>
                 <div class="ui divider"></div>
                 <a class="item">More information</a>
-                <a class="item x" asp-area="" asp-controller="dashboard" asp-action="study-in-mostar">Study in Mostar</a>
-                <a class="item x" asp-area="" asp-controller="dashboard" asp-action="enrolment"> Enrolment procedure</a>
-                <a class="item x" asp-area="" asp-controller="dashboard" asp-action="tuition"> Tuition fees</a>
-                <a class="item x" asp-area="" asp-controller="dashboard" asp-action="activities"> Student activities</a>
-                <a class="item x" asp-area="" asp-controller="dashboard" asp-action="administrative"> Administrative formalities</a>
-                <a class="item x" asp-area="" asp-controller="dashboard" asp-action="accomodation"> Accomodation</a>
-                <a class="item x" asp-area="" asp-controller="dashboard" asp-action="insurance"> Insurance</a>
-                <a class="item x" asp-area="" asp-controller="dashboard" asp-action="emergency"> Emergency numbers</a>
+                <a class="item x" asp-area="applicant" asp-controller="dashboard" asp-action="study-in-mostar">Study in Mostar</a>
+                <a class="item x" asp-area="applicant" asp-controller="dashboard" asp-action="enrolment"> Enrolment procedure</a>
+                <a class="item x" asp-area="applicant" asp-controller="dashboard" asp-action="tuition"> Tuition fees</a>
+                <a class="item x" asp-area="applicant" asp-controller="dashboard" asp-action="activities"> Student activities</a>
+                <a class="item x" asp-area="applicant" asp-controller="dashboard" asp-action="administrative"> Administrative formalities</a>
+                <a class="item x" asp-area="applicant" asp-controller="dashboard" asp-action="accomodation"> Accomodation</a>
+                <a class="item x" asp-area="applicant" asp-controller="dashboard" asp-action="insurance"> Insurance</a>
+                <a class="item x" asp-area="applicant" asp-controller="dashboard" asp-action="emergency"> Emergency numbers</a>
             </div>
         </div>
         <div class="sixteen wide mobile thirteen wide tablet thirteen wide computer right floated column" id="content">
-            <div class="ui container">
-                @RenderBody()
+            <div class="ui padded grid">
+                <div class="ui dividing huge header">
+                    <p></p>
+                    <div class="ui huge breadcrumb">
+                        @if (!controller.Equals("Home"))
+                        {
+                            <h1 class="ui header">
+                                @controller.ToString().ToUpper()
+                                @if (action == "Index")
+                                {
+
+                                }
+                                else
+                                {
+                                    <a>/ @action.ToUpper()</a>
+                                }
+                            </h1>
+                        }
+                        else
+                        {
+                            <h1 class="ui header">DASHBOARD</h1>
+                        }
+                    </div>
+                </div>
+                <div class="ui container">
+                    @RenderBody()
+                </div>
+                <div class="ui hidden section divider"></div>
             </div>
-            <div class="ui hidden section divider"></div>
         </div>
     </div>
+    <script>
+        $('.ui.teal.label')
+            .popup({
+                on: 'click'
+            });
+    </script>
 </body>
 </html>
+
+<script src="~/lib/signalr/dist/browser/signalr.js"></script>
+<script src="~/js/notifikacijaSignalR.js"></script>

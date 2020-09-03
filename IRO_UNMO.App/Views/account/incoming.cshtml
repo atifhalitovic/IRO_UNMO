@@ -14,168 +14,172 @@
         }
     </style>
 </head>
-<body>
-    @if (errorMessage != null)
-    {
-        <div class="ui negative message">
-            <i class="close icon"></i>
-            <div class="header">
-                Warning!
-            </div>
-            <p>
-                @errorMessage
-            </p>
+<div class="ui dividing huge header">
+    <p></p>
+    <div class="ui huge breadcrumb">
+        <h2 class="ui header">Registration page - incoming</h2>
+    </div>
+</div>
+@if (errorMessage != null)
+{
+    <div class="ui negative message">
+        <i class="close icon"></i>
+        <div class="header">
+            Warning!
         </div>
-    }
-    <form class="ui form" asp-controller="account" asp-action="incoming" method="post">
-        <p></p>
-        <div class="ui compact segment">
-            <h3 class="ui green dividing header"><i class="sign in alternate icon"></i>Registration for incoming applicant at UNMO</h3>
-            <div class="fields">
-                <div class="ui small equal width form">
-                    <div class="fields">
-                        <div class="field">
-                            <label>Name</label>
-                            <input class="ui input" name="name" asp-for="@Model.Name" type="text">
-                        </div>
-                        <div class="field">
-                            <label>Last name</label>
-                            <input class="ui input" name="surname" asp-for="@Model.Surname" type="text" />
-                        </div>
-                        <div class="field">
-                            <label asp-for="@Model.TypeOfApplication">Applicant type</label>
-                            @Html.DropDownListFor(model => model.TypeOfApplication, Model.TypesOfApplicant, new { @id = "type", @Name = "type", @class = "ui dropdown" })
-                        </div>
+        <p>
+            @errorMessage
+        </p>
+    </div>
+}
+<form class="ui form" asp-controller="account" asp-action="incoming" method="post">
+    <p></p>
+    <div class="ui compact segment">
+        <h3 class="ui green dividing header"><i class="sign in alternate icon"></i>Registration for incoming applicant at UNMO</h3>
+        <div class="fields">
+            <div class="ui small equal width form">
+                <div class="fields">
+                    <div class="field">
+                        <label>Name</label>
+                        <input class="ui input" name="name" asp-for="@Model.Name" type="text">
                     </div>
-                    <div class="fields">
-                        <div class="field">
-                            <label>Phone number</label>
-                            <input name="PhoneNumber" asp-for="@Model.PhoneNumber" type="text" />
-                        </div>
-                        <div class="field">
-                            <label>E-mail</label>
-                            <input class="ui input" name="email" asp-for="@Model.Email" type="text" />
-                        </div>
-                        <div class="field">
-                            <label asp-for="@Model.CountryId">Nationality</label>
-                            @Html.DropDownListFor(model => model.CountryId, Model.Countries, new { @id = "nationality", @Name = "nationality", @class = "ui dropdown" })
-                        </div>
+                    <div class="field">
+                        <label>Last name</label>
+                        <input class="ui input" name="surname" asp-for="@Model.Surname" type="text" />
                     </div>
-                    <div class="fields">
-                        <div class="field">
-                            <label asp-for="@Model.StudyField">Study field</label>
-                            <input class="ui input" name="studyfield" asp-for="@Model.StudyField" type="text" autocomplete="off" />
-                        </div>
-                        <div class="field">
-                            <label asp-for="@Model.StudyCycle">Study cycle</label>
-                            @Html.DropDownListFor(model => model.StudyCycle, Model.StudyCycles, new { @id = "studycycle", @Name = "studycycle", @class = "ui dropdown" })
-                        </div>
-                        <div class="field">
-                            <label asp-for="@Model.UniversityId">University</label>
-                            @Html.DropDownListFor(model => model.UniversityId, Model.Universities, new { @id = "uni", @Name = "university", @class = "ui dropdown" })
-                        </div>
+                    <div class="field">
+                        <label asp-for="@Model.TypeOfApplication">Applicant type</label>
+                        @Html.DropDownListFor(model => model.TypeOfApplication, Model.TypesOfApplicant, new { @id = "type", @Name = "type", @class = "ui dropdown" })
+                    </div>
+                </div>
+                <div class="fields">
+                    <div class="field">
+                        <label>Phone number</label>
+                        <input name="PhoneNumber" asp-for="@Model.PhoneNumber" type="text" />
+                    </div>
+                    <div class="field">
+                        <label>E-mail</label>
+                        <input class="ui input" name="email" asp-for="@Model.Email" type="text" />
+                    </div>
+                    <div class="field">
+                        <label asp-for="@Model.CountryId">Nationality</label>
+                        @Html.DropDownListFor(model => model.CountryId, Model.Countries, new { @id = "nationality", @Name = "nationality", @class = "ui dropdown" })
+                    </div>
+                </div>
+                <div class="fields">
+                    <div class="field">
+                        <label asp-for="@Model.StudyField">Study field</label>
+                        <input class="ui input" name="studyfield" asp-for="@Model.StudyField" type="text" autocomplete="off" />
+                    </div>
+                    <div class="field">
+                        <label asp-for="@Model.StudyCycle">Study cycle</label>
+                        @Html.DropDownListFor(model => model.StudyCycle, Model.StudyCycles, new { @id = "studycycle", @Name = "studycycle", @class = "ui dropdown" })
+                    </div>
+                    <div class="field">
+                        <label asp-for="@Model.UniversityId">University</label>
+                        @Html.DropDownListFor(model => model.UniversityId, Model.Universities, new { @id = "uni", @Name = "university", @class = "ui dropdown" })
                     </div>
                 </div>
             </div>
-            <div class="extra content">
-                <button type="submit" class="ui primary button">Register</button>
-            </div>
         </div>
-        <div class="ui error message"></div>
-    </form>
-    <script>
-        $('.ui.dropdown').dropdown();
+        <div class="extra content">
+            <button type="submit" class="ui primary button">Register</button>
+        </div>
+    </div>
+    <div class="ui error message"></div>
+</form>
+<script>
+    $('.ui.dropdown').dropdown();
 
-        $('.ui.form')
-            .form({
-                fields: {
-                    name: {
-                        identifier: 'name',
-                        rules: [
-                            {
-                                type: 'empty',
-                                prompt: 'Please enter your name'
-                            },
-                        ]
-                    },
-                    surname: {
-                        identifier: 'surname',
-                        rules: [
-                            {
-                                type: 'empty',
-                                prompt: 'Please enter your surname'
-                            }
-                        ]
-                    },
-                    type: {
-                        identifier: 'type',
-                        rules: [
-                            {
-                                type: 'empty',
-                                prompt: 'Please select your applicant type'
-                            }
-                        ]
-                    },
-                    phone: {
-                        identifier: 'PhoneNumber',
-                        rules: [
-                            {
-                                type: 'empty',
-                                prompt: 'Please enter your phone number'
-                            }
-                        ]
-                    },
-                    email: {
-                        identifier: 'email',
-                        rules: [
-                            {
-                                type: 'email',
-                                prompt: 'Please enter your valid email address'
-                            }
-                        ]
-                    },
-                    nationality: {
-                        identifier: 'nationality',
-                        rules: [
-                            {
-                                type: 'empty',
-                                prompt: 'Please select your nationality'
-                            }
-                        ]
-                    },
-                    studyfield: {
-                        identifier: 'studyfield',
-                        rules: [
-                            {
-                                type: 'empty',
-                                prompt: 'Please enter your study field'
-                            }
-                        ]
-                    },
-                    studycycle: {
-                        identifier: 'studycycle',
-                        rules: [
-                            {
-                                type: 'empty',
-                                prompt: 'Please select a study cycle'
-                            }
-                        ]
-                    },
-                    uni: {
-                        identifier: 'uni',
-                        rules: [
-                            {
-                                type: 'empty',
-                                prompt: 'Please select your university'
-                            }
-                        ]
-                    }
+    $('.ui.form')
+        .form({
+            fields: {
+                name: {
+                    identifier: 'name',
+                    rules: [
+                        {
+                            type: 'empty',
+                            prompt: 'Please enter your name'
+                        },
+                    ]
+                },
+                surname: {
+                    identifier: 'surname',
+                    rules: [
+                        {
+                            type: 'empty',
+                            prompt: 'Please enter your surname'
+                        }
+                    ]
+                },
+                type: {
+                    identifier: 'type',
+                    rules: [
+                        {
+                            type: 'empty',
+                            prompt: 'Please select your applicant type'
+                        }
+                    ]
+                },
+                phone: {
+                    identifier: 'PhoneNumber',
+                    rules: [
+                        {
+                            type: 'empty',
+                            prompt: 'Please enter your phone number'
+                        }
+                    ]
+                },
+                email: {
+                    identifier: 'email',
+                    rules: [
+                        {
+                            type: 'email',
+                            prompt: 'Please enter your valid email address'
+                        }
+                    ]
+                },
+                nationality: {
+                    identifier: 'nationality',
+                    rules: [
+                        {
+                            type: 'empty',
+                            prompt: 'Please select your nationality'
+                        }
+                    ]
+                },
+                studyfield: {
+                    identifier: 'studyfield',
+                    rules: [
+                        {
+                            type: 'empty',
+                            prompt: 'Please enter your study field'
+                        }
+                    ]
+                },
+                studycycle: {
+                    identifier: 'studycycle',
+                    rules: [
+                        {
+                            type: 'empty',
+                            prompt: 'Please select a study cycle'
+                        }
+                    ]
+                },
+                uni: {
+                    identifier: 'uni',
+                    rules: [
+                        {
+                            type: 'empty',
+                            prompt: 'Please select your university'
+                        }
+                    ]
                 }
-            });
+            }
+        });
 
-        $('.message .close')
-            .on('click', function () {
-                $(this).closest('.message').transition('fade');
-            });
-    </script>
-</body>
+    $('.message .close')
+        .on('click', function () {
+            $(this).closest('.message').transition('fade');
+        });
+</script>

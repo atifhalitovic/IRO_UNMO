@@ -194,7 +194,10 @@ namespace IRO_UNMO.App.Controllers
             _db.Applicant.Add(applicant);
             _db.SaveChanges();
 
-            string msg = "Your unique code is: " + user.UniqueCode + "\nPlease login with it.";
+            string welcome = "Thank you for the registration at IRO Dzemal Bijedic University of Mostar system!\n";
+            string thanks = "We wish you the best of luck for your application. Please follow the rules!\n";
+            string contact = "In case of any problems you can contact us at international@unmo.ba \n";
+            string msg = welcome + "Your unique code is: " + user.UniqueCode + "\nPlease login with your code." + thanks + contact;
             EmailSettings.SendEmail(_configuration, user.Name + " " + user.Surname, user.Email, "Login info", msg);
 
             TempData["successMessage"] = "You have successfully registered! Now you can log in.";
@@ -268,7 +271,10 @@ namespace IRO_UNMO.App.Controllers
                 _db.Applicant.Add(applicant);
                 _db.SaveChanges();
 
-                string msg = "Your unique code is: " + user.UniqueCode + "\nPlease login with it.";
+                string welcome = "Thank you for the registration at IRO Dzemal Bijedic University of Mostar system!\n";
+                string thanks = "We wish you the best of luck for your nomination. Please follow the rules!\n";
+                string contact = "In case of any problems you can contact us at international@unmo.ba \n";
+                string msg = welcome + "Your unique code is: " + user.UniqueCode + "\nPlease login with your code. " + thanks + contact;
                 EmailSettings.SendEmail(_configuration, user.Name + " " + user.Surname, user.Email, "Login info", msg);
 
                 TempData["successMessage"] = "You have successfully registered! Now you can log in.";

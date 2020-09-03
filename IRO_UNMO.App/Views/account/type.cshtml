@@ -2,53 +2,23 @@
 @{
     Layout = "BasicLayout";
 }
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <!--- Site CSS -->
-    <link rel="stylesheet" type="text/css" href="~/dist/components/reset.css">
-    <link rel="stylesheet" type="text/css" href="~/dist/components/site.css">
-    <link rel="stylesheet" type="text/css" href="~/dist/components/grid.css">
-    <!--- Component CSS -->
-    <link rel="stylesheet" type="text/css" href="~/dist/components/icon.css">
-    <link rel="stylesheet" type="text/css" href="~/dist/components/table.css">
-    <link rel="stylesheet" type="text/css" href="~/dist/components/button.css">
-    <link rel="stylesheet" type="text/css" href="~/dist/components/transition.css">
-    <link rel="stylesheet" type="text/css" href="~/dist/components/popup.css">
-    <link rel="stylesheet" type="text/css" href="~/dist/components/accordion.css">
-    <!--- Component JS -->
-    @*<script src="~/lib/jquery/dist/jquery.min.js"></script>
-        <script src="~/dist/semantic.min.js"></script>*@
-
-    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.0/jquery.min.js"></script>*@
-    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>*@
-
-    <script src="~/assets/library/jquery.min.js"></script>
-    <script src="~/assets/library/iframe-content.js"></script>
-
-    <script type="text/javascript" src="~/dist/components/popup.js"></script>
-    <script type="text/javascript" src="~/dist/components/transition.js"></script>
-    <script type="text/javascript" src="~/dist/components/accordion.js"></script>
-</head>
-<body>
+<div class="ui dividing huge header">
     <p></p>
-    <p></p>
-    <p></p>
-    @*<div class="ui middle aligned center aligned grid">*@
-    <div class="ui container center aligned">
-        <div class="ui centered card">
-            <p></p>
-            <div class="meta">
-                <div class="ui top attached label">Please choose applicant type</div>
-                <div class="field">
-                    <a asp-action="incoming" asp-controller="account" class="ui green submit button"><i class="sign in alternate icon"></i>INCOMING</a>
-                    <a asp-action="outgoing" asp-controller="account" class="ui red submit button"><i class="exchange alternate icon"></i>OUTGOING</a>
-                </div>
-            </div>
-            <p></p>
-            <p></p>
-            <p></p>
-        </div>
+    <div class="ui huge breadcrumb">
+        <h2 class="ui header">Registration page - applicant type</h2>
     </div>
-</body>
+</div>
+<div class="ui container center aligned">
+    <div class="ui centered card">
+        <p></p>
+        <div class="meta">
+            <div class="ui top attached label">Please choose applicant type</div>
+            <div class="field">
+                <a asp-action="incoming" asp-controller="account" class="ui green submit button"><i class="sign in alternate icon"></i>INCOMING</a>
+                <a asp-action="outgoing" asp-controller="account" class="ui red submit button"><i class="exchange alternate icon"></i>OUTGOING</a>
+            </div>
+        </div>
+        <p></p>
+        <p></p>
+    </div>
+</div>

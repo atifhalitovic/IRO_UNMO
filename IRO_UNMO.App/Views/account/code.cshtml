@@ -4,7 +4,12 @@
     string errorMessage = (string)TempData["errorMessage"];
     string successMessage = (string)TempData["successMessage"];
 }
-<p></p>
+<div class="ui dividing huge header">
+    <p></p>
+    <div class="ui huge breadcrumb">
+        <h2 class="ui header">Forgot unique code page</h2>
+    </div>
+</div>
 @if (errorMessage != null)
 {
     <div class="ui negative message">
@@ -46,7 +51,7 @@
                             <span asp-validation-for="@Model.Email"></span>
                         </div>
                     </div>
-                    <input type="submit" class="ui teal submit button" value="Log in" style="margin: 10px 10px 10px 10px;" />
+                    <input type="submit" class="ui teal submit button" value="Send" style="margin: 10px 10px 10px 10px;" />
                 </form>
             </div>
         </div>
