@@ -33,7 +33,7 @@ namespace IRO_UNMO.App
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("lokalni")));
+                    Configuration.GetConnectionString("azure")));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
               .AddEntityFrameworkStores<ApplicationDbContext>()

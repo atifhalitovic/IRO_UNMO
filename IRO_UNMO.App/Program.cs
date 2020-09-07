@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.SqlClient;
 using IRO_UNMO.App.Data;
 using IRO_UNMO.App.Models;
 using Microsoft.AspNetCore;
@@ -36,5 +37,14 @@ namespace IRO_UNMO.App
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>();
+
+        //public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+        //WebHost.CreateDefaultBuilder(args)
+        //.ConfigureAppConfiguration((hostingContext, config) =>
+        //{
+        //    var settings = config.Build();
+        //    config.AddAzureAppConfiguration(settings["ConnectionStrings:AppConfig"]);
+        //})
+        //.UseStartup<Startup>();
     }
 }

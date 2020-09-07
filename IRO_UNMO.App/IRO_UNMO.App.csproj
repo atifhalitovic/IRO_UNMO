@@ -32,6 +32,7 @@
     <Compile Remove="Migrations\20200327221048_AddDocuments.cs" />
     <Compile Remove="Migrations\20200331203458_AddNomination.cs" />
     <Compile Remove="Migrations\20200709022507_AddComment4.cs" />
+    <Compile Remove="Migrations\20200907120255_Testn.cs" />
     <Compile Remove="NotificationComponent.cs" />
     <Compile Remove="Subscription\IDatabaseSubscriptionInterface.cs" />
     <Compile Remove="Subscription\ILoggedUser.cs" />
@@ -79,6 +80,7 @@
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="1.0.4" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Common" Version="1.0.4" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Core" Version="1.0.4" />
+    <PackageReference Include="Microsoft.Azure.SignalR" Version="1.5.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.14" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="2.1.14" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.1.14" />
@@ -699,5 +701,7 @@
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
   </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JSONSchema="https://json.schemastore.org/asmdef" /></VisualStudio></ProjectExtensions>
 
 </Project>

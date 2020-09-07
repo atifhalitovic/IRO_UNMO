@@ -174,31 +174,31 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
 
             var path2 = Path.Combine(
              Directory.GetCurrentDirectory(),
-             "wwwroot\\uploads\\", mrki.CV);
+              "wwwroot\\uploads\\", mrki.CV);
 
             var pathx = Path.Combine(
               Directory.GetCurrentDirectory(),
-              "wwwroot\\uploads\\", mrki.Passport);
+               "wwwroot\\uploads\\", mrki.Passport);
 
 
             var path3 = Path.Combine(
              Directory.GetCurrentDirectory(),
-             "wwwroot\\uploads\\", mrki.EngProficiency);
+              "wwwroot\\uploads\\", mrki.EngProficiency);
 
 
             var path4 = Path.Combine(
              Directory.GetCurrentDirectory(),
-             "wwwroot\\uploads\\", mrki.TranscriptOfRecords);
+              "wwwroot\\uploads\\", mrki.TranscriptOfRecords);
 
 
             var path5 = Path.Combine(
              Directory.GetCurrentDirectory(),
-             "wwwroot\\uploads\\", mrki.MotivationLetter);
+              "wwwroot\\uploads\\", mrki.MotivationLetter);
 
 
             var path6 = Path.Combine(
              Directory.GetCurrentDirectory(),
-             "wwwroot\\uploads\\", mrki.ReferenceLetter);
+              "wwwroot\\uploads\\", mrki.ReferenceLetter);
 
             FileStream stream1 = new FileStream(path1, FileMode.Open, FileAccess.Read);
 
