@@ -12,6 +12,7 @@ namespace IRO_UNMO.App.Models
         public int UniversityId { get; set; }
         public string Name { get; set; }
         public string Code { get; set; }
+        public byte[] Logo { get; set; }
         public int CountryId { get; set; }
         public Country Country { get; set; }
     }

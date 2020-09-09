@@ -1,13 +1,10 @@
-﻿@page
-@model IRO_UNMO.App.Areas.Identity.Pages.Account.LogoutModel
-@{
+﻿@{
     Layout = "BasicLayout";
 }
 <h3 class="ui header">
-    @*<h1>@ViewData["Title"]</h1>*@
-    <p>You have successfully logged out of the application.</p>
+    You have successfully logged out of the application.
 </h3>
 <div class="ui compact segment">
     <h4 class="ui header">Wanna login again?</h4>
     <a asp-area="" asp-controller="account" asp-action="login" class="ui primary button">Login</a>
-</div>
+</div>  

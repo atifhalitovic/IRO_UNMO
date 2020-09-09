@@ -267,7 +267,7 @@ namespace IRO_UNMO.App.Areas.Applicant.Controllers
             ViewAppVM model = new ViewAppVM();
             model.Application = _db.Application.Where(a => a.ApplicationId == id).Include(b => b.Infos).ThenInclude(q=>q.Citizenship).Include(c => c.Contacts).ThenInclude(q => q.Country).Include(d => d.HomeInstitutions).Include(e => e.Others).Include(f=>f.Documents).Include(g=>g.Languages).FirstOrDefault();
             model.Applicant = _db.Applicant.Where(x => x.ApplicantId == model.Application.ApplicantId).Include(a => a.ApplicationUser).ThenInclude(b => b.Country).Include(c=>c.University).FirstOrDefault();
-            model.Comments = _db.Comment.Where(x => x.IonId == id).ToList();
+            model.Comments = _db.Comment.Where(x => x.IonId == id).Include(a => a.Applicant).ThenInclude(b => b.ApplicationUser).ToList();
             model.Statuses = new List<SelectListItem>();
             model.Statuses.Add(new SelectListItem()
             {

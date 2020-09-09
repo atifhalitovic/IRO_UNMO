@@ -419,7 +419,7 @@
             <form class="ui piled segment" method="post">
                 @Html.HiddenFor(x => x.Nomination.NominationId)
                 <div class="ui small equal width form">
-                    <h4>It is possible to submit application when all documents are uploaded.</h4>
+                    <h4>It is possible to submit nomination when all documents are uploaded.</h4>
                     @if ((Model.Nomination.LearningAgreement != null || Model.Nomination.WorkPlan != null) && Model.Nomination.MotivationLetter != null && Model.Nomination.CV != null && Model.Nomination.TranscriptOfRecords != null && Model.Nomination.ReferenceLetter != null && Model.Nomination.EngProficiency != null && Model.Nomination.Passport != null)
                     {
                         <div class="field">

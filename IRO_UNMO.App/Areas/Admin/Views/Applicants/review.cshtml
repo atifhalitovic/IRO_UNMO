@@ -203,7 +203,7 @@
                                     Application start
                                 </div>
                                 <div class="description">
-                                    @Model.Timing.From.ToShortDateString()
+                                    @Model.Timing.From.ToMyStrDMYYYY_HMM()
                                 </div>
                             </div>
                         </div>
@@ -213,7 +213,7 @@
                                 <div class="header">
                                     Application deadline
                                 </div>
-                                <div class="description"><span>@Model.Timing.To.ToShortDateString()</span></div>
+                                <div class="description"><span>@Model.Timing.To.ToMyStrDMYYYY_HMM()</span></div>
                             </div>
                         </div>
                     </div>

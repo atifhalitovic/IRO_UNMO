@@ -161,44 +161,38 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
 
             if (mrki.LearningAgreement != null)
             {
-                path1 = Path.Combine(
-                Directory.GetCurrentDirectory(),
+                path1 = Path.Combine(Directory.GetCurrentDirectory(),
                 "wwwroot\\uploads\\", mrki.LearningAgreement);
             }
             else if (mrki.WorkPlan != null)
             {
-                path1 = Path.Combine(
-                Directory.GetCurrentDirectory(),
+                path1 = Path.Combine(Directory.GetCurrentDirectory(),
                 "wwwroot\\uploads\\", mrki.WorkPlan);
             }
 
             var path2 = Path.Combine(
              Directory.GetCurrentDirectory(),
-              "wwwroot\\uploads\\", mrki.CV);
+               "wwwroot\\uploads\\", mrki.CV);
 
             var pathx = Path.Combine(
               Directory.GetCurrentDirectory(),
                "wwwroot\\uploads\\", mrki.Passport);
 
-
             var path3 = Path.Combine(
              Directory.GetCurrentDirectory(),
-              "wwwroot\\uploads\\", mrki.EngProficiency);
-
+               "wwwroot\\uploads\\", mrki.EngProficiency);
 
             var path4 = Path.Combine(
              Directory.GetCurrentDirectory(),
-              "wwwroot\\uploads\\", mrki.TranscriptOfRecords);
-
+               "wwwroot\\uploads\\", mrki.TranscriptOfRecords);
 
             var path5 = Path.Combine(
              Directory.GetCurrentDirectory(),
-              "wwwroot\\uploads\\", mrki.MotivationLetter);
-
+               "wwwroot\\uploads\\", mrki.MotivationLetter);
 
             var path6 = Path.Combine(
              Directory.GetCurrentDirectory(),
-              "wwwroot\\uploads\\", mrki.ReferenceLetter);
+               "wwwroot\\uploads\\", mrki.ReferenceLetter);
 
             FileStream stream1 = new FileStream(path1, FileMode.Open, FileAccess.Read);
 
@@ -235,7 +229,6 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
             FileStreamResult nova = new FileStreamResult(stream, "nomination/pdf");
             string nameOfFile = "Nomination_" + mrki.NominationId + "_" + mrki.Applicant.ApplicationUser.Name + "_" + mrki.Applicant.ApplicationUser.Surname + ".pdf";
             nova.FileDownloadName = nameOfFile;
-            stream.Close();
             return nova;
         }
 
@@ -271,6 +264,7 @@ namespace IRO_UNMO.App.Areas.Admin.Controllers
         public IActionResult view(int id)
         {
             ViewNomVM model = new ViewNomVM();
+            var put = hosting.ContentRootPath;
             model.Nomination = _db.Nomination.Where(a => a.NominationId == id).Include(q => q.Offer).ThenInclude(a => a.University).ThenInclude(d => d.Country).FirstOrDefault();
             model.Applicant = _db.Applicant.Where(x => x.ApplicantId == model.Nomination.ApplicantId).Include(a => a.ApplicationUser).ThenInclude(b => b.Country).Include(c => c.University).FirstOrDefault();
             model.Comments = _db.Comment.Where(x => x.IonId == id).ToList();

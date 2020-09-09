@@ -55,21 +55,8 @@
                     <td>@x.Code</td>
                     <td>@x.Country.Name</td>
                     <td>
-                        <a asp-action="partner" asp-controller="partners"  asp-route-id="@x.UniversityId" class="ui basic primary button">Edit</a>
+                        <a asp-action="partner" asp-controller="partners" asp-route-id="@x.UniversityId" class="ui basic primary button">Edit</a>
                         <a asp-action="delete" asp-controller="partners" class="ui basic red button" asp-route-id="@x.UniversityId" id="test">Delete</a>
-                        @*<div class="ui modal test">
-                            <i class="close icon"></i>
-                            <div class="ui small header">
-                                Are you sure you want to delete selected university?
-                                You will delete all offers for it.
-                            </div>
-                            <div class="actions">
-                                <div class="ui black deny button">
-                                    No
-                                </div>
-                                <a asp-action="delete" asp-controller="partners" class="ui right floated red button" asp-route-id="@x.UniversityId" id="test"><i class="checkmark icon"></i>Yes, delete this offer.</a>
-                            </div>
-                        </div>*@
                     </td>
                 </tr>
             </tbody>
@@ -77,14 +64,3 @@
     </table>
     <a asp-controller="partners" asp-action="partner" class="ui basic green button">Add</a>
 </body>
-@*<script>
-    $(function () {
-        $("#test").click(function () {
-            $(".test").modal('show');
-        });
-
-        $(".test").modal({
-            closable: true
-        });
-    });
-</script>*@

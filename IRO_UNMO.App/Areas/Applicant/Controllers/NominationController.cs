@@ -342,7 +342,7 @@ namespace IRO_UNMO.App.Areas.Applicant.Controllers
             ViewNomVM model = new ViewNomVM();
             model.Nomination = _db.Nomination.Where(a => a.NominationId == id).Include(a => a.Offer).ThenInclude(b=>b.University).ThenInclude(c=>c.Country).FirstOrDefault();
             model.Applicant = _db.Applicant.Where(x => x.ApplicantId == model.Nomination.ApplicantId).Include(a => a.ApplicationUser).ThenInclude(b => b.Country).Include(c => c.University).FirstOrDefault();
-            model.Comments = _db.Comment.Where(x => x.IonId == id).ToList();
+            model.Comments = _db.Comment.Where(x => x.IonId == id).Include(a => a.Applicant).ThenInclude(b => b.ApplicationUser).ToList();
             model.Statuses = new List<SelectListItem>();
             model.Statuses.Add(new SelectListItem()
             {
